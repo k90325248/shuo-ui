@@ -17,14 +17,14 @@
 ## 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v0.1.1
+pnpm add github:k90325248/shuo-ui#v0.1.2
 ```
 
 指定 tag 以固定版本；升級時改成新的 tag 即可。其他套件管理工具：
 
 ```bash
-npm install github:k90325248/shuo-ui#v0.1.1
-yarn add github:k90325248/shuo-ui#v0.1.1
+npm install github:k90325248/shuo-ui#v0.1.2
+yarn add github:k90325248/shuo-ui#v0.1.2
 ```
 
 啟用模組（`@nuxt/ui` 須一併安裝並在 `modules` 中）：

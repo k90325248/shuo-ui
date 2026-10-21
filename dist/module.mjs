@@ -3,6 +3,18 @@ import { defu } from 'defu';
 import { readdirSync } from 'node:fs';
 import { defaultTheme } from '../dist/runtime/theme.js';
 
+const ICONS = [
+  "lucide:chevron-down",
+  "lucide:chevron-up",
+  "lucide:circle-alert",
+  "lucide:download",
+  "lucide:eye",
+  "lucide:eye-off",
+  "lucide:list",
+  "lucide:paperclip",
+  "lucide:search",
+  "lucide:x"
+];
 const module$1 = defineNuxtModule({
   meta: {
     name: "@shuo/ui",
@@ -21,6 +33,12 @@ const module$1 = defineNuxtModule({
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url);
     const runtime = resolve("./runtime");
+    nuxt.options.imports.transform ||= {};
+    nuxt.options.imports.transform.include ||= [];
+    nuxt.options.imports.transform.include.push(
+      /[\\/]@shuo[\\/]ui[\\/]dist[\\/]runtime[\\/]/,
+      new RegExp(runtime.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    );
     nuxt.options.alias["#shuo-ui"] = runtime;
     const componentsDir = resolve("./runtime/components");
     for (const file of readdirSync(componentsDir).filter((name) => name.endsWith(".vue"))) {
@@ -39,6 +57,10 @@ const module$1 = defineNuxtModule({
         nuxt.options.appConfig.ui,
         defaultTheme
       );
+    const iconOptions = nuxt.options;
+    iconOptions.icon ||= {};
+    iconOptions.icon.clientBundle ||= {};
+    iconOptions.icon.clientBundle.icons = [.../* @__PURE__ */ new Set([...iconOptions.icon.clientBundle.icons ?? [], ...ICONS])];
     nuxt.options.build.transpile.push("@vuepic/vue-datepicker");
     nuxt.options.vite.optimizeDeps = defu(nuxt.options.vite.optimizeDeps, {
       include: ["date-fns", "date-fns/locale", "valibot"]
