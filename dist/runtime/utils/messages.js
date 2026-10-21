@@ -21,8 +21,14 @@ export const defaultMessages = {
   months: { total: "\u7E3D\u6708\u6578", years: "\u5E74\u6578", months: "\u6708\u6578" },
   selectMenu: { searchPlaceholder: "\u95DC\u9375\u5B57\u67E5\u8A62..." },
   infoTooltip: { label: "\u8CC7\u8A0A\u8AAA\u660E" },
-  queryCard: { title: "\u67E5\u8A62\u689D\u4EF6", collapse: "\u6536\u5408", expand: "\u5C55\u958B" },
-  list: { title: "\u67E5\u8A62\u7D50\u679C", empty: "\u67E5\u7121\u8CC7\u6599" },
+  queryCard: { title: "\u67E5\u8A62\u689D\u4EF6", collapse: "\u6536\u5408", expand: "\u5C55\u958B", submit: "\u67E5\u8A62" },
+  list: {
+    title: "\u67E5\u8A62\u7D50\u679C",
+    empty: "\u67E5\u7121\u8CC7\u6599",
+    loading: "\u67E5\u8A62\u4E2D\u2026",
+    /** `{total}` 為總筆數，`{start}`、`{end}` 為目前顯示的起訖筆數 */
+    summary: "\u5171\u6709 {total} \u7B46\u8CC7\u6599, \u76EE\u524D\u986F\u793A\u7B2C {start} \u7B46\u81F3\u7B2C {end} \u7B46\u8CC7\u6599\u3002"
+  },
   datepicker: {
     hours: "\u6642",
     minutes: "\u5206",

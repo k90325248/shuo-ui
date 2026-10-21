@@ -1,7 +1,7 @@
 <template>
   <UCard
     :ui="{
-  root: 'overflow-visible rounded-[10px] bg-white ring-0 shadow-sm',
+  root: 'overflow-visible rounded-[10px] bg-default ring-0 shadow-sm',
   body: 'p-0 sm:p-0'
 }"
   >
@@ -52,7 +52,9 @@
             </div>
 
             <!-- 隱藏送出按鈕：讓欄位內按 Enter 可送出查詢 -->
-            <button type="submit" class="sr-only" tabindex="-1" aria-hidden="true">查詢</button>
+            <button type="submit" class="sr-only" tabindex="-1" aria-hidden="true">
+              {{ messages.queryCard.submit }}
+            </button>
 
             <!-- 操作按鈕：有提供 actions 插槽時顯示 -->
             <div v-if="$slots.actions" class="mt-6 flex flex-wrap justify-end gap-2">

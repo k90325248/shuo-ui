@@ -9,22 +9,24 @@
 
 ## 需求
 
-| 套件       | 版本 |
-| ---------- | ---- |
-| Nuxt       | ≥ 4  |
-| `@nuxt/ui` | ≥ 4  |
+| 套件       | 版本      |
+| ---------- | --------- |
+| Nuxt       | `^4.6.2`  |
+| `@nuxt/ui` | `^4.12.0` |
+
+`date-fns`、`valibot`、`@vuepic/vue-datepicker` 等執行期依賴會隨套件一併安裝。
 
 ## 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v0.1.3
+pnpm add github:k90325248/shuo-ui#v1.0.0
 ```
 
 指定 tag 以固定版本；升級時改成新的 tag 即可。其他套件管理工具：
 
 ```bash
-npm install github:k90325248/shuo-ui#v0.1.3
-yarn add github:k90325248/shuo-ui#v0.1.3
+npm install github:k90325248/shuo-ui#v1.0.0
+yarn add github:k90325248/shuo-ui#v1.0.0
 ```
 
 啟用模組（`@nuxt/ui` 須一併安裝並在 `modules` 中）：
@@ -46,6 +48,12 @@ export default defineNuxtConfig({
 ```
 
 最後一行讓 Tailwind 掃描元件庫內使用的 class（Tailwind 預設不掃描 `node_modules`）。**沒有這行，部分樣式（例如載入中圖示大小、排版）不會生效。**
+
+在自己的程式碼中 `import * as v from 'valibot'` 撰寫 schema 時，請在專案另外安裝 `valibot`（pnpm 不會讓專案直接引用套件的依賴）：
+
+```bash
+pnpm add valibot
+```
 
 ## 快速開始
 
@@ -113,4 +121,4 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(
 
 ## 版本與升級
 
-版本以 git tag 發佈（`v主.次.修`），每次升級請更新 tag 並測試。
+版本以 git tag 發佈（`v主.次.修`），每次升級請更新安裝指令中的 tag 並測試。

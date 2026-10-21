@@ -74,7 +74,7 @@ export default defineAppConfig({
 
 ### 4. 單一元件的 `ui` prop
 
-可以傳入 `ui` 的元件（例如 `ShuoCheckboxGroup`、`ShuoRadioGroup`）沿用 Nuxt UI 的 `ui` slots 覆寫；其餘元件的 HTML attributes（`class`、`style`）套用在外層。
+`ShuoCheckboxGroup`、`ShuoRadioGroup` 宣告 `ui` prop，`ShuoInputText`、`ShuoTextarea`、`ShuoCheckbox` 也會把傳入的 `ui` 與元件自身的樣式合併後交給內部的 Nuxt UI 元件，寫法同 Nuxt UI 的 `ui` slots。其餘元件請以 `app.config.ts` 的主題覆寫；`class`、`style` 套用在元件外層。
 
 ## 文案覆寫
 
@@ -91,14 +91,19 @@ export default defineNuxtConfig({
         minValue: '{label} must not be less than {min}'
       },
       file: { placeholder: 'Choose a file' },
-      list: { title: 'Results', empty: 'No data' },
+      list: {
+        title: 'Results',
+        empty: 'No data',
+        loading: 'Loading…',
+        summary: '{start}–{end} of {total}'
+      },
       queryCard: { title: 'Filters', collapse: 'Collapse ', expand: 'Expand ' }
     }
   }
 });
 ```
 
-`{label}`、`{min}`、`{unit}` 是佔位符，會在使用時替換。完整可覆寫的結構如下：
+`{label}`、`{min}`、`{unit}`、`{total}`、`{start}`、`{end}` 是佔位符，會在使用時替換。完整可覆寫的結構如下：
 
 | 區塊          | 項目                                                                                                                                                                                                                                                                                                                                |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -111,8 +116,8 @@ export default defineNuxtConfig({
 | `months`      | `total`、`years`、`months`                                                                                                                                                                                                                                                                                                          |
 | `selectMenu`  | `searchPlaceholder`                                                                                                                                                                                                                                                                                                                 |
 | `infoTooltip` | `label`                                                                                                                                                                                                                                                                                                                             |
-| `queryCard`   | `title`、`collapse`、`expand`                                                                                                                                                                                                                                                                                                       |
-| `list`        | `title`、`empty`                                                                                                                                                                                                                                                                                                                    |
+| `queryCard`   | `title`、`collapse`、`expand`、`submit`（隱藏送出按鈕的名稱）                                                                                                                                                                                                                                                                       |
+| `list`        | `title`、`empty`、`loading`（查詢中文字）、`summary`（筆數統計，`{total}`、`{start}`、`{end}`）                                                                                                                                                                                                                                     |
 | `datepicker`  | `hours`、`minutes`、`seconds`、`menu`、`calendarIcon`、`clearInput`、`toggleOverlay`、`monthPicker`、`yearPicker`、`nextMonth`、`prevMonth`、`nextYear`、`prevYear`、`openMonthsOverlay`、`openYearsOverlay`、`openTimePicker`、`closeTimePicker`、`timePicker`、`openTpOverlay`、`timeOverlay`、`incrementValue`、`decrementValue` |
 
 預設值可在 `node_modules/@shuo/ui/dist/runtime/utils/messages.js` 查看。
@@ -123,14 +128,17 @@ export default defineNuxtConfig({
 
 模組自動匯入 `dist/runtime/utils` 與 `dist/runtime/composables`，無須 import：
 
-| 名稱                                                                                            | 說明                                          |
-| ----------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `requiredText`、`requiredNumber`、`requiredArray`、`optionalEmail`、`optionalNonNegativeNumber` | Valibot 驗證規則，見[表單驗證](validation.md) |
-| `formatDateDisplay`、`parseDateValue`、`getDateModelFormat`、`isValidDateSeparator` 等          | 日期格式與解析                                |
-| `formatNumberDisplay`、`toNumberText`、`getDecimalPlaces`                                       | 數字顯示                                      |
-| `filterPhoneInput`、`joinPhone`、`splitPhone`                                                   | 電話號碼                                      |
-| `useChoiceGroup`、`useTruncatedText`                                                            | 排列與文字省略                                |
-| `setShuoMessages`、`getShuoMessages`                                                            | 文案（通常不需直接使用）                      |
+| 名稱                                                                                            | 說明                                           |
+| ----------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `requiredText`、`requiredNumber`、`requiredArray`、`optionalEmail`、`optionalNonNegativeNumber` | Valibot 驗證規則，見[表單驗證](validation.md)  |
+| `formatDateDisplay`、`parseDateValue`、`getDateModelFormat`、`isValidDateSeparator` 等          | 日期格式與解析                                 |
+| `formatNumberDisplay`、`toNumberText`、`getDecimalPlaces`                                       | 數字顯示                                       |
+| `filterPhoneInput`、`joinPhone`、`splitPhone`                                                   | 電話號碼                                       |
+| `splitMonths`、`combineMonths`                                                                  | 年月數換算                                     |
+| `useChoiceGroup`、`useTruncatedText`                                                            | 排列與文字省略                                 |
+| `getShuoMessages`、`setShuoMessages`、`formatMessage`                                           | 文案讀取、覆寫與佔位符替換（通常不需直接使用） |
+
+目錄內其他元件內部使用的工具（例如 `getByPath`、`getMaskCount`）同樣會被匯入，但不屬於公開 API，版本間可能變動。若與專案自己的函式同名，請改名或關閉其中一方的自動匯入。
 
 型別可由別名 `#shuo-ui` 匯入：
 

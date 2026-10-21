@@ -19,9 +19,9 @@ declare const __VLS_export: <S extends FormSchema>(__VLS_props: NonNullable<Awai
         open?: boolean;
     }) & {
         onClear?: (() => any) | undefined;
+        onSubmit?: ((event: FormSubmitEvent<InferOutput<S>>) => any) | undefined;
         onError?: ((event: FormErrorEvent) => any) | undefined;
         "onUpdate:open"?: ((value: boolean) => any) | undefined;
-        onSubmit?: ((event: FormSubmitEvent<InferOutput<S>>) => any) | undefined;
     }> & (typeof globalThis extends {
         __VLS_PROPS_FALLBACK: infer P;
     } ? P : {});
@@ -45,7 +45,7 @@ declare const __VLS_export: <S extends FormSchema>(__VLS_props: NonNullable<Awai
             loading: any;
         }) => any;
     };
-    emit: (((evt: "clear") => void) & ((evt: "error", event: FormErrorEvent) => void) & ((evt: "submit", event: FormSubmitEvent<InferOutput<S>>) => void)) & ((event: "update:open", value: boolean) => void);
+    emit: (((evt: "clear") => void) & ((evt: "submit", event: FormSubmitEvent<InferOutput<S>>) => void) & ((evt: "error", event: FormErrorEvent) => void)) & ((event: "update:open", value: boolean) => void);
 }>) => import("vue").VNode & {
     __ctx?: NonNullable<Awaited<typeof __VLS_setup>>;
 };

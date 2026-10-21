@@ -44,10 +44,14 @@ export declare const defaultMessages: {
         title: string;
         collapse: string;
         expand: string;
+        submit: string;
     };
     list: {
         title: string;
         empty: string;
+        loading: string;
+        /** `{total}` 為總筆數，`{start}`、`{end}` 為目前顯示的起訖筆數 */
+        summary: string;
     };
     datepicker: {
         hours: string;

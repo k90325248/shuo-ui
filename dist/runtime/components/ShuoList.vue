@@ -1,5 +1,5 @@
 <template>
-  <UCard :ui="{ root: 'rounded-[10px] bg-white ring-0 shadow-sm', body: 'p-0 sm:p-0' }">
+  <UCard :ui="{ root: 'rounded-[10px] bg-default ring-0 shadow-sm', body: 'p-0 sm:p-0' }">
     <!-- 標題區：圖示、標題與右側自訂操作 -->
     <template #header>
       <div class="flex min-h-8 flex-wrap items-center justify-between gap-3">
@@ -63,7 +63,7 @@
 
           <!-- 無資料時的查詢狀態，可由使用頁面覆寫 -->
           <template #loading>
-            <slot v-if="!initialLoading" name="loading">查詢中…</slot>
+            <slot v-if="!initialLoading" name="loading">{{ messages.list.loading }}</slot>
           </template>
 
           <!-- 查詢完成但沒有符合資料時的提示 -->
@@ -91,13 +91,10 @@
         />
         <!-- 右側統計：依總筆數、已載入頁碼及當頁資料數計算範圍 -->
         <p v-if="showSummary" class="text-muted ms-auto text-sm" aria-live="polite">
-          共有
-          <span class="text-primary">{{ total }}</span>
-          筆資料, 目前顯示第
-          <span class="text-primary">{{ rangeStart }}</span>
-          筆至第
-          <span class="text-primary">{{ rangeEnd }}</span>
-          筆資料。
+          <template v-for="(part, index) in summaryParts" :key="index">
+            <span v-if="part.value" class="text-primary">{{ part.text }}</span>
+            <template v-else>{{ part.text }}</template>
+          </template>
         </p>
       </div>
       <!-- 額外底部內容，可取得查詢中的停用狀態 -->
@@ -124,6 +121,7 @@ const props = defineProps({
 });
 const emit = defineEmits(["page-change"]);
 const slots = useSlots();
+const messages = getShuoMessages();
 const tableContent = useTemplateRef("tableContent");
 const tableHeight = ref();
 let tableResizeObserver;
@@ -133,6 +131,13 @@ const rangeEnd = computed(
   () => rangeStart.value ? Math.min(props.total, rangeStart.value + props.data.length - 1) : 0
 );
 const initialLoading = computed(() => firstLoadPending.value && props.loading && props.data.length === 0);
+const summaryParts = computed(() => {
+  const values = { total: props.total, start: rangeStart.value, end: rangeEnd.value };
+  return messages.list.summary.split(/(\{(?:total|start|end)\})/).filter(Boolean).map((text) => {
+    const key = text.match(/^\{(\w+)\}$/)?.[1];
+    return key ? { text: String(values[key]), value: true } : { text, value: false };
+  });
+});
 const skeletonColumns = computed(() => countColumns(props.columns));
 const getPagination = (page = props.page) => ({ PageNumber: page, PageSize: props.pageSize });
 const onPageChange = (page) => {

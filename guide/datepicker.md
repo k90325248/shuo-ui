@@ -9,20 +9,22 @@
 | `v-model`       | 單選 `string`；範圍 `[string, string] \| []` | 空值                  | 永遠使用西元字串，範圍以起迄陣列表示；單選空值 `''`，範圍空值 `[]`。                                           |
 | `v-model:start` | `string`                                     | `''`                  | 範圍起日，可獨立回填，非範圍時為 `''`。                                                                        |
 | `v-model:end`   | `string`                                     | `''`                  | 範圍迄日，可獨立回填，尚無完整範圍或非範圍時為 `''`。                                                          |
-| `id`            | `string`                                     | 未指定                | 輸入框識別碼，對應外部 label。                                                                                 |
+| `id`            | `string`                                     | 沿用 `UFormField`     | 輸入框識別碼，對應外部 label。                                                                                 |
 | `clearable`     | `boolean`                                    | `false`               | 顯示清除按鈕，清空時單選為 `''`，範圍為 `[]`，起迄為 `''`。                                                    |
-| `disabled`      | `boolean`                                    | `false`               | 禁用輸入、選單與清除操作。                                                                                     |
+| `loading`       | `boolean`                                    | `false`               | 以轉圈圖示取代日曆圖示並停用輸入。                                                                             |
+| `skeleton`      | `boolean`                                    | `false`               | 以骨架覆蓋並暫停互動，見[元件與參數](components.md#骨架)。                                                     |
+| `disabled`      | `boolean`                                    | `false`               | 禁用輸入、選單與清除操作；外層 `UForm` 停用時同樣停用。                                                        |
 | `range`         | `boolean`                                    | `false`               | 開啟起迄選擇，五種日期精度皆支援。                                                                             |
 | `roc`           | `boolean`                                    | `true`                | 開關民國年顯示，切換不改寫綁定值。                                                                             |
 | `mode`          | `DatepickerMode`                             | `date`                | 選擇精度，見下表。                                                                                             |
-| `size`          | `xs \| sm \| md \| lg \| xl`                 | `lg`                  | 與其他表單元件一致。                                                                                           |
+| `size`          | `xs \| sm \| md \| lg \| xl`                 | `lg`                  | 與其他表單元件一致；未設定時沿用 `UFormField` 的 `size`。                                                      |
 | `min-date`      | `Date \| string \| number`                   | 民國模式為 1911/01/01 | 民國模式採指定日期與 1911/01/01 中較晚者；年與年月模式以整年、整月比較。                                       |
 | `max-date`      | `Date \| string \| number`                   | 未指定                | 最晚可選日期。                                                                                                 |
 | `year-range`    | `[number, number]`                           | `[1900, 2100]`        | 西元年份範圍，民國模式的下限至少為 1911。                                                                      |
 | `separator`     | `string`                                     | `'/'`                 | 綁定值的日期分隔符號，例如 `'-'`；顯示仍為斜線。不可為空或含數字、空白、冒號、單引號，無效時警告並沿用 `'/'`。 |
-| `state`         | `boolean \| undefined`                       | `undefined`           | 一般、成功或錯誤樣式。                                                                                         |
+| `state`         | `boolean \| undefined`                       | `undefined`           | `false` 錯誤樣式、`true` 成功樣式，未指定為一般樣式；`UFormField` 有錯誤時一律顯示錯誤樣式。                   |
 
-公開設定集中於元件內的 `DatepickerProps`，只列出共用元件已支援且驗證的功能，不繼承套件全部 props。`class`、`style` 等 HTML attributes 套用在外層容器；不透傳任意屬性覆寫日期套件設定。`auto-apply`、`flow`、`config`、`formats`、`model-type` 等由元件內部統一管理。
+元件只開放上表的參數，不繼承 `@vuepic/vue-datepicker` 的全部 props。`class`、`style` 等 HTML attributes 套用在外層容器，不會透傳到日期套件；`auto-apply`、`flow`、`config`、`formats`、`model-type` 等由元件內部統一管理。
 
 ## 自動套用與選取流程
 
@@ -86,7 +88,7 @@ const timestamp = ref('2026/09/20 14:02:09');
 - 同一輪清空只送出一次 `update:modelValue`（或 `update:start`、`update:end`）事件；起迄相反時不會先同步出排序後的暫時值。
 - 日期時間是本地日曆時間，不做 UTC 或時區轉換。
 - 修改模式時，使用端應同步提供該模式格式的綁定值。
-- 日期綁定已改為斜線格式，舊的 `YYYY-MM-DD` 資料須先轉換。
+- 綁定值預設以斜線分隔；API 使用 `YYYY-MM-DD` 等連字號格式時，設定 `separator="-"` 即可直接綁定。
 
 ## 日曆顯示
 
