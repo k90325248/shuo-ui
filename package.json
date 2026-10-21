@@ -1,0 +1,33 @@
+{
+  "name": "@shuo/ui",
+  "version": "0.1.0",
+  "description": "Shuo UI：基於 Nuxt UI 的表單元件 Nuxt Module",
+  "repository": "https://github.com/k90325248/shuo-ui",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
+    },
+    "./runtime/*": "./dist/runtime/*"
+  },
+  "main": "./dist/module.mjs",
+  "types": "./dist/types.d.mts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@nuxt/kit": "^4.6.2",
+    "@vuepic/vue-datepicker": "^14.0.0",
+    "date-fns": "^4.4.0",
+    "decimal.js": "^10.6.0",
+    "defu": "^6.1.4",
+    "lodash": "^4.18.1",
+    "valibot": "^1.5.0"
+  },
+  "peerDependencies": {
+    "@nuxt/ui": "^4.12.0",
+    "nuxt": "^4.6.2"
+  }
+}

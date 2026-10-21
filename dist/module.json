@@ -1,0 +1,12 @@
+{
+  "name": "@shuo/ui",
+  "configKey": "shuoUi",
+  "compatibility": {
+    "nuxt": ">=4.0.0"
+  },
+  "version": "0.1.0",
+  "builder": {
+    "@nuxt/module-builder": "1.0.3",
+    "unbuild": "unknown"
+  }
+}
