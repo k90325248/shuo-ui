@@ -1,4 +1,4 @@
-import type { DateMode } from './date.ts.js';
+import type { DateMode } from './date.js';
 /** 日期選擇模式：年、年月、日期、日期時分、日期時分秒。 */
 export type DatepickerMode = DateMode;
 /** 完整日期範圍綁定值，起迄皆選完才回傳。 */

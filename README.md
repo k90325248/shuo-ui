@@ -1,74 +1,113 @@
 # @shuo/ui
 
-基於 [Nuxt UI](https://ui.nuxt.com) 的表單元件庫，以 Nuxt Module 提供。需求：Nuxt 4 + `@nuxt/ui` 4。
+基於 [Nuxt UI](https://ui.nuxt.com) 的表單元件庫，以 Nuxt Module 提供。包含 11 個表單輸入元件、查詢條件卡片、資料清單與資訊提示，並附 Valibot 驗證規則與日期、數字等工具函式。
 
-## 元件
+- 預設繁體中文文案，可由模組設定覆寫
+- 樣式使用 Nuxt UI 語意色與 CSS 變數，顏色與主題由使用的專案決定
+- 一致的尺寸、停用、載入中（`loading`）與骨架（`skeleton`）行為
+- 型別完整，元件、utils 與 composables 皆自動匯入
 
-`ShuoInputText`、`ShuoInputNumber`、`ShuoSelectMenu`、`ShuoDatepicker`、`ShuoCheckbox`、`ShuoCheckboxGroup`、`ShuoRadioGroup`、`ShuoTextarea`、`ShuoFile`、`ShuoMonths`、`ShuoPhone`、`ShuoQueryCard`、`ShuoList`、`ShuoInfoTooltip`。
+## 需求
 
-另自動匯入：`requiredText`、`requiredNumber`、`requiredArray`、`optionalEmail`、`optionalNonNegativeNumber`（valibot 驗證規則）與日期、數字、電話等 utils、`useChoiceGroup`、`useTruncatedText`。
+| 套件       | 版本 |
+| ---------- | ---- |
+| Nuxt       | ≥ 4  |
+| `@nuxt/ui` | ≥ 4  |
 
 ## 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui   # 或指定 tag：github:k90325248/shuo-ui#v0.1.0
+pnpm add github:k90325248/shuo-ui#v0.1.1
 ```
+
+指定 tag 以固定版本；升級時改成新的 tag 即可。其他套件管理工具：
+
+```bash
+npm install github:k90325248/shuo-ui#v0.1.1
+yarn add github:k90325248/shuo-ui#v0.1.1
+```
+
+啟用模組（`@nuxt/ui` 須一併安裝並在 `modules` 中）：
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@shuo/ui']
+  modules: ['@nuxt/ui', '@shuo/ui']
 });
 ```
 
-## 自定義
-
-### 1. 樣式吃專案設定
-
-元件只使用 Nuxt UI 語意色與 CSS 變數，顏色由專案決定。在自己的 CSS 覆寫表單色票：
+確認 CSS 已載入 Tailwind 與 Nuxt UI（`@nuxt/ui` 的標準設定）：
 
 ```css
-:root {
-  --ui-form-border: var(--ui-color-primary-700);
-  --ui-form-disabled-text: var(--color-gray-600);
-  --ui-form-disabled-border: var(--color-gray-400);
-  --ui-form-disabled-bg: var(--color-gray-100);
-}
+/* app/assets/css/main.css */
+@import 'tailwindcss';
+@import '@nuxt/ui';
 ```
 
-內建的 Nuxt UI 主題（輸入框、核取方塊、`formField` 錯誤樣式等）只是預設值，專案 `app.config.ts` 的 `ui` 設定優先；各元件也支援 `ui` prop 與 slots。
+## 快速開始
 
-### 2. 模組設定
+元件以 `Shuo` 開頭，無須 import。搭配 Nuxt UI 的 `UForm` 與 Valibot 驗證：
 
-```ts
-export default defineNuxtConfig({
-  modules: ['@shuo/ui'],
-  shuoUi: {
-    prefix: 'Shuo', // 元件前綴，例如改成 'My' → <MyInputText>
-    theme: true, // false：不套用內建主題，完全由專案決定
-    css: true, // false：不載入預設 CSS 變數
-    messages: {
-      // 只需寫想改的項目，其餘維持預設繁體中文
-      validation: { required: '{label} is required' },
-      file: { placeholder: 'Choose a file' },
-      list: { empty: 'No data' }
-    }
-  }
+```vue
+<template>
+  <UForm :schema="schema" :state="state" @submit="onSubmit">
+    <UFormField label="姓名" name="name">
+      <ShuoInputText v-model="state.name" />
+    </UFormField>
+    <UFormField label="金額" name="amount">
+      <ShuoInputNumber v-model="state.amount" unit />
+    </UFormField>
+    <UFormField label="申請日期" name="date">
+      <ShuoDatepicker v-model="state.date" clearable />
+    </UFormField>
+    <UButton type="submit" label="送出" />
+  </UForm>
+</template>
+
+<script setup lang="ts">
+import * as v from 'valibot';
+
+// requiredText、requiredNumber 由模組自動匯入
+const schema = v.object({
+  name: requiredText('姓名'),
+  amount: requiredNumber('金額'),
+  date: requiredText('申請日期')
 });
+
+const state = reactive({ name: '', amount: null as number | null, date: '' });
+
+const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(event.data);
+</script>
 ```
 
-可覆寫的文案結構見 [`src/runtime/utils/messages.ts`](src/runtime/utils/messages.ts)。
+## 文件
 
-## 開發
+| 文件                                   | 內容                                                        |
+| -------------------------------------- | ----------------------------------------------------------- |
+| [元件與參數](guide/components.md)      | 全部元件的用途、v-model、props、slots 與事件                |
+| [日期選擇器](guide/datepicker.md)      | 民國年、五種格式、範圍選擇、綁定與驗證                      |
+| [表單驗證](guide/validation.md)        | Valibot 規則、空值約定、錯誤訊息、群組排列                  |
+| [設定與自定義](guide/configuration.md) | 模組選項、主題、CSS 變數、文案覆寫、`ui` prop、自動匯入 API |
 
-```bash
-pnpm install
-pnpm dev            # 啟動 playground（所有元件的測試頁）
-pnpm lint           # eslint + prettier + typecheck
-pnpm test:unit      # 單元測試
-pnpm test:e2e       # Playwright E2E
-pnpm test:scenarios # 檢查 docs/test-scenarios 與測試名稱一致
-pnpm build          # 建置模組
-```
+## 元件一覽
 
-測試情境文件在 [`docs/test-scenarios`](docs/test-scenarios)，每個元件對應一份情境表與一支 E2E／單元測試。
+| 元件                | 用途                       | v-model 型別                                    |
+| ------------------- | -------------------------- | ----------------------------------------------- |
+| `ShuoInputText`     | 單行文字，可遮蔽           | `string`                                        |
+| `ShuoInputNumber`   | 數字，千分位、小數、單位   | `number \| null`                                |
+| `ShuoSelectMenu`    | 下拉選單，可搜尋、多選     | `string`／多選為 `string[]`                     |
+| `ShuoDatepicker`    | 日期、年月、日期時間，範圍 | `string`／範圍為 `[string, string]`             |
+| `ShuoCheckbox`      | 單一核取方塊               | `string \| number \| boolean`（預設 `1`／`0`）  |
+| `ShuoCheckboxGroup` | 複選群組                   | `string[]`                                      |
+| `ShuoRadioGroup`    | 單選群組                   | `string`                                        |
+| `ShuoTextarea`      | 多行文字                   | `string`                                        |
+| `ShuoFile`          | 單檔選擇與既有附件下載     | `File \| null`                                  |
+| `ShuoMonths`        | 年月數換算輸入             | 總月數 `number \| null`（另有 `year`、`month`） |
+| `ShuoPhone`         | 區碼加電話號碼             | `string`（另有 `areaCode`、`number`）           |
+| `ShuoQueryCard`     | 可收合的查詢條件表單卡片   | `open`（`boolean`）                             |
+| `ShuoList`          | 分頁資料清單               | —                                               |
+| `ShuoInfoTooltip`   | 資訊圖示加提示             | —                                               |
+
+## 版本與升級
+
+版本以 git tag 發佈（`v主.次.修`），每次升級請更新 tag 並測試。

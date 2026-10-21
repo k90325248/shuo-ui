@@ -1,5 +1,5 @@
 import * as v from "valibot";
-import { formatMessage, getShuoMessages } from "./messages.ts";
+import { formatMessage, getShuoMessages } from "./messages.js";
 const message = (key, label, min) => formatMessage(getShuoMessages().validation[key], { label, min: min ?? "" });
 export const requiredText = (label) => {
   const requiredMessage = message("required", label);

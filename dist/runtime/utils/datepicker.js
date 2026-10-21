@@ -6,7 +6,7 @@ import {
   formatDateDisplay,
   getDateModelFormat,
   parseDateValue
-} from "./date.ts";
+} from "./date.js";
 export const isEmptyDatepickerValue = (value) => value === null || value === void 0 || value === "" || Array.isArray(value) && value.length === 0;
 export const DATEPICKER_MODEL_FORMATS = DATE_MODEL_FORMATS;
 export const parseDatepickerValue = parseDateValue;

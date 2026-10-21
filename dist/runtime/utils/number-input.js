@@ -1,4 +1,4 @@
-import { getDecimalPlaces } from "./number.ts";
+import { getDecimalPlaces } from "./number.js";
 export const isNumberDraft = (text, decimal) => {
   const places = getDecimalPlaces(decimal);
   if (!/^[+-]?\d*(?:\.\d*)?$/.test(text)) return false;
