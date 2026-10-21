@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { get } from "lodash";
+import { getByPath } from "../utils/get-by-path";
 import { getShuoMessages } from "../utils/messages";
 import { vSkeleton } from "../directives/skeleton";
 import { useTruncatedText } from "../composables/useTruncatedText";
@@ -101,7 +101,7 @@ const selectedItems = computed(() => {
   const values = Array.isArray(value) ? value : [value];
   return values.filter((value2) => value2 != null && value2 !== props.emptyValue).map(
     (value2) => props.items.find(
-      (option) => (typeof option === "string" ? option : get(option, resolvedValueKey.value)) === value2
+      (option) => (typeof option === "string" ? option : getByPath(option, resolvedValueKey.value)) === value2
     )
   ).filter((item) => item != null);
 });
@@ -112,8 +112,8 @@ const normalizeValue = (value, multiple, emptyValue) => {
   return isEmptyValue(value) ? emptyValue : value;
 };
 const formatItem = (item) => {
-  const value = typeof item === "string" ? item : get(item, resolvedValueKey.value);
-  const label = typeof item === "string" ? item : get(item, resolvedLabelKey.value);
+  const value = typeof item === "string" ? item : getByPath(item, resolvedValueKey.value);
+  const label = typeof item === "string" ? item : getByPath(item, resolvedLabelKey.value);
   return props.format.replace(
     /\{(value|label)\}/g,
     (_, key) => String((key === "value" ? value : label) ?? "")

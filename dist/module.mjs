@@ -62,9 +62,9 @@ const module$1 = defineNuxtModule({
     iconOptions.icon.clientBundle ||= {};
     iconOptions.icon.clientBundle.icons = [.../* @__PURE__ */ new Set([...iconOptions.icon.clientBundle.icons ?? [], ...ICONS])];
     nuxt.options.build.transpile.push("@vuepic/vue-datepicker");
-    nuxt.options.vite.optimizeDeps = defu(nuxt.options.vite.optimizeDeps, {
-      include: ["date-fns", "date-fns/locale", "valibot"]
-    });
+    const installed = import.meta.url.includes("node_modules");
+    const deps = ["date-fns", "date-fns/locale", "valibot"].map((name) => installed ? `@shuo/ui > ${name}` : name);
+    nuxt.options.vite.optimizeDeps = defu(nuxt.options.vite.optimizeDeps, { include: deps });
   }
 });
 

@@ -141,5 +141,6 @@ import type { PageRequest } from '#shuo-ui/types/pagination';
 
 ## 與 Nuxt UI 搭配的注意事項
 
+- 專案 CSS 必須加入 `@import '@shuo/ui/css';`（放在 `@import 'tailwindcss'` 之後），否則 Tailwind 不會掃描元件庫內的 class，部分樣式會缺失。
 - 表單欄位建議外包 `UFormField` 並設定 `name`，元件會透過 `useFormField` 接入 id、name、size、停用與錯誤狀態，並在 input、blur、change 時觸發驗證。
 - 圖示使用 Iconify（`i-lucide-*`）。元件庫用到的圖示會由模組自動加入 `@nuxt/icon` 的 client bundle；若專案停用執行期圖示 API（`icon.provider: 'none'`），請安裝 `@iconify-json/lucide` 讓圖示能在建置時打包。

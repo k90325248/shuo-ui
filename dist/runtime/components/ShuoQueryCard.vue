@@ -42,7 +42,7 @@
             :validate="validate"
             :validate-on="validateOn"
             :disabled="disabled"
-            :class="['relative', appConfig.ui.card.slots.body]"
+            :class="['relative', appConfig.ui.card?.slots?.body ?? 'p-4 sm:p-6']"
             @submit="emit('submit', $event)"
             @error="onError"
           >

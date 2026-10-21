@@ -17,14 +17,14 @@
 ## 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v0.1.2
+pnpm add github:k90325248/shuo-ui#v0.1.3
 ```
 
 指定 tag 以固定版本；升級時改成新的 tag 即可。其他套件管理工具：
 
 ```bash
-npm install github:k90325248/shuo-ui#v0.1.2
-yarn add github:k90325248/shuo-ui#v0.1.2
+npm install github:k90325248/shuo-ui#v0.1.3
+yarn add github:k90325248/shuo-ui#v0.1.3
 ```
 
 啟用模組（`@nuxt/ui` 須一併安裝並在 `modules` 中）：
@@ -36,13 +36,16 @@ export default defineNuxtConfig({
 });
 ```
 
-確認 CSS 已載入 Tailwind 與 Nuxt UI（`@nuxt/ui` 的標準設定）：
+在 CSS 載入 Tailwind、Nuxt UI 與元件庫的來源掃描：
 
 ```css
 /* app/assets/css/main.css */
 @import 'tailwindcss';
 @import '@nuxt/ui';
+@import '@shuo/ui/css';
 ```
+
+最後一行讓 Tailwind 掃描元件庫內使用的 class（Tailwind 預設不掃描 `node_modules`）。**沒有這行，部分樣式（例如載入中圖示大小、排版）不會生效。**
 
 ## 快速開始
 
