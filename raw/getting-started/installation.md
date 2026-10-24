@@ -61,18 +61,24 @@ canonical_url: "https://k90325248.github.io/getting-started/installation"
 
 指定 tag 以固定版本，升級時改成新的 tag 即可。
 
+<warning>
+
+目前為 beta 版本（`0.0.1-beta.x`），功能與參數仍可能調整，beta 之間可能有破壞性變更。升級時請確認專案中的用法。
+
+</warning>
+
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v2.0.0
+pnpm add github:k90325248/shuo-ui#v0.0.1-beta.1
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v2.0.0
+npm install github:k90325248/shuo-ui#v0.0.1-beta.1
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v2.0.0
+yarn add github:k90325248/shuo-ui#v0.0.1-beta.1
 ```
 
 </code-group>
