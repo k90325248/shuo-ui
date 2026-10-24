@@ -1,0 +1,1 @@
+var e=(e,t)=>t.split(/[.[\]]+/).filter(Boolean).reduce((e,t)=>e?.[t],e),t=(e,t,n,r)=>{};export{e as n,t};

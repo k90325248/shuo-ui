@@ -1,0 +1,40 @@
+# Shuo UI
+
+## Documentation Sets
+
+- [Shuo UI](https://k90325248.github.io/llms-full.txt)
+
+## Docs
+
+Every page below is available as raw markdown.
+
+- [Checkbox](https://k90325248.github.io/raw/components/checkbox.md): 單一核取方塊，可自訂勾選值，文字旁可放附加內容。
+- [RadioGroup／CheckboxGroup](https://k90325248.github.io/raw/components/choice-group.md): 單選與複選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
+- [共用參數](https://k90325248.github.io/raw/components/common.md): 表單輸入元件共同支援的參數、骨架行為與空值約定。
+- [Datepicker](https://k90325248.github.io/raw/components/datepicker.md): 日期選擇器，預設民國年，支援五種精度與範圍選擇。
+- [File](https://k90325248.github.io/raw/components/file.md): 單檔選擇與既有附件下載，選檔不會自動上傳。
+- [InfoTooltip](https://k90325248.github.io/raw/components/info-tooltip.md): 資訊圖示加提示，滑鼠移入或鍵盤聚焦即顯示。
+- [InputNumber](https://k90325248.github.io/raw/components/input-number.md): 數字輸入，離開輸入框後顯示千分位，可指定小數位數與單位。
+- [InputText](https://k90325248.github.io/raw/components/input-text.md): 單行文字輸入，可遮蔽全部或最後幾碼。
+- [ListCard](https://k90325248.github.io/raw/components/list-card.md): 查詢結果清單卡片，包含標題列、表格與後端分頁。
+- [Months](https://k90325248.github.io/raw/components/months.md): 年月數換算輸入，可同時綁定總月數、年數與月數。
+- [Phone](https://k90325248.github.io/raw/components/phone.md): 市話號碼，兩個輸入框分別輸入區碼與電話。
+- [QueryCard](https://k90325248.github.io/raw/components/query-card.md): 可收合的查詢條件卡片，內含 UForm，欄位以響應式格線排列。
+- [SelectMenu](https://k90325248.github.io/raw/components/select-menu.md): 下拉選單，可搜尋、多選，文字過長時顯示完整提示。
+- [Table](https://k90325248.github.io/raw/components/table.md): 基於 UTable 的純表格，含骨架、空資料與高度過渡。
+- [Textarea](https://k90325248.github.io/raw/components/textarea.md): 多行文字輸入，保留換行，可自動調整高度。
+- [安裝](https://k90325248.github.io/raw/getting-started/installation.md): 在 Nuxt 專案中安裝並啟用 Shuo UI。
+- [簡介](https://k90325248.github.io/raw/getting-started/introduction.md): Shuo UI 是什麼、適合用在哪裡。
+- [快速開始](https://k90325248.github.io/raw/getting-started/quick-start.md): 用 UForm 與 Valibot 組出第一個表單，並認識全部元件。
+- [自動匯入與型別](https://k90325248.github.io/raw/guides/auto-imports.md): 自動匯入的工具函式、型別別名，以及與 Nuxt UI 搭配的注意事項。
+- [元件全站預設值](https://k90325248.github.io/raw/guides/component-defaults.md): 以 shuoUi.components 統一設定尺寸、顯示格式、圖示等參數。
+- [文案覆寫](https://k90325248.github.io/raw/guides/messages.md): 覆寫驗證訊息、無障礙名稱、提示文字與日期選擇器文案。
+- [模組選項](https://k90325248.github.io/raw/guides/module-options.md): 在 nuxt.config.ts 以 shuoUi 設定元件庫。
+- [樣式與主題](https://k90325248.github.io/raw/guides/theming.md): 顏色、表單色票、內建主題，以及單一元件的 ui 覆寫規則。
+- [表單驗證](https://k90325248.github.io/raw/guides/validation.md): 以 UForm、UFormField 與 Valibot 驗證表單，搭配內建的共用規則。
+
+## Landing
+
+Every page below is available as raw markdown.
+
+- [/](https://k90325248.github.io/raw/index.md)

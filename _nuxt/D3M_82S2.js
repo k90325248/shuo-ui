@@ -1,0 +1,1 @@
+var e=e=>e.replace(/-(\w)/g,(e,t)=>t.toUpperCase()),t=e=>e.replace(/[A-Z]/g,e=>`-${e.toLowerCase()}`),n=(n,r)=>n?n[e(r)]!==void 0||n[t(r)]!==void 0:!1;export{n as t};

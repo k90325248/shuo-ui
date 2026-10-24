@@ -1,0 +1,6734 @@
+# Checkbox
+
+> 單一核取方塊，可自訂勾選值，文字旁可放附加內容。
+
+`v-model: string | number | boolean`，必須提供。
+
+## 用法
+
+### 勾選值
+
+預設勾選為 `1`、取消為 `0`。綁定值不等於 `trueValue` 時顯示未勾選。
+
+<component-example name="checkbox-basic">
+
+
+
+</component-example>
+
+### 與輸入框並排
+
+外層在 flex 中會隨空間收縮並截斷文字。要完整顯示文字，設定 `ui.wrapper` 為 `shrink-0`；文字超過容器寬度時仍會截斷並顯示 Tooltip。
+
+<component-example name="checkbox-inline">
+
+
+
+</component-example>
+
+## Props
+
+<component-props name="ShuoCheckbox">
+
+
+
+</component-props>
+
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`label` 的預設值可由文案 `checkbox.label` 覆寫。
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      參數
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        append
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        checked
+      </code>
+      
+      、<code>
+        disabled
+      </code>
+      
+      、<code>
+        labelId
+      </code>
+      
+      、<code>
+        check()
+      </code>
+    </td>
+    
+    <td>
+      文字旁的附加內容，見<a href="https://k90325248.github.io/components/choice-group#%E9%81%B8%E9%A0%85%E9%99%84%E5%8A%A0%E5%85%A7%E5%AE%B9">
+        選項附加內容
+      </a>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 可用 Nuxt UI `UCheckbox` 的所有 slot，合併規則見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)，另外提供 `wrapper`：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        wrapper
+      </code>
+    </td>
+    
+    <td>
+      外層，量測省略文字、掛 Tooltip 並定位載入圖示
+    </td>
+    
+    <td>
+      <code>
+        relative inline-flex w-fit max-w-full min-w-0 align-top
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      核取方塊外框（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        w-fit max-w-full min-w-0
+      </code>
+      
+      ，高度對齊同尺寸輸入框、垂直置中
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      文字（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        truncate
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        base
+      </code>
+    </td>
+    
+    <td>
+      勾選框（Nuxt UI）
+    </td>
+    
+    <td>
+      載入中為 <code>
+        opacity-0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+高度也可用 `class="[--form-checkbox-height:1.25rem]"` 調整。`class` 落在核取方塊外框，不影響外層。
+
+---
+
+- [UCheckbox](https://ui.nuxt.com/docs/components/checkbox)
+
+
+# RadioGroup／CheckboxGroup
+
+> 單選與複選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
+
+複選群組 `v-model: string[]`（必須提供）、單選群組 `v-model: string`；選項 `value` 不使用空字串。
+
+## 用法
+
+### 單選與複選
+
+`orientation` 預設 `auto`，依視窗寬度在 `breakpoint`（預設 `md`）前後切換垂直與水平排列。選項文字被省略時，滑鼠移入或鍵盤聚焦會顯示完整文字提示。
+
+<component-example name="choice-group-basic">
+
+
+
+</component-example>
+
+### 響應式分欄
+
+使用 `orientation="grid"`，透過 `ui.fieldset` 覆寫 Tailwind 分欄與斷點 class。預設一欄，每列至少維持同尺寸輸入框高度；保留多選陣列綁定、省略提示與骨架行為。
+
+<component-example name="choice-group-grid">
+
+
+
+</component-example>
+
+以上設定為預設一欄、md 起兩欄、xl 起四欄。`breakpoint` 只用於 `orientation="auto"` 的水平／垂直切換；grid 的斷點由 class 控制。`class` 設定外框，`ui.fieldset` 設定選項容器。請使用完整靜態 class，讓 Tailwind 能掃描產生樣式。
+
+### 自訂選項欄位
+
+後端選項欄位不是 `label`、`value` 時（例如 `{ Code, Name }`），以 `labelKey`、`valueKey` 指定，不必先轉換資料：
+
+<component-example name="choice-group-keys">
+
+
+
+</component-example>
+
+- **綁定值須為字串**：`v-model` 型別維持 `string`（複選為 `string[]`）。後端代碼若是數字，請先轉成字串，例如 `items.map((item) => ({ ...item, Code: String(item.Code) }))`。
+- **原始的 label、value 欄位會被取代**：元件把每個物件選項轉成「原始欄位 + 依 `labelKey`、`valueKey` 解析的 `label`、`value`」。原始資料本身就有 `label`、`value` 欄位時，會被解析出的值取代。
+- `#item-append` 的 `item` 是轉換後的物件，同時取得原始欄位（`item.Code`、`item.Name`）與 `item.label`、`item.value`。
+- 開發模式下，第一個物件選項缺少 `labelKey` 或 `valueKey` 指定的欄位時，主控台會警告一次（含元件與欄位名稱）；正式環境不檢查。`ShuoSelectMenu` 也有相同檢查。
+
+### 選項附加內容
+
+選項文字旁需要直接輸入時（例如「○ 定額轉存 <span>
+
+百元
+
+</span>
+
+」），使用 `#item-append` slot（`ShuoCheckbox` 為 `#append`）：
+
+<component-example name="choice-group-append">
+
+
+
+</component-example>
+
+附加輸入框需要驗證時，另包一層 `UFormField`，並以外層的 `error-pattern` 一併顯示錯誤：
+
+```vue
+<UFormField label="薪餉留薪金額" name="mode" :error-pattern="/^(mode|amount)$/">
+  <ShuoRadioGroup v-model="state.mode" :items="modeOptions">
+    <template #item-append="{ item, selected, labelId }">
+      <UFormField v-if="item.value === 'fixed'" name="amount" :ui="{ error: 'hidden' }">
+        <ShuoInputNumber
+          v-model="state.amount"
+          class="w-32"
+          unit="百元"
+          :disabled="!selected"
+          :aria-labelledby="labelId"
+        />
+      </UFormField>
+    </template>
+  </ShuoRadioGroup>
+</UFormField>
+```
+
+- 點擊附加內容（輸入框、單位或空白處）不會改變選取；要在聚焦時自動選取，請綁定 `@focus="select"`（或 `check`）。
+- `disabled` 已包含選項停用、元件停用、載入中與表單停用。
+- `labelId` 是選項文字的 id，建議設為附加輸入框的 `aria-labelledby`；選項按鈕本身只以選項文字命名，不會帶入輸入框的值。
+- 附加輸入框不屬於外層 `UFormField`，需要驗證時另包一層 `UFormField`，或以外層的 `error-pattern` 一併顯示錯誤。
+
+## Props
+
+兩個元件的 props 相同，以下為 `ShuoRadioGroup`；`ShuoCheckboxGroup` 另有選項欄位 `icon`（勾選時顯示的圖示）。
+
+<component-props name="ShuoRadioGroup">
+
+
+
+</component-props>
+
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。
+
+### 選項欄位
+
+選項（`RadioGroupOption`／`CheckboxGroupOption`）沿用 Nuxt UI 的選項欄位，`value` 限定字串。
+
+<table>
+<thead>
+  <tr>
+    <th>
+      欄位
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+      
+      （必填）
+    </td>
+    
+    <td>
+      顯示文字；欄位名稱可由 <code>
+        labelKey
+      </code>
+      
+       指定
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        value
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+      
+      （必填）
+    </td>
+    
+    <td>
+      綁定值；欄位名稱可由 <code>
+        valueKey
+      </code>
+      
+       指定
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        disabled
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        boolean
+      </code>
+    </td>
+    
+    <td>
+      停用此選項；已選取的停用選項維持選取，方向鍵與 Tab 會略過
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        icon
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      只有複選群組：勾選時顯示的圖示
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        class
+      </code>
+      
+      、<code>
+        ui
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+    
+    <td>
+      此選項的 class 與樣式覆寫，部位同 Nuxt UI；<code>
+        ui
+      </code>
+      
+       各部位只接受 class 字串或 <code>
+        (defaults) => string
+      </code>
+      
+       函式，不接受陣列與物件寫法
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      其他欄位
+    </td>
+    
+    <td>
+      —
+    </td>
+    
+    <td>
+      自訂欄位原樣保留，可在 <code>
+        #item-append
+      </code>
+      
+       的 <code>
+        item
+      </code>
+      
+       取得
+    </td>
+  </tr>
+</tbody>
+</table>
+
+<warning>
+
+不支援 `description`：說明會撐高選項，破壞與輸入框對齊的高度，型別會報錯，執行時也不顯示。
+
+</warning>
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      元件
+    </th>
+    
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      參數
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        ShuoRadioGroup
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        #item-append
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        item
+      </code>
+      
+      、<code>
+        selected
+      </code>
+      
+      、<code>
+        disabled
+      </code>
+      
+      、<code>
+        labelId
+      </code>
+      
+      、<code>
+        select()
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ShuoCheckboxGroup
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        #item-append
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        item
+      </code>
+      
+      、<code>
+        checked
+      </code>
+      
+      、<code>
+        disabled
+      </code>
+      
+      、<code>
+        labelId
+      </code>
+      
+      、<code>
+        check()
+      </code>
+      
+      （已勾選時不變）
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+內建樣式寫在 `ui`，可直接覆寫（見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)）：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        w-fit max-w-full min-w-0
+      </code>
+      
+      ；<code>
+        grid
+      </code>
+      
+       為 <code>
+        w-full
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        fieldset
+      </code>
+    </td>
+    
+    <td>
+      水平排列時高度對齊同尺寸輸入框、間距 <code>
+        gap-x-2
+      </code>
+      
+      ；<code>
+        grid
+      </code>
+      
+       為 <code>
+        grid grid-cols-1
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        item
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        min-w-0 w-fit max-w-full
+      </code>
+      
+      ；載入中加 <code>
+        relative
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        base
+      </code>
+    </td>
+    
+    <td>
+      載入中為 <code>
+        opacity-0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+例如 `:ui="{ fieldset: 'gap-x-8' }"` 加大水平排列的選項間距。函式寫法收到的預設值包含上述內建樣式，`grid` 模式取代 `fieldset` 時請保留 `grid`，例如 `(defaults) => defaults.replace('grid-cols-1', 'grid-cols-3')`。
+
+---
+
+- [URadioGroup](https://ui.nuxt.com/docs/components/radio-group)
+- [UCheckboxGroup](https://ui.nuxt.com/docs/components/checkbox-group)
+
+
+# 共用參數
+
+> 表單輸入元件共同支援的參數、骨架行為與空值約定。
+
+## 共用參數
+
+表單輸入元件（`ShuoInputText`、`ShuoInputNumber`、`ShuoSelectMenu`、`ShuoDatepicker`、`ShuoCheckbox`、`ShuoCheckboxGroup`、`ShuoRadioGroup`、`ShuoTextarea`、`ShuoFile`、`ShuoMonths`、`ShuoPhone`）都支援下列參數，各元件頁面不再重複列出：
+
+<field-group>
+<field name="size" type="'xs' | 'sm' | 'md' | 'lg' | 'xl'" default="lg">
+
+元件尺寸，同尺寸元件高度一致。未傳入時依序沿用 `UFormField` 的 `size`、全站設定，最後為 `lg`，見[尺寸與 UFormField](https://k90325248.github.io/guides/component-defaults#%E5%B0%BA%E5%AF%B8%E8%88%87-uformfield)。
+
+</field>
+
+<field name="disabled" type="boolean">
+
+停用。未設定時沿用 `UForm` 的停用狀態。
+
+</field>
+
+<field name="loading" type="boolean" default="false">
+
+顯示轉圈圖示並停用操作。
+
+</field>
+
+<field name="skeleton" type="boolean" default="false">
+
+以骨架覆蓋並暫停互動，保留原排版；切回後保留綁定值，不影響表單驗證。
+
+</field>
+
+<field name="id" type="string">
+
+輸入框識別碼，未設定時沿用 `UFormField`。`ShuoMonths` 指向年數框、`ShuoPhone` 指向區碼框；`ShuoFile` 只沿用 `UFormField`。
+
+</field>
+
+<field name="name" type="string">
+
+欄位名稱，未設定時沿用 `UFormField`。
+
+</field>
+</field-group>
+
+除 `ShuoDatepicker`（改用 `state`，見[日期選擇器](https://k90325248.github.io/components/datepicker)）與 `ShuoFile` 外，也支援 Nuxt UI 的 `color`（元件顏色）與 `highlight`（強調外框）；`ShuoFile` 的顏色與錯誤外框沿用 `UFormField`。
+
+建議外包 `UFormField`，`name` 對應 schema 欄位，元件會接入 `UFormField` 的 id、尺寸、停用與錯誤狀態，並在 input、blur、change 時觸發驗證：
+
+```vue
+<UFormField label="姓名" name="name" required>
+  <ShuoInputText v-model="state.name" />
+</UFormField>
+```
+
+## 沿用 Nuxt UI
+
+包裝 Nuxt UI 元件的 Shuo 元件，props 型別繼承底層元件，未自行宣告的 Nuxt UI props 也有自動補全與型別檢查；slots 轉給底層元件，並對外提供與底層相同的 ref。
+
+<table>
+<thead>
+  <tr>
+    <th>
+      元件
+    </th>
+    
+    <th>
+      繼承的 props
+    </th>
+    
+    <th>
+      可用的 slots
+    </th>
+    
+    <th>
+      對外提供的 ref
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/input-text">
+        <code>
+          ShuoInputText
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        UInput
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        leading
+      </code>
+      
+      、<code>
+        default
+      </code>
+      
+      、<code>
+        trailing
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        inputRef
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/input-number">
+        <code>
+          ShuoInputNumber
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        UInput
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        leading
+      </code>
+      
+      、<code>
+        default
+      </code>
+      
+      、<code>
+        trailing
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        inputRef
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/textarea">
+        <code>
+          ShuoTextarea
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        UTextarea
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        leading
+      </code>
+      
+      、<code>
+        default
+      </code>
+      
+      、<code>
+        trailing
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        textareaRef
+      </code>
+      
+      、<code>
+        autoResize
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/file">
+        <code>
+          ShuoFile
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        UInput
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        leading
+      </code>
+      
+      、<code>
+        default
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        inputRef
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/select-menu">
+        <code>
+          ShuoSelectMenu
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        USelectMenu
+      </code>
+    </td>
+    
+    <td>
+      全部
+    </td>
+    
+    <td>
+      <code>
+        triggerRef
+      </code>
+      
+      、<code>
+        viewportRef
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+- 繼承的 props 只用於型別推導，執行時經 `$attrs` 傳給底層元件。
+- 元件自行處理的 props 不列入繼承（例如 `modelValue`、載入圖示 `loadingIcon`）。這些名稱照樣能寫，Vue 會當成一般 HTML attribute，但不會出現在自動補全。
+- `@blur`、`@change` 等事件照常轉給底層元件，事件參數型別尚未補上。
+
+## 骨架
+
+骨架保留原控制項的排版空間，沿用 `size`、寬度、textarea 行數及選項群組排列，不另設固定高度。啟用期間不可點擊或鍵盤操作，Tooltip 與已開啟的選單會關閉。
+
+```vue
+<ShuoInputText v-model="state.text" :skeleton="loading" />
+<ShuoTextarea v-model="state.description" :rows="5" :skeleton="loading" />
+<ShuoFile v-model="file" :skeleton="loading" />
+```
+
+## 空值約定
+
+父層綁定 `null`／`undefined` 時，下列元件會回寫約定空值；型別錯誤等非預期值會清空為約定空值，並以 `console.warn`（`[Shuo元件名] … 已清空`）留下紀錄。掛載時與之後由父層回填皆適用。
+
+<table>
+<thead>
+  <tr>
+    <th>
+      元件
+    </th>
+    
+    <th>
+      空值
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        ShuoInputText
+      </code>
+      
+      、<code>
+        ShuoTextarea
+      </code>
+      
+      、<code>
+        ShuoRadioGroup
+      </code>
+      
+      、<code>
+        ShuoPhone
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ''
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ShuoSelectMenu
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        emptyValue
+      </code>
+      
+      （預設 <code>
+        ''
+      </code>
+      
+      ）；多選 <code>
+        []
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ShuoInputNumber
+      </code>
+      
+      、<code>
+        ShuoMonths
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        null
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ShuoDatepicker
+      </code>
+    </td>
+    
+    <td>
+      單選 <code>
+        ''
+      </code>
+      
+      、範圍 <code>
+        []
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+下列元件不回寫父層的值：
+
+- `ShuoCheckboxGroup`：`null` 或非陣列值顯示為全部未勾選，勾選後回寫完整陣列；清空為 `[]`。
+- `ShuoCheckbox`：綁定值不等於 `trueValue` 時顯示未勾選。
+- `ShuoFile`：清除後為 `null`。
+
+
+# Datepicker
+
+> 日期選擇器，預設民國年，支援五種精度與範圍選擇。
+
+預設顯示民國年、選擇年月日、尺寸為 `lg`。綁定值永遠使用西元字串。
+
+## 用法
+
+### 五種格式
+
+`mode` 決定選擇精度，綁定值一律是西元字串。
+
+<table>
+<thead>
+  <tr>
+    <th>
+      mode
+    </th>
+    
+    <th>
+      民國顯示
+    </th>
+    
+    <th>
+      西元顯示
+    </th>
+    
+    <th>
+      v-model
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        year
+      </code>
+    </td>
+    
+    <td>
+      115 年
+    </td>
+    
+    <td>
+      2026 年
+    </td>
+    
+    <td>
+      <code>
+        "2026"
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        month
+      </code>
+    </td>
+    
+    <td>
+      115 年 09 月
+    </td>
+    
+    <td>
+      2026 年 09 月
+    </td>
+    
+    <td>
+      <code>
+        "2026/09"
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        date
+      </code>
+    </td>
+    
+    <td>
+      115/09/20
+    </td>
+    
+    <td>
+      2026/09/20
+    </td>
+    
+    <td>
+      <code>
+        "2026/09/20"
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        datetime
+      </code>
+    </td>
+    
+    <td>
+      115/09/20 14:02
+    </td>
+    
+    <td>
+      2026/09/20 14:02
+    </td>
+    
+    <td>
+      <code>
+        "2026/09/20 14:02"
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        datetime-second
+      </code>
+    </td>
+    
+    <td>
+      115/09/20 14:02:09
+    </td>
+    
+    <td>
+      2026/09/20 14:02:09
+    </td>
+    
+    <td>
+      <code>
+        "2026/09/20 14:02:09"
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+<component-example name="datepicker-modes">
+
+
+
+</component-example>
+
+- 民國年為西元年減 1911；1911 年顯示為民國 0 年。年份按鈕與年份清單也使用此規則。
+- 年模式開啟時，已選年份會捲至清單中央；尚未選取時以今年置中，綁定值仍保持 `''`。接近年份範圍兩端時，以可捲動範圍為限。
+- 民國模式不顯示、也不能選取 1911 年以前的日期；西元模式沿用一般年份範圍。
+- 日期時間是本地日曆時間，不做 UTC 或時區轉換。
+- 綁定值預設以斜線分隔；API 使用 `YYYY-MM-DD` 等連字號格式時，設定 `separator="-"` 即可直接綁定。
+
+### 民國年與分隔符號
+
+`roc` 只切換顯示，不改寫綁定值；`separator` 只影響綁定值，顯示仍為斜線。
+
+<component-example name="datepicker-roc">
+
+
+
+</component-example>
+
+<warning>
+
+父層傳入（掛載時或之後回填）不符合目前 `mode`、`separator` 的格式、型別錯誤、民國下限之前的日期，或範圍起日晚於迄日時，元件會清空綁定值，並以 `console.warn` 留下 `[ShuoDatepicker] modelValue 格式不符，已清空：` 或 `起迄相反` 紀錄。切換 `mode`、`roc` 或 `separator` 後，若既有值不符合新設定，同樣會清空並警告；請同時回填符合新設定的值。
+
+</warning>
+
+同一輪清空只送出一次 `update:modelValue`（或 `update:start`、`update:end`）事件；起迄相反時不會先同步出排序後的暫時值。
+
+### 範圍綁定
+
+主陣列與獨立起迄同步，方便對接不同 API。只會提交完整起迄陣列或 `[]`，不回傳半個範圍。
+
+<component-example name="datepicker-range">
+
+
+
+</component-example>
+
+- 初始化同時提供兩種綁定時，以主 `v-model` 為準；之後可由父層更新主值或起迄。
+- 清空時主值為 `[]`，起迄為 `''`。父層綁定 `null` 或 `undefined` 時，元件回寫為單選 `''`、範圍 `[]`、起迄 `''`。
+- 只綁起迄時允許分次回填，單邊格式不符只清空該端，兩端皆有值但起日晚於迄日則兩端都清空。
+- 不需要主陣列時，可以只寫 `<ShuoDatepicker v-model:start="start" v-model:end="end" range />`。迄日須配合起日使用，元件不將單獨迄日視為完整範圍。
+
+## 選取流程
+
+- **年、年月、日期**：選取即套用並關閉選單，不再顯示確認／取消按鈕。
+- **範圍**：僅選起日時保留草稿，父層三個綁定值維持原值；起迄皆選完才一次提交並關閉。中途點外面、按 Esc 或關閉選單，捨棄草稿並恢復上次完整範圍；原本為空值則保持 `[]`。
+- **日期時分／秒**：選取日期後，立即帶入完整日期時間並切到時間面板；時間沿用既有值，空值以套件初始化的本地目前時間為準。調整時間即更新，點外面關閉即可保留。
+- **日期時間範圍**：先選完兩個日期，再切換到起迄時間面板，兩端的時間都可即時修改。
+- 單選切換為範圍時清空並等待完整選擇；關閉範圍時保留起日作為單選值，並清空 `start`、`end`。
+
+## 鍵盤操作
+
+開啟選單時焦點移到已選日期（或年份、月份），未選取時移到第一個可選項目。方向鍵移動焦點，Enter 選取，Esc 關閉；選單關閉時若焦點仍在選單內，回到輸入框。選單 teleport 至 body，無法以 Tab 進入。
+
+## 日曆顯示
+
+日曆以週日為每週第一天，固定顯示六週；前後月份的日期以較淡文字呈現。換月使用透明度過場，避免水平位移產生捲軸。
+
+## v-model
+
+<table>
+<thead>
+  <tr>
+    <th>
+      v-model
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        v-model
+      </code>
+    </td>
+    
+    <td>
+      單選 <code>
+        string
+      </code>
+      
+      ；範圍 <code>
+        [string, string] | []
+      </code>
+    </td>
+    
+    <td>
+      永遠使用西元字串，範圍以起迄陣列表示；單選空值 <code>
+        ''
+      </code>
+      
+      ，範圍空值 <code>
+        []
+      </code>
+      
+      。
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        v-model:start
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      範圍起日，可獨立回填，非範圍時為 <code>
+        ''
+      </code>
+      
+      。
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        v-model:end
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      範圍迄日，可獨立回填，尚無完整範圍或非範圍時為 <code>
+        ''
+      </code>
+      
+      。
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Props
+
+<component-props :exclude="["start", "end"]" name="ShuoDatepicker">
+
+
+
+</component-props>
+
+<note>
+
+元件只開放上表的參數，不繼承 `@vuepic/vue-datepicker` 的全部 props。`class`、`style` 等 HTML attributes 套用在外層容器，不會透傳到日期套件。外層內建 `w-full min-w-0`，`class` 與其合併且衝突時優先，可覆寫寬度與最小寬度（例如 `class="w-40"`、`class="min-w-20"`）；`auto-apply`、`flow`、`config`、`formats`、`model-type` 等由元件內部統一管理。
+
+</note>
+
+## 與 UForm 搭配
+
+日期選擇器透過 `useFormField` 接入欄位 id、name、size、停用與錯誤狀態。選取或清除後觸發 change，未完成的範圍不提交、不觸發 change。必填驗證使用 `requiredText('欄位名稱')`（範圍可用 `requiredArray`），見[表單驗證](https://k90325248.github.io/guides/validation)。
+
+---
+
+- [@vuepic/vue-datepicker](https://vue3datepicker.com)
+
+
+# File
+
+> 單檔選擇與既有附件下載，選檔不會自動上傳。
+
+`v-model: File | null`，必須提供；選檔不會自動上傳。
+
+## 用法
+
+### 選擇檔案
+
+綁定原始 `File`，選檔不會自動上傳；清除後為 `null`。`accept` 只篩選選檔對話框，不阻擋其他類型，類型限制請由表單規則驗證。
+
+<component-example name="file-basic">
+
+
+
+</component-example>
+
+### 既有附件
+
+沒有本機 `File` 時顯示 `file-name`；按下載以 Blob 取得 `file-url` 的內容，跨來源網址須允許 CORS，下載失敗會顯示 Toast（需 `UApp`）。停用時隱藏移除按鈕，但已有附件仍可下載；載入中則一律不可操作。
+
+<component-example name="file-existing">
+
+
+
+</component-example>
+
+## Props
+
+<component-props name="ShuoFile">
+
+
+
+</component-props>
+
+`size`、`disabled`、`loading`、`skeleton` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。尾端固定為清除與下載按鈕，`trailing`、`trailingIcon` 不開放；識別碼與錯誤外觀取自 `UFormField`。
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        leading
+      </code>
+    </td>
+    
+    <td>
+      前置內容；未傳時保留 <code>
+        icon
+      </code>
+      
+      、<code>
+        leadingIcon
+      </code>
+      
+      、<code>
+        avatar
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        default
+      </code>
+    </td>
+    
+    <td>
+      輸入框內的額外內容
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Expose
+
+<table>
+<thead>
+  <tr>
+    <th>
+      名稱
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        inputRef
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        HTMLInputElement | null
+      </code>
+    </td>
+    
+    <td>
+      顯示檔名的原生 input
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 可用 Nuxt UI `UInput` 的所有 slot，另外提供 `wrapper`，合併規則見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        wrapper
+      </code>
+    </td>
+    
+    <td>
+      外層，量測省略檔名並掛 Tooltip
+    </td>
+    
+    <td>
+      <code>
+        flex w-full min-w-0 cursor-default
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      輸入框外框（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        w-full min-w-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        base
+      </code>
+    </td>
+    
+    <td>
+      檔名欄位（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        truncate
+      </code>
+      
+      、游標與滑過底色；右內距依尾端按鈕數為 <code>
+        pe-9
+      </code>
+      
+       或 <code>
+        pe-16
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        trailing
+      </code>
+    </td>
+    
+    <td>
+      清除與下載按鈕的外層（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        pointer-events-auto cursor-default gap-1 pe-2
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+要縮短寬度時設定 `ui.wrapper`（例如 `w-60`）；`class` 落在輸入框外框。
+
+---
+
+- [UInput](https://ui.nuxt.com/docs/components/input)
+
+
+# InfoTooltip
+
+> 資訊圖示加提示，滑鼠移入或鍵盤聚焦即顯示。
+
+滑鼠移入或鍵盤聚焦即顯示提示，沒有延遲。
+
+## 用法
+
+<component-example name="info-tooltip-basic">
+
+
+
+</component-example>
+
+`text` 支援換行字元；需要粗體等格式時改用 `#content` slot。`class` 落在觸發按鈕，例如 `class="text-warning"` 可改變圖示顏色。
+
+## Props
+
+<component-props name="ShuoInfoTooltip">
+
+
+
+</component-props>
+
+`label` 的預設值可由文案 `infoTooltip.label` 覆寫。
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        content
+      </code>
+    </td>
+    
+    <td>
+      自訂提示內容；<code>
+        text
+      </code>
+      
+       為空且沒有此 slot 時不顯示提示
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 合併規則見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        trigger
+      </code>
+    </td>
+    
+    <td>
+      觸發按鈕
+    </td>
+    
+    <td>
+      <code>
+        text-primary inline-flex cursor-help rounded-full
+      </code>
+      
+      、focus 外框
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        icon
+      </code>
+    </td>
+    
+    <td>
+      按鈕內的圖示
+    </td>
+    
+    <td>
+      <code>
+        size-4 shrink-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        text
+      </code>
+    </td>
+    
+    <td>
+      提示內容外層
+    </td>
+    
+    <td>
+      <code>
+        min-w-0 text-left wrap-break-word whitespace-pre-line
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        tooltip
+      </code>
+    </td>
+    
+    <td>
+      提示框，值同 Nuxt UI <code>
+        UTooltip
+      </code>
+      
+       的 <code>
+        ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        content
+      </code>
+      
+       為 <code>
+        h-auto max-w-xs py-2
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+`class` 落在觸發按鈕，與 `ui.trigger` 一起合併，例如 `class="text-warning"` 可改變圖示顏色。
+
+---
+
+- [UTooltip](https://ui.nuxt.com/docs/components/tooltip)
+
+
+# InputNumber
+
+> 數字輸入，離開輸入框後顯示千分位，可指定小數位數與單位。
+
+`v-model: number | null`。
+
+## 用法
+
+### 單位、小數與千分位
+
+輸入中保留正負號、小數點與尾端零，尚未完成的輸入（例如只有 `-`）綁定為 `null`；離開輸入框時依 `decimal` 捨入並補零，並顯示千分位。
+
+<component-example name="input-number-basic">
+
+
+
+</component-example>
+
+### 數字置中
+
+`ui.base` 內建 `text-right`，傳入 `text-center` 即可置中。有單位或載入中時，右內距依尾端實際寬度保留，數字不會與單位重疊。
+
+<component-example name="input-number-center">
+
+
+
+</component-example>
+
+<tip>
+
+元件不提供 `min`、`max`。底層是文字型 input，原生的 `min`、`max`、`step` 不會生效，數值範圍請用[驗證規則](https://k90325248.github.io/guides/validation)，例如 `v.pipe(v.number(), v.minValue(1), v.maxValue(100))`。
+
+</tip>
+
+## Props
+
+<component-props name="ShuoInputNumber">
+
+
+
+</component-props>
+
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        leading
+      </code>
+    </td>
+    
+    <td>
+      前置內容；未傳時保留 <code>
+        icon
+      </code>
+      
+      、<code>
+        leadingIcon
+      </code>
+      
+      、<code>
+        avatar
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        default
+      </code>
+    </td>
+    
+    <td>
+      輸入框內的額外內容
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        trailing
+      </code>
+    </td>
+    
+    <td>
+      尾端內容，依序並排「單位、<code>
+        trailing
+      </code>
+      
+       slot、載入圖示」，右內距依實際寬度保留
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Expose
+
+<table>
+<thead>
+  <tr>
+    <th>
+      名稱
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        inputRef
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        HTMLInputElement | null
+      </code>
+    </td>
+    
+    <td>
+      原生 input，可直接 <code>
+        focus()
+      </code>
+      
+      、<code>
+        select()
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 可用 Nuxt UI `UInput` 的所有 slot（`root`、`base`、`trailing` 等），另外提供 `suffix`、`unit`：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      外框（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        w-full min-w-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        base
+      </code>
+    </td>
+    
+    <td>
+      原生 input（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        text-right
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        suffix
+      </code>
+    </td>
+    
+    <td>
+      尾端外層，包住單位與載入圖示
+    </td>
+    
+    <td>
+      <code>
+        flex items-center gap-1.5
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        unit
+      </code>
+    </td>
+    
+    <td>
+      單位文字
+    </td>
+    
+    <td>
+      <code>
+        text-dimmed whitespace-nowrap
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+數字置中：
+
+```vue
+<ShuoInputNumber v-model="count" class="w-14" :ui="{ base: 'text-center' }" />
+```
+
+有單位或載入中時，元件依尾端實際寬度設定輸入框右內距（inline style），`ui`、`class`、`style` 都不會蓋掉，置中時數字在扣除單位後的空間內置中，不會與單位重疊。
+
+---
+
+- [UInput](https://ui.nuxt.com/docs/components/input)
+
+
+# InputText
+
+> 單行文字輸入，可遮蔽全部或最後幾碼。
+
+`v-model: string`。
+
+## 用法
+
+### 遮蔽
+
+`mask` 為 `true` 時全部遮蔽，正整數遮蔽最後指定碼數。右側眼睛按鈕切換明碼與遮蔽，`v-model` 始終保留原始文字。
+
+<component-example name="input-text-mask">
+
+
+
+</component-example>
+
+- `12345678` 搭配 `:mask="4"` 顯示 `1234••••`；不足四碼時全部遮蔽。`false`、`0`、負數與非有限數字不啟用，小數向下取整。
+- 遮蔽狀態禁止複製及剪下，顯示明碼後可正常複製。
+- 動態變更 `mask` 或 `hideMaskToggle` 會重設為遮蔽狀態。
+- 以 `ui.base` 改變文字對齊時，局部遮蔽的顯示層跟著對齊。
+
+### 沿用 Nuxt UI
+
+`UInput` 的 props 與 slots 都能直接使用，例如 `variant`、`icon` 與 `#leading`。
+
+<component-example name="input-text-nuxt-ui">
+
+
+
+</component-example>
+
+### 載入中、停用與骨架
+
+停用時仍可切換顯示；骨架期間不可操作。
+
+<component-example name="input-text-states">
+
+
+
+</component-example>
+
+### 操作原生 input
+
+透過 template ref 的 `inputRef` 取得原生 input。
+
+<component-example name="input-text-expose">
+
+
+
+</component-example>
+
+## Props
+
+<component-props name="ShuoInputText">
+
+
+
+</component-props>
+
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`type` 由 `mask` 決定，不開放傳入。
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        leading
+      </code>
+    </td>
+    
+    <td>
+      前置內容；未傳時保留 <code>
+        icon
+      </code>
+      
+      、<code>
+        leadingIcon
+      </code>
+      
+      、<code>
+        avatar
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        default
+      </code>
+    </td>
+    
+    <td>
+      輸入框內的額外內容
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        trailing
+      </code>
+    </td>
+    
+    <td>
+      尾端內容；優先順序為「載入圖示 > 遮罩切換按鈕 > <code>
+        trailing
+      </code>
+      
+       slot」
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Expose
+
+<table>
+<thead>
+  <tr>
+    <th>
+      名稱
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        inputRef
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        HTMLInputElement | null
+      </code>
+    </td>
+    
+    <td>
+      原生 input，可直接 <code>
+        focus()
+      </code>
+      
+      、<code>
+        select()
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 同 Nuxt UI `UInput` 的 `ui`，與內建樣式合併，見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)。`ui.root` 內建 `w-full min-w-0`；有遮蔽時 `ui.trailing` 加上 `pointer-events-auto` 讓眼睛按鈕可點擊。`class` 在 `ui.root` 之後合併，可覆寫寬度與最小寬度（例如 `class="min-w-20"`）。
+
+---
+
+- [UInput](https://ui.nuxt.com/docs/components/input)
+
+
+# ListCard
+
+> 查詢結果清單卡片，包含標題列、表格與後端分頁。
+
+查詢結果的清單卡片：標題列、[ShuoTable](https://k90325248.github.io/components/table) 資料區與分頁，分頁由後端處理。泛型 `T` 為資料列型別。骨架、空資料、查詢中文字與高度過渡由 `ShuoTable` 處理，不需要卡片與分頁時直接使用 `ShuoTable`。
+
+## 用法
+
+分頁由後端處理：元件發出 `page-change`，頁面查詢該頁成功後再更新 `page` 與 `data`。查詢中、頁碼與目前相同或超出範圍時不發出。`interactionDisabled` 在查詢中為 `true`，可用來停用清單內的操作。
+
+<component-example name="list-card-basic">
+
+
+
+</component-example>
+
+`PageRequest` 型別可由 `#shuo-ui/types/pagination` 匯入，見[自動匯入與型別](https://k90325248.github.io/guides/auto-imports#%E5%9E%8B%E5%88%A5)。標題「查詢結果」與底部統計可由文案 `listCard.title`、`listCard.summary` 全域覆寫；「查詢中…」「查無資料」屬於 `table` 區塊，見[文案覆寫](https://k90325248.github.io/guides/messages)。
+
+## Props
+
+<component-props name="ShuoListCard">
+
+
+
+</component-props>
+
+## Events
+
+<table>
+<thead>
+  <tr>
+    <th>
+      事件
+    </th>
+    
+    <th>
+      參數
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        page-change
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        { PageNumber: number; PageSize: number }
+      </code>
+    </td>
+    
+    <td>
+      請由使用頁面查詢該頁，成功後再更新 <code>
+        page
+      </code>
+      
+       與 <code>
+        data
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      參數
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        title
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+    
+    <td>
+      標題文字
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        header-right
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        interactionDisabled
+      </code>
+    </td>
+    
+    <td>
+      標題右側操作
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        <欄位>-cell
+      </code>
+      
+       等 <code>
+        UTable
+      </code>
+      
+       slot
+    </td>
+    
+    <td>
+      原參數＋<code>
+        interactionDisabled
+      </code>
+    </td>
+    
+    <td>
+      自訂儲存格與表頭
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        body-top
+      </code>
+      
+      、<code>
+        footer
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        interactionDisabled
+      </code>
+    </td>
+    
+    <td>
+      表格上方列與卡片底部額外內容；分頁與統計皆關閉時 footer 只顯示插槽內容
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        loading
+      </code>
+      
+      、<code>
+        empty
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+    
+    <td>
+      查詢中與空資料的內容
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Expose
+
+<table>
+<thead>
+  <tr>
+    <th>
+      名稱
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        getPagination(page?)
+      </code>
+    </td>
+    
+    <td>
+      回傳 <code>
+        { PageNumber, PageSize }
+      </code>
+      
+      ，供初次查詢或重新查詢使用
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 目前開放標題列各部位，內建樣式與 `ShuoQueryCard` 相同，合併規則見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)；表格樣式請用 `tableProps.ui`：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        bar
+      </code>
+    </td>
+    
+    <td>
+      標題列
+    </td>
+    
+    <td>
+      <code>
+        flex min-h-8 flex-wrap items-center gap-2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        icon
+      </code>
+    </td>
+    
+    <td>
+      標題圖示
+    </td>
+    
+    <td>
+      <code>
+        text-primary size-5 shrink-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        title
+      </code>
+    </td>
+    
+    <td>
+      標題文字
+    </td>
+    
+    <td>
+      <code>
+        text-highlighted shrink-0 text-base font-semibold whitespace-nowrap
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        headerRight
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        header-right
+      </code>
+      
+       的外層
+    </td>
+    
+    <td>
+      <code>
+        ml-auto flex min-w-0 items-center gap-3
+      </code>
+      
+      ，只在有傳入 slot 時產生
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [UTable](https://ui.nuxt.com/docs/components/table)
+
+
+# Months
+
+> 年月數換算輸入，可同時綁定總月數、年數與月數。
+
+顯示「年輸入框 年 月輸入框 月」。
+
+## 用法
+
+<component-example name="months-basic">
+
+
+
+</component-example>
+
+- 只接受非負整數；焦點離開年月整組後才進位（在年與月之間移動焦點不提交，可同時清空兩欄）：0 年 13 月變成 1 年 1 月，總月數 13。
+- 三個綁定可單獨或同時使用。父層同時回填總月數與年月且內容衝突時，總月數優先。
+- 單邊空白視為 0，兩邊皆空則三個綁定皆為 `null`。父層回填字串、負數、小數、`NaN` 或超出安全整數的值時視為空值。
+- 容器寬度不足以顯示年月兩欄時，自動改為單一「總月數」輸入框。
+
+## v-model
+
+<table>
+<thead>
+  <tr>
+    <th>
+      v-model
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        v-model
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        number | null
+      </code>
+    </td>
+    
+    <td>
+      總月數
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        v-model:year
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        number | null
+      </code>
+    </td>
+    
+    <td>
+      年數
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        v-model:month
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        number | null
+      </code>
+    </td>
+    
+    <td>
+      月數
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Props
+
+<component-props name="ShuoMonths">
+
+
+
+</component-props>
+
+`size`、`disabled`、`loading`、`skeleton`、`name` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)；`id` 指向年數框。
+
+## 樣式
+
+`ui` 合併規則見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)；`year`、`month`、`total` 的值同 Nuxt UI `UInput` 的 `ui`：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      外層
+    </td>
+    
+    <td>
+      <code>
+        inline-flex items-center gap-2
+      </code>
+      
+      ，寬度為完整年月所需寬度，字級依尺寸
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        year
+      </code>
+      
+      、<code>
+        month
+      </code>
+    </td>
+    
+    <td>
+      年數、月數輸入框
+    </td>
+    
+    <td>
+      <code>
+        root
+      </code>
+      
+       容納兩位數的寬度；<code>
+        base
+      </code>
+      
+       為 <code>
+        text-center tabular-nums
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        total
+      </code>
+    </td>
+    
+    <td>
+      窄容器時的總月數輸入框
+    </td>
+    
+    <td>
+      <code>
+        root
+      </code>
+      
+       容納四位數的寬度；<code>
+        base
+      </code>
+      
+       為 <code>
+        text-center tabular-nums
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        unit
+      </code>
+    </td>
+    
+    <td>
+      「年」「月」文字
+    </td>
+    
+    <td>
+      <code>
+        w-[1em] flex-none whitespace-nowrap
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+```vue
+<ShuoMonths v-model="totalMonths" class="w-80" :ui="{ unit: 'text-muted', year: { base: 'text-left' } }" />
+```
+
+外層的 `class` 與 `ui.root` 一起合併，可覆寫寬度；寬度小於完整年月所需時會改為總月數輸入。
+
+
+# Phone
+
+> 市話號碼，兩個輸入框分別輸入區碼與電話。
+
+## 用法
+
+<component-example name="phone-basic">
+
+
+
+</component-example>
+
+- 三者皆保留字串與開頭的 `0`，例如區碼 `02`、電話 `00123456`，完整號碼為 `0200123456`。
+- 使用者輸入或貼上時只保留半形數字；父層回填則原樣顯示，使用者編輯該欄後才過濾。
+- 只回填完整號碼時，依已知且符合前綴的區碼拆分；沒有可用區碼則全文放入電話欄並清空區碼，不猜測長度。
+- 區碼或電話型別不符時只清空該欄並重新合併完整號碼；完整號碼型別不符時兩欄一併清空。
+
+<note>
+
+不內建電話長度或區碼合法性規則，請由表單 schema 定義。
+
+</note>
+
+## v-model
+
+<table>
+<thead>
+  <tr>
+    <th>
+      v-model
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        v-model
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      完整號碼（區碼加號碼，無分隔符號）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        v-model:area-code
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      區碼
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        v-model:number
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      電話號碼
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Props
+
+<component-props name="ShuoPhone">
+
+
+
+</component-props>
+
+`size`、`disabled`、`loading`、`skeleton`、`name` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)；`id` 指向區碼框。
+
+## 樣式
+
+`ui` 合併規則見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)；`areaCode`、`number` 的值同 Nuxt UI `UInput` 的 `ui`：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      外層
+    </td>
+    
+    <td>
+      <code>
+        flex w-full min-w-0 items-center gap-2
+      </code>
+      
+      ，字級依尺寸
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        areaCode
+      </code>
+    </td>
+    
+    <td>
+      區碼輸入框
+    </td>
+    
+    <td>
+      <code>
+        root
+      </code>
+      
+       容納三位數、最多佔一半寬度；<code>
+        base
+      </code>
+      
+       為 <code>
+        text-center tabular-nums
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        number
+      </code>
+    </td>
+    
+    <td>
+      電話號碼輸入框
+    </td>
+    
+    <td>
+      <code>
+        root
+      </code>
+      
+       為 <code>
+        min-w-0 flex-1
+      </code>
+      
+      ；<code>
+        base
+      </code>
+      
+       為 <code>
+        tabular-nums
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+```vue
+<ShuoPhone v-model="fullPhone" class="w-72" :ui="{ areaCode: { root: 'w-20' } }" />
+```
+
+外層的 `class` 與 `ui.root` 一起合併，可覆寫寬度。
+
+
+# QueryCard
+
+> 可收合的查詢條件卡片，內含 UForm，欄位以響應式格線排列。
+
+欄位以響應式格線排列（一欄、md 兩欄、xl 四欄，可由 `ui.grid` 調整），在欄位內按 Enter 即可送出。泛型 `S` 為 schema。
+
+## 用法
+
+在欄位內按 Enter 即可送出；驗證失敗時，收合狀態下會自動展開以顯示錯誤訊息。透過 template ref 可呼叫 `submit()`、`clear()`，例如由卡片外的按鈕觸發查詢；停用時兩者皆不動作。
+
+<component-example name="query-card-basic">
+
+
+
+</component-example>
+
+### 欄數
+
+改欄數時要寫齊各斷點：tailwind-merge 只會取代同一斷點的 class，只傳 `md:grid-cols-3` 時，內建的 `xl:grid-cols-4` 仍會生效。
+
+```vue
+<!-- md 起三欄 -->
+<ShuoQueryCard :state="query" :ui="{ grid: 'md:grid-cols-3 xl:grid-cols-3' }">...</ShuoQueryCard>
+
+<!-- 函式寫法：移除內建斷點後自訂 -->
+<ShuoQueryCard
+  :state="query"
+  :ui="{ grid: (defaults) => defaults.replace(/(md|xl):grid-cols-\d/g, '') + ' lg:grid-cols-3' }"
+>
+  ...
+</ShuoQueryCard>
+```
+
+全站統一欄數見[查詢欄位分欄](https://k90325248.github.io/guides/component-defaults#%E6%9F%A5%E8%A9%A2%E6%AC%84%E4%BD%8D%E5%88%86%E6%AC%84)。
+
+### 長標題
+
+標題預設不換行、不省略；`header-right` 放不下時整塊換到下一行並靠右，不會擠壓標題與收合按鈕。`ShuoListCard` 的標題列使用相同規則。要讓長標題在圖示旁換行，覆寫標題列不換行並允許標題收縮：
+
+```vue
+<ShuoQueryCard :state="query" :ui="{ bar: 'flex-nowrap', title: 'min-w-0 shrink whitespace-normal' }">
+  ...
+</ShuoQueryCard>
+```
+
+## Props
+
+<component-props name="ShuoQueryCard">
+
+
+
+</component-props>
+
+`v-model:open`（`boolean`，預設 `true`）控制展開狀態。
+
+## Events
+
+<table>
+<thead>
+  <tr>
+    <th>
+      事件
+    </th>
+    
+    <th>
+      參數
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        submit
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        FormSubmitEvent
+      </code>
+    </td>
+    
+    <td>
+      驗證通過後送出，以 <code>
+        event.data
+      </code>
+      
+       取得資料
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        clear
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+    
+    <td>
+      通知使用頁面重設資料，之後元件清除驗證錯誤
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        error
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        FormErrorEvent
+      </code>
+    </td>
+    
+    <td>
+      驗證失敗；收合狀態下會自動展開以顯示錯誤訊息
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      參數
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        default
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        state
+      </code>
+      
+      、<code>
+        errors
+      </code>
+      
+      、<code>
+        loading
+      </code>
+    </td>
+    
+    <td>
+      欄位內容
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        header-right
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+    
+    <td>
+      標題右側
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        actions
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        submit
+      </code>
+      
+      、<code>
+        clear
+      </code>
+      
+      、<code>
+        loading
+      </code>
+    </td>
+    
+    <td>
+      底部操作按鈕
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Expose
+
+<table>
+<thead>
+  <tr>
+    <th>
+      名稱
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        submit()
+      </code>
+    </td>
+    
+    <td>
+      驗證並送出，停用時不動作
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        clear()
+      </code>
+    </td>
+    
+    <td>
+      觸發 <code>
+        clear
+      </code>
+      
+      ，停用時不動作
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 可用 Nuxt UI `UCard` 的 slot（`root`、`header`、`body`），另外提供卡片內各部位，合併規則見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      卡片外框（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        overflow-visible rounded-[10px] bg-default ring-0 shadow-sm
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        body
+      </code>
+    </td>
+    
+    <td>
+      卡片內容（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        p-0 sm:p-0
+      </code>
+      
+      ，內距改由 <code>
+        form
+      </code>
+      
+       負責
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        bar
+      </code>
+    </td>
+    
+    <td>
+      標題列
+    </td>
+    
+    <td>
+      <code>
+        flex min-h-8 flex-wrap items-center gap-2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        icon
+      </code>
+    </td>
+    
+    <td>
+      標題圖示
+    </td>
+    
+    <td>
+      <code>
+        text-primary size-5 shrink-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        title
+      </code>
+    </td>
+    
+    <td>
+      標題文字
+    </td>
+    
+    <td>
+      <code>
+        text-highlighted shrink-0 text-base font-semibold whitespace-nowrap
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        toggle
+      </code>
+    </td>
+    
+    <td>
+      展開／收合按鈕
+    </td>
+    
+    <td>
+      <code>
+        shrink-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        headerRight
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        header-right
+      </code>
+      
+       的外層
+    </td>
+    
+    <td>
+      <code>
+        ml-auto flex min-w-0 items-center gap-3
+      </code>
+      
+      ，只在有傳入 slot 時產生
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        form
+      </code>
+    </td>
+    
+    <td>
+      查詢條件表單
+    </td>
+    
+    <td>
+      <code>
+        relative
+      </code>
+      
+      ，內距沿用全站 <code>
+        app.config.ui.card.slots.body
+      </code>
+      
+      （預設 <code>
+        p-4 sm:p-6
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        grid
+      </code>
+    </td>
+    
+    <td>
+      查詢欄位格線
+    </td>
+    
+    <td>
+      <code>
+        grid grid-cols-1 gap-x-5 gap-y-4 md:grid-cols-2 xl:grid-cols-4
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        actions
+      </code>
+    </td>
+    
+    <td>
+      操作按鈕列
+    </td>
+    
+    <td>
+      <code>
+        mt-6 flex flex-wrap justify-end gap-2
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [UCard](https://ui.nuxt.com/docs/components/card)
+- [UForm](https://ui.nuxt.com/docs/components/form)
+
+
+# SelectMenu
+
+> 下拉選單，可搜尋、多選，文字過長時顯示完整提示。
+
+基於 `USelectMenu`，帶有搜尋與省略提示。單選 `v-model` 為選項的 value，多選為 value 陣列。
+
+## 用法
+
+### 單選與多選
+
+單選綁定選項的 value；`multiple` 時綁定 value 陣列。單選未選取時為 `emptyValue`（預設 `''`），多選為 `[]`。
+
+<component-example name="select-menu-basic">
+
+
+
+</component-example>
+
+### 顯示格式
+
+預設只顯示名稱。`{value}`、`{label}` 會被替換，替換結果不再二次解析，未知標記原樣保留。關鍵字查詢依 `labelKey` 欄位比對，不受顯示格式影響。
+
+<component-example name="select-menu-format">
+
+
+
+</component-example>
+
+要讓整個專案都顯示「值_名稱」，在全站設定 `format`：
+
+<code-group>
+
+```vue [單一元件]
+<ShuoSelectMenu v-model="state.type" :items="items" format="{value}_{label}" />
+```
+
+```ts [全站設定]
+// nuxt.config.ts
+export default defineNuxtConfig({
+  shuoUi: {
+    components: {
+      selectMenu: { format: '{value}_{label}' }
+    }
+  }
+});
+```
+
+</code-group>
+
+### 自訂選項欄位
+
+後端欄位不是 `label`、`value` 時，以 `label-key`、`value-key` 指定。`USelectMenu` 的 `description-key` 等 props 也能直接使用，欄位名稱依 `items` 推導，寫錯會有型別錯誤。
+
+<component-example name="select-menu-keys">
+
+
+
+</component-example>
+
+### 載入中、停用與骨架
+
+切換骨架、停用或載入中時會關閉已開啟的選單，還原後不自動重開。
+
+<component-example name="select-menu-states">
+
+
+
+</component-example>
+
+## Props
+
+<component-props name="ShuoSelectMenu">
+
+
+
+</component-props>
+
+`open` 未設定時由使用者操作開關，不提供 v-model。`clear`、`clearIcon` 的型別依 Nuxt UI 的另一個泛型推導，本元件未提供，因此不列入型別。
+
+## Slots
+
+`USelectMenu` 的 slot 全部可用（`leading`、`trailing`、`item`、`item-leading`、`content-top` 等）。以下三個有傳入時取代元件的內建內容：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      內建內容
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        item-label
+      </code>
+    </td>
+    
+    <td>
+      依 <code>
+        format
+      </code>
+      
+       格式化的選項文字
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        default
+      </code>
+    </td>
+    
+    <td>
+      依 <code>
+        format
+      </code>
+      
+       格式化的已選取文字
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        empty
+      </code>
+    </td>
+    
+    <td>
+      「無可用選項」
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Expose
+
+<table>
+<thead>
+  <tr>
+    <th>
+      名稱
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        triggerRef
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        HTMLButtonElement
+      </code>
+    </td>
+    
+    <td>
+      觸發按鈕
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        viewportRef
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        HTMLDivElement | null
+      </code>
+    </td>
+    
+    <td>
+      選單捲動區域
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 可用 Nuxt UI `USelectMenu` 的所有 slot，另外提供 `wrapper`：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        wrapper
+      </code>
+    </td>
+    
+    <td>
+      外層，量測省略文字並掛 Tooltip
+    </td>
+    
+    <td>
+      <code>
+        flex w-full min-w-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        base
+      </code>
+    </td>
+    
+    <td>
+      觸發按鈕（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        w-full min-w-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        value
+      </code>
+      
+      、<code>
+        placeholder
+      </code>
+    </td>
+    
+    <td>
+      已選取文字、提示文字（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        min-w-0 truncate
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+要縮短寬度時設定 `ui.wrapper`（例如 `w-40`），觸發按鈕會填滿外層；`class` 落在觸發按鈕，不影響外層。`ui.value`、`ui.placeholder` 在已選取、未選取與找不到選項時都套用。
+
+---
+
+- [USelectMenu](https://ui.nuxt.com/docs/components/select-menu)
+
+
+# Table
+
+> 基於 UTable 的純表格，含骨架、空資料與高度過渡。
+
+沒有卡片、標題與分頁，可直接放進彈窗或自己的 `UCard`。共用的表頭不換行、儲存格內距、空資料與查詢中文字、初次載入骨架、`interactionDisabled`，以及高度與淡化過渡。泛型 `T` 為資料列型別。
+
+## 用法
+
+### 查詢中與空資料
+
+元件建立時即在查詢且沒有資料時顯示骨架列；已有資料時重新查詢，資料淡化並以高度過渡切換。清空資料後顯示「查無資料」。
+
+<component-example name="table-basic">
+
+
+
+</component-example>
+
+### 可編輯表格
+
+在 cell slot 放 Shuo 輸入元件，搭配 `UCard` 的標題與底部按鈕。
+
+<component-example name="table-editable">
+
+
+
+</component-example>
+
+### 彈窗內的明細表
+
+限制高度並固定表頭時，用 `tableProps` 設定 `ui.root` 與 `sticky`，捲動發生在表格本身，表頭才會固定。
+
+```vue
+<ShuoTable :data="rows" :columns="columns" :loading="!rows" :table-props="{ sticky: true, ui: { root: 'max-h-80' } }" />
+```
+
+### 過渡
+
+資料筆數或內容高度改變時，資料區高度以 0.2 秒平滑變化；重新查詢且已有資料時，資料淡化為 0.5。`transition` 設為 `false` 時高度直接跟著內容，淡化不播放過渡。使用者偏好減少動態效果時一律不播放。
+
+## Props
+
+<component-props name="ShuoTable">
+
+
+
+</component-props>
+
+「查詢中…」與「查無資料」可由文案 `table.loading`、`table.empty` 全域覆寫，見[文案覆寫](https://k90325248.github.io/guides/messages)。表頭、儲存格等樣式用 `tableProps.ui` 設定，與內建樣式合併。
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      參數
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        <欄位>-cell
+      </code>
+      
+       等 <code>
+        UTable
+      </code>
+      
+       slot
+    </td>
+    
+    <td>
+      原參數＋<code>
+        interactionDisabled
+      </code>
+    </td>
+    
+    <td>
+      自訂儲存格與表頭
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        body-top
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        interactionDisabled
+      </code>
+    </td>
+    
+    <td>
+      表格上方列
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        loading
+      </code>
+      
+      、<code>
+        empty
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+    
+    <td>
+      查詢中與空資料的內容
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [UTable](https://ui.nuxt.com/docs/components/table)
+
+
+# Textarea
+
+> 多行文字輸入，保留換行，可自動調整高度。
+
+`v-model: string`，保留換行。
+
+## 用法
+
+### 行數與自動高度
+
+未啟用 `autoresize` 時可上下拖拉調整高度，最低不小於同尺寸單行輸入框。
+
+<component-example name="textarea-basic">
+
+
+
+</component-example>
+
+### 載入中、停用與骨架
+
+載入中在右上角顯示轉圈圖示，位置同 Nuxt UI 的尾端圖示，不取代左側 `icon`、也不推移文字起點。骨架保留 `rows` 對應的高度。
+
+<component-example name="textarea-states">
+
+
+
+</component-example>
+
+## Props
+
+<component-props name="ShuoTextarea">
+
+
+
+</component-props>
+
+`size`、`disabled`、`loading`、`skeleton`、`name` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        leading
+      </code>
+    </td>
+    
+    <td>
+      前置內容；未傳時保留 <code>
+        icon
+      </code>
+      
+      、<code>
+        leadingIcon
+      </code>
+      
+      、<code>
+        avatar
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        default
+      </code>
+    </td>
+    
+    <td>
+      輸入框內的額外內容
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        trailing
+      </code>
+    </td>
+    
+    <td>
+      尾端內容；載入中不顯示，由載入圖示佔用同一位置
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Expose
+
+<table>
+<thead>
+  <tr>
+    <th>
+      名稱
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        textareaRef
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        HTMLTextAreaElement | null
+      </code>
+    </td>
+    
+    <td>
+      原生 textarea
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        autoResize
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        () => void
+      </code>
+    </td>
+    
+    <td>
+      依內容重新計算自動高度
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 可用 Nuxt UI `UTextarea` 的所有 slot，另外提供 `loading`：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      外框（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        w-full min-w-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        base
+      </code>
+    </td>
+    
+    <td>
+      原生 textarea（Nuxt UI）
+    </td>
+    
+    <td>
+      依尺寸的最小高度；未啟用 <code>
+        autoresize
+      </code>
+      
+       時 <code>
+        resize-y
+      </code>
+      
+      ；載入中加右內距
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        loading
+      </code>
+    </td>
+    
+    <td>
+      右上角載入圖示的外層
+    </td>
+    
+    <td>
+      <code>
+        pointer-events-none absolute end-0 flex items-start
+      </code>
+      
+      ，依尺寸的位置
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [UTextarea](https://ui.nuxt.com/docs/components/textarea)
+
+
+# 安裝
+
+> 在 Nuxt 專案中安裝並啟用 Shuo UI。
+
+## 需求
+
+<table>
+<thead>
+  <tr>
+    <th>
+      套件
+    </th>
+    
+    <th>
+      版本
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+`date-fns`、`valibot`、`@vuepic/vue-datepicker` 等執行期依賴會隨套件一併安裝。
+
+## 步驟
+
+<steps level="3">
+
+### 安裝套件
+
+指定 tag 以固定版本，升級時改成新的 tag 即可。
+
+<code-group>
+
+```bash [pnpm]
+pnpm add github:k90325248/shuo-ui#v2.0.0
+```
+
+```bash [npm]
+npm install github:k90325248/shuo-ui#v2.0.0
+```
+
+```bash [yarn]
+yarn add github:k90325248/shuo-ui#v2.0.0
+```
+
+</code-group>
+
+### 啟用模組
+
+`@nuxt/ui` 須一併安裝並放在 `modules` 中。
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['@nuxt/ui', '@shuo/ui']
+});
+```
+
+### 載入樣式
+
+在 CSS 載入 Tailwind、Nuxt UI 與元件庫的來源掃描。
+
+```css [app/assets/css/main.css]
+@import 'tailwindcss';
+@import '@nuxt/ui';
+@import '@shuo/ui/css';
+```
+
+<warning>
+
+最後一行讓 Tailwind 掃描元件庫內使用的 class（Tailwind 預設不掃描 `node_modules`）。沒有這行，部分樣式（例如載入中圖示大小、排版）不會生效。
+
+</warning>
+</steps>
+
+## 使用 Valibot 撰寫驗證規則
+
+在自己的程式碼中 `import * as v from 'valibot'` 撰寫 schema 時，請在專案另外安裝 `valibot`。pnpm 不會讓專案直接引用套件的依賴。
+
+```bash
+pnpm add valibot
+```
+
+## 版本與升級
+
+版本以 git tag 發佈（`v主.次.修`），每次升級請更新安裝指令中的 tag 並測試。
+
+
+# 簡介
+
+> Shuo UI 是什麼、適合用在哪裡。
+
+Shuo UI 是一組基於 [Nuxt UI](https://ui.nuxt.com) 的表單元件，以 Nuxt Module 提供。目標是讓多個專案共用同一套表單元件與行為，同時不失去 Nuxt UI 本身的功能。
+
+## 範例
+
+下面是實際運作的 `ShuoInputText`：輸入文字後，最後 4 碼會被遮蔽，點眼睛按鈕可切換顯示。
+
+<code-preview>
+<shuo-input-text :mask="4" className="max-w-80" placeholder="請輸入身分證字號">
+
+
+
+</shuo-input-text>
+
+<template v-slot:code="">
+
+```vue
+<ShuoInputText v-model="value" :mask="4" placeholder="請輸入身分證字號" />
+```
+
+</template>
+</code-preview>
+
+## 特色
+
+- 預設繁體中文文案，可由模組設定覆寫
+- 樣式使用 Nuxt UI 語意色與 CSS 變數，顏色與主題由使用的專案決定
+- 一致的尺寸、停用、載入中（`loading`）與骨架（`skeleton`）行為
+- 未自行宣告的 Nuxt UI 參數、插槽與 ref 都能直接使用，並有型別推導
+- 元件、utils 與 composables 皆自動匯入
+
+
+# 快速開始
+
+> 用 UForm 與 Valibot 組出第一個表單，並認識全部元件。
+
+## 第一個表單
+
+元件以 `Shuo` 開頭，無須 import。搭配 Nuxt UI 的 `UForm` 與 Valibot 驗證：
+
+```vue
+<template>
+  <UForm :schema="schema" :state="state" @submit="onSubmit">
+    <UFormField label="姓名" name="name">
+      <ShuoInputText v-model="state.name" />
+    </UFormField>
+    <UFormField label="金額" name="amount">
+      <ShuoInputNumber v-model="state.amount" unit />
+    </UFormField>
+    <UFormField label="申請日期" name="date">
+      <ShuoDatepicker v-model="state.date" clearable />
+    </UFormField>
+    <UButton type="submit" label="送出" />
+  </UForm>
+</template>
+
+<script setup lang="ts">
+import * as v from 'valibot';
+
+// requiredText、requiredNumber 由模組自動匯入
+const schema = v.object({
+  name: requiredText('姓名'),
+  amount: requiredNumber('金額'),
+  date: requiredText('申請日期')
+});
+
+const state = reactive({ name: '', amount: null as number | null, date: '' });
+
+const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(event.data);
+</script>
+```
+
+<tip>
+
+`UFormField` 的 `name` 要對應 schema 與 state 的欄位名稱，元件會接入欄位的 id、尺寸、停用與錯誤狀態。驗證規則見[表單驗證](https://k90325248.github.io/guides/validation)。
+
+</tip>
+
+## 元件一覽
+
+<table>
+<thead>
+  <tr>
+    <th>
+      元件
+    </th>
+    
+    <th>
+      用途
+    </th>
+    
+    <th>
+      v-model 型別
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/input-text">
+        <code>
+          ShuoInputText
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      單行文字，可遮蔽
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/input-number">
+        <code>
+          ShuoInputNumber
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      數字，千分位、小數、單位
+    </td>
+    
+    <td>
+      <code>
+        number | null
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/textarea">
+        <code>
+          ShuoTextarea
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      多行文字
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/select-menu">
+        <code>
+          ShuoSelectMenu
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      下拉選單，可搜尋、多選
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+      
+      ／多選為 <code>
+        string[]
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/datepicker">
+        <code>
+          ShuoDatepicker
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      日期、年月、日期時間，範圍
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+      
+      ／範圍為 <code>
+        [string, string]
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/checkbox">
+        <code>
+          ShuoCheckbox
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      單一核取方塊
+    </td>
+    
+    <td>
+      <code>
+        string | number | boolean
+      </code>
+      
+      （預設 <code>
+        1
+      </code>
+      
+      ／<code>
+        0
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/choice-group">
+        <code>
+          ShuoRadioGroup
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      單選群組
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/choice-group">
+        <code>
+          ShuoCheckboxGroup
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      複選群組
+    </td>
+    
+    <td>
+      <code>
+        string[]
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/file">
+        <code>
+          ShuoFile
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      單檔選擇與既有附件下載
+    </td>
+    
+    <td>
+      <code>
+        File | null
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/months">
+        <code>
+          ShuoMonths
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      年月數換算輸入
+    </td>
+    
+    <td>
+      總月數 <code>
+        number | null
+      </code>
+      
+      （另有 <code>
+        year
+      </code>
+      
+      、<code>
+        month
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/phone">
+        <code>
+          ShuoPhone
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      區碼加電話號碼
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+      
+      （另有 <code>
+        areaCode
+      </code>
+      
+      、<code>
+        number
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/query-card">
+        <code>
+          ShuoQueryCard
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      可收合的查詢條件表單卡片
+    </td>
+    
+    <td>
+      <code>
+        open
+      </code>
+      
+      （<code>
+        boolean
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/list-card">
+        <code>
+          ShuoListCard
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      查詢結果清單卡片（標題、表格與後端分頁）
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/table">
+        <code>
+          ShuoTable
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      純表格（無卡片與分頁），含骨架與高度過渡
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/info-tooltip">
+        <code>
+          ShuoInfoTooltip
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      資訊圖示加提示
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
+</tbody>
+</table>
+
+
+# 自動匯入與型別
+
+> 自動匯入的工具函式、型別別名，以及與 Nuxt UI 搭配的注意事項。
+
+## 自動匯入
+
+模組自動匯入 `dist/runtime/utils` 與 `dist/runtime/composables`，無須 import：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      名稱
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        requiredText
+      </code>
+      
+      、<code>
+        requiredNumber
+      </code>
+      
+      、<code>
+        requiredArray
+      </code>
+      
+      、<code>
+        optionalEmail
+      </code>
+      
+      、<code>
+        optionalNonNegativeNumber
+      </code>
+    </td>
+    
+    <td>
+      Valibot 驗證規則，見<a href="https://k90325248.github.io/guides/validation">
+        表單驗證
+      </a>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        formatDateDisplay
+      </code>
+      
+      、<code>
+        parseDateValue
+      </code>
+      
+      、<code>
+        getDateModelFormat
+      </code>
+      
+      、<code>
+        isValidDateSeparator
+      </code>
+      
+       等
+    </td>
+    
+    <td>
+      日期格式與解析
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        formatNumberDisplay
+      </code>
+      
+      、<code>
+        toNumberText
+      </code>
+      
+      、<code>
+        getDecimalPlaces
+      </code>
+    </td>
+    
+    <td>
+      數字顯示
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        filterPhoneInput
+      </code>
+      
+      、<code>
+        joinPhone
+      </code>
+      
+      、<code>
+        splitPhone
+      </code>
+    </td>
+    
+    <td>
+      電話號碼
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        splitMonths
+      </code>
+      
+      、<code>
+        combineMonths
+      </code>
+    </td>
+    
+    <td>
+      年月數換算
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        useChoiceGroup
+      </code>
+      
+      、<code>
+        useTruncatedText
+      </code>
+    </td>
+    
+    <td>
+      排列與文字省略
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        getShuoMessages
+      </code>
+      
+      、<code>
+        setShuoMessages
+      </code>
+      
+      、<code>
+        formatMessage
+      </code>
+    </td>
+    
+    <td>
+      文案讀取、覆寫與佔位符替換（通常不需直接使用）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        resolveShuoDefault
+      </code>
+      
+      、<code>
+        getShuoComponentDefaults
+      </code>
+    </td>
+    
+    <td>
+      元件全站預設值的生效值與原始設定，見<a href="https://k90325248.github.io/guides/component-defaults#%E5%9C%A8%E9%A0%81%E9%9D%A2%E5%8F%96%E5%BE%97%E7%94%9F%E6%95%88%E5%80%BC">
+        在頁面取得生效值
+      </a>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+<warning>
+
+目錄內其他元件內部使用的工具（例如 `getByPath`、`getMaskCount`）同樣會被匯入，但不屬於公開 API，版本間可能變動。若與專案自己的函式同名，請改名或關閉其中一方的自動匯入。
+
+</warning>
+
+## 型別
+
+型別可由別名 `#shuo-ui` 匯入：
+
+```ts
+import type { DatepickerValue } from '#shuo-ui/components/ShuoDatepicker.vue';
+import type { PageRequest } from '#shuo-ui/types/pagination';
+import type { ShuoComponentDefaults } from '#shuo-ui/types/component-defaults';
+```
+
+元件 props 型別也可由 `#shuo-ui/types/components` 匯入（例如 `InputTextProps`、`SelectMenuProps`），原本從 `.vue` 匯入的寫法仍可使用。
+
+## 與 Nuxt UI 搭配的注意事項
+
+- 專案 CSS 必須加入 `@import '@shuo/ui/css';`（放在 `@import 'tailwindcss'` 之後），否則 Tailwind 不會掃描元件庫內的 class，部分樣式會缺失。
+- 表單欄位建議外包 `UFormField` 並設定 `name`，元件會接入 `UFormField` 的 id、name、size、停用與錯誤狀態，並在 input、blur、change 時觸發驗證。尺寸的優先順序見[尺寸與 UFormField](https://k90325248.github.io/guides/component-defaults#%E5%B0%BA%E5%AF%B8%E8%88%87-uformfield)。
+- 圖示使用 Iconify（`i-lucide-*`）。元件庫用到的圖示，以及 `shuoUi.components` 設定的圖示，會由模組自動加入 `@nuxt/icon` 的 client bundle；只在頁面以 prop 傳入的其他圖示需自行加入 `icon.clientBundle.icons` 或維持執行期圖示 API。若專案停用執行期圖示 API（`icon.provider: 'none'`），請安裝 `@iconify-json/lucide` 讓圖示能在建置時打包。
+
+
+# 元件全站預設值
+
+> 以 shuoUi.components 統一設定尺寸、顯示格式、圖示等參數。
+
+以 `components` 依元件設定全站預設值，例如全站下拉選單顯示「值_名稱」、清單每頁 20 筆。優先順序固定為：
+
+```text
+元件上明確傳入的 prop  >  全站預設（components.<元件>）  >  元件內建預設
+```
+
+`size` 另有 `UFormField` 這一層，見[尺寸與 UFormField](#%E5%B0%BA%E5%AF%B8%E8%88%87-uformfield)。
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['@nuxt/ui', '@shuo/ui'],
+  shuoUi: {
+    components: {
+      selectMenu: { format: '{value}_{label}', size: 'md', emptyValue: null, labelKey: 'Name', valueKey: 'Code' },
+      checkboxGroup: { labelKey: 'Name', valueKey: 'Code' },
+      radioGroup: { orientation: 'horizontal', breakpoint: 'lg', labelKey: 'Name', valueKey: 'Code' },
+      checkbox: { trueValue: 'Y', falseValue: 'N' },
+      datepicker: { clearable: true, separator: '-' },
+      inputNumber: { unit: true, thousandSeparator: true }, // 單位文字來自 messages.inputNumber.unit（預設「元」）
+      queryCard: {
+        // 查詢欄位分欄：xl 要明確寫出，才會蓋過內建的 xl:grid-cols-4（見下方說明）
+        ui: { grid: 'grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4' }
+      },
+      listCard: { pageSize: 20, ui: { title: 'text-lg' } } // 標題列 ui 部位與 queryCard 相同
+    }
+  }
+});
+```
+
+## 可設定的項目
+
+元件鍵名為元件名稱去掉 `Shuo` 後的 camelCase，和 `messages` 一致，**不隨 prefix 改變**（設定 `prefix: 'My'` 時仍寫 `components.selectMenu`）。
+
+只有下表的 prop 可以全站設定。`disabled`、`loading`、`skeleton` 等狀態類 prop，以及和單一欄位綁定的 prop（`id`、`name`、`items`、`mask`、`decimal`、`multiple` 等）無法全站設定。
+
+<table>
+<thead>
+  <tr>
+    <th>
+      鍵名
+    </th>
+    
+    <th>
+      可設定的 prop（內建預設）
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        inputText
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        hideMaskToggle
+      </code>
+      
+      （<code>
+        false
+      </code>
+      
+      ）、<code>
+        revealIcon
+      </code>
+      
+      （<code>
+        i-lucide-eye
+      </code>
+      
+      ）、<code>
+        concealIcon
+      </code>
+      
+      （<code>
+        i-lucide-eye-off
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        inputNumber
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        unit
+      </code>
+      
+      （<code>
+        false
+      </code>
+      
+      ，全站只接受 boolean）、<code>
+        thousandSeparator
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        textarea
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        autoresize
+      </code>
+      
+      、<code>
+        rows
+      </code>
+      
+      、<code>
+        maxrows
+      </code>
+      
+      、<code>
+        fixed
+      </code>
+      
+      （未設定時沿用 Nuxt UI）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        file
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        clearIcon
+      </code>
+      
+      （<code>
+        i-lucide-x
+      </code>
+      
+      ）、<code>
+        downloadIcon
+      </code>
+      
+      （<code>
+        i-lucide-download
+      </code>
+      
+      ）、<code>
+        selectIcon
+      </code>
+      
+      （<code>
+        i-lucide-paperclip
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        months
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        phone
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        selectMenu
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        format
+      </code>
+      
+      （<code>
+        {label}
+      </code>
+      
+      ）、<code>
+        emptyValue
+      </code>
+      
+      （<code>
+        ''
+      </code>
+      
+      ）、<code>
+        labelKey
+      </code>
+      
+      （<code>
+        label
+      </code>
+      
+      ）、<code>
+        valueKey
+      </code>
+      
+      （<code>
+        value
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        checkbox
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        trueValue
+      </code>
+      
+      （<code>
+        1
+      </code>
+      
+      ）、<code>
+        falseValue
+      </code>
+      
+      （<code>
+        0
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        radioGroup
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        orientation
+      </code>
+      
+      （<code>
+        auto
+      </code>
+      
+      ）、<code>
+        breakpoint
+      </code>
+      
+      （<code>
+        md
+      </code>
+      
+      ）、<code>
+        ui
+      </code>
+      
+      、<code>
+        labelKey
+      </code>
+      
+      （<code>
+        label
+      </code>
+      
+      ）、<code>
+        valueKey
+      </code>
+      
+      （<code>
+        value
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        checkboxGroup
+      </code>
+    </td>
+    
+    <td>
+      同 <code>
+        radioGroup
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        datepicker
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        clearable
+      </code>
+      
+      （<code>
+        false
+      </code>
+      
+      ）、<code>
+        calendarIcon
+      </code>
+      
+      （<code>
+        i-lucide-calendar
+      </code>
+      
+      ）、<code>
+        clearIcon
+      </code>
+      
+      （<code>
+        i-lucide-x
+      </code>
+      
+      ）、<code>
+        roc
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        separator
+      </code>
+      
+      （<code>
+        /
+      </code>
+      
+      ）、<code>
+        yearRange
+      </code>
+      
+      （<code>
+        [1900, 2100]
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        queryCard
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        icon
+      </code>
+      
+      （<code>
+        i-lucide-search
+      </code>
+      
+      ）、<code>
+        expandIcon
+      </code>
+      
+      （<code>
+        i-lucide-chevron-down
+      </code>
+      
+      ）、<code>
+        collapseIcon
+      </code>
+      
+      （<code>
+        i-lucide-chevron-up
+      </code>
+      
+      ）、<code>
+        validateOn
+      </code>
+      
+      （沿用 <code>
+        UForm
+      </code>
+      
+      ）、<code>
+        ui
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        listCard
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        icon
+      </code>
+      
+      （<code>
+        i-lucide-list
+      </code>
+      
+      ）、<code>
+        pageSize
+      </code>
+      
+      （<code>
+        10
+      </code>
+      
+      ）、<code>
+        showPagination
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        showSummary
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        transition
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        ui
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        infoTooltip
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        icon
+      </code>
+      
+      （<code>
+        i-lucide-circle-alert
+      </code>
+      
+      ）
+    </td>
+  </tr>
+</tbody>
+</table>
+
+寫到白名單外的元件或 prop 時，`nuxt.config.ts` 會出現型別錯誤；未經型別檢查的值（例如環境變數）在執行時忽略並於主控台警告。
+
+## 規則
+
+- **是否明確傳入看的是有沒有寫這個 prop，不看值**：`<ShuoDatepicker :clearable="false" />`、`<ShuoSelectMenu :empty-value="null" />`、`format=""` 都算明確傳入，不會被全站值取代；`v-bind="{ clearable: undefined }"` 視為沒寫，沿用全站值。
+- **ui 依 slot 合併**：全站設定 `radioGroup.ui.fieldset`、頁面傳 `:ui="{ item: '...' }"` 時兩者都生效；頁面也傳了 `fieldset` 時，以頁面的值取代全站值（不做 class 串接）。合併後再和元件內建樣式以 tailwind-merge 合併，同[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)。`queryCard.ui` 與 `listCard.ui` 的標題列部位（`bar`、`icon`、`title`、`headerRight`）與內建樣式相同，要統一兩張卡片的標題樣式時兩邊寫相同的值。
+- **其他值整個取代**：陣列（例如 `yearRange`）不和內建值串接。
+- `inputNumber.unit` 全站只決定「預設是否顯示單位」，只接受 `true`／`false`；單位文字由 `messages.inputNumber.unit` 決定。單一欄位仍可傳 `unit="件"` 或 `:unit="false"`。
+- `labelKey`／`valueKey` 全站設定為 `{ Code, Name }` 後，某一頁的選項仍是 `{ label, value }` 時，在該元件明確傳 `label-key="label" value-key="value"`。單選與複選群組的綁定值仍為字串，後端代碼是數字時請先轉成字串。開發模式下選項缺少欄位時，主控台警告會註明欄位名稱來自明確傳入或全站設定（例如 `（來源：valueKey 為全站設定 components.selectMenu.valueKey）`）。
+
+<warning>
+
+設定經 `runtimeConfig.public` 傳到瀏覽器，必須可序列化成 JSON：**不能寫函式**（例如 `ui` 的 `(defaults) => string` 只能在單一元件使用），也不要放機密資料。執行時可用 `NUXT_PUBLIC_SHUO_UI_COMPONENTS_*` 環境變數覆寫，這是 Nuxt runtimeConfig 的既有行為。
+
+</warning>
+
+## 尺寸與 UFormField
+
+所有輸入元件的尺寸依下列順序決定：
+
+```text
+元件明確傳入的 size  >  UFormField 上寫的 size  >  components.<元件>.size  >  formField 主題預設  >  lg
+```
+
+<table>
+<thead>
+  <tr>
+    <th>
+      寫法
+    </th>
+    
+    <th>
+      結果
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      什麼都沒設定
+    </td>
+    
+    <td>
+      <code>
+        lg
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        <UFormField size="sm">
+      </code>
+      
+       包住 <code>
+        <ShuoInputText />
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        sm
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        <UFormField size="sm">
+      </code>
+      
+       包住 <code>
+        <ShuoInputText size="xl" />
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        xl
+      </code>
+      
+      （元件自己傳的優先）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      全站 <code>
+        inputText.size: 'md'
+      </code>
+      
+      ，<code>
+        UFormField
+      </code>
+      
+       沒寫 <code>
+        size
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        md
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      全站 <code>
+        inputText.size: 'md'
+      </code>
+      
+      ，<code>
+        <UFormField size="sm">
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        sm
+      </code>
+      
+      （單一欄位比全站近）
+    </td>
+  </tr>
+</tbody>
+</table>
+
+「formField 主題預設」指 `app.config.ts` 的 `ui.formField.defaultVariants.size`（內建主題為 `lg`）。它在全站設定之後，所以沒寫 `size` 的 `UFormField` 不會蓋掉 `components.<元件>.size`；沒有全站設定時，元件沿用它。
+
+### 一次調整所有輸入元件尺寸
+
+本模組不提供跨元件共用的 `components.size`，`size` 只能逐一元件設定（`components.inputText.size`、`components.selectMenu.size`⋯）。要讓表單內所有輸入元件一起改尺寸，改 Nuxt UI 的 `formField` 主題預設：
+
+```ts [app.config.ts]
+export default defineAppConfig({
+  ui: {
+    formField: { defaultVariants: { size: 'md' } }
+  }
+});
+```
+
+包在 `UFormField` 內、元件沒有傳 `size`、`UFormField` 沒有寫 `size`、也沒有 `components.<元件>.size` 的 Shuo 輸入元件都會改為 `md`；`UFormField` 的標籤與說明文字也一起改尺寸。限制：
+
+- 不在 `UFormField` 內的元件不受影響，仍為 `components.<元件>.size` 或內建的 `lg`。
+- 各元件的 `components.<元件>.size` 優先於這個主題預設，例如同時設定 `components.selectMenu.size: 'lg'` 時，下拉選單仍為 `lg`、其他輸入元件為 `md`。
+- 元件或 `UFormField` 上明確寫的 `size` 仍然優先。
+
+## 查詢欄位分欄
+
+`ShuoQueryCard` 的內建分欄為 `grid grid-cols-1 gap-x-5 gap-y-4 md:grid-cols-2 xl:grid-cols-4`，全站設定的 `queryCard.ui.grid` 會和它以 tailwind-merge 合併。
+
+<warning>
+
+tailwind-merge 不會把不同斷點視為衝突：只寫 `md:grid-cols-3` 時，內建的 `xl:grid-cols-4` 仍會保留，到了 xl 寬度又變回 4 欄。因此要把每個會用到的斷點都寫出來。
+
+</warning>
+
+```ts [nuxt.config.ts]
+shuoUi: {
+  components: {
+    queryCard: {
+      // 手機 1 欄、sm 2 欄、md 與 xl 3 欄、2xl 4 欄
+      ui: { grid: 'grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4' }
+    }
+  }
+}
+```
+
+全站設定無法寫函式，所以做不到「完整取代內建分欄」；需要時在單一元件傳 `:ui="{ grid: () => '...' }"`。
+
+**Tailwind 掃描**：class 寫在 `nuxt.config.ts`，必須在 Tailwind 的掃描範圍內。Tailwind v4 預設會掃描專案根目錄（排除 `.gitignore` 的檔案），通常已包含 `nuxt.config.ts`；若設定的 class 沒有生效，在專案 CSS 加上 `@source` 指向設定檔：
+
+```css [app/assets/css/main.css]
+@import 'tailwindcss';
+@import '@nuxt/ui';
+@import '@shuo/ui/css';
+@source '../../../nuxt.config.ts'; /* 路徑相對於這個 CSS 檔 */
+```
+
+## 在頁面取得生效值
+
+`resolveShuoDefault(元件, prop)` 回傳「全站設定 ?? 元件內建預設」的實際生效值，例如送給後端的每頁筆數要和清單一致：
+
+```ts
+// 後端依此值分頁；頁面另外傳 :page-size 時改用頁面自己的值。
+const pageSize = resolveShuoDefault('listCard', 'pageSize');
+const request = reactive<PageRequest>({ PageNumber: 1, PageSize: pageSize });
+```
+
+`getShuoComponentDefaults()` 回傳使用端的原始設定（不含內建預設）。
+
+
+# 文案覆寫
+
+> 覆寫驗證訊息、無障礙名稱、提示文字與日期選擇器文案。
+
+預設文案為繁體中文，涵蓋驗證訊息、無障礙名稱（aria-label）、提示文字與日期選擇器文案。只需寫要改的項目：
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  shuoUi: {
+    messages: {
+      validation: {
+        required: '{label} is required',
+        invalidNumber: '{label} must be a valid number',
+        invalidFormat: '{label} is invalid',
+        minValue: '{label} must not be less than {min}'
+      },
+      file: { placeholder: 'Choose a file' },
+      table: { empty: 'No data', loading: 'Loading…' },
+      listCard: { title: 'Results', summary: '{start}–{end} of {total}' },
+      queryCard: { title: 'Filters', collapse: 'Collapse ', expand: 'Expand ' }
+    }
+  }
+});
+```
+
+`{label}`、`{min}`、`{unit}`、`{total}`、`{start}`、`{end}` 是佔位符，會在使用時替換。
+
+## 可覆寫的項目
+
+<table>
+<thead>
+  <tr>
+    <th>
+      區塊
+    </th>
+    
+    <th>
+      項目
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        validation
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        required
+      </code>
+      
+      、<code>
+        invalidNumber
+      </code>
+      
+      、<code>
+        invalidFormat
+      </code>
+      
+      、<code>
+        minValue
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        checkbox
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        file
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        placeholder
+      </code>
+      
+      、<code>
+        clear
+      </code>
+      
+      、<code>
+        download
+      </code>
+      
+      、<code>
+        select
+      </code>
+      
+      、<code>
+        downloadFailedTitle
+      </code>
+      
+      、<code>
+        downloadFailedDescription
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        inputNumber
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        unit
+      </code>
+      
+      （<code>
+        unit
+      </code>
+      
+       為 <code>
+        true
+      </code>
+      
+       時顯示的文字）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        inputText
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        hide
+      </code>
+      
+      、<code>
+        show
+      </code>
+      
+      （遮蔽顯示按鈕）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        phone
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        areaCode
+      </code>
+      
+      、<code>
+        number
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        months
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        total
+      </code>
+      
+      、<code>
+        years
+      </code>
+      
+      、<code>
+        months
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        selectMenu
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        searchPlaceholder
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        infoTooltip
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        queryCard
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        title
+      </code>
+      
+      、<code>
+        collapse
+      </code>
+      
+      、<code>
+        expand
+      </code>
+      
+      、<code>
+        submit
+      </code>
+      
+      （隱藏送出按鈕的名稱）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        table
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        empty
+      </code>
+      
+      、<code>
+        loading
+      </code>
+      
+      （<code>
+        ShuoTable
+      </code>
+      
+       的空資料與查詢中文字）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        listCard
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        title
+      </code>
+      
+      、<code>
+        summary
+      </code>
+      
+      （筆數統計，<code>
+        {total}
+      </code>
+      
+      、<code>
+        {start}
+      </code>
+      
+      、<code>
+        {end}
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        datepicker
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        hours
+      </code>
+      
+      、<code>
+        minutes
+      </code>
+      
+      、<code>
+        seconds
+      </code>
+      
+      、<code>
+        menu
+      </code>
+      
+      、<code>
+        calendarIcon
+      </code>
+      
+      、<code>
+        clearInput
+      </code>
+      
+      、<code>
+        toggleOverlay
+      </code>
+      
+      、<code>
+        monthPicker
+      </code>
+      
+      、<code>
+        yearPicker
+      </code>
+      
+      、<code>
+        nextMonth
+      </code>
+      
+      、<code>
+        prevMonth
+      </code>
+      
+      、<code>
+        nextYear
+      </code>
+      
+      、<code>
+        prevYear
+      </code>
+      
+      、<code>
+        openMonthsOverlay
+      </code>
+      
+      、<code>
+        openYearsOverlay
+      </code>
+      
+      、<code>
+        openTimePicker
+      </code>
+      
+      、<code>
+        closeTimePicker
+      </code>
+      
+      、<code>
+        timePicker
+      </code>
+      
+      、<code>
+        openTpOverlay
+      </code>
+      
+      、<code>
+        timeOverlay
+      </code>
+      
+      、<code>
+        incrementValue
+      </code>
+      
+      、<code>
+        decrementValue
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+預設值可在 `node_modules/@shuo/ui/dist/runtime/utils/messages.js` 查看。
+
+## 單一元件覆寫
+
+單一元件也可直接用 prop 覆寫，例如 `<ShuoFile placeholder="..." />`、`<ShuoListCard title="..." empty="..." />`，優先於模組設定。
+
+<note>
+
+`messages` 只放文案。下拉選單的顯示格式（`format`）、尺寸、每頁筆數等非文案的全站設定，請寫在 [`components`](https://k90325248.github.io/guides/component-defaults)。
+
+</note>
+
+
+# 模組選項
+
+> 在 nuxt.config.ts 以 shuoUi 設定元件庫。
+
+## 用法
+
+在 `nuxt.config.ts` 以 `shuoUi` 設定，以下為預設值：
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['@nuxt/ui', '@shuo/ui'],
+  shuoUi: {
+    prefix: 'Shuo',
+    theme: true,
+    css: true,
+    messages: {},
+    components: {}
+  }
+});
+```
+
+## 選項
+
+<field-group>
+<field default="Shuo" name="prefix" type="string">
+
+元件名稱前綴。改為 `My` 後使用 `<MyInputText>`。
+
+</field>
+
+<field default="true" name="theme" type="boolean">
+
+是否套用內建 Nuxt UI 主題，見[樣式與主題](https://k90325248.github.io/guides/theming#%E5%85%A7%E5%BB%BA%E4%B8%BB%E9%A1%8C)。`false` 表示完全交給專案決定。
+
+</field>
+
+<field default="true" name="css" type="boolean">
+
+是否載入預設 CSS 變數（`--ui-form-*`），見[表單色票](https://k90325248.github.io/guides/theming#%E8%A1%A8%E5%96%AE%E8%89%B2%E7%A5%A8)。`false` 表示由專案自行定義。
+
+</field>
+
+<field default="{}" name="messages" type="object">
+
+覆寫內建文案，只需寫要修改的項目，見[文案覆寫](https://k90325248.github.io/guides/messages)。
+
+</field>
+
+<field default="{}" name="components" type="object">
+
+元件全站預設值，依元件分區設定，見[元件全站預設值](https://k90325248.github.io/guides/component-defaults)。
+
+</field>
+</field-group>
+
+
+# 樣式與主題
+
+> 顏色、表單色票、內建主題，以及單一元件的 ui 覆寫規則。
+
+## 顏色來自你的專案
+
+元件只使用 Nuxt UI 的語意色（`primary`、`neutral`、`error` 等）與 CSS 變數，不寫死顏色。在專案的 `app.config.ts` 設定主題色即可：
+
+```ts [app.config.ts]
+export default defineAppConfig({
+  ui: { colors: { primary: 'blue', neutral: 'slate' } }
+});
+```
+
+## 表單色票
+
+預設值如下，在你的 CSS 重新定義即可覆寫（模組載入的預設值權重最低）：
+
+```css
+:root {
+  --ui-form-border: var(--ui-color-primary-700); /* 輸入框邊框 */
+  --ui-form-disabled-text: var(--color-gray-600); /* 停用文字 */
+  --ui-form-disabled-border: var(--color-gray-400); /* 停用邊框 */
+  --ui-form-disabled-bg: var(--color-gray-100); /* 停用背景 */
+}
+```
+
+## 內建主題
+
+`theme: true` 時，模組以 `defu` 把下列 Nuxt UI 主題當作**預設值**加入 `appConfig.ui`；專案 `app.config.ts` 的 `ui` 設定優先。
+
+<table>
+<thead>
+  <tr>
+    <th>
+      元件
+    </th>
+    
+    <th>
+      內容
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        input
+      </code>
+      
+      、<code>
+        textarea
+      </code>
+      
+      、<code>
+        select
+      </code>
+      
+      、<code>
+        selectMenu
+      </code>
+    </td>
+    
+    <td>
+      邊框使用 <code>
+        --ui-form-border
+      </code>
+      
+      ，停用時使用停用色票
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        checkbox
+      </code>
+      
+      、<code>
+        radioGroup
+      </code>
+    </td>
+    
+    <td>
+      停用時保留勾選狀態，文字可換行
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        formField
+      </code>
+    </td>
+    
+    <td>
+      預設尺寸 <code>
+        lg
+      </code>
+      
+      、標題單行省略、錯誤訊息嵌在下邊線
+    </td>
+  </tr>
+</tbody>
+</table>
+
+想改其中一項，在 `app.config.ts` 覆寫即可：
+
+```ts [app.config.ts]
+export default defineAppConfig({
+  ui: {
+    formField: {
+      slots: { error: 'text-xs text-error' } // 改成一般樣式的錯誤訊息
+    }
+  }
+});
+```
+
+<tip>
+
+完全不要內建主題：設定 `shuoUi: { theme: false }`，再自行設定 `ui.input`、`ui.formField` 等。
+
+</tip>
+
+## 單一元件的 `ui` prop
+
+元件的 `ui` 寫法同 Nuxt UI 的 `ui` slots，只影響該元件；要改全站所有 Nuxt UI 元件，請用上一節的 `app.config.ts`。
+
+### 合併規則
+
+- 元件內建樣式在前、傳入的 `ui` 在後，以 tailwind-merge 合併，同一 slot 衝突時以傳入值優先。例如 `ShuoInputNumber` 內建 `base: 'text-right'`，傳入 `{ base: 'text-center' }` 後改為置中，其他內建樣式保留。
+- 傳入函式 `(defaults) => string` 時，`defaults` 已包含內建樣式，回傳值即為最終樣式，可完整取代：
+
+```vue
+<ShuoInputNumber :ui="{ base: (defaults) => defaults.replace('text-right', 'text-left') }" />
+```
+
+### `class` 落在哪裡
+
+傳入的 `class` 落在元件外框，與 `ui.root` 一起合併且排在後面，可覆寫內建寬度（例如 `class="w-14"`）。以下元件例外：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      元件
+    </th>
+    
+    <th>
+      <code>
+        class
+      </code>
+      
+       落在
+    </th>
+    
+    <th>
+      外層寬度改用
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        ShuoSelectMenu
+      </code>
+      
+      、<code>
+        ShuoFile
+      </code>
+    </td>
+    
+    <td>
+      輸入框
+    </td>
+    
+    <td>
+      <code>
+        ui.wrapper
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ShuoInfoTooltip
+      </code>
+    </td>
+    
+    <td>
+      觸發按鈕
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ShuoQueryCard
+      </code>
+    </td>
+    
+    <td>
+      卡片外框
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
+</tbody>
+</table>
+
+### 支援的元件
+
+<table>
+<thead>
+  <tr>
+    <th>
+      元件
+    </th>
+    
+    <th>
+      <code>
+        ui
+      </code>
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        ShuoInputText
+      </code>
+      
+      、<code>
+        ShuoInputNumber
+      </code>
+      
+      、<code>
+        ShuoTextarea
+      </code>
+      
+      、<code>
+        ShuoSelectMenu
+      </code>
+      
+      、<code>
+        ShuoCheckbox
+      </code>
+      
+      、<code>
+        ShuoCheckboxGroup
+      </code>
+      
+      、<code>
+        ShuoRadioGroup
+      </code>
+      
+      、<code>
+        ShuoFile
+      </code>
+      
+      、<code>
+        ShuoMonths
+      </code>
+      
+      、<code>
+        ShuoPhone
+      </code>
+      
+      、<code>
+        ShuoInfoTooltip
+      </code>
+      
+      、<code>
+        ShuoQueryCard
+      </code>
+      
+      、<code>
+        ShuoListCard
+      </code>
+      
+      （標題列）
+    </td>
+    
+    <td>
+      依上述規則合併，slot 見各元件頁面
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ShuoDatepicker
+      </code>
+      
+      、<code>
+        ShuoTable
+      </code>
+      
+      （表格樣式用 <code>
+        tableProps.ui
+      </code>
+      
+      ）
+    </td>
+    
+    <td>
+      尚未開放
+    </td>
+  </tr>
+</tbody>
+</table>
+
+
+# 表單驗證
+
+> 以 UForm、UFormField 與 Valibot 驗證表單，搭配內建的共用規則。
+
+建議表單使用 `UForm + UFormField`，驗證 schema 使用 Valibot。`UFormField` 的 `name` 必須對應 schema 與 state 的欄位名稱；`required` 只顯示必填星號，實際必填判斷由 schema 負責。
+
+## 共用規則
+
+規則由模組自動匯入（來自 `dist/runtime/utils/validation`），各表單自行組合 schema，不把商業規則寫進輸入元件。
+
+預設錯誤訊息為「欄位名稱 說明」，欄位名稱使用畫面上的標題，與說明之間空一格，例如「姓名 為必填」。訊息可用模組設定 `shuoUi.messages.validation` 覆寫，見[文案覆寫](https://k90325248.github.io/guides/messages)。
+
+<field-group>
+<field name="requiredText('欄位名稱')" type="文字、下拉與單選群組的字串 value、日期字串、多行文字">
+
+拒絕 `null`、`undefined`、空字串、純空白與非字串值，保留原始文字。
+
+</field>
+
+<field name="requiredNumber('欄位名稱')" type="數字">
+
+接受 `0`、負數與小數；空值與字串顯示「為必填」，`NaN` 與無限大顯示「必須是有效數字」。
+
+</field>
+
+<field name="requiredArray('欄位名稱', 項目 schema)" type="複選群組">
+
+空陣列、`null` 與 `undefined` 不通過；至少勾選一項才通過。項目 schema 自行組合，例如 `requiredArray('複選群組', v.string())`，不將選項寫死在共用規則。
+
+</field>
+
+<field name="optionalEmail('欄位名稱')" type="選填電子信箱">
+
+空字串通過；有值時須符合 email 格式，否則顯示「格式錯誤」。必填信箱改用 `requiredText` 串接 `v.email`。
+
+</field>
+
+<field name="optionalNonNegativeNumber('欄位名稱')" type="選填的金額、期數、評分、利率等非負數字">
+
+`null` 通過；接受 `0` 與小數；負數顯示「不可小於 0」，`NaN`、無限大與非數字顯示「必須是有效數字」。整數限制另以 `v.pipe` 追加。
+
+</field>
+</field-group>
+
+```ts
+import * as v from 'valibot';
+
+const schema = v.object({
+  name: requiredText('姓名'),
+  amount: requiredNumber('金額'),
+  email: v.pipe(requiredText('電子郵件'), v.email('電子郵件 格式錯誤')),
+  backupEmail: optionalEmail('備用電子郵件'),
+  approvedAmount: optionalNonNegativeNumber('核准金額')
+});
+```
+
+可重複使用的格式、長度或範圍規則再加入共用檔；特定頁面的跨欄位規則留在該表單。使用 Valibot `pipe` 組合，不另建一套驗證設定語言。
+
+<note>
+
+目前日期與選項只檢查必填；日期格式、選項是否仍有效、跨欄位條件、數值範圍等，依實際需求追加規則，例如 `v.pipe(v.number(), v.minValue(1), v.maxValue(100))`。
+
+</note>
+
+## 空值與型別
+
+元件會將父層綁定的 `null` / `undefined` 回寫為約定空值（文字 `''`、數字 `null`、日期範圍 `[]` 等，見[空值約定](https://k90325248.github.io/components/common#%E7%A9%BA%E5%80%BC%E7%B4%84%E5%AE%9A)），非預期值則清空並以 `console.warn` 留下紀錄。單選群組未選取即為 `''`，因此選項不使用空字串作為 value。
+
+共用 schema 的輸入型別容納編輯時的 `null` / `undefined`，驗證通過後的輸出則收斂為 `string`、`number` 或對應項目型別的陣列，不需要改掉元件的空值契約。
+
+## 顯示與互動
+
+- 錯誤訊息建議使用內建主題（`theme: true`）：嵌在欄位下邊線的浮動樣式，不增加欄位高度；欄位排列須保留適當間距，外框避免裁切溢出內容。
+- `UForm` 驗證通過才會觸發 `@submit`，透過 `event.data` 取得驗證後的資料；驗證失敗則觸發 `@error`。
+- 使用預設的 input、blur、change 驗證時機。重設時除了清空 state，也呼叫表單的 `clear()` 清除錯誤。
+
+
+<u-page-hero>
+<template v-slot:title="">
+
+Shuo UI
+
+</template>
+
+<template v-slot:description="">
+
+基於 [Nuxt UI](https://ui.nuxt.com) 的表單元件庫。保留 Nuxt UI 元件的全部參數、插槽與型別，再加上台灣專案常用的功能：遮罩、千分位、民國年、統一的載入中與骨架。
+
+</template>
+
+<template v-slot:links="">
+<u-button size="xl" to="https://k90325248.github.io/getting-started/installation" trailing-icon="i-lucide-arrow-right">
+
+開始使用
+
+</u-button>
+</template>
+</u-page-hero>
+
+<u-page-section>
+<template v-slot:title="">
+
+特色
+
+</template>
+
+<template v-slot:features="">
+<u-page-feature icon="i-lucide-layers">
+<template v-slot:title="">
+
+沿用 Nuxt UI
+
+</template>
+
+<template v-slot:description="">
+
+未自行宣告的 Nuxt UI 參數、插槽與 ref 都能直接使用，並有完整的型別推導。
+
+</template>
+</u-page-feature>
+
+<u-page-feature icon="i-lucide-languages">
+<template v-slot:title="">
+
+繁體中文預設
+
+</template>
+
+<template v-slot:description="">
+
+驗證訊息、提示文字與無障礙標籤預設為繁體中文，可由模組設定覆寫。
+
+</template>
+</u-page-feature>
+
+<u-page-feature icon="i-lucide-sliders-horizontal">
+<template v-slot:title="">
+
+全站預設值
+
+</template>
+
+<template v-slot:description="">
+
+尺寸、顯示格式、圖示等參數可在 `nuxt.config.ts` 統一設定，元件上明確傳入的值仍然優先。
+
+</template>
+</u-page-feature>
+</template>
+</u-page-section>
+
+## Resources for Agents
+
+- [API catalog: every service document this site publishes](https://k90325248.github.io/.well-known/api-catalog)
+- [Sitemap (XML)](https://k90325248.github.io/sitemap.xml)
+- [Sitemap (Markdown): every page on the site](https://k90325248.github.io/sitemap.md)
+- [llms.txt: index of the documentation for LLMs](https://k90325248.github.io/llms.txt)
+- [llms-full.txt: the full documentation as a single file](https://k90325248.github.io/llms-full.txt)
+- [OpenAPI document: every route this site serves to agents](https://k90325248.github.io/openapi.json)
