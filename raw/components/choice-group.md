@@ -287,6 +287,26 @@ canonical_url: "https://k90325248.github.io/components/choice-group"
 <tbody>
   <tr>
     <td>
+      兩者
+    </td>
+    
+    <td>
+      <code>
+        #legend
+      </code>
+    </td>
+    
+    <td>
+      群組標題，同 Nuxt UI；只需要文字時改用 <code>
+        legend
+      </code>
+      
+       prop
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
       <code>
         ShuoRadioGroup
       </code>

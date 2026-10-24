@@ -61,7 +61,7 @@ canonical_url: "https://k90325248.github.io/components/common"
 
 ## 沿用 Nuxt UI
 
-包裝 Nuxt UI 元件的 Shuo 元件，props 型別繼承底層元件，未自行宣告的 Nuxt UI props 也有自動補全與型別檢查；slots 轉給底層元件，並對外提供與底層相同的 ref。
+包裝 Nuxt UI 元件的 Shuo 元件，props 型別繼承底層元件，未自行宣告的 Nuxt UI props 也有自動補全與型別檢查；事件參數也有型別；slots 轉給底層元件，並對外提供與底層相同的 ref。
 
 <table>
 <thead>
@@ -258,12 +258,105 @@ canonical_url: "https://k90325248.github.io/components/common"
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/checkbox">
+        <code>
+          ShuoCheckbox
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        UCheckbox
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        append
+      </code>
+      
+      （元件自有）
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/choice-group">
+        <code>
+          ShuoRadioGroup
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        URadioGroup
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        legend
+      </code>
+      
+      、<code>
+        item-append
+      </code>
+      
+      （元件自有）
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/components/choice-group">
+        <code>
+          ShuoCheckboxGroup
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        UCheckboxGroup
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        legend
+      </code>
+      
+      、<code>
+        item-append
+      </code>
+      
+      （元件自有）
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
 </tbody>
 </table>
 
 - 繼承的 props 只用於型別推導，執行時經 `$attrs` 傳給底層元件。
 - 元件自行處理的 props 不列入繼承（例如 `modelValue`、載入圖示 `loadingIcon`）。這些名稱照樣能寫，Vue 會當成一般 HTML attribute，但不會出現在自動補全。
-- `@blur`、`@change` 等事件照常轉給底層元件，事件參數型別尚未補上。
+- 事件照常經 `$attrs` 轉給底層元件，型別取自底層元件的 emits，例如 `@blur` 的參數為 `FocusEvent`。
+- 核取方塊與群組不支援說明文字（`description`、`descriptionKey`）：說明會撐高選項，破壞與輸入框對齊的高度。
 
 ## 骨架
 
