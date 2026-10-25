@@ -15,3 +15,7 @@ export const toBundleIconName = (name, hasCollection) => {
   }
   return parts.length > 1 ? `${parts[0]}:${parts.slice(1).join("-")}` : bare;
 };
+export const filterInstalledIcons = (names, hasCollection) => names.filter((name) => {
+  const prefix = name.split(":")[0];
+  return name.includes(":") && !!prefix && hasCollection(prefix);
+});

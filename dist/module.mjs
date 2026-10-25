@@ -4,7 +4,7 @@ import { readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { defaultTheme } from '../dist/runtime/theme.js';
-import { collectConfiguredIcons, toBundleIconName } from '../dist/runtime/internal/configured-icons.js';
+import { collectConfiguredIcons, toBundleIconName, filterInstalledIcons } from '../dist/runtime/internal/configured-icons.js';
 
 const ICONS = [
   "lucide:calendar",
@@ -77,7 +77,10 @@ const module$1 = defineNuxtModule({
     iconOptions.icon ||= {};
     iconOptions.icon.clientBundle ||= {};
     iconOptions.icon.clientBundle.icons = [
-      .../* @__PURE__ */ new Set([...iconOptions.icon.clientBundle.icons ?? [], ...ICONS, ...configured])
+      .../* @__PURE__ */ new Set([
+        ...iconOptions.icon.clientBundle.icons ?? [],
+        ...filterInstalledIcons([...ICONS, ...configured], hasCollection)
+      ])
     ];
     nuxt.options.build.transpile.push("@vuepic/vue-datepicker");
     const installed = import.meta.url.includes("node_modules");
