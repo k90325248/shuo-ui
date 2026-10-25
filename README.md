@@ -1,11 +1,11 @@
 # @shuo/ui
 
-基於 [Nuxt UI](https://ui.nuxt.com) 的表單元件庫，以 Nuxt Module 提供。包含 11 個表單輸入元件、查詢條件卡片、清單卡片、表格與資訊提示，並附 Valibot 驗證規則與日期、數字等工具函式。
+基於 [Nuxt UI](https://ui.nuxt.com) 的表單元件庫，以 Nuxt Module 提供。包含 11 個表單輸入元件、查詢條件卡片、清單卡片、表格、資訊提示與提示，並附 Valibot 驗證規則與日期、數字等工具函式。
 
-- 預設繁體中文文案，可由模組設定覆寫
+- 預設繁體中文，內建英文，跟隨 Nuxt UI 的語系（`<UApp :locale>`）切換；文案可依語系覆寫
 - 樣式使用 Nuxt UI 語意色與 CSS 變數，顏色與主題由使用的專案決定
 - 一致的尺寸、停用、載入中（`loading`）與骨架（`skeleton`）行為
-- 型別完整，元件、utils 與 composables 皆自動匯入
+- 型別完整，元件與常用工具函式（驗證規則、日期與數字顯示等）皆自動匯入
 
 ## 需求
 
@@ -19,14 +19,14 @@
 ## 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v1.0.1
+pnpm add github:k90325248/shuo-ui#v1.1.0
 ```
 
 指定 tag 以固定版本；升級時改成新的 tag 即可，升級前請先看[更新說明](https://github.com/k90325248/shuo-ui/releases)。其他套件管理工具：
 
 ```bash
-npm install github:k90325248/shuo-ui#v1.0.1
-yarn add github:k90325248/shuo-ui#v1.0.1
+npm install github:k90325248/shuo-ui#v1.1.0
+yarn add github:k90325248/shuo-ui#v1.1.0
 ```
 
 建議一併安裝 lucide 圖示集（`pnpm add @iconify-json/lucide`），元件內建的圖示會打包進網站；沒有安裝時圖示改由 `@nuxt/icon` 在執行時載入。
@@ -64,15 +64,21 @@ pnpm add valibot
 ```vue
 <template>
   <UForm :schema="schema" :state="state" @submit="onSubmit">
+    <!-- 姓名 -->
     <UFormField label="姓名" name="name">
       <ShuoInputText v-model="state.name" />
     </UFormField>
+
+    <!-- 金額 -->
     <UFormField label="金額" name="amount">
       <ShuoInputNumber v-model="state.amount" unit />
     </UFormField>
+
+    <!-- 申請日期 -->
     <UFormField label="申請日期" name="date">
       <ShuoDatepicker v-model="state.date" clearable />
     </UFormField>
+
     <UButton type="submit" label="送出" />
   </UForm>
 </template>
@@ -95,14 +101,14 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(
 
 ## 文件
 
-完整文件見 **[Shuo UI 文件網站](https://k90325248.github.io/shuo-ui/)**，每個元件都有可操作的範例與參數表。
+完整文件見 **[Shuo UI 文件網站](https://k90325248.github.io/shuo-ui/zh-tw)**，每個元件都有可操作的範例與參數表。
 
-| 文件                                                                    | 內容                                                                  |
-| ----------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [元件](https://k90325248.github.io/shuo-ui/components/common)           | 全部元件的用途、v-model、props、slots 與事件，以及沿用 Nuxt UI 的部分 |
-| [日期選擇器](https://k90325248.github.io/shuo-ui/components/datepicker) | 民國年、五種格式、範圍選擇、綁定與驗證                                |
-| [表單驗證](https://k90325248.github.io/shuo-ui/guides/validation)       | Valibot 規則、空值約定、錯誤訊息                                      |
-| [模組選項](https://k90325248.github.io/shuo-ui/guides/module-options)   | 模組選項、主題、CSS 變數、文案覆寫、元件全站預設值、自動匯入 API      |
+| 文件                                                                                       | 內容                                                                  |
+| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| [元件](https://k90325248.github.io/shuo-ui/zh-tw/components/overview/common)               | 全部元件的用途、v-model、props、slots 與事件，以及沿用 Nuxt UI 的部分 |
+| [日期選擇器](https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepicker)         | 民國年、五種格式、範圍選擇、綁定與驗證                                |
+| [表單驗證](https://k90325248.github.io/shuo-ui/zh-tw/getting-started/form/validation)      | Valibot 規則、空值約定、錯誤訊息                                      |
+| [模組選項](https://k90325248.github.io/shuo-ui/zh-tw/getting-started/theme/module-options) | 模組選項、主題、CSS 變數、文案覆寫、元件全站預設值                    |
 
 ## 元件一覽
 
@@ -123,6 +129,7 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(
 | `ShuoListCard`      | 查詢結果清單卡片（標題、表格與後端分頁） | —                                               |
 | `ShuoTable`         | 純表格（無卡片與分頁），含骨架與高度過渡 | —                                               |
 | `ShuoInfoTooltip`   | 資訊圖示加提示                           | —                                               |
+| `ShuoTooltip`       | 提示（UTooltip 加上觸控長按顯示）        | `open`（`boolean`）                             |
 
 ## 版本與升級
 

@@ -6,8 +6,18 @@ export interface DateDisplayOptions {
     mode?: DateMode;
     /** 是否使用民國年，預設開啟 */
     roc?: boolean;
-    /** 年與年月是否加上中文單位，供日期選擇器使用 */
-    yearMonthLabels?: boolean;
+    /**
+     * 年與年月是否加上單位，例如「115 年 10 月」。`true` 使用目前語系的文案（`messages.date`），
+     * 也可直接傳入格式，`{year}`、`{month}` 為年份與兩位數月份。
+     */
+    yearMonthLabels?: boolean | YearMonthLabels;
+}
+/** 年與年月的顯示格式 */
+export interface YearMonthLabels {
+    /** 年，例如 `{year} 年` */
+    year: string;
+    /** 年月，例如 `{year} 年 {month} 月` */
+    month: string;
 }
 /** 各精度的西元日期格式。 */
 export declare const DATE_MODEL_FORMATS: Record<DateMode, string>;

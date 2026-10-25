@@ -1,10 +1,19 @@
-import { defineNuxtModule, createResolver, addComponent, addImportsDir, addPlugin } from '@nuxt/kit';
+import { defineNuxtModule, createResolver, addComponent, addImports, addPlugin } from '@nuxt/kit';
 import { defu } from 'defu';
 import { readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { defaultTheme } from '../dist/runtime/theme.js';
 import { collectConfiguredIcons, toBundleIconName, filterInstalledIcons } from '../dist/runtime/internal/configured-icons.js';
+
+const PUBLIC_IMPORTS = {
+  "validation": ["requiredText", "requiredNumber", "requiredArray", "optionalEmail", "optionalNonNegativeNumber"],
+  "date": ["formatDateDisplay", "parseDateValue"],
+  "number": ["formatNumberDisplay"],
+  "phone": ["splitPhone", "joinPhone"],
+  "months": ["splitMonths", "combineMonths"],
+  "component-defaults": ["resolveShuoDefault", "getShuoComponentDefaults"]
+};
 
 const ICONS = [
   "lucide:calendar",
@@ -29,7 +38,9 @@ const module$1 = defineNuxtModule({
     prefix: "Shuo",
     theme: true,
     css: true,
+    locale: "zh-TW",
     messages: {},
+    locales: {},
     components: {}
   },
   moduleDependencies: {
@@ -50,10 +61,16 @@ const module$1 = defineNuxtModule({
       const name = file.replace(/^Shuo/, "").replace(/\.vue$/, "");
       addComponent({ name: `${options.prefix}${name}`, filePath: resolve(componentsDir, file) });
     }
-    addImportsDir(resolve("./runtime/utils"));
-    addImportsDir(resolve("./runtime/composables"));
-    nuxt.options.runtimeConfig.public.shuoUi = defu(nuxt.options.runtimeConfig.public.shuoUi, {
+    addImports(
+      Object.entries(PUBLIC_IMPORTS).flatMap(
+        ([file, names]) => names.map((name) => ({ name, from: resolve(`./runtime/utils/${file}`) }))
+      )
+    );
+    const publicConfig = nuxt.options.runtimeConfig.public;
+    publicConfig.shuoUi = defu(publicConfig.shuoUi, {
+      locale: options.locale,
       messages: options.messages,
+      locales: options.locales,
       components: options.components
     });
     addPlugin(resolve("./runtime/plugin"));

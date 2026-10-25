@@ -43,7 +43,7 @@
 
           <!-- 查詢完成但沒有符合資料時的提示 -->
           <template #empty>
-            <slot name="empty">{{ empty }}</slot>
+            <slot name="empty">{{ emptyText }}</slot>
           </template>
         </UTable>
       </div>
@@ -52,17 +52,22 @@
 </template>
 
 <script setup>
-import { getShuoMessages } from "../utils/messages";
+import { useMessageDefault, useShuoMessages } from "../internal/useShuoLocale";
 const props = defineProps({
   data: { type: Array, required: true },
   columns: { type: Array, required: true },
   loading: { type: Boolean, required: false, default: false },
-  empty: { type: String, required: false, default: () => getShuoMessages().table.empty },
+  empty: { type: String, required: false },
   transition: { type: Boolean, required: false, default: true },
   tableProps: { type: Object, required: false, default: void 0 }
 });
 const slots = useSlots();
-const messages = getShuoMessages();
+const messages = useShuoMessages();
+const emptyText = useMessageDefault(
+  () => props.empty,
+  (m) => m.table.empty,
+  messages
+);
 const tableContent = useTemplateRef("tableContent");
 const tableHeight = ref();
 let tableResizeObserver;

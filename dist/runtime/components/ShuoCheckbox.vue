@@ -1,7 +1,7 @@
 <template>
   <!-- 文字省略時顯示完整內容；外層頂端對齊，避免勾選圖示改變基線而使所在行高跳動 -->
-  <UTooltip
-    :text="label"
+  <ShuoTooltip
+    :text="labelText"
     :delay-duration="0"
     :disabled="skeleton || !isTruncated"
     :open="!skeleton && isTruncated && tooltipOpen"
@@ -21,7 +21,7 @@
         :id="id"
         v-model="modelValue"
         v-skeleton="skeleton"
-        :label="label"
+        :label="labelText"
         :true-value="resolved.trueValue"
         :false-value="resolved.falseValue"
         :value="String(resolved.trueValue)"
@@ -37,7 +37,7 @@
       >
         <!-- 文字旁的附加內容（例如輸入框）；點擊非互動區域不會改變勾選 -->
         <template v-if="slots.append" #label>
-          <span :id="labelId" data-choice-label>{{ label }}</span>
+          <span :id="labelId" data-choice-label>{{ labelText }}</span>
           <span data-choice-append @click="onAppendClick">
             <slot name="append" v-bind="appendProps" />
           </span>
@@ -54,12 +54,12 @@
         aria-hidden="true"
       />
     </span>
-  </UTooltip>
+  </ShuoTooltip>
 </template>
 
 <script setup>
 import { useTruncatedText } from "../composables/useTruncatedText";
-import { getShuoMessages } from "../utils/messages";
+import { useMessageDefault } from "../internal/useShuoLocale";
 import { vSkeleton } from "../directives/skeleton";
 import { useChoiceAppend } from "../composables/useChoiceAppend";
 import { tv } from "@nuxt/ui/utils/tv";
@@ -68,6 +68,7 @@ import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps } from "../internal/useShuoComponentProps";
 import { useControlSize } from "../internal/useControlSize";
 import { omitChoiceAttrs } from "../internal/choice-attrs";
+import ShuoTooltip from "./ShuoTooltip.vue";
 const theme = tv({ slots: { wrapper: "relative inline-flex w-fit max-w-full min-w-0 align-top" } });
 defineOptions({ inheritAttrs: false });
 const props = defineProps({
@@ -76,7 +77,7 @@ const props = defineProps({
   disabled: { type: Boolean, required: false, default: void 0 },
   color: { type: null, required: false },
   skeleton: { type: Boolean, required: false },
-  label: { type: String, required: false, default: () => getShuoMessages().checkbox.label },
+  label: { type: String, required: false },
   trueValue: { type: [String, Number, Boolean], required: false, default: BUILT_IN_DEFAULTS.checkbox.trueValue },
   falseValue: { type: [String, Number, Boolean], required: false, default: BUILT_IN_DEFAULTS.checkbox.falseValue },
   loading: { type: Boolean, required: false },
@@ -90,7 +91,10 @@ const resolved = useShuoComponentProps("checkbox", props);
 const controlSize = useControlSize("checkbox", props);
 const root = useTemplateRef("root");
 const labelId = `${useId()}-label`;
-const labelText = computed(() => props.label);
+const labelText = useMessageDefault(
+  () => props.label,
+  (m) => m.checkbox.label
+);
 const loadingIconSize = computed(
   () => ({ xs: "size-3", sm: "size-3.5", md: "size-4", lg: "size-4.5", xl: "size-5" })[controlSize.value]
 );
@@ -108,7 +112,7 @@ const checkboxUi = computed(() => {
 const styles = theme();
 const { formDisabled, onAppendClick, activate } = useChoiceAppend(() => root.value, {
   enabled: () => !!slots.append,
-  source: () => props.label
+  source: () => labelText.value
 });
 const isChecked = computed(() => modelValue.value === resolved.trueValue);
 const appendProps = computed(() => ({

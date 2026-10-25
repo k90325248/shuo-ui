@@ -49,7 +49,8 @@ export const BUILT_IN_DEFAULTS = {
     transition: true,
     ui: void 0
   },
-  infoTooltip: { icon: "i-lucide-circle-alert" }
+  infoTooltip: { icon: "i-lucide-circle-alert" },
+  tooltip: { touch: true }
 };
 const isPlainObject = (value) => typeof value === "object" && value !== null && !Array.isArray(value);
 let current = {};

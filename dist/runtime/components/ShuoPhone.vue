@@ -47,7 +47,7 @@
 import { tv } from "@nuxt/ui/utils/tv";
 import { mergeUi } from "../utils/ui";
 import { useFormField } from "@nuxt/ui/composables";
-import { getShuoMessages } from "../utils/messages";
+import { useShuoMessages } from "../internal/useShuoLocale";
 import { vSkeleton } from "../directives/skeleton";
 import { filterPhoneInput, joinPhone, splitPhone } from "../utils/phone";
 import { useControlSize } from "../internal/useControlSize";
@@ -72,7 +72,7 @@ const props = defineProps({
   loading: { type: Boolean, required: false },
   ui: { type: Object, required: false }
 });
-const messages = getShuoMessages();
+const messages = useShuoMessages();
 const modelValue = defineModel({ type: String });
 const areaCode = defineModel("areaCode", { type: String });
 const number = defineModel("number", { type: String });

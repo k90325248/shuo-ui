@@ -13,7 +13,7 @@
     :aria-busy="loading || void 0"
     v-bind="$attrs"
     class="form-input-text"
-    :class="{ 'form-input-text--masked': partialMask }"
+    :class="{ 'form-input-text--partial': partialMaskEnabled, 'form-input-text--masked': partialMask }"
     :type="mask === true && !revealed ? 'password' : 'text'"
     :ui="inputUi"
     @input="syncDisplay"
@@ -81,7 +81,7 @@
 </template>
 
 <script setup>
-import { getShuoMessages } from "../utils/messages";
+import { useShuoMessages } from "../internal/useShuoLocale";
 import { vSkeleton } from "../directives/skeleton";
 import { getMaskCount, splitMaskedText } from "../utils/text-mask";
 import { mergeUi } from "../utils/ui";
@@ -115,7 +115,7 @@ const slots = defineSlots();
 const resolved = useShuoComponentProps("inputText", props);
 const controlSize = useControlSize("inputText", props);
 const appConfig = useAppConfig();
-const messages = getShuoMessages();
+const messages = useShuoMessages();
 const control = useTemplateRef("control");
 const revealed = ref(false);
 const displayValue = ref(modelValue.value ?? "");
@@ -133,7 +133,8 @@ const inputUi = computed(
 );
 const maskEnabled = computed(() => getMaskCount(props.mask) > 0);
 const showMaskToggle = computed(() => maskEnabled.value && !resolved.hideMaskToggle);
-const partialMask = computed(() => maskEnabled.value && props.mask !== true && !revealed.value);
+const partialMaskEnabled = computed(() => maskEnabled.value && props.mask !== true);
+const partialMask = computed(() => partialMaskEnabled.value && !revealed.value);
 const maskedParts = computed(() => splitMaskedText(displayValue.value, props.mask));
 const syncDisplay = () => {
   const input = control.value?.inputRef;
@@ -181,6 +182,9 @@ defineExpose({ inputRef: computed(() => control.value?.inputRef ?? null) });
 </script>
 
 <style scoped>
+.form-input-text--partial :deep(input) {
+  transition-property: background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+}
 .form-input-text--masked :deep(input) {
   color: transparent !important;
   caret-color: var(--ui-text-highlighted);

@@ -10,8 +10,12 @@ interface ModuleOptions {
     theme: boolean;
     /** 是否載入預設的 CSS 變數（`--ui-form-*`），設為 false 則由專案自行定義。 */
     css: boolean;
-    /** 內建文案覆寫（驗證訊息、aria-label、提示文字等），只需提供想修改的項目。 */
+    /** 預設語系代碼，頁面沒有設定 Nuxt UI 語系（`<UApp :locale>`）時使用；內建 `zh-TW`、`en`。 */
+    locale: string;
+    /** 預設語系的文案覆寫（驗證訊息、aria-label、提示文字等），只需提供想修改的項目。 */
     messages: ShuoMessagesOverride;
+    /** 依語系代碼覆寫文案，例如 `{ en: { queryCard: { title: 'Search' } } }`；也可加入內建以外的語系。 */
+    locales: Record<string, ShuoMessagesOverride>;
     /** 元件全站預設值，依元件分區設定白名單內的 prop；明確傳入的 prop 仍然優先。 */
     components: ShuoComponentDefaults;
 }

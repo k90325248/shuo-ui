@@ -59,7 +59,7 @@
 <script setup>
 import { tv } from "@nuxt/ui/utils/tv";
 import { mergeUi } from "../utils/ui";
-import { getShuoMessages } from "../utils/messages";
+import { useShuoMessages } from "../internal/useShuoLocale";
 import { vSkeleton } from "../directives/skeleton";
 import { formatNumberDisplay, getDecimalPlaces, toNumberText } from "../utils/number";
 import { isNumberDraft, mapNumberInputPosition } from "../utils/number-input";
@@ -103,7 +103,8 @@ const control = useTemplateRef("control");
 const trailing = useTemplateRef("trailing");
 const trailingWidth = ref(0);
 let trailingObserver;
-const unitText = computed(() => resolved.unit === true ? getShuoMessages().inputNumber.unit : resolved.unit || "");
+const messages = useShuoMessages();
+const unitText = computed(() => resolved.unit === true ? messages.value.inputNumber.unit : resolved.unit || "");
 const inputUi = computed(() => {
   const { suffix: _suffix, unit: _unit, ...ui } = props.ui ?? {};
   return mergeUi(BUILTIN_UI, ui);

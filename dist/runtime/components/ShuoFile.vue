@@ -1,5 +1,5 @@
 <template>
-  <UTooltip
+  <ShuoTooltip
     :text="filename"
     :delay-duration="0"
     :disabled="skeleton || !isTruncated"
@@ -28,7 +28,7 @@
         :color="fieldColor"
         :highlight="fieldHighlight"
         :disabled="blocked"
-        :placeholder="isDisabled ? '' : placeholder"
+        :placeholder="isDisabled ? '' : placeholderText"
         :aria-busy="loading || void 0"
         readonly
         :ui="inputUi"
@@ -88,11 +88,11 @@
         </template>
       </UInput>
     </span>
-  </UTooltip>
+  </ShuoTooltip>
 </template>
 
 <script setup>
-import { getShuoMessages } from "../utils/messages";
+import { useMessageDefault, useShuoMessages } from "../internal/useShuoLocale";
 import { vSkeleton } from "../directives/skeleton";
 import { tv } from "@nuxt/ui/utils/tv";
 import { mergeUi } from "../utils/ui";
@@ -101,12 +101,13 @@ import { useTruncatedText } from "../composables/useTruncatedText";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps } from "../internal/useShuoComponentProps";
 import { useControlSize } from "../internal/useControlSize";
+import ShuoTooltip from "./ShuoTooltip.vue";
 const theme = tv({ slots: { wrapper: "flex w-full min-w-0 cursor-default" } });
 defineOptions({ inheritAttrs: false });
 const props = defineProps({
   skeleton: { type: Boolean, required: false },
   accept: { type: String, required: false },
-  placeholder: { type: String, required: false, default: () => getShuoMessages().file.placeholder },
+  placeholder: { type: String, required: false },
   fileName: { type: String, required: false },
   fileUrl: { type: String, required: false },
   size: { type: null, required: false },
@@ -132,7 +133,12 @@ const resolved = useShuoComponentProps("file", props);
 const controlSize = useControlSize("file", props);
 const appConfig = useAppConfig();
 const toast = useToast();
-const messages = getShuoMessages();
+const messages = useShuoMessages();
+const placeholderText = useMessageDefault(
+  () => props.placeholder,
+  (m) => m.file.placeholder,
+  messages
+);
 const picker = useTemplateRef("picker");
 const control = useTemplateRef("control");
 const root = useTemplateRef("root");
@@ -207,8 +213,8 @@ const downloadFile = async () => {
   } catch {
     if (!controller.signal.aborted)
       toast.add({
-        title: messages.file.downloadFailedTitle,
-        description: messages.file.downloadFailedDescription,
+        title: messages.value.file.downloadFailedTitle,
+        description: messages.value.file.downloadFailedDescription,
         color: "error"
       });
   } finally {

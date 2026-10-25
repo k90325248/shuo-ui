@@ -4,12 +4,12 @@
     <template #header>
       <div data-slot="bar" :class="styles.bar({ class: queryUi?.bar })">
         <UIcon v-if="queryIcon" :name="queryIcon" data-slot="icon" :class="styles.icon({ class: queryUi?.icon })" />
-        <h2 data-slot="title" :class="styles.title({ class: queryUi?.title })">{{ title }}</h2>
+        <h2 data-slot="title" :class="styles.title({ class: queryUi?.title })">{{ titleText }}</h2>
 
         <!-- 展開／收合按鈕 -->
         <UButton
           :icon="toggleIcon"
-          :aria-label="`${open ? messages.queryCard.collapse : messages.queryCard.expand}${title}`"
+          :aria-label="`${open ? messages.queryCard.collapse : messages.queryCard.expand}${titleText}`"
           :aria-expanded="open"
           :aria-controls="formId"
           color="neutral"
@@ -72,14 +72,19 @@
 </template>
 
 <script setup>
-import { getShuoMessages } from "../utils/messages";
+import { useMessageDefault, useShuoMessages } from "../internal/useShuoLocale";
 import { tv } from "@nuxt/ui/utils/tv";
 import { mergeUi } from "../utils/ui";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps } from "../internal/useShuoComponentProps";
-const messages = getShuoMessages();
+const messages = useShuoMessages();
+const titleText = useMessageDefault(
+  () => props.title,
+  (m) => m.queryCard.title,
+  messages
+);
 const props = defineProps({
-  title: { type: String, required: false, default: () => getShuoMessages().queryCard.title },
+  title: { type: String, required: false },
   icon: { type: String, required: false, default: BUILT_IN_DEFAULTS.queryCard.icon },
   expandIcon: { type: String, required: false, default: BUILT_IN_DEFAULTS.queryCard.expandIcon },
   collapseIcon: { type: String, required: false, default: BUILT_IN_DEFAULTS.queryCard.collapseIcon },

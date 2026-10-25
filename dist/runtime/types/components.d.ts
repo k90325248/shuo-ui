@@ -1,4 +1,4 @@
-import type { CardProps, CheckboxEmits as NuxtCheckboxEmits, CheckboxGroupEmits as NuxtCheckboxGroupEmits, CheckboxGroupProps as NuxtCheckboxGroupProps, CheckboxProps as NuxtCheckboxProps, EmitsToProps, FormProps, FormSchema, GetItemKeys, InputEmits, InputProps, RadioGroupEmits as NuxtRadioGroupEmits, RadioGroupProps as NuxtRadioGroupProps, SelectMenuEmits as USelectMenuEmits, SelectMenuItem, SelectMenuProps as USelectMenuProps, SlotClass, TableColumn, TableData, TableProps, TextareaEmits as NuxtTextareaEmits, TextareaProps as NuxtTextareaProps, TooltipProps } from '@nuxt/ui';
+import type { CardProps, CheckboxEmits as NuxtCheckboxEmits, CheckboxGroupEmits as NuxtCheckboxGroupEmits, CheckboxGroupProps as NuxtCheckboxGroupProps, CheckboxProps as NuxtCheckboxProps, EmitsToProps, FormProps, FormSchema, GetItemKeys, InputEmits, InputProps, RadioGroupEmits as NuxtRadioGroupEmits, RadioGroupProps as NuxtRadioGroupProps, SelectMenuEmits as USelectMenuEmits, SelectMenuItem, SelectMenuProps as USelectMenuProps, SlotClass, TableColumn, TableData, TableProps, TextareaEmits as NuxtTextareaEmits, TextareaProps as NuxtTextareaProps, TooltipProps as NuxtTooltipProps } from '@nuxt/ui';
 import type { DateValue } from '@vuepic/vue-datepicker';
 import type { ChoiceGroupBreakpoint, ChoiceGroupOrientation } from '../composables/useChoiceGroup.js';
 import type { DatepickerMode, DatepickerValue } from '../utils/datepicker.js';
@@ -435,6 +435,25 @@ export interface DatepickerProps<TRange extends boolean = false> {
     /** 綁定值的日期分隔符號，預設 '/'；不可為空或含數字、空白、冒號，無效時沿用預設並警告。 */
     separator?: string;
 }
+/**
+ * 沿用 Nuxt UI 提示的參數，僅供型別推導；值經 `$attrs` 轉給 UTooltip。
+ * 開啟狀態與停用由元件自行處理，才能加入觸控長按。
+ */
+type InheritedTooltipProps = Omit<NuxtTooltipProps, keyof TooltipOwnProps>;
+/** 提示參數；未列出的 Nuxt UI 提示參數（text、kbds、content、arrow、delayDuration 等）皆可直接使用 */
+export interface TooltipProps extends /* @vue-ignore */ InheritedTooltipProps, TooltipOwnProps {
+}
+/** 提示自行宣告的參數 */
+interface TooltipOwnProps {
+    /** 是否開啟，可用 `v-model:open` 綁定；未綁定時由元件自行管理 */
+    open?: boolean;
+    /** 未綁定 `open` 時的初始開啟狀態 */
+    defaultOpen?: boolean;
+    /** 是否停用提示 */
+    disabled?: boolean;
+    /** 是否可在觸控裝置長按觸發元素顯示提示；關閉時與 Nuxt UI 相同，觸控無法開啟 */
+    touch?: boolean;
+}
 /** 資訊提示樣式覆寫 */
 export interface InfoTooltipUi {
     /** 觸發按鈕 */
@@ -444,7 +463,7 @@ export interface InfoTooltipUi {
     /** 提示內容外層，處理換行與斷字 */
     text?: SlotClass;
     /** 提示框，同 Nuxt UI Tooltip 的 ui */
-    tooltip?: TooltipProps['ui'];
+    tooltip?: NuxtTooltipProps['ui'];
 }
 /** 資訊提示參數 */
 export interface InfoTooltipProps {

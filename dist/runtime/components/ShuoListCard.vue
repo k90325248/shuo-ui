@@ -11,7 +11,7 @@
           :class="styles.icon({ class: listUi?.icon })"
         />
         <h2 data-slot="title" :class="styles.title({ class: listUi?.title })">
-          <slot name="title">{{ title }}</slot>
+          <slot name="title">{{ titleText }}</slot>
         </h2>
         <!-- 空間不足時整塊換到下一行並靠右 -->
         <div
@@ -72,13 +72,13 @@
 </template>
 
 <script setup>
-import { getShuoMessages } from "../utils/messages";
+import { useMessageDefault, useShuoMessages } from "../internal/useShuoLocale";
 import { tv } from "@nuxt/ui/utils/tv";
 import ShuoTable from "./ShuoTable.vue";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps } from "../internal/useShuoComponentProps";
 const props = defineProps({
-  title: { type: String, required: false, default: () => getShuoMessages().listCard.title },
+  title: { type: String, required: false },
   icon: { type: String, required: false, default: BUILT_IN_DEFAULTS.listCard.icon },
   data: { type: Array, required: true },
   columns: { type: Array, required: true },
@@ -97,7 +97,12 @@ const emit = defineEmits(["page-change"]);
 const resolved = useShuoComponentProps("listCard", props);
 const listUi = computed(() => resolved.ui);
 const slots = useSlots();
-const messages = getShuoMessages();
+const messages = useShuoMessages();
+const titleText = useMessageDefault(
+  () => props.title,
+  (m) => m.listCard.title,
+  messages
+);
 const styles = tv({
   slots: {
     bar: "flex min-h-8 flex-wrap items-center gap-2",
@@ -114,7 +119,7 @@ const rangeEnd = computed(
 );
 const summaryParts = computed(() => {
   const values = { total: props.total, start: rangeStart.value, end: rangeEnd.value };
-  return messages.listCard.summary.split(/(\{(?:total|start|end)\})/).filter(Boolean).map((text) => {
+  return messages.value.listCard.summary.split(/(\{(?:total|start|end)\})/).filter(Boolean).map((text) => {
     const key = text.match(/^\{(\w+)\}$/)?.[1];
     return key ? { text: String(values[key]), value: true } : { text, value: false };
   });

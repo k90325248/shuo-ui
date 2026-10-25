@@ -10,7 +10,7 @@ import {
 export const isEmptyDatepickerValue = (value) => value === null || value === void 0 || value === "" || Array.isArray(value) && value.length === 0;
 export const DATEPICKER_MODEL_FORMATS = DATE_MODEL_FORMATS;
 export const parseDatepickerValue = parseDateValue;
-export const formatDatepickerDisplay = (date, mode, roc) => formatDateDisplay(date, { mode, roc, yearMonthLabels: true });
+export const formatDatepickerDisplay = (date, mode, roc, labels = true) => formatDateDisplay(date, { mode, roc, yearMonthLabels: labels });
 export const normalizeDatepickerValue = (value, mode, roc, separator = DEFAULT_DATE_SEPARATOR) => {
   const candidate = mode === "year" && typeof value === "number" ? String(value).padStart(4, "0") : value;
   if (typeof candidate !== "string") return null;

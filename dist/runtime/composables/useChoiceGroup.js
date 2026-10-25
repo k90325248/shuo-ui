@@ -37,12 +37,19 @@ export const useChoiceGroup = (props) => {
     isTruncated.value = !!label && label.scrollWidth > label.clientWidth;
     if (!isTruncated.value) tooltipOpen.value = false;
   };
-  const showOptionTooltip = (event) => {
-    if ("pointerType" in event && event.pointerType === "touch") return;
+  const locateOptionTooltip = (event) => {
     const target = event.target;
     tooltipReference.value = target instanceof Element ? target.closest('[data-slot="item"]') ?? void 0 : void 0;
     measureTooltip();
+  };
+  const showOptionTooltip = (event) => {
+    if ("pointerType" in event && event.pointerType === "touch") return;
+    locateOptionTooltip(event);
     tooltipOpen.value = isTruncated.value;
+  };
+  const prepareOptionTooltip = (event) => {
+    if (event.pointerType !== "touch") return;
+    locateOptionTooltip(event);
   };
   const closeTooltip = () => {
     tooltipOpen.value = false;
@@ -56,6 +63,7 @@ export const useChoiceGroup = (props) => {
     isTruncated,
     tooltipOpen,
     showOptionTooltip,
+    prepareOptionTooltip,
     closeTooltip
   };
 };

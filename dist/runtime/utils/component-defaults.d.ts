@@ -86,6 +86,9 @@ export declare const BUILT_IN_DEFAULTS: {
     infoTooltip: {
         icon: string;
     };
+    tooltip: {
+        touch: true;
+    };
 };
 /** 實際生效的預設值：有內建預設的項目必定有值，內建為 `undefined` 的項目可能仍為 `undefined`。 */
 export type ResolvedShuoDefault<C extends ShuoComponentName, K extends keyof ShuoComponentDefaultsOf<C>> = undefined extends (typeof BUILT_IN_DEFAULTS)[C][K & keyof (typeof BUILT_IN_DEFAULTS)[C]] ? ShuoComponentDefaultsOf<C>[K] : Exclude<ShuoComponentDefaultsOf<C>[K], undefined>;

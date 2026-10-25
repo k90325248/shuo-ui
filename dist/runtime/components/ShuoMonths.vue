@@ -15,6 +15,12 @@
     <!-- 完整寬度量測 -->
     <span ref="widthProbe" class="form-months-width-probe" aria-hidden="true" />
 
+    <!-- 單位寬度量測：依目前語系的「年」「月」文字計算完整寬度 -->
+    <span ref="unitProbe" class="form-months-unit-probe" aria-hidden="true">
+      <span :class="styles.unit({ class: ui?.unit })">{{ messages.months.yearUnit }}</span>
+      <span :class="styles.unit({ class: ui?.unit })">{{ messages.months.monthUnit }}</span>
+    </span>
+
     <!-- 窄容器以總月數輸入 -->
     <UInput
       v-if="compact"
@@ -50,7 +56,9 @@
       @update:model-value="yearInput = String($event)"
       @blur="commit"
     />
-    <span v-if="!compact" data-slot="unit" :class="styles.unit({ class: ui?.unit })">年</span>
+    <span v-if="!compact" data-slot="unit" :class="styles.unit({ class: ui?.unit })">
+      {{ messages.months.yearUnit }}
+    </span>
 
     <!-- 月數 -->
     <UInput
@@ -69,7 +77,9 @@
       @update:model-value="monthInput = String($event)"
       @blur="commit"
     />
-    <span data-testid="months-unit" data-slot="unit" :class="styles.unit({ class: ui?.unit })">月</span>
+    <span data-testid="months-unit" data-slot="unit" :class="styles.unit({ class: ui?.unit })">
+      {{ messages.months.monthUnit }}
+    </span>
 
     <!-- 載入中圖示接在「月」後面，整組寬度同步加上圖示空間 -->
     <UIcon
@@ -86,14 +96,14 @@
 import { tv } from "@nuxt/ui/utils/tv";
 import { mergeUi } from "../utils/ui";
 import { useFormField } from "@nuxt/ui/composables";
-import { getShuoMessages } from "../utils/messages";
+import { useShuoMessages } from "../internal/useShuoLocale";
 import { vSkeleton } from "../directives/skeleton";
 import { combineMonths, splitMonths } from "../utils/months";
 import { useControlSize } from "../internal/useControlSize";
 const theme = tv({
   slots: {
     root: "relative inline-flex w-(--months-full-width) max-w-full min-w-0 items-center gap-2 overflow-hidden text-base",
-    unit: "w-[1em] flex-none whitespace-nowrap"
+    unit: "min-w-[1em] flex-none whitespace-nowrap"
   },
   variants: { size: { xs: { root: "text-sm" }, sm: { root: "text-sm" }, md: "", lg: "", xl: "" } }
 });
@@ -123,7 +133,7 @@ const monthModel = defineModel("month", { type: [Number, null] });
 const instance = getCurrentInstance();
 const generatedId = useId();
 const appConfig = useAppConfig();
-const messages = getShuoMessages();
+const messages = useShuoMessages();
 const {
   id: fieldId,
   color: fieldColor,
@@ -137,6 +147,7 @@ const monthInput = ref("");
 const totalInput = ref("");
 const root = useTemplateRef("root");
 const widthProbe = useTemplateRef("widthProbe");
+const unitProbe = useTemplateRef("unitProbe");
 const compact = ref(false);
 let resizeObserver;
 let synced = [];
@@ -186,8 +197,14 @@ const commit = async (event) => {
   await nextTick();
   emitFormChange();
 };
+const measureUnits = () => {
+  if (!root.value || !unitProbe.value) return;
+  const width = [...unitProbe.value.children].reduce((sum, unit) => sum + unit.getBoundingClientRect().width, 0);
+  root.value.style.setProperty("--months-units-width", `${width}px`);
+};
 const updateLayout = () => {
   if (!root.value || !widthProbe.value) return;
+  measureUnits();
   const nextCompact = root.value.clientWidth < widthProbe.value.getBoundingClientRect().width - 1;
   if (nextCompact === compact.value) return;
   applyValue(compact.value ? splitDraft() : combineDraft());
@@ -204,9 +221,11 @@ watch(
   },
   { immediate: true }
 );
+watch(() => [messages.value.months.yearUnit, messages.value.months.monthUnit], updateLayout, { flush: "post" });
 onMounted(() => {
   resizeObserver = new ResizeObserver(updateLayout);
   if (root.value) resizeObserver.observe(root.value);
+  if (unitProbe.value) resizeObserver.observe(unitProbe.value);
   if (widthProbe.value) resizeObserver.observe(widthProbe.value);
   updateLayout();
 });
@@ -218,7 +237,8 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   --months-input-padding: 1.5rem;
   --months-loading-size: 1.25rem;
   --months-full-width: calc(
-    4ch + var(--months-input-padding) * 2 + 4px + 2em + 1.5rem + var(--months-loading-space, 0px)
+    4ch + var(--months-input-padding) * 2 + 4px + var(--months-units-width, 2em) + 1.5rem +
+      var(--months-loading-space, 0px)
   );
 }
 .form-months .form-months-width-probe {
@@ -227,6 +247,13 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   height: 0;
   visibility: hidden;
   pointer-events: none;
+}
+.form-months .form-months-unit-probe {
+  position: absolute;
+  display: flex;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
 }
 .form-months .form-months-loading {
   width: var(--months-loading-size);

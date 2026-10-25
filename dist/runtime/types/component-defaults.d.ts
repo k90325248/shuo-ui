@@ -1,4 +1,4 @@
-import type { CheckboxGroupProps, CheckboxProps, DatepickerProps, FileProps, InfoTooltipProps, InputNumberProps, InputTextProps, ListCardProps, MonthsProps, PhoneProps, QueryCardProps, RadioGroupProps, SelectMenuProps, TextareaProps } from './components.js';
+import type { CheckboxGroupProps, CheckboxProps, DatepickerProps, FileProps, InfoTooltipProps, InputNumberProps, InputTextProps, ListCardProps, MonthsProps, PhoneProps, QueryCardProps, RadioGroupProps, SelectMenuProps, TextareaProps, TooltipProps } from './components.js';
 /** 可設定全站預設值的 prop 白名單；型別與執行時過濾共用這份清單。 */
 export declare const COMPONENT_DEFAULT_KEYS: {
     readonly inputText: readonly ["size", "hideMaskToggle", "revealIcon", "concealIcon"];
@@ -15,6 +15,7 @@ export declare const COMPONENT_DEFAULT_KEYS: {
     readonly queryCard: readonly ["icon", "expandIcon", "collapseIcon", "validateOn", "ui"];
     readonly listCard: readonly ["icon", "pageSize", "showPagination", "showSummary", "transition", "ui"];
     readonly infoTooltip: readonly ["icon"];
+    readonly tooltip: readonly ["touch"];
 };
 /** 元件鍵名與 props 型別對照 */
 interface ShuoComponentPropsMap {
@@ -46,6 +47,8 @@ interface ShuoComponentPropsMap {
     listCard: ListCardProps;
     /** 資訊提示 */
     infoTooltip: InfoTooltipProps;
+    /** 提示 */
+    tooltip: TooltipProps;
 }
 /** 可全站設定的元件鍵名 */
 export type ShuoComponentName = keyof typeof COMPONENT_DEFAULT_KEYS;

@@ -1,5 +1,5 @@
 <template>
-  <UTooltip
+  <ShuoTooltip
     :text="tooltipText"
     :delay-duration="0"
     :disabled="skeleton || !isTruncated || isMenuOpen"
@@ -23,7 +23,7 @@
       <!-- 日曆固定六週，避免不同月份的週數改變彈窗高度。 -->
       <VueDatePicker
         ref="picker"
-        :key="`${mode}-${rocDisplay}-${range}`"
+        :key="`${mode}-${rocDisplay}-${range}-${locale.code}`"
         v-model="pickerValue"
         class="form-datepicker form-datepicker-theme"
         :class="`form-datepicker--${controlSize}`"
@@ -36,7 +36,7 @@
   autocomplete: 'off'
 }"
         :aria-labels="ariaLabels"
-        :locale="zhTW"
+        :locale="locale.dateLocale"
         :year-picker="mode === 'year'"
         :month-picker="mode === 'month'"
         :time-config="timeConfig"
@@ -105,11 +105,12 @@
         />
       </span>
     </span>
-  </UTooltip>
+  </ShuoTooltip>
 </template>
 
 <script setup>
-import { formatMessage, getShuoMessages } from "../utils/messages";
+import { formatMessage } from "../utils/messages";
+import { useShuoLocale } from "../internal/useShuoLocale";
 import { vSkeleton } from "../directives/skeleton";
 import { useTruncatedText } from "../composables/useTruncatedText";
 import { VueDatePicker } from "@vuepic/vue-datepicker";
@@ -133,11 +134,11 @@ import {
   isValidDateSeparator,
   parseDateValue
 } from "../utils/date";
-import { zhTW } from "date-fns/locale";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps } from "../internal/useShuoComponentProps";
 import { useControlSize } from "../internal/useControlSize";
+import ShuoTooltip from "./ShuoTooltip.vue";
 defineOptions({ inheritAttrs: false });
 const props = defineProps({
   skeleton: { type: Boolean, required: false },
@@ -181,33 +182,34 @@ const calendarIcon = computed(() => resolved.calendarIcon);
 const clearIcon = computed(() => resolved.clearIcon);
 const controlSize = useControlSize("datepicker", props);
 const display = tv({ base: "form-datepicker-display relative block w-full min-w-0" });
-const messages = getShuoMessages();
-const timeUnitLabel = (type) => messages.datepicker[type];
+const locale = useShuoLocale();
+const messages = computed(() => locale.value.messages);
+const timeUnitLabel = (type) => messages.value.datepicker[type];
 const MIN_DATE_MODES = ["date", "datetime", "datetime-second"];
 const MIN_DATE_SEPARATORS = [DEFAULT_DATE_SEPARATOR, "-"];
-const ariaLabels = {
+const ariaLabels = computed(() => ({
   // 保留原生 label 的名稱，避免套件預設的英文 aria-label 蓋過外部標籤。
   input: void 0,
-  menu: messages.datepicker.menu,
-  calendarIcon: messages.datepicker.calendarIcon,
-  clearInput: messages.datepicker.clearInput,
-  toggleOverlay: messages.datepicker.toggleOverlay,
-  monthPicker: () => messages.datepicker.monthPicker,
-  yearPicker: () => messages.datepicker.yearPicker,
-  nextMonth: messages.datepicker.nextMonth,
-  prevMonth: messages.datepicker.prevMonth,
-  nextYear: messages.datepicker.nextYear,
-  prevYear: messages.datepicker.prevYear,
-  openMonthsOverlay: messages.datepicker.openMonthsOverlay,
-  openYearsOverlay: messages.datepicker.openYearsOverlay,
-  openTimePicker: messages.datepicker.openTimePicker,
-  closeTimePicker: messages.datepicker.closeTimePicker,
-  timePicker: messages.datepicker.timePicker,
-  openTpOverlay: (type) => formatMessage(messages.datepicker.openTpOverlay, { unit: timeUnitLabel(type) }),
-  timeOverlay: (type) => formatMessage(messages.datepicker.timeOverlay, { unit: timeUnitLabel(type) }),
-  incrementValue: (type) => formatMessage(messages.datepicker.incrementValue, { unit: timeUnitLabel(type) }),
-  decrementValue: (type) => formatMessage(messages.datepicker.decrementValue, { unit: timeUnitLabel(type) })
-};
+  menu: messages.value.datepicker.menu,
+  calendarIcon: messages.value.datepicker.calendarIcon,
+  clearInput: messages.value.datepicker.clearInput,
+  toggleOverlay: messages.value.datepicker.toggleOverlay,
+  monthPicker: () => messages.value.datepicker.monthPicker,
+  yearPicker: () => messages.value.datepicker.yearPicker,
+  nextMonth: messages.value.datepicker.nextMonth,
+  prevMonth: messages.value.datepicker.prevMonth,
+  nextYear: messages.value.datepicker.nextYear,
+  prevYear: messages.value.datepicker.prevYear,
+  openMonthsOverlay: messages.value.datepicker.openMonthsOverlay,
+  openYearsOverlay: messages.value.datepicker.openYearsOverlay,
+  openTimePicker: messages.value.datepicker.openTimePicker,
+  closeTimePicker: messages.value.datepicker.closeTimePicker,
+  timePicker: messages.value.datepicker.timePicker,
+  openTpOverlay: (type) => formatMessage(messages.value.datepicker.openTpOverlay, { unit: timeUnitLabel(type) }),
+  timeOverlay: (type) => formatMessage(messages.value.datepicker.timeOverlay, { unit: timeUnitLabel(type) }),
+  incrementValue: (type) => formatMessage(messages.value.datepicker.incrementValue, { unit: timeUnitLabel(type) }),
+  decrementValue: (type) => formatMessage(messages.value.datepicker.decrementValue, { unit: timeUnitLabel(type) })
+}));
 let lastWarning = "";
 let checkedRange = props.range;
 let syncedEndpoints = "";
@@ -273,7 +275,7 @@ const tooltipText = computed(() => {
   return values.map((value) => {
     const date = parseDatepickerValue(value, props.mode, separator.value);
     return date ? formatDisplay(date) : "";
-  }).join(" \uFF5E ");
+  }).join(messages.value.datepicker.rangeSeparator);
 });
 const emptyValue = () => props.range ? [] : "";
 const hasMainModel = () => {
@@ -307,12 +309,14 @@ const toPickerValue = (value) => {
   return date;
 };
 const validRange = (value) => getDatepickerValueIssue(value, { mode: props.mode, roc: resolved.roc, range: true, separator: separator.value }) ? null : serializeDatepickerRange(value, props.mode, resolved.roc, separator.value);
-const formatYear = (year) => `${formatDateDisplay(String(year).padStart(4, "0"), { mode: "year", roc: resolved.roc })}\u5E74`;
+const formatYear = (year) => formatMessage(messages.value.datepicker.yearOption, {
+  year: formatDateDisplay(String(year).padStart(4, "0"), { mode: "year", roc: resolved.roc })
+});
 const formatDisplay = (value) => {
   if (Array.isArray(value)) {
-    return value.map((date) => date ? formatDatepickerDisplay(date, props.mode, resolved.roc) : "").join(" \uFF5E ");
+    return value.map((date) => date ? formatDatepickerDisplay(date, props.mode, resolved.roc, messages.value.date) : "").join(messages.value.datepicker.rangeSeparator);
   }
-  return formatDatepickerDisplay(value, props.mode, resolved.roc);
+  return formatDatepickerDisplay(value, props.mode, resolved.roc, messages.value.date);
 };
 const centerYear = async (menu) => {
   if (props.mode !== "year") return;

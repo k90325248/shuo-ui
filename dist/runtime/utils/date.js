@@ -1,4 +1,5 @@
 import { format, isValid, parse } from "date-fns";
+import { formatMessage, getShuoMessages } from "./messages.js";
 export const DATE_MODEL_FORMATS = {
   /** 年 */
   "year": "yyyy",
@@ -29,7 +30,8 @@ export const formatDateDisplay = (value, { mode = "date", roc = true, yearMonthL
   const date = normalized instanceof Date ? normalized : parseDateValue(normalized, mode);
   if (!date || !isValid(date) || roc && date.getFullYear() < ROC_START_YEAR) return "";
   const year = roc ? String(date.getFullYear() - ROC_START_YEAR) : format(date, "yyyy");
-  if (mode === "year") return yearMonthLabels ? `${year} \u5E74` : year;
-  if (mode === "month" && yearMonthLabels) return `${year} \u5E74 ${format(date, "MM")} \u6708`;
+  const labels = yearMonthLabels === true ? getShuoMessages().date : yearMonthLabels || void 0;
+  if (mode === "year") return labels ? formatMessage(labels.year, { year }) : year;
+  if (mode === "month" && labels) return formatMessage(labels.month, { year, month: format(date, "MM") });
   return `${year}${format(date, DATE_MODEL_FORMATS[mode].slice(4))}`;
 };

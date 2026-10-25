@@ -12,5 +12,6 @@ export const COMPONENT_DEFAULT_KEYS = {
   datepicker: ["size", "clearable", "calendarIcon", "clearIcon", "roc", "separator", "yearRange"],
   queryCard: ["icon", "expandIcon", "collapseIcon", "validateOn", "ui"],
   listCard: ["icon", "pageSize", "showPagination", "showSummary", "transition", "ui"],
-  infoTooltip: ["icon"]
+  infoTooltip: ["icon"],
+  tooltip: ["touch"]
 };

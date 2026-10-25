@@ -1,5 +1,5 @@
 <template>
-  <UTooltip
+  <ShuoTooltip
     :text="selectedText"
     :delay-duration="0"
     :disabled="skeleton || !isTruncated || isMenuOpen"
@@ -60,23 +60,24 @@
         </template>
 
         <!-- 無選項提示 -->
-        <template v-if="!slots.empty" #empty>無可用選項</template>
+        <template v-if="!slots.empty" #empty>{{ messages.selectMenu.empty }}</template>
       </USelectMenu>
     </span>
-  </UTooltip>
+  </ShuoTooltip>
 </template>
 
 <script setup>
 import { tv } from "@nuxt/ui/utils/tv";
 import { mergeUi } from "../utils/ui";
 import { getByPath } from "../utils/get-by-path";
-import { getShuoMessages } from "../utils/messages";
+import { useShuoMessages } from "../internal/useShuoLocale";
 import { vSkeleton } from "../directives/skeleton";
 import { useTruncatedText } from "../composables/useTruncatedText";
 import { useOptionKeysWarning } from "../internal/useOptionKeysWarning";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps, useShuoPropSource } from "../internal/useShuoComponentProps";
 import { useControlSize } from "../internal/useControlSize";
+import ShuoTooltip from "./ShuoTooltip.vue";
 const BUILTIN_UI = { base: "w-full min-w-0", value: "min-w-0 truncate", placeholder: "min-w-0 truncate" };
 const theme = tv({
   slots: {
@@ -86,7 +87,7 @@ const theme = tv({
   }
 });
 defineOptions({ inheritAttrs: false });
-const messages = getShuoMessages();
+const messages = useShuoMessages();
 const props = defineProps({
   id: { type: String, required: false },
   name: { type: String, required: false },

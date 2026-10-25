@@ -1,5 +1,5 @@
 <template>
-  <UTooltip
+  <ShuoTooltip
     :text="tooltipText"
     :delay-duration="0"
     :reference="tooltipReference"
@@ -29,6 +29,7 @@
       :roving-focus="false"
       v-bind="omitChoiceAttrs($attrs)"
       :ui="groupUi"
+      @pointerdown="prepareOptionTooltip"
       @pointermove="showOptionTooltip"
       @pointerleave="closeTooltip"
       @focusin="showOptionTooltip"
@@ -58,7 +59,7 @@
         />
       </template>
     </UCheckboxGroup>
-  </UTooltip>
+  </ShuoTooltip>
 </template>
 
 <script setup>
@@ -72,6 +73,7 @@ import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps, useShuoPropSource } from "../internal/useShuoComponentProps";
 import { omitChoiceAttrs } from "../internal/choice-attrs";
 import { useControlSize } from "../internal/useControlSize";
+import ShuoTooltip from "./ShuoTooltip.vue";
 defineOptions({ inheritAttrs: false });
 const props = defineProps({
   id: { type: String, required: false },
@@ -126,6 +128,7 @@ const {
   isTruncated,
   tooltipOpen,
   showOptionTooltip,
+  prepareOptionTooltip,
   closeTooltip
 } = useChoiceGroup(choiceProps);
 const { formDisabled, onAppendClick, activate } = useChoiceAppend(() => group.value?.$el, {
