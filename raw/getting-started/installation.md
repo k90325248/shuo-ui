@@ -64,18 +64,24 @@ canonical_url: "https://k90325248.github.io/getting-started/installation"
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v1.0.0
+pnpm add github:k90325248/shuo-ui#v1.0.1
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v1.0.0
+npm install github:k90325248/shuo-ui#v1.0.1
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v1.0.0
+yarn add github:k90325248/shuo-ui#v1.0.1
 ```
 
 </code-group>
+
+<tip>
+
+建議一併安裝 lucide 圖示集（`pnpm add @iconify-json/lucide`）：元件內建的圖示（日曆、眼睛、下載等）會打包進網站，不必在執行時從網路載入。沒有安裝時元件仍可使用，圖示改由 `@nuxt/icon` 在執行時載入。
+
+</tip>
 
 ### 啟用模組
 
