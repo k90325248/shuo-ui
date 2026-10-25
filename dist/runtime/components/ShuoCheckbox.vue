@@ -29,9 +29,8 @@
         :name="name"
         :disabled="loading || disabled"
         :color="color"
-        :highlight="highlight"
         :aria-busy="loading || void 0"
-        v-bind="$attrs"
+        v-bind="omitChoiceAttrs($attrs)"
         :ui="checkboxUi"
         class="form-checkbox"
         :class="`form-checkbox--${controlSize}`"
@@ -68,6 +67,7 @@ import { mergeUi } from "../utils/ui";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps } from "../internal/useShuoComponentProps";
 import { useControlSize } from "../internal/useControlSize";
+import { omitChoiceAttrs } from "../internal/choice-attrs";
 const theme = tv({ slots: { wrapper: "relative inline-flex w-fit max-w-full min-w-0 align-top" } });
 defineOptions({ inheritAttrs: false });
 const props = defineProps({
@@ -75,7 +75,6 @@ const props = defineProps({
   name: { type: String, required: false },
   disabled: { type: Boolean, required: false, default: void 0 },
   color: { type: null, required: false },
-  highlight: { type: Boolean, required: false, default: void 0 },
   skeleton: { type: Boolean, required: false },
   label: { type: String, required: false, default: () => getShuoMessages().checkbox.label },
   trueValue: { type: [String, Number, Boolean], required: false, default: BUILT_IN_DEFAULTS.checkbox.trueValue },

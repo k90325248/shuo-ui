@@ -19,7 +19,6 @@
       :name="name"
       :disabled="loading || disabled"
       :color="color"
-      :highlight="highlight"
       :aria-busy="loading || void 0"
       class="form-radio-group"
       :class="`form-radio-group--${controlSize}`"
@@ -27,7 +26,7 @@
       :data-layout="resolved.orientation"
       label-key="label"
       value-key="value"
-      v-bind="$attrs"
+      v-bind="omitChoiceAttrs($attrs)"
       :ui="groupUi"
       @pointermove="showOptionTooltip"
       @pointerleave="closeTooltip"
@@ -70,6 +69,7 @@ import { useOptionKeysWarning } from "../internal/useOptionKeysWarning";
 import { useChoiceAppend } from "../composables/useChoiceAppend";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps, useShuoPropSource } from "../internal/useShuoComponentProps";
+import { omitChoiceAttrs } from "../internal/choice-attrs";
 import { useControlSize } from "../internal/useControlSize";
 defineOptions({ inheritAttrs: false });
 const props = defineProps({
@@ -77,7 +77,6 @@ const props = defineProps({
   name: { type: String, required: false },
   disabled: { type: Boolean, required: false, default: void 0 },
   color: { type: null, required: false },
-  highlight: { type: Boolean, required: false, default: void 0 },
   skeleton: { type: Boolean, required: false },
   loading: { type: Boolean, required: false },
   items: { type: Array, required: true },

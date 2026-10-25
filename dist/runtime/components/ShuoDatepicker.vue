@@ -151,6 +151,7 @@ const props = defineProps({
   loading: { type: Boolean, required: false, default: false },
   range: { type: Boolean, required: false, default: () => false },
   id: { type: String, required: false },
+  name: { type: String, required: false },
   size: { type: null, required: false },
   state: { type: Boolean, required: false, default: void 0 },
   roc: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.datepicker.roc },

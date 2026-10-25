@@ -1,4 +1,4 @@
-import { breakpointsTailwind, useBreakpoints, useResizeObserver } from "@vueuse/core";
+import { breakpointsTailwind, useBreakpoints, useMounted, useResizeObserver } from "@vueuse/core";
 export const getChoiceGroupUi = ({ orientation, grid, loading }) => {
   const horizontal = orientation === "horizontal";
   const join = (...classes) => classes.filter(Boolean).join(" ");
@@ -26,9 +26,10 @@ export const useChoiceGroup = (props) => {
   const isTruncated = ref(false);
   const tooltipOpen = ref(false);
   const isWide = useBreakpoints(breakpointsTailwind).greaterOrEqual(() => props.breakpoint);
+  const isMounted = useMounted();
   const resolvedOrientation = computed(() => {
     if (props.orientation !== "auto") return props.orientation;
-    return isWide.value ? "horizontal" : "vertical";
+    return isMounted.value && isWide.value ? "horizontal" : "vertical";
   });
   const measureTooltip = () => {
     const label = tooltipReference.value?.querySelector("[data-choice-label]");

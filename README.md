@@ -19,14 +19,14 @@
 ## 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v0.0.1-beta.1
+pnpm add github:k90325248/shuo-ui#v1.0.0
 ```
 
-指定 tag 以固定版本；升級時改成新的 tag 即可。目前為 beta 版本，正式版前的 beta 之間可能有破壞性變更，升級前請先看 release notes。其他套件管理工具：
+指定 tag 以固定版本；升級時改成新的 tag 即可，升級前請先看[更新說明](https://github.com/k90325248/shuo-ui/releases)。其他套件管理工具：
 
 ```bash
-npm install github:k90325248/shuo-ui#v0.0.1-beta.1
-yarn add github:k90325248/shuo-ui#v0.0.1-beta.1
+npm install github:k90325248/shuo-ui#v1.0.0
+yarn add github:k90325248/shuo-ui#v1.0.0
 ```
 
 啟用模組（`@nuxt/ui` 須一併安裝並在 `modules` 中）：
@@ -124,4 +124,4 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(
 
 ## 版本與升級
 
-版本以 git tag 發佈（`v主.次.修`），每次升級請更新安裝指令中的 tag 並測試。
+版本以 git tag 發佈（`v主.次.修`，beta 為 `v主.次.修-beta.N`），每次升級請更新安裝指令中的 tag 並測試。

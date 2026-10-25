@@ -109,7 +109,7 @@ export interface TextareaProps extends /* @vue-ignore */ InheritedTextareaProps,
 }
 /** 多行文字輸入自行宣告的參數 */
 interface TextareaOwnProps {
-    /** 是否顯示骨架 */
+    /** 是否顯示與原控制項同尺寸的骨架 */
     skeleton?: boolean;
     /** 是否停用 */
     disabled?: boolean;
@@ -171,11 +171,11 @@ interface FileOwnProps {
     fileUrl?: string;
     /** 輸入框尺寸 */
     size?: InputProps['size'];
-    /** 是否停用選檔並隱藏移除按鈕；已有附件仍可下載 */
+    /** 是否停用選檔並隱藏清除按鈕；已有附件仍可下載 */
     disabled?: boolean;
     /** 是否顯示載入中，以轉圈圖示取代尾端按鈕，並停用選檔、清除與下載 */
     loading?: boolean;
-    /** 移除按鈕圖示，預設 `i-lucide-x`。 */
+    /** 清除按鈕圖示，預設 `i-lucide-x`。 */
     clearIcon?: string;
     /** 下載按鈕圖示，預設 `i-lucide-download`。 */
     downloadIcon?: string;
@@ -241,7 +241,7 @@ export interface PhoneProps {
     highlight?: boolean;
     /** 是否停用 */
     disabled?: boolean;
-    /** 是否顯示骨架 */
+    /** 是否顯示與原控制項同尺寸的骨架 */
     skeleton?: boolean;
     /** 是否顯示載入中，在電話號碼欄最右側顯示轉圈圖示並停用輸入 */
     loading?: boolean;
@@ -255,13 +255,28 @@ export type CheckboxUi = NonNullable<NuxtCheckboxProps['ui']> & {
     /** 外層，負責量測省略文字、Tooltip 與載入圖示定位 */
     wrapper?: SlotClass;
 };
+/**
+ * 核取方塊與選項群組不支援的 Nuxt UI 外觀參數，宣告為 never 讓傳入時型別報錯；執行時也不會轉給 Nuxt UI。
+ * variant（card、table）的外框與內距會撐高選項，破壞與輸入框對齊的固定高度；
+ * indicator 會移動勾選框，載入圖示固定蓋在左側勾選框上；highlight 只改 card、table 的外框顏色。
+ */
+interface UnsupportedChoiceProps {
+    /** 不支援：card、table 會撐高選項，破壞與輸入框對齊的高度。 */
+    variant?: never;
+    /** 不支援：載入圖示固定在左側勾選框的位置。 */
+    indicator?: never;
+    /** 不支援：只在 card、table 有外框時才有作用。 */
+    highlight?: never;
+}
 /** 單個核取方塊參數 */
 /**
  * 沿用 Nuxt UI 核取方塊的參數與事件，僅供型別推導；值經 `$attrs` 轉給 UCheckbox。
- * 排除元件自行宣告或改寫語意的項目：勾選值由 trueValue／falseValue 決定；不支援 description，說明會撐高選項、破壞與輸入框對齊的高度。
+ * 排除元件自行宣告或改寫語意的項目：勾選值由 trueValue／falseValue 決定；
+ * 不支援 description、variant、indicator、highlight：說明與 card 外框會撐高選項、破壞與輸入框對齊的高度，
+ * 移動勾選框會讓載入圖示對不上，highlight 只在 card 有作用。
  */
-type InheritedCheckboxProps = Omit<NuxtCheckboxProps<CheckboxValue>, keyof CheckboxOwnProps | 'modelValue' | 'defaultValue' | 'value' | 'description'> & ForwardedEvents<NuxtCheckboxEmits<CheckboxValue>>;
-/** 單個核取方塊參數；未列出的 Nuxt UI 核取方塊參數（variant、indicator、icon、required 等）皆可直接使用 */
+type InheritedCheckboxProps = Omit<NuxtCheckboxProps<CheckboxValue>, keyof CheckboxOwnProps | 'modelValue' | 'defaultValue' | 'value' | 'description' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtCheckboxEmits<CheckboxValue>> & UnsupportedChoiceProps;
+/** 單個核取方塊參數；未列出的 Nuxt UI 核取方塊參數（icon、required 等）皆可直接使用；不支援 variant、indicator、highlight */
 export interface CheckboxProps extends /* @vue-ignore */ InheritedCheckboxProps, CheckboxOwnProps {
 }
 /** 單個核取方塊自行宣告的參數 */
@@ -274,8 +289,6 @@ interface CheckboxOwnProps {
     disabled?: boolean;
     /** 元件顏色 */
     color?: NuxtCheckboxProps['color'];
-    /** 是否強調外框 */
-    highlight?: boolean;
     /** 是否顯示與原控制項同尺寸的骨架 */
     skeleton?: boolean;
     /** 顯示文字，預設為「啟用」。 */
@@ -298,10 +311,12 @@ export type RadioGroupBreakpoint = ChoiceGroupBreakpoint;
 /** 單選群組參數 */
 /**
  * 沿用 Nuxt UI 單選群組的參數與事件，僅供型別推導；值經 `$attrs` 轉給 URadioGroup。
- * 排除元件自行宣告或改寫語意的項目：選項與欄位名稱由元件轉換；不支援 descriptionKey，說明會撐高選項、破壞與輸入框對齊的高度。
+ * 排除元件自行宣告或改寫語意的項目：選項與欄位名稱由元件轉換；
+ * 不支援 descriptionKey、variant、indicator、highlight：說明與 card／table 外框會撐高選項、破壞與輸入框對齊的高度，
+ * 移動選項按鈕會讓載入圖示對不上，highlight 只在 card／table 有作用。
  */
-type InheritedRadioGroupProps = Omit<NuxtRadioGroupProps, keyof RadioGroupOwnProps | 'modelValue' | 'defaultValue' | 'descriptionKey'> & ForwardedEvents<NuxtRadioGroupEmits>;
-/** 單選群組參數；未列出的 Nuxt UI 單選群組參數（legend、variant、indicator、required 等）皆可直接使用 */
+type InheritedRadioGroupProps = Omit<NuxtRadioGroupProps, keyof RadioGroupOwnProps | 'modelValue' | 'defaultValue' | 'descriptionKey' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtRadioGroupEmits> & UnsupportedChoiceProps;
+/** 單選群組參數；未列出的 Nuxt UI 單選群組參數（legend、required 等）皆可直接使用；不支援 variant、indicator、highlight */
 export interface RadioGroupProps<T extends object = RadioGroupOption> extends /* @vue-ignore */ InheritedRadioGroupProps, RadioGroupOwnProps<T> {
 }
 /** 單選群組自行宣告的參數 */
@@ -314,8 +329,6 @@ interface RadioGroupOwnProps<T extends object = RadioGroupOption> {
     disabled?: boolean;
     /** 元件顏色 */
     color?: NuxtRadioGroupProps['color'];
-    /** 是否強調外框 */
-    highlight?: boolean;
     /** 是否顯示與原控制項同尺寸的骨架 */
     skeleton?: boolean;
     /** 是否顯示載入中，以轉圈圖示取代各選項按鈕並停用 */
@@ -342,10 +355,12 @@ export type CheckboxGroupBreakpoint = ChoiceGroupBreakpoint;
 /** 複選群組參數 */
 /**
  * 沿用 Nuxt UI 複選群組的參數與事件，僅供型別推導；值經 `$attrs` 轉給 UCheckboxGroup。
- * 排除元件自行宣告或改寫語意的項目：選項與欄位名稱由元件轉換；不支援 descriptionKey，說明會撐高選項、破壞與輸入框對齊的高度。
+ * 排除元件自行宣告或改寫語意的項目：選項與欄位名稱由元件轉換；
+ * 不支援 descriptionKey、variant、indicator、highlight：說明與 card／table 外框會撐高選項、破壞與輸入框對齊的高度，
+ * 移動勾選框會讓載入圖示對不上，highlight 只在 card／table 有作用。
  */
-type InheritedCheckboxGroupProps = Omit<NuxtCheckboxGroupProps, keyof CheckboxGroupOwnProps | 'modelValue' | 'defaultValue' | 'descriptionKey'> & ForwardedEvents<NuxtCheckboxGroupEmits>;
-/** 複選群組參數；未列出的 Nuxt UI 複選群組參數（legend、variant、indicator、max、required 等）皆可直接使用 */
+type InheritedCheckboxGroupProps = Omit<NuxtCheckboxGroupProps, keyof CheckboxGroupOwnProps | 'modelValue' | 'defaultValue' | 'descriptionKey' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtCheckboxGroupEmits> & UnsupportedChoiceProps;
+/** 複選群組參數；未列出的 Nuxt UI 複選群組參數（legend、max、required 等）皆可直接使用；不支援 variant、indicator、highlight */
 export interface CheckboxGroupProps<T extends object = CheckboxGroupOption> extends /* @vue-ignore */ InheritedCheckboxGroupProps, CheckboxGroupOwnProps<T> {
 }
 /** 複選群組自行宣告的參數 */
@@ -358,8 +373,6 @@ interface CheckboxGroupOwnProps<T extends object = CheckboxGroupOption> {
     disabled?: boolean;
     /** 元件顏色 */
     color?: NuxtCheckboxGroupProps['color'];
-    /** 是否強調外框 */
-    highlight?: boolean;
     /** 是否顯示與原控制項同尺寸的骨架 */
     skeleton?: boolean;
     /** 是否顯示載入中，以轉圈圖示取代各選項按鈕並停用 */
@@ -395,7 +408,7 @@ export interface DatepickerProps<TRange extends boolean = false> {
     calendarIcon?: string;
     /** 清除按鈕圖示，預設 `i-lucide-x`。 */
     clearIcon?: string;
-    /** 禁用狀態，預設關閉。 */
+    /** 停用狀態，預設關閉。 */
     disabled?: boolean;
     /** 是否顯示載入中，以轉圈圖示取代尾端日曆圖示並停用輸入。 */
     loading?: boolean;
@@ -403,6 +416,8 @@ export interface DatepickerProps<TRange extends boolean = false> {
     range?: TRange & boolean;
     /** 輸入框識別碼，用於連結外部標籤。 */
     id?: string;
+    /** 欄位名稱，未設定時沿用 UFormField。 */
+    name?: string;
     /** 元件尺寸，與 Nuxt UI 的五種 size 一致。 */
     size?: InputProps['size'];
     /** 驗證狀態，false 顯示錯誤，true 顯示成功，未指定時使用一般樣式。 */
