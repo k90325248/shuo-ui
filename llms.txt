@@ -1,41 +1,95 @@
 # Shuo UI
 
+## Overview
+
+- [Shuo UI](https://k90325248.github.io/shuo-ui/raw/index.md)
+
 ## Documentation Sets
 
-- [Shuo UI](https://k90325248.github.io/llms-full.txt)
+- [Shuo UI](https://k90325248.github.io/shuo-ui/llms-full.txt)
 
-## Docs
-
-Every page below is available as raw markdown.
-
-- [Checkbox](https://k90325248.github.io/raw/components/checkbox.md): 單一核取方塊，可自訂勾選值，文字旁可放附加內容。
-- [CheckboxGroup](https://k90325248.github.io/raw/components/checkbox-group.md): 複選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
-- [共用參數](https://k90325248.github.io/raw/components/common.md): 表單輸入元件共同支援的參數、骨架行為與空值約定。
-- [Datepicker](https://k90325248.github.io/raw/components/datepicker.md): 日期選擇器，預設民國年，支援五種精度與範圍選擇。
-- [File](https://k90325248.github.io/raw/components/file.md): 單檔選擇與既有附件下載，選檔不會自動上傳。
-- [InfoTooltip](https://k90325248.github.io/raw/components/info-tooltip.md): 資訊圖示加提示，滑鼠移入或鍵盤聚焦即顯示。
-- [InputNumber](https://k90325248.github.io/raw/components/input-number.md): 數字輸入，離開輸入框後顯示千分位，可指定小數位數與單位。
-- [InputText](https://k90325248.github.io/raw/components/input-text.md): 單行文字輸入，可遮蔽全部或最後幾碼。
-- [ListCard](https://k90325248.github.io/raw/components/list-card.md): 查詢結果清單卡片，包含標題列、表格與後端分頁。
-- [Months](https://k90325248.github.io/raw/components/months.md): 年月數換算輸入，可同時綁定總月數、年數與月數。
-- [Phone](https://k90325248.github.io/raw/components/phone.md): 市話號碼，兩個輸入框分別輸入區碼與電話。
-- [QueryCard](https://k90325248.github.io/raw/components/query-card.md): 可收合的查詢條件卡片，內含 UForm，欄位以響應式格線排列。
-- [RadioGroup](https://k90325248.github.io/raw/components/radio-group.md): 單選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
-- [SelectMenu](https://k90325248.github.io/raw/components/select-menu.md): 下拉選單，可搜尋、多選，文字過長時顯示完整提示。
-- [Table](https://k90325248.github.io/raw/components/table.md): 基於 UTable 的純表格，含骨架、空資料與高度過渡。
-- [Textarea](https://k90325248.github.io/raw/components/textarea.md): 多行文字輸入，保留換行，可自動調整高度。
-- [安裝](https://k90325248.github.io/raw/getting-started/installation.md): 在 Nuxt 專案中安裝並啟用 Shuo UI。
-- [簡介](https://k90325248.github.io/raw/getting-started/introduction.md): Shuo UI 是什麼、適合用在哪裡。
-- [快速開始](https://k90325248.github.io/raw/getting-started/quick-start.md): 用 UForm 與 Valibot 組出第一個表單，並認識全部元件。
-- [自動匯入與型別](https://k90325248.github.io/raw/guides/auto-imports.md): 自動匯入的工具函式、型別別名，以及與 Nuxt UI 搭配的注意事項。
-- [元件全站預設值](https://k90325248.github.io/raw/guides/component-defaults.md): 以 shuoUi.components 統一設定尺寸、顯示格式、圖示等參數。
-- [文案覆寫](https://k90325248.github.io/raw/guides/messages.md): 覆寫驗證訊息、無障礙名稱、提示文字與日期選擇器文案。
-- [模組選項](https://k90325248.github.io/raw/guides/module-options.md): 在 nuxt.config.ts 以 shuoUi 設定元件庫。
-- [樣式與主題](https://k90325248.github.io/raw/guides/theming.md): 顏色、表單色票、內建主題，以及單一元件的 ui 覆寫規則。
-- [表單驗證](https://k90325248.github.io/raw/guides/validation.md): 以 UForm、UFormField 與 Valibot 驗證表單，搭配內建的共用規則。
-
-## Landing
+## Landing Zh Tw
 
 Every page below is available as raw markdown.
 
-- [/](https://k90325248.github.io/raw/index.md)
+- [/zh-tw](https://k90325248.github.io/shuo-ui/raw/zh-tw.md)
+
+## Docs Zh Tw
+
+Every page below is available as raw markdown.
+
+- [Checkbox](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/choice/checkbox.md): 單一核取方塊，可自訂勾選值，文字旁可放附加內容。
+- [CheckboxGroup](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/choice/checkbox-group.md): 複選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
+- [RadioGroup](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/choice/radio-group.md): 單選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
+- [SelectMenu](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/choice/select-menu.md): 下拉選單，可搜尋、多選，文字過長時顯示完整提示。
+- [Datepicker](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/date/datepicker.md): 日期選擇器，預設民國年，支援五種精度與範圍選擇。
+- [Months](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/date/months.md): 年月數換算輸入，可同時綁定總月數、年數與月數。
+- [InfoTooltip](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/helper/info-tooltip.md): 資訊圖示加提示，滑鼠移入、鍵盤聚焦或觸控長按即顯示。
+- [Tooltip](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/helper/tooltip.md): 基於 UTooltip 的提示，補上觸控裝置長按顯示。
+- [ListCard](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/layout/list-card.md): 查詢結果清單卡片，包含標題列、表格與後端分頁。
+- [QueryCard](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/layout/query-card.md): 可收合的查詢條件卡片，內含 UForm，欄位以響應式格線排列。
+- [Table](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/layout/table.md): 基於 UTable 的純表格，含骨架、空資料與高度過渡。
+- [共用參數](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/overview/common.md): 表單輸入元件共同支援的參數、骨架行為與空值約定。
+- [File](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/phone-file/file.md): 單檔選擇與既有附件下載，選檔不會自動上傳。
+- [Phone](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/phone-file/phone.md): 市話號碼，兩個輸入框分別輸入區碼與電話。
+- [InputNumber](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/text/input-number.md): 數字輸入，離開輸入框後顯示千分位，可指定小數位數與單位。
+- [InputText](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/text/input-text.md): 單行文字輸入，可遮蔽全部或最後幾碼。
+- [Textarea](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/text/textarea.md): 多行文字輸入，保留換行，可自動調整高度。
+- [自動匯入與型別](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/advanced/auto-imports.md): 自動匯入的元件與工具函式、型別別名，以及與 Nuxt UI 搭配的注意事項。
+- [表單驗證](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/form/validation.md): 以 UForm、UFormField 與 Valibot 驗證表單，搭配內建的共用規則。
+- [安裝](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/overview/installation.md): 在 Nuxt 專案中安裝並啟用 Shuo UI。
+- [簡介](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/overview/introduction.md): Shuo UI 是什麼、適合用在哪裡。
+- [快速開始](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/overview/quick-start.md): 用 UForm 與 Valibot 組出第一個表單，並認識全部元件。
+- [元件全站預設值](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/theme/component-defaults.md): 以 shuoUi.components 統一設定尺寸、顯示格式、圖示等參數。
+- [多語系與文案](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/theme/messages.md): 元件文案跟隨 Nuxt UI 的語系切換，並可依語系覆寫或加入其他語系。
+- [模組選項](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/theme/module-options.md): 在 nuxt.config.ts 以 shuoUi 設定元件庫。
+- [樣式與主題](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/theme/theming.md): 顏色、表單色票、內建主題，以及單一元件的 ui 覆寫規則。
+- [Months](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/field/months.md): 總月數與年、月的拆分與合併。
+- [Phone](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/field/phone.md): 市話號碼的區碼拆分與合併。
+- [Validation](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/form/validation.md): 搭配 Valibot 的共用驗證規則，錯誤訊息格式全站一致。
+- [Date](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/format/date.md): 西元日期字串的民國年顯示與嚴格解析。
+- [Number](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/format/number.md): 千分位與固定小數位數的數字顯示。
+- [ComponentDefaults](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/settings/component-defaults.md): 在頁面取得元件全站預設值的實際生效值與原始設定。
+
+## Landing En
+
+Every page below is available as raw markdown.
+
+- [/en](https://k90325248.github.io/shuo-ui/raw/en.md)
+
+## Docs En
+
+Every page below is available as raw markdown.
+
+- [Checkbox](https://k90325248.github.io/shuo-ui/raw/en/components/choice/checkbox.md): Single checkbox with custom checked values and optional content next to the label.
+- [CheckboxGroup](https://k90325248.github.io/shuo-ui/raw/en/components/choice/checkbox-group.md): Checkbox group that lays out by viewport width, with custom item fields and appended content.
+- [RadioGroup](https://k90325248.github.io/shuo-ui/raw/en/components/choice/radio-group.md): Radio group that lays out by viewport width, with custom item fields and appended content.
+- [SelectMenu](https://k90325248.github.io/shuo-ui/raw/en/components/choice/select-menu.md): Select menu with search and multiple selection, showing a full-text tooltip when the text is too long.
+- [Datepicker](https://k90325248.github.io/shuo-ui/raw/en/components/date/datepicker.md): Date picker with ROC years by default, five precisions and range selection.
+- [Months](https://k90325248.github.io/shuo-ui/raw/en/components/date/months.md): Years and months input converted to total months, with total months, years and months all bindable.
+- [InfoTooltip](https://k90325248.github.io/shuo-ui/raw/en/components/helper/info-tooltip.md): Info icon with a tooltip, shown on hover, keyboard focus or long press on touch devices.
+- [Tooltip](https://k90325248.github.io/shuo-ui/raw/en/components/helper/tooltip.md): Tooltip built on UTooltip that adds long press on touch devices.
+- [ListCard](https://k90325248.github.io/shuo-ui/raw/en/components/layout/list-card.md): Result list card with a title bar, a table and server-side pagination.
+- [QueryCard](https://k90325248.github.io/shuo-ui/raw/en/components/layout/query-card.md): Collapsible query card containing a UForm, with fields in a responsive grid.
+- [Table](https://k90325248.github.io/shuo-ui/raw/en/components/layout/table.md): Plain table built on UTable, with skeleton, empty data and height transition.
+- [Shared props](https://k90325248.github.io/shuo-ui/raw/en/components/overview/common.md): Props shared by the form input components, skeleton behavior and the empty-value contract.
+- [File](https://k90325248.github.io/shuo-ui/raw/en/components/phone-file/file.md): Single file selection and existing attachment download; selecting a file does not upload it.
+- [Phone](https://k90325248.github.io/shuo-ui/raw/en/components/phone-file/phone.md): Landline number with separate inputs for the area code and the number.
+- [InputNumber](https://k90325248.github.io/shuo-ui/raw/en/components/text/input-number.md): Number input that shows thousands separators on blur, with decimal places and units.
+- [InputText](https://k90325248.github.io/shuo-ui/raw/en/components/text/input-text.md): Single-line text input that can mask all or the last few characters.
+- [Textarea](https://k90325248.github.io/shuo-ui/raw/en/components/text/textarea.md): Multi-line text input that keeps line breaks and can resize automatically.
+- [Auto-imports and types](https://k90325248.github.io/shuo-ui/raw/en/getting-started/advanced/auto-imports.md): Auto-imported components and utilities, type aliases, and notes on using them with Nuxt UI.
+- [Validation](https://k90325248.github.io/shuo-ui/raw/en/getting-started/form/validation.md): Validate forms with UForm, UFormField and Valibot, using the built-in shared rules.
+- [Installation](https://k90325248.github.io/shuo-ui/raw/en/getting-started/overview/installation.md): Install and enable Shuo UI in a Nuxt project.
+- [Introduction](https://k90325248.github.io/shuo-ui/raw/en/getting-started/overview/introduction.md): What Shuo UI is and where it fits.
+- [Quick start](https://k90325248.github.io/shuo-ui/raw/en/getting-started/overview/quick-start.md): Build your first form with UForm and Valibot, and meet every component.
+- [Component defaults](https://k90325248.github.io/shuo-ui/raw/en/getting-started/theme/component-defaults.md): Set size, display format, icons and other props site-wide with shuoUi.components.
+- [Locales and messages](https://k90325248.github.io/shuo-ui/raw/en/getting-started/theme/messages.md): Component texts follow the Nuxt UI locale, and can be overridden per locale or extended with other locales.
+- [Module options](https://k90325248.github.io/shuo-ui/raw/en/getting-started/theme/module-options.md): Configure the component library with shuoUi in nuxt.config.ts.
+- [Theming](https://k90325248.github.io/shuo-ui/raw/en/getting-started/theme/theming.md): Colors, form color tokens, the built-in theme, and how the per-component ui prop is merged.
+- [Months](https://k90325248.github.io/shuo-ui/raw/en/utils/field/months.md): Splitting total months into years and months, and combining them back.
+- [Phone](https://k90325248.github.io/shuo-ui/raw/en/utils/field/phone.md): Splitting and joining the area code of landline numbers.
+- [Validation](https://k90325248.github.io/shuo-ui/raw/en/utils/form/validation.md): Shared validation rules for Valibot, with consistent error messages across the site.
+- [Date](https://k90325248.github.io/shuo-ui/raw/en/utils/format/date.md): ROC year display and strict parsing of Gregorian date strings.
+- [Number](https://k90325248.github.io/shuo-ui/raw/en/utils/format/number.md): Number display with thousands separators and fixed decimal places.
+- [ComponentDefaults](https://k90325248.github.io/shuo-ui/raw/en/utils/settings/component-defaults.md): Read the effective values and raw settings of the component defaults in a page.

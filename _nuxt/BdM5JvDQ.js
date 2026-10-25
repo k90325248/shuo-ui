@@ -1,0 +1,1 @@
+import{L as e}from"./DVRkMeDb.js";import{ot as t,st as n}from"#entry";import{t as r}from"./D3M_82S2.js";var i=(t,i)=>{let a=e();return n(t,i,e=>r(a?.vnode.props,e))},a=n=>{let i=e();return e=>r(i?.vnode.props,e)?`explicit`:t()[n]?.[e]===void 0?`builtin`:`global`};export{a as n,i as t};

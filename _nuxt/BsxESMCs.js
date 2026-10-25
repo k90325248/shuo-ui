@@ -1,0 +1,1 @@
+import{Ht as e,J as t,g as n}from"./DVRkMeDb.js";import{a as r,i,n as a}from"./B2lD3kwr.js";var o=Symbol.for(`nuxt-ui.locale-context`),s=()=>{let s=t(o,void 0),c=n(()=>i(s?.value?.code??a()));return e(()=>c.value.code,r,{immediate:!0}),c},c=()=>{let e=s();return n(()=>e.value.messages)},l=(e,t,r=c())=>n(()=>e()??t(r.value));export{s as n,c as r,l as t};
