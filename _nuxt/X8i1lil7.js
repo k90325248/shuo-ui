@@ -1,0 +1,1 @@
+import{b as e,mt as t,xt as n}from"./DVRkMeDb.js";import{M as r}from"#entry";var i={},a={class:`border-muted -mx-4 -mt-4 flex flex-wrap items-center gap-2.5 overflow-x-auto border-b px-4 py-2.5`};function o(r,i){return t(),e(`div`,a,[n(r.$slots,`default`)])}var s=Object.assign(r(i,[[`render`,o]]),{__name:`ExampleOptions`});export{s as t};

@@ -138,7 +138,11 @@ export default defineAppConfig({
 - 傳入函式 `(defaults) => string` 時，`defaults` 已包含內建樣式，回傳值即為最終樣式，可完整取代：
 
 ```vue
-<ShuoInputNumber :ui="{ base: (defaults) => defaults.replace('text-right', 'text-left') }" />
+<ShuoInputNumber
+  :ui="{
+    base: (defaults) => defaults.replace('text-right', 'text-left')
+  }"
+/>
 ```
 
 ### `class` 落在哪裡
@@ -208,12 +212,48 @@ export default defineAppConfig({
   <tr>
     <td>
       <code>
-        ShuoQueryCard
+        ShuoListCard
       </code>
     </td>
     
     <td>
-      卡片外框
+      卡片外框（<code>
+        ui
+      </code>
+      
+       沒有 <code>
+        root
+      </code>
+      
+      ）
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ShuoDatepicker
+      </code>
+      
+      、<code>
+        ShuoTable
+      </code>
+    </td>
+    
+    <td>
+      外層容器（沒有 <code>
+        ui
+      </code>
+      
+      ，直接以 <code>
+        class
+      </code>
+      
+       設定）
     </td>
     
     <td>

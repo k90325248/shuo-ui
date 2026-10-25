@@ -13,7 +13,7 @@ canonical_url: "https://k90325248.github.io/components/file"
 
 ### 選擇檔案
 
-綁定原始 `File`，選檔不會自動上傳；清除後為 `null`。`accept` 只篩選選檔對話框，不阻擋其他類型，類型限制請由表單規則驗證。
+綁定原始 `File`；清除後為 `null`。點擊欄位，或聚焦後按 Enter、空白鍵開啟選檔對話框。`accept` 只篩選選檔對話框，不阻擋其他類型，類型限制請由表單規則驗證。
 
 <component-example name="file-basic">
 
@@ -23,9 +23,71 @@ canonical_url: "https://k90325248.github.io/components/file"
 
 ### 既有附件
 
-沒有本機 `File` 時顯示 `file-name`；按下載以 Blob 取得 `file-url` 的內容，跨來源網址須允許 CORS，下載失敗會顯示 Toast（需 `UApp`）。停用時隱藏移除按鈕，但已有附件仍可下載；載入中則一律不可操作。
+沒有本機 `File` 時顯示 `file-name`；按下載以 Blob 取得 `file-url` 的內容，跨來源網址須允許 CORS，下載失敗會顯示 Toast（需 `UApp`）。檔名被省略時，滑鼠移入或鍵盤聚焦會顯示完整檔名。
 
 <component-example name="file-existing">
+
+
+
+</component-example>
+
+### 按鈕圖示
+
+`select-icon` 是尚無檔案時的選擇檔案按鈕，`clear-icon` 是清除按鈕，`download-icon` 是有檔案時的下載按鈕。清除按鈕只在有本機 `File` 且未停用時顯示。
+
+<component-example name="file-icons">
+
+
+
+</component-example>
+
+### 外觀
+
+沿用 `UInput` 的 `variant` 與 `icon`。`ShuoFile` 沒有 `color` 與 `highlight`，顏色與錯誤外框沿用 `UFormField`。
+
+<component-example name="file-variant">
+
+
+
+</component-example>
+
+### 尺寸與狀態
+
+停用時隱藏清除按鈕，但已有附件仍可下載；載入中以轉圈圖示取代尾端按鈕，一律不可操作。各狀態的共通行為見[共用參數](https://k90325248.github.io/components/common)。
+
+<component-example name="file-states">
+
+
+
+</component-example>
+
+## 範例
+
+### 搭配表單驗證
+
+必填、類型與大小以 Valibot 的 `v.file`、`v.mimeType`、`v.maxSize` 檢查；`accept` 只影響選檔對話框，實際限制以 schema 為準。
+
+<component-example name="file-validation">
+
+
+
+</component-example>
+
+### 選檔後再上傳
+
+選檔不會自動上傳，由頁面決定何時送出 `v-model` 的 `File`。範例按「上傳」後以 `loading` 停用欄位，完成後清空 `v-model`，改以 `file-name`、`file-url` 顯示為既有附件。
+
+<component-example name="file-upload">
+
+
+
+</component-example>
+
+### 操作原生 input
+
+透過 template ref 的 `inputRef` 取得顯示檔名的原生 input。
+
+<component-example name="file-expose">
 
 
 
@@ -238,6 +300,14 @@ canonical_url: "https://k90325248.github.io/components/file"
 </table>
 
 要縮短寬度時設定 `ui.wrapper`（例如 `w-60`）；`class` 落在輸入框外框。
+
+## 更新紀錄
+
+<component-changelog name="ShuoFile">
+
+
+
+</component-changelog>
 
 ---
 

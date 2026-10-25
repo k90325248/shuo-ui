@@ -7,13 +7,38 @@ canonical_url: "https://k90325248.github.io/components/query-card"
 
 > 可收合的查詢條件卡片，內含 UForm，欄位以響應式格線排列。
 
-欄位以響應式格線排列（一欄、md 兩欄、xl 四欄，可由 `ui.grid` 調整），在欄位內按 Enter 即可送出。泛型 `S` 為 schema。
+欄位以響應式格線排列（一欄、md 兩欄、xl 四欄，可由 `ui.grid` 調整）。泛型 `S` 為 schema。
 
 ## 用法
 
-在欄位內按 Enter 即可送出；驗證失敗時，收合狀態下會自動展開以顯示錯誤訊息。透過 template ref 可呼叫 `submit()`、`clear()`，例如由卡片外的按鈕觸發查詢；停用時兩者皆不動作。
+### 標題與圖示
 
-<component-example name="query-card-basic">
+`title` 為標題文字，`icon` 為標題左側圖示，傳空字串可隱藏圖示。
+
+<component-example name="query-card-title">
+
+
+
+</component-example>
+
+### 收合
+
+以 `v-model:open` 控制展開狀態，預設展開。`expand-icon` 是收合時顯示的按鈕圖示，`collapse-icon` 是展開時顯示的按鈕圖示。
+
+<component-example name="query-card-collapse">
+
+
+
+</component-example>
+
+- 驗證失敗時，收合狀態下會自動展開以顯示錯誤訊息。範例中先收合，再按參數列的「送出」即可看到。
+- 收合中的欄位不可聚焦與操作。
+
+### 停用
+
+`disabled` 會停用表單內的欄位（沿用 `UForm` 的停用狀態）；template ref 的 `submit()`、`clear()` 與 `#actions` 提供的 `submit`、`clear` 皆不動作。`#actions` 內的按鈕不會自動停用，請自行傳入 `disabled`。
+
+<component-example name="query-card-disabled">
 
 
 
@@ -21,16 +46,23 @@ canonical_url: "https://k90325248.github.io/components/query-card"
 
 ### 欄數
 
-改欄數時要寫齊各斷點：tailwind-merge 只會取代同一斷點的 class，只傳 `md:grid-cols-3` 時，內建的 `xl:grid-cols-4` 仍會生效。
+以 `ui.grid` 調整欄數。改欄數時要寫齊各斷點：tailwind-merge 只會取代同一斷點的 class，只傳 `md:grid-cols-3` 時，內建的 `xl:grid-cols-4` 仍會生效。
+
+<component-example name="query-card-grid">
+
+
+
+</component-example>
+
+也可以用函式寫法移除內建斷點後自訂：
 
 ```vue
-<!-- md 起三欄 -->
-<ShuoQueryCard :state="query" :ui="{ grid: 'md:grid-cols-3 xl:grid-cols-3' }">...</ShuoQueryCard>
-
-<!-- 函式寫法：移除內建斷點後自訂 -->
 <ShuoQueryCard
   :state="query"
-  :ui="{ grid: (defaults) => defaults.replace(/(md|xl):grid-cols-\d/g, '') + ' lg:grid-cols-3' }"
+  :ui="{
+    grid: (defaults) =>
+      defaults.replace(/(md|xl):grid-cols-\d/g, '') + ' lg:grid-cols-3'
+  }"
 >
   ...
 </ShuoQueryCard>
@@ -40,13 +72,45 @@ canonical_url: "https://k90325248.github.io/components/query-card"
 
 ### 長標題
 
-標題預設不換行、不省略；`header-right` 放不下時整塊換到下一行並靠右，不會擠壓標題與收合按鈕。`ShuoListCard` 的標題列使用相同規則。要讓長標題在圖示旁換行，覆寫標題列不換行並允許標題收縮：
+標題預設不換行、不省略；`header-right` 放不下時整塊換到下一行並靠右，不會擠壓標題與收合按鈕。`ShuoListCard` 的標題列使用相同規則。要讓長標題在圖示旁換行，以 `ui` 覆寫標題列不換行（`bar: 'flex-nowrap'`）並允許標題收縮（`title: 'min-w-0 shrink whitespace-normal'`）：
 
-```vue
-<ShuoQueryCard :state="query" :ui="{ bar: 'flex-nowrap', title: 'min-w-0 shrink whitespace-normal' }">
-  ...
-</ShuoQueryCard>
-```
+<component-example name="query-card-long-title">
+
+
+
+</component-example>
+
+## 範例
+
+### 驗證與操作按鈕
+
+在欄位內按 Enter 即可送出；驗證通過才觸發 `submit`，以 `event.data` 取得資料。`#actions` 放底部按鈕，`clear` 觸發 `clear` 事件，由頁面重設資料後元件再清除驗證錯誤。
+
+<component-example name="query-card-basic">
+
+
+
+</component-example>
+
+### 由標題列送出
+
+透過 template ref 呼叫 `submit()`、`clear()`，例如把查詢按鈕放在 `#header-right`。
+
+<component-example name="query-card-expose">
+
+
+
+</component-example>
+
+### 搭配清單卡片
+
+送出查詢條件後，以 [ShuoListCard](https://k90325248.github.io/components/list-card) 的 `getPagination(1)` 回到第一頁查詢；換頁沿用已送出的條件。
+
+<component-example name="query-card-with-list">
+
+
+
+</component-example>
 
 ## Props
 
@@ -497,6 +561,14 @@ canonical_url: "https://k90325248.github.io/components/query-card"
   </tr>
 </tbody>
 </table>
+
+## 更新紀錄
+
+<component-changelog name="ShuoQueryCard">
+
+
+
+</component-changelog>
 
 ---
 

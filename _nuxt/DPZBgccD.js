@@ -1,0 +1,1 @@
+import{On as e,mt as t,qt as n,v as r}from"./DVRkMeDb.js";import{r as i}from"./CpO48ebK.js";import{t as a}from"./CmyhZoRK.js";import{n as o}from"./C2JJgzWa.js";var s={__name:`ProseTip`,setup(s){let c=i();return(i,s)=>(t(),r(o,{color:`success`,icon:e(c).ui.icons.tip},{default:n(()=>[a(i.$slots,`default`,{mdcUnwrap:`p`})]),_:3},8,[`icon`]))}};export{s as default};

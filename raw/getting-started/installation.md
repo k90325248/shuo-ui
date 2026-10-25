@@ -59,26 +59,20 @@ canonical_url: "https://k90325248.github.io/getting-started/installation"
 
 ### 安裝套件
 
-指定 tag 以固定版本，升級時改成新的 tag 即可。
-
-<warning>
-
-目前為 beta 版本（`0.0.1-beta.x`），功能與參數仍可能調整，beta 之間可能有破壞性變更。升級時請確認專案中的用法。
-
-</warning>
+指定 tag 以固定版本，升級時改成新的 tag 即可。各版本的改動見 [GitHub Releases](https://github.com/k90325248/shuo-ui/releases)，元件頁最下方也有該元件的更新紀錄。
 
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v0.0.1-beta.1
+pnpm add github:k90325248/shuo-ui#v1.0.0
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v0.0.1-beta.1
+npm install github:k90325248/shuo-ui#v1.0.0
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v0.0.1-beta.1
+yarn add github:k90325248/shuo-ui#v1.0.0
 ```
 
 </code-group>
@@ -103,9 +97,18 @@ export default defineNuxtConfig({
 @import '@shuo/ui/css';
 ```
 
+再到 `nuxt.config.ts` 以 `css` 註冊這個檔案：
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['@nuxt/ui', '@shuo/ui'],
+  css: ['~/assets/css/main.css']
+});
+```
+
 <warning>
 
-最後一行讓 Tailwind 掃描元件庫內使用的 class（Tailwind 預設不掃描 `node_modules`）。沒有這行，部分樣式（例如載入中圖示大小、排版）不會生效。
+CSS 的最後一行 `@import '@shuo/ui/css'` 讓 Tailwind 掃描元件庫內使用的 class（Tailwind 預設不掃描 `node_modules`）。沒有這行，部分樣式（例如載入中圖示大小、排版）不會生效。
 
 </warning>
 </steps>

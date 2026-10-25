@@ -13,19 +13,84 @@ canonical_url: "https://k90325248.github.io/components/textarea"
 
 ### 行數與自動高度
 
-未啟用 `autoresize` 時可上下拖拉調整高度，最低不小於同尺寸單行輸入框。
+`rows` 是基本行數（Nuxt UI 預設 `3`）。`autoresize` 為 `true` 時高度隨內容增加，最少 `rows` 行，最多 `maxrows` 行，超過後出現捲軸；`maxrows` 為 `0` 時不限。
 
-<component-example name="textarea-basic">
+<component-example name="textarea-autoresize">
 
 
 
 </component-example>
 
-### 載入中、停用與骨架
+- 未啟用 `autoresize` 時可上下拖拉調整高度，最低不小於同尺寸單行輸入框；啟用後不能拖拉。
+- `autoresize`、`rows`、`maxrows`、`fixed` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/guides/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
 
-載入中在右上角顯示轉圈圖示，位置同 Nuxt UI 的尾端圖示，不取代左側 `icon`、也不推移文字起點。骨架保留 `rows` 對應的高度。
+### 外觀
+
+沿用 `UTextarea` 的 `variant`、`color` 與 `highlight`。
+
+<component-example name="textarea-variant">
+
+
+
+</component-example>
+
+### 圖示
+
+沿用 `UTextarea` 的 `icon`；`trailing` 為 `true` 時圖示放在右側。
+
+<component-example name="textarea-icon">
+
+
+
+</component-example>
+
+### 尺寸與狀態
+
+載入中在右上角顯示轉圈圖示，位置同 Nuxt UI 的尾端圖示，不取代左側 `icon`、也不推移文字起點。骨架保留 `rows` 對應的高度。各狀態的共通行為見[共用參數](https://k90325248.github.io/components/common)。
 
 <component-example name="textarea-states">
+
+
+
+</component-example>
+
+## 範例
+
+### 搭配表單驗證
+
+必填用 `requiredText`，純空白也不通過；字數下限另以 `v.minLength` 檢查。
+
+<component-example name="textarea-validation">
+
+
+
+</component-example>
+
+### 字數上限與計數
+
+`maxlength` 是原生字數上限，達到上限後無法再輸入。搭配 `UFormField` 的 `hint` 顯示目前字數。
+
+<component-example name="textarea-maxlength">
+
+
+
+</component-example>
+
+### 快捷鍵送出
+
+事件會轉給原生 textarea，可直接加上鍵盤修飾符。下例按 Ctrl＋Enter（macOS 為 ⌘＋Enter）送出留言，單獨按 Enter 仍是換行。
+
+<component-example name="textarea-shortcut">
+
+
+
+</component-example>
+
+### 操作原生 textarea
+
+透過 template ref 的 `textareaRef` 取得原生 textarea；另有 `autoResize()` 可依內容重新計算自動高度，見下方 [Expose](#expose)。
+
+<component-example name="textarea-expose">
 
 
 
@@ -39,7 +104,7 @@ canonical_url: "https://k90325248.github.io/components/textarea"
 
 </component-props>
 
-`size`、`disabled`、`loading`、`skeleton`、`name` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/components/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。
 
 ## Slots
 
@@ -48,6 +113,10 @@ canonical_url: "https://k90325248.github.io/components/textarea"
   <tr>
     <th>
       Slot
+    </th>
+    
+    <th>
+      參數
     </th>
     
     <th>
@@ -61,6 +130,12 @@ canonical_url: "https://k90325248.github.io/components/textarea"
     <td>
       <code>
         leading
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ui
       </code>
     </td>
     
@@ -87,6 +162,12 @@ canonical_url: "https://k90325248.github.io/components/textarea"
     </td>
     
     <td>
+      <code>
+        ui
+      </code>
+    </td>
+    
+    <td>
       輸入框內的額外內容
     </td>
   </tr>
@@ -99,11 +180,19 @@ canonical_url: "https://k90325248.github.io/components/textarea"
     </td>
     
     <td>
+      <code>
+        ui
+      </code>
+    </td>
+    
+    <td>
       尾端內容；載入中不顯示，由載入圖示佔用同一位置
     </td>
   </tr>
 </tbody>
 </table>
+
+參數同 Nuxt UI `UTextarea`。
 
 ## Expose
 
@@ -248,6 +337,14 @@ canonical_url: "https://k90325248.github.io/components/textarea"
   </tr>
 </tbody>
 </table>
+
+## 更新紀錄
+
+<component-changelog name="ShuoTextarea">
+
+
+
+</component-changelog>
 
 ---
 

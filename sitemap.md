@@ -5,7 +5,7 @@
 ## Components
 
 - [Checkbox](https://k90325248.github.io/raw/components/checkbox.md)
-- [RadioGroup／CheckboxGroup](https://k90325248.github.io/raw/components/choice-group.md)
+- [CheckboxGroup](https://k90325248.github.io/raw/components/checkbox-group.md)
 - [共用參數](https://k90325248.github.io/raw/components/common.md)
 - [Datepicker](https://k90325248.github.io/raw/components/datepicker.md)
 - [File](https://k90325248.github.io/raw/components/file.md)
@@ -16,6 +16,7 @@
 - [Months](https://k90325248.github.io/raw/components/months.md)
 - [Phone](https://k90325248.github.io/raw/components/phone.md)
 - [QueryCard](https://k90325248.github.io/raw/components/query-card.md)
+- [RadioGroup](https://k90325248.github.io/raw/components/radio-group.md)
 - [SelectMenu](https://k90325248.github.io/raw/components/select-menu.md)
 - [Table](https://k90325248.github.io/raw/components/table.md)
 - [Textarea](https://k90325248.github.io/raw/components/textarea.md)

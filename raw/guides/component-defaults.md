@@ -20,17 +20,63 @@ export default defineNuxtConfig({
   modules: ['@nuxt/ui', '@shuo/ui'],
   shuoUi: {
     components: {
-      selectMenu: { format: '{value}_{label}', size: 'md', emptyValue: null, labelKey: 'Name', valueKey: 'Code' },
-      checkboxGroup: { labelKey: 'Name', valueKey: 'Code' },
-      radioGroup: { orientation: 'horizontal', breakpoint: 'lg', labelKey: 'Name', valueKey: 'Code' },
-      checkbox: { trueValue: 'Y', falseValue: 'N' },
-      datepicker: { clearable: true, separator: '-' },
-      inputNumber: { unit: true, thousandSeparator: true }, // 單位文字來自 messages.inputNumber.unit（預設「元」）
-      queryCard: {
-        // 查詢欄位分欄：xl 要明確寫出，才會蓋過內建的 xl:grid-cols-4（見下方說明）
-        ui: { grid: 'grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4' }
+      // selectMenu 下拉選單
+      selectMenu: {
+        format: '{value}_{label}',
+        size: 'md',
+        emptyValue: null,
+        labelKey: 'Name',
+        valueKey: 'Code'
       },
-      listCard: { pageSize: 20, ui: { title: 'text-lg' } } // 標題列 ui 部位與 queryCard 相同
+
+      // checkboxGroup 複選群組
+      checkboxGroup: {
+        labelKey: 'Name',
+        valueKey: 'Code'
+      },
+
+      // radioGroup 單選群組
+      radioGroup: {
+        orientation: 'horizontal',
+        breakpoint: 'lg',
+        labelKey: 'Name',
+        valueKey: 'Code'
+      },
+
+      // checkbox 核取方塊
+      checkbox: {
+        trueValue: 'Y',
+        falseValue: 'N'
+      },
+
+      // datepicker 日期選擇器
+      datepicker: {
+        clearable: true,
+        separator: '-'
+      },
+
+      // inputNumber 數字輸入
+      inputNumber: {
+        unit: true, // 單位文字來自 messages.inputNumber.unit（預設「元」）
+        thousandSeparator: true
+      },
+
+      // queryCard 查詢條件卡片
+      queryCard: {
+        ui: {
+          // 查詢欄位分欄：xl 要明確寫出，
+          // 才會蓋過內建的 xl:grid-cols-4（見下方說明）
+          grid: 'sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4'
+        }
+      },
+
+      // listCard 清單卡片
+      listCard: {
+        pageSize: 20,
+        ui: {
+          title: 'text-lg' // 標題列 ui 部位與 queryCard 相同
+        }
+      }
     }
   }
 });
@@ -625,7 +671,11 @@ export default defineNuxtConfig({
 所有輸入元件的尺寸依下列順序決定：
 
 ```text
-元件明確傳入的 size  >  UFormField 上寫的 size  >  components.<元件>.size  >  formField 主題預設  >  lg
+元件明確傳入的 size
+  >  UFormField 上寫的 size
+  >  components.<元件>.size
+  >  formField 主題預設
+  >  lg
 ```
 
 <table>
@@ -771,7 +821,9 @@ shuoUi: {
   components: {
     queryCard: {
       // 手機 1 欄、sm 2 欄、md 與 xl 3 欄、2xl 4 欄
-      ui: { grid: 'grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4' }
+      ui: {
+        grid: 'sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4'
+      }
     }
   }
 }
@@ -793,6 +845,8 @@ shuoUi: {
 `resolveShuoDefault(元件, prop)` 回傳「全站設定 ?? 元件內建預設」的實際生效值，例如送給後端的每頁筆數要和清單一致：
 
 ```ts
+import type { PageRequest } from '#shuo-ui/types/pagination';
+
 // 後端依此值分頁；頁面另外傳 :page-size 時改用頁面自己的值。
 const pageSize = resolveShuoDefault('listCard', 'pageSize');
 const request = reactive<PageRequest>({ PageNumber: 1, PageSize: pageSize });

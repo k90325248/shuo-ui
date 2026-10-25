@@ -13,7 +13,7 @@ canonical_url: "https://k90325248.github.io/components/input-text"
 
 ### 遮蔽
 
-`mask` 為 `true` 時全部遮蔽，正整數遮蔽最後指定碼數。右側眼睛按鈕切換明碼與遮蔽，`v-model` 始終保留原始文字。
+`mask` 為 `true` 時全部遮蔽，正整數遮蔽最後指定碼數。右側眼睛按鈕切換明碼與遮蔽，`hide-mask-toggle` 可隱藏這個按鈕；`v-model` 始終保留原始文字。
 
 <component-example name="input-text-mask">
 
@@ -26,21 +26,73 @@ canonical_url: "https://k90325248.github.io/components/input-text"
 - 動態變更 `mask` 或 `hideMaskToggle` 會重設為遮蔽狀態。
 - 以 `ui.base` 改變文字對齊時，局部遮蔽的顯示層跟著對齊。
 
-### 沿用 Nuxt UI
+### 切換按鈕圖示
 
-`UInput` 的 props 與 slots 都能直接使用，例如 `variant`、`icon` 與 `#leading`。
+`reveal-icon` 是遮蔽中顯示的圖示（按下顯示明碼），`conceal-icon` 是顯示明碼時的圖示（按下恢復遮蔽）。
 
-<component-example name="input-text-nuxt-ui">
+<component-example name="input-text-mask-icons">
 
 
 
 </component-example>
 
-### 載入中、停用與骨架
+### 外觀
 
-停用時仍可切換顯示；骨架期間不可操作。
+沿用 `UInput` 的 `variant`、`color` 與 `highlight`。
+
+<component-example name="input-text-variant">
+
+
+
+</component-example>
+
+### 圖示
+
+沿用 `UInput` 的 `icon`；`trailing` 為 `true` 時圖示放在右側。
+
+<component-example name="input-text-icon">
+
+
+
+</component-example>
+
+### 尺寸與狀態
+
+停用時仍可切換明碼顯示；骨架期間不可操作。各狀態的共通行為見[共用參數](https://k90325248.github.io/components/common)。
 
 <component-example name="input-text-states">
+
+
+
+</component-example>
+
+## 範例
+
+### 搭配表單驗證
+
+必填用 `requiredText`，格式另外以 `v.regex` 檢查。遮蔽只影響顯示，驗證與送出的都是原始文字。
+
+<component-example name="input-text-validation">
+
+
+
+</component-example>
+
+### 前置圖示與遮蔽並用
+
+`#leading` 放在左側，眼睛按鈕仍在右側，兩者可同時使用。
+
+<component-example name="input-text-leading-mask">
+
+
+
+</component-example>
+
+### 清除按鈕
+
+以 `#trailing` 放入清除按鈕。有遮蔽或載入中時，尾端優先顯示眼睛按鈕或載入圖示，見下方 [Slots](#slots)。
+
+<component-example name="input-text-clearable">
 
 
 
@@ -76,6 +128,10 @@ canonical_url: "https://k90325248.github.io/components/input-text"
     </th>
     
     <th>
+      參數
+    </th>
+    
+    <th>
       說明
     </th>
   </tr>
@@ -86,6 +142,12 @@ canonical_url: "https://k90325248.github.io/components/input-text"
     <td>
       <code>
         leading
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ui
       </code>
     </td>
     
@@ -112,6 +174,12 @@ canonical_url: "https://k90325248.github.io/components/input-text"
     </td>
     
     <td>
+      <code>
+        ui
+      </code>
+    </td>
+    
+    <td>
       輸入框內的額外內容
     </td>
   </tr>
@@ -120,6 +188,12 @@ canonical_url: "https://k90325248.github.io/components/input-text"
     <td>
       <code>
         trailing
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ui
       </code>
     </td>
     
@@ -133,6 +207,8 @@ canonical_url: "https://k90325248.github.io/components/input-text"
   </tr>
 </tbody>
 </table>
+
+參數同 Nuxt UI `UInput`。
 
 ## Expose
 
@@ -182,7 +258,75 @@ canonical_url: "https://k90325248.github.io/components/input-text"
 
 ## 樣式
 
-`ui` 同 Nuxt UI `UInput` 的 `ui`，與內建樣式合併，見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)。`ui.root` 內建 `w-full min-w-0`；有遮蔽時 `ui.trailing` 加上 `pointer-events-auto` 讓眼睛按鈕可點擊。`class` 在 `ui.root` 之後合併，可覆寫寬度與最小寬度（例如 `class="min-w-20"`）。
+`ui` 可用 Nuxt UI `UInput` 的所有 slot，與內建樣式合併，見[單一元件的 `ui` prop](https://k90325248.github.io/guides/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      外框（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        w-full min-w-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        trailing
+      </code>
+    </td>
+    
+    <td>
+      尾端內容外層（Nuxt UI）
+    </td>
+    
+    <td>
+      有遮蔽時為 <code>
+        pointer-events-auto
+      </code>
+      
+      ，讓眼睛按鈕可點擊
+    </td>
+  </tr>
+</tbody>
+</table>
+
+`class` 在 `ui.root` 之後合併，可覆寫寬度與最小寬度（例如 `class="min-w-20"`）。
+
+## 更新紀錄
+
+<component-changelog name="ShuoInputText">
+
+
+
+</component-changelog>
 
 ---
 

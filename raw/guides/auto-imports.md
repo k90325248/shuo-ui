@@ -195,7 +195,7 @@ canonical_url: "https://k90325248.github.io/guides/auto-imports"
 
 <warning>
 
-目錄內其他元件內部使用的工具（例如 `getByPath`、`getMaskCount`）同樣會被匯入，但不屬於公開 API，版本間可能變動。若與專案自己的函式同名，請改名或關閉其中一方的自動匯入。
+目錄內其他元件內部使用的工具（例如 `getByPath`、`getMaskCount`、`useChoiceAppend`、`getChoiceGroupUi`）同樣會被匯入，但不屬於公開 API，版本間可能變動。若與專案自己的函式同名，請改名或關閉其中一方的自動匯入。
 
 </warning>
 

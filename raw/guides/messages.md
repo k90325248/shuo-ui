@@ -30,6 +30,8 @@ export default defineNuxtConfig({
 
 `{label}`、`{min}`、`{unit}`、`{total}`、`{start}`、`{end}` 是佔位符，會在使用時替換。
 
+`queryCard` 的 `collapse`、`expand` 會直接接在卡片標題前，組成收合按鈕的 aria-label（例如「收合查詢條件」），中間不另加空白，所以範例的英文文案結尾留一個空格（`'Collapse '` 加上標題 `Filters` 成為 `Collapse Filters`）。
+
 ## 可覆寫的項目
 
 <table>

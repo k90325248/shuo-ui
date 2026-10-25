@@ -9,7 +9,7 @@
 Every page below is available as raw markdown.
 
 - [Checkbox](https://k90325248.github.io/raw/components/checkbox.md): 單一核取方塊，可自訂勾選值，文字旁可放附加內容。
-- [RadioGroup／CheckboxGroup](https://k90325248.github.io/raw/components/choice-group.md): 單選與複選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
+- [CheckboxGroup](https://k90325248.github.io/raw/components/checkbox-group.md): 複選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
 - [共用參數](https://k90325248.github.io/raw/components/common.md): 表單輸入元件共同支援的參數、骨架行為與空值約定。
 - [Datepicker](https://k90325248.github.io/raw/components/datepicker.md): 日期選擇器，預設民國年，支援五種精度與範圍選擇。
 - [File](https://k90325248.github.io/raw/components/file.md): 單檔選擇與既有附件下載，選檔不會自動上傳。
@@ -20,6 +20,7 @@ Every page below is available as raw markdown.
 - [Months](https://k90325248.github.io/raw/components/months.md): 年月數換算輸入，可同時綁定總月數、年數與月數。
 - [Phone](https://k90325248.github.io/raw/components/phone.md): 市話號碼，兩個輸入框分別輸入區碼與電話。
 - [QueryCard](https://k90325248.github.io/raw/components/query-card.md): 可收合的查詢條件卡片，內含 UForm，欄位以響應式格線排列。
+- [RadioGroup](https://k90325248.github.io/raw/components/radio-group.md): 單選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
 - [SelectMenu](https://k90325248.github.io/raw/components/select-menu.md): 下拉選單，可搜尋、多選，文字過長時顯示完整提示。
 - [Table](https://k90325248.github.io/raw/components/table.md): 基於 UTable 的純表格，含骨架、空資料與高度過渡。
 - [Textarea](https://k90325248.github.io/raw/components/textarea.md): 多行文字輸入，保留換行，可自動調整高度。

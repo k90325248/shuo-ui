@@ -11,13 +11,61 @@ canonical_url: "https://k90325248.github.io/components/info-tooltip"
 
 ## 用法
 
-<component-example name="info-tooltip-basic">
+### 提示文字
+
+`text` 為提示內容，支援換行字元，過長時在最大寬度內自動換行。`text` 為空且沒有 `#content` slot 時不顯示提示。
+
+<component-example name="info-tooltip-text">
 
 
 
 </component-example>
 
-`text` 支援換行字元；需要粗體等格式時改用 `#content` slot。`class` 落在觸發按鈕，例如 `class="text-warning"` 可改變圖示顏色。
+需要粗體等格式時改用 `#content` slot，見[自訂內容](#%E8%87%AA%E8%A8%82%E5%85%A7%E5%AE%B9)。
+
+### 圖示與顏色
+
+`icon` 為觸發按鈕的圖示，預設 `i-lucide-circle-alert`。`class` 落在觸發按鈕，例如 `class="text-warning"` 可改變圖示顏色。
+
+<component-example name="info-tooltip-icon">
+
+
+
+</component-example>
+
+圖示按鈕沒有可見文字，請以 `label` 提供無障礙名稱。
+
+## 範例
+
+### 欄位提示
+
+放在 `UFormField` 的 `#hint`，提示圖示顯示在欄位標籤右側。
+
+<component-example name="info-tooltip-form-field">
+
+
+
+</component-example>
+
+### 自訂內容
+
+以 `#content` slot 放入粗體、顏色等格式。
+
+<component-example name="info-tooltip-content">
+
+
+
+</component-example>
+
+### 提示框寬度
+
+提示框預設最大寬度為 `max-w-xs`，可用 `ui.tooltip.content` 調整，例如 `:ui="{ tooltip: { content: 'max-w-md' } }"`。
+
+<component-example name="info-tooltip-width">
+
+
+
+</component-example>
 
 ## Props
 
@@ -171,7 +219,15 @@ canonical_url: "https://k90325248.github.io/components/info-tooltip"
 </tbody>
 </table>
 
-`class` 落在觸發按鈕，與 `ui.trigger` 一起合併，例如 `class="text-warning"` 可改變圖示顏色。
+`class` 與 `ui.trigger` 一起合併。
+
+## 更新紀錄
+
+<component-changelog name="ShuoInfoTooltip">
+
+
+
+</component-changelog>
 
 ---
 

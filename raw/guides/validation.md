@@ -61,6 +61,8 @@ const schema = v.object({
 
 可重複使用的格式、長度或範圍規則再加入共用檔；特定頁面的跨欄位規則留在該表單。使用 Valibot `pipe` 組合，不另建一套驗證設定語言。
 
+檔案欄位（`ShuoFile`）綁定 `File | null`，必填、類型與大小以 Valibot 的 `v.file`、`v.mimeType`、`v.maxSize` 組合，見 File 的[搭配表單驗證](https://k90325248.github.io/components/file#%E6%90%AD%E9%85%8D%E8%A1%A8%E5%96%AE%E9%A9%97%E8%AD%89)。
+
 <note>
 
 目前日期與選項只檢查必填；日期格式、選項是否仍有效、跨欄位條件、數值範圍等，依實際需求追加規則，例如 `v.pipe(v.number(), v.minValue(1), v.maxValue(100))`。
@@ -69,7 +71,7 @@ const schema = v.object({
 
 ## 空值與型別
 
-元件會將父層綁定的 `null` / `undefined` 回寫為約定空值（文字 `''`、數字 `null`、日期範圍 `[]` 等，見[空值約定](https://k90325248.github.io/components/common#%E7%A9%BA%E5%80%BC%E7%B4%84%E5%AE%9A)），非預期值則清空並以 `console.warn` 留下紀錄。單選群組未選取即為 `''`，因此選項不使用空字串作為 value。
+元件會將父層綁定的 `null` / `undefined` 回寫為約定空值（文字 `''`、數字 `null`、日期範圍 `[]` 等，見[空值約定](https://k90325248.github.io/components/common#%E7%A9%BA%E5%80%BC%E7%B4%84%E5%AE%9A)），非預期值則清空，多數元件另以 `console.warn` 留下紀錄（`ShuoSelectMenu`、`ShuoMonths` 只清空不警告，見同一節）。單選群組未選取即為 `''`，因此選項不使用空字串作為 value。
 
 共用 schema 的輸入型別容納編輯時的 `null` / `undefined`，驗證通過後的輸出則收斂為 `string`、`number` 或對應項目型別的陣列，不需要改掉元件的空值契約。
 

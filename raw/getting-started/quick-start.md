@@ -37,9 +37,15 @@ const schema = v.object({
   date: requiredText('申請日期')
 });
 
-const state = reactive({ name: '', amount: null as number | null, date: '' });
+const state = reactive({
+  name: '',
+  amount: null as number | null,
+  date: ''
+});
 
-const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(event.data);
+const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => {
+  console.log(event.data);
+};
 </script>
 ```
 
@@ -172,8 +178,18 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(
       </code>
       
       ／範圍為 <code>
-        [string, string]
+        [string, string] | []
       </code>
+      
+      （另有 <code>
+        start
+      </code>
+      
+      、<code>
+        end
+      </code>
+      
+      ）
     </td>
   </tr>
   
@@ -209,7 +225,7 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(
   
   <tr>
     <td>
-      <a href="https://k90325248.github.io/components/choice-group">
+      <a href="https://k90325248.github.io/components/radio-group">
         <code>
           ShuoRadioGroup
         </code>
@@ -229,7 +245,7 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(
   
   <tr>
     <td>
-      <a href="https://k90325248.github.io/components/choice-group">
+      <a href="https://k90325248.github.io/components/checkbox-group">
         <code>
           ShuoCheckboxGroup
         </code>

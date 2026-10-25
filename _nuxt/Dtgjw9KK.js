@@ -1,0 +1,1 @@
+import{En as e,g as t}from"./DVRkMeDb.js";import{a as n}from"./Dry1wXF-.js";function r(r){return t(()=>!e(r)||!!n(r)?.closest(`form`))}export{r as t};

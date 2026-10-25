@@ -11,11 +11,75 @@ canonical_url: "https://k90325248.github.io/components/input-number"
 
 ## 用法
 
-### 單位、小數與千分位
+### 小數位數與千分位
 
-輸入中保留正負號、小數點與尾端零，尚未完成的輸入（例如只有 `-`）綁定為 `null`；離開輸入框時依 `decimal` 捨入並補零，並顯示千分位。
+`decimal` 預設 `false`，只能輸入整數；正整數指定小數位數，`true` 不限位數。`thousand-separator` 預設 `true`，離開輸入框後顯示千分位；年份、代碼等不適合千分位的數字傳 `false`。
 
-<component-example name="input-number-basic">
+<component-example name="input-number-decimal">
+
+
+
+</component-example>
+
+- 輸入中保留正負號、小數點與尾端零，尚未完成的輸入（例如只有 `-`）綁定為 `null`；離開輸入框時依 `decimal` 捨入並補零，並顯示千分位。
+- 非數字字元與超過指定位數的小數無法輸入，貼上時也會還原；`decimal` 為 `false` 或 `0` 時不能輸入小數點。
+- 聚焦時改為不含千分位的編輯文字。`decimal` 為 `false` 或 `0` 時 `inputmode` 為 `numeric`，否則為 `decimal`，手機會顯示對應的數字鍵盤。
+
+<tip>
+
+元件不提供 `min`、`max`。底層是文字型 input，原生的 `min`、`max`、`step` 不會生效，數值範圍請用[驗證規則](https://k90325248.github.io/guides/validation)，見下方[搭配表單驗證](#%E6%90%AD%E9%85%8D%E8%A1%A8%E5%96%AE%E9%A9%97%E8%AD%89)。
+
+</tip>
+
+### 單位
+
+`unit` 為 `true` 時顯示「元」，文字可由[文案覆寫](https://k90325248.github.io/guides/messages#%E5%8F%AF%E8%A6%86%E5%AF%AB%E7%9A%84%E9%A0%85%E7%9B%AE)調整；傳入字串時顯示該文字。單位長度不固定，右內距依單位實際寬度保留，數字不會與單位重疊。
+
+<component-example name="input-number-unit">
+
+
+
+</component-example>
+
+`unit` 與 `thousand-separator` 也可以在全站設定預設值，見[可設定的項目](https://k90325248.github.io/guides/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)；全站的 `unit` 只接受 `true`／`false`。
+
+### 外觀
+
+沿用 `UInput` 的 `variant`、`color` 與 `highlight`。
+
+<component-example name="input-number-variant">
+
+
+
+</component-example>
+
+### 圖示
+
+沿用 `UInput` 的 `icon`，顯示在左側，與單位並存。
+
+<component-example name="input-number-icon">
+
+
+
+</component-example>
+
+### 尺寸與狀態
+
+載入中時轉圈圖示排在單位右側，數字與單位往左讓出空間。各狀態的共通行為見[共用參數](https://k90325248.github.io/components/common)。
+
+<component-example name="input-number-states">
+
+
+
+</component-example>
+
+## 範例
+
+### 搭配表單驗證
+
+必填用 `requiredNumber`，範圍以 `v.minValue`、`v.maxValue` 追加；選填的非負數字用 `optionalNonNegativeNumber`。驗證與送出的都是數字，不含千分位。
+
+<component-example name="input-number-validation">
 
 
 
@@ -23,7 +87,7 @@ canonical_url: "https://k90325248.github.io/components/input-number"
 
 ### 數字置中
 
-`ui.base` 內建 `text-right`，傳入 `text-center` 即可置中。有單位或載入中時，右內距依尾端實際寬度保留，數字不會與單位重疊。
+`ui.base` 內建 `text-right`，傳入 `text-center` 即可置中，適合嵌在句子中的短欄位。有單位或載入中時，右內距依尾端實際寬度保留，數字不會與單位重疊。
 
 <component-example name="input-number-center">
 
@@ -31,11 +95,25 @@ canonical_url: "https://k90325248.github.io/components/input-number"
 
 </component-example>
 
-<tip>
+### 清除按鈕
 
-元件不提供 `min`、`max`。底層是文字型 input，原生的 `min`、`max`、`step` 不會生效，數值範圍請用[驗證規則](https://k90325248.github.io/guides/validation)，例如 `v.pipe(v.number(), v.minValue(1), v.maxValue(100))`。
+以 `#trailing` 放入清除按鈕。`#trailing` 與單位、載入圖示並排，不會互相取代，見下方 [Slots](#slots)。
 
-</tip>
+<component-example name="input-number-clearable">
+
+
+
+</component-example>
+
+### 操作原生 input
+
+透過 template ref 的 `inputRef` 取得原生 input。
+
+<component-example name="input-number-expose">
+
+
+
+</component-example>
 
 ## Props
 
@@ -57,6 +135,10 @@ canonical_url: "https://k90325248.github.io/components/input-number"
     </th>
     
     <th>
+      參數
+    </th>
+    
+    <th>
       說明
     </th>
   </tr>
@@ -67,6 +149,12 @@ canonical_url: "https://k90325248.github.io/components/input-number"
     <td>
       <code>
         leading
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ui
       </code>
     </td>
     
@@ -93,6 +181,12 @@ canonical_url: "https://k90325248.github.io/components/input-number"
     </td>
     
     <td>
+      <code>
+        ui
+      </code>
+    </td>
+    
+    <td>
       輸入框內的額外內容
     </td>
   </tr>
@@ -101,6 +195,12 @@ canonical_url: "https://k90325248.github.io/components/input-number"
     <td>
       <code>
         trailing
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ui
       </code>
     </td>
     
@@ -114,6 +214,8 @@ canonical_url: "https://k90325248.github.io/components/input-number"
   </tr>
 </tbody>
 </table>
+
+參數同 Nuxt UI `UInput`。
 
 ## Expose
 
@@ -257,13 +359,15 @@ canonical_url: "https://k90325248.github.io/components/input-number"
 </tbody>
 </table>
 
-數字置中：
+要讓數字置中，傳入 `:ui="{ base: 'text-center' }"`，見[數字置中](#%E6%95%B8%E5%AD%97%E7%BD%AE%E4%B8%AD)。有單位或載入中時，元件依尾端實際寬度設定輸入框右內距（inline style），`ui`、`class`、`style` 都不會蓋掉，置中時數字在扣除單位後的空間內置中，不會與單位重疊。
 
-```vue
-<ShuoInputNumber v-model="count" class="w-14" :ui="{ base: 'text-center' }" />
-```
+## 更新紀錄
 
-有單位或載入中時，元件依尾端實際寬度設定輸入框右內距（inline style），`ui`、`class`、`style` 都不會蓋掉，置中時數字在扣除單位後的空間內置中，不會與單位重疊。
+<component-changelog name="ShuoInputNumber">
+
+
+
+</component-changelog>
 
 ---
 
