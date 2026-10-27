@@ -1,4 +1,4 @@
-import type { CheckboxGroupProps, CheckboxProps, DatepickerProps, FileProps, InfoTooltipProps, InputNumberProps, InputTextProps, ListCardProps, MonthsProps, PhoneProps, QueryCardProps, RadioGroupProps, SelectMenuProps, TextareaProps, TooltipProps } from './components.js';
+import type { CheckboxGroupProps, CheckboxProps, DatepickerProps, FileProps, InfoTooltipProps, InputNumberProps, InputTextProps, ListCardProps, MonthsProps, PhoneProps, QueryCardProps, ShuoTableProps, SwitchProps, RadioGroupProps, SelectMenuProps, TextareaProps, TooltipProps } from './components.js';
 /** 可設定全站預設值的 prop 白名單；型別與執行時過濾共用這份清單。 */
 export declare const COMPONENT_DEFAULT_KEYS: {
     readonly inputText: readonly ["size", "hideMaskToggle", "revealIcon", "concealIcon"];
@@ -9,10 +9,12 @@ export declare const COMPONENT_DEFAULT_KEYS: {
     readonly phone: readonly ["size"];
     readonly selectMenu: readonly ["size", "format", "emptyValue", "labelKey", "valueKey"];
     readonly checkbox: readonly ["size", "trueValue", "falseValue"];
+    readonly switch: readonly ["size", "color", "loadingIcon"];
     readonly radioGroup: readonly ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"];
     readonly checkboxGroup: readonly ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"];
     readonly datepicker: readonly ["size", "clearable", "calendarIcon", "clearIcon", "roc", "separator", "yearRange"];
     readonly queryCard: readonly ["icon", "expandIcon", "collapseIcon", "validateOn", "ui"];
+    readonly table: readonly ["selectAll", "checkboxProps"];
     readonly listCard: readonly ["icon", "pageSize", "showPagination", "showSummary", "transition", "ui"];
     readonly infoTooltip: readonly ["icon"];
     readonly tooltip: readonly ["touch"];
@@ -35,6 +37,8 @@ interface ShuoComponentPropsMap {
     selectMenu: SelectMenuProps;
     /** 核取方塊 */
     checkbox: CheckboxProps;
+    /** 開關 */
+    switch: SwitchProps;
     /** 單選群組 */
     radioGroup: RadioGroupProps;
     /** 複選群組 */
@@ -43,6 +47,8 @@ interface ShuoComponentPropsMap {
     datepicker: DatepickerProps;
     /** 查詢條件卡片 */
     queryCard: QueryCardProps;
+    /** 表格（也套用到清單卡片內的表格） */
+    table: ShuoTableProps;
     /** 清單卡片 */
     listCard: ListCardProps;
     /** 資訊提示 */

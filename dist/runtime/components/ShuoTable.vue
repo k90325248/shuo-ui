@@ -9,10 +9,12 @@
       :style="{ height: transition && tableHeight !== void 0 ? `${tableHeight}px` : void 0 }"
     >
       <div ref="tableContent">
+        <!-- UTable 只在建立時讀取勾選與列 ID 設定，開關勾選或切換 rowKey 種類時重新建立 -->
         <UTable
-          v-bind="tableProps"
+          :key="tableKey"
+          v-bind="forwardedTableProps"
           :data="data"
-          :columns="columns"
+          :columns="tableColumns"
           :column-visibility="tableProps?.state?.columnVisibility"
           :loading="loading"
           :pagination-options="{ ...tableProps?.paginationOptions, manualPagination: true }"
@@ -22,6 +24,30 @@
           <!-- 動態欄位插槽：保留 Table 參數，另提供操作停用狀態 -->
           <template v-for="name in tableSlotNames()" #[name]="slotProps">
             <slot :name="name" v-bind="slotProps" :interaction-disabled="loading" />
+          </template>
+
+          <!-- 勾選欄表頭：全選只勾選目前這頁可勾選的資料，關閉全選時顯示表頭文字；可由 select-header 插槽覆寫 -->
+          <template v-if="selectable && !$slots['select-header']" #select-header="{ table }">
+            <UCheckbox
+              v-if="resolved.selectAll"
+              v-bind="checkboxProps"
+              :model-value="table.getIsSomePageRowsSelected() ? 'indeterminate' : table.getIsAllPageRowsSelected()"
+              :disabled="loading || !table.getRowModel().rows.some((row2) => row2.getCanSelect())"
+              :aria-label="messages.table.selectAll"
+              @update:model-value="(value) => table.toggleAllPageRowsSelected(!!value)"
+            />
+            <template v-else>{{ selectionHeaderText }}</template>
+          </template>
+
+          <!-- 每列的勾選；不可勾選的列與查詢中停用，可由 select-cell 插槽覆寫 -->
+          <template v-if="selectable && !$slots['select-cell']" #select-cell="{ row }">
+            <UCheckbox
+              v-bind="checkboxProps"
+              :model-value="row.getIsSelected()"
+              :disabled="loading || !row.getCanSelect()"
+              :aria-label="messages.table.selectRow"
+              @update:model-value="(value) => row.toggleSelected(!!value)"
+            />
           </template>
 
           <!-- 初次載入：依欄位數顯示 3 列骨架，每條高 24px -->
@@ -53,14 +79,35 @@
 
 <script setup>
 import { useMessageDefault, useShuoMessages } from "../internal/useShuoLocale";
+import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
+import {
+  SELECT_COLUMN_ID,
+  withSelectColumn,
+  fromRowSelection,
+  getRowKey,
+  toRowSelection
+} from "../utils/table-selection";
+import { useShuoComponentProps } from "../internal/useShuoComponentProps";
 const props = defineProps({
   data: { type: Array, required: true },
   columns: { type: Array, required: true },
   loading: { type: Boolean, required: false, default: false },
   empty: { type: String, required: false },
   transition: { type: Boolean, required: false, default: true },
-  tableProps: { type: Object, required: false, default: void 0 }
+  tableProps: { type: Object, required: false, default: void 0 },
+  selectable: { type: Boolean, required: false, default: false },
+  selectAll: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.table.selectAll },
+  selectionHeader: { type: String, required: false, default: void 0 },
+  rowKey: { type: Function, required: false, skipCheck: true, default: void 0 },
+  rowSelectable: { type: Function, required: false, default: void 0 },
+  checkboxProps: { type: Object, required: false, default: void 0 }
 });
+const selected = defineModel("selected", { type: Array, ...{ default: () => [] } });
+const resolved = useShuoComponentProps(
+  "table",
+  props
+);
+const checkboxProps = computed(() => resolved.checkboxProps);
 const slots = useSlots();
 const messages = useShuoMessages();
 const emptyText = useMessageDefault(
@@ -68,12 +115,51 @@ const emptyText = useMessageDefault(
   (m) => m.table.empty,
   messages
 );
+const selectionHeaderText = useMessageDefault(
+  () => props.selectionHeader,
+  (m) => m.table.selectionHeader,
+  messages
+);
 const tableContent = useTemplateRef("tableContent");
 const tableHeight = ref();
 let tableResizeObserver;
 const firstLoadPending = ref(props.loading);
 const initialLoading = computed(() => firstLoadPending.value && props.loading && props.data.length === 0);
-const skeletonColumns = computed(() => countColumns(props.columns));
+const tableColumns = computed(
+  () => props.selectable ? withSelectColumn(props.columns, {
+    id: SELECT_COLUMN_ID,
+    enableSorting: false,
+    enableHiding: false,
+    meta: { class: { th: "w-px", td: "w-px" } }
+  }) : props.columns
+);
+const rowKeys = computed(
+  () => props.data.map((row, index) => props.rowKey === void 0 ? String(index) : getRowKey(row, props.rowKey))
+);
+const tableKey = computed(() => {
+  const rowKey = props.rowKey;
+  if (rowKey === void 0) return `${props.selectable}:`;
+  return `${props.selectable}:${typeof rowKey === "function" ? "function" : String(rowKey)}`;
+});
+const getRowId = (row) => String(getRowKey(row, props.rowKey));
+const enableRowSelection = (row) => {
+  if (props.rowSelectable) return props.rowSelectable(row.original);
+  const option = props.tableProps?.rowSelectionOptions?.enableRowSelection;
+  return typeof option === "function" ? option(row) : option ?? true;
+};
+const onRowSelectionChange = (value) => {
+  selected.value = fromRowSelection(value, selected.value, rowKeys.value);
+};
+const forwardedTableProps = computed(() => ({
+  ...props.tableProps,
+  ...props.rowKey !== void 0 && { getRowId },
+  ...props.selectable && {
+    "rowSelection": toRowSelection(selected.value),
+    "onUpdate:rowSelection": onRowSelectionChange,
+    "rowSelectionOptions": { ...props.tableProps?.rowSelectionOptions, enableRowSelection }
+  }
+}));
+const skeletonColumns = computed(() => countColumns(tableColumns.value));
 const tableUi = computed(() => {
   const ui = props.tableProps?.ui;
   const body = ["common-table-body", props.transition ? void 0 : "common-table-body--instant"];

@@ -26,12 +26,19 @@
 
     <!-- 資料區：骨架、淡化與高度過渡由表格處理 -->
     <ShuoTable
+      v-model:selected="selected"
       :data="data"
       :columns="columns"
       :loading="loading"
       :empty="empty"
       :transition="resolved.transition"
       :table-props="tableProps"
+      :selectable="selectable"
+      :select-all="selectAll"
+      :selection-header="selectionHeader"
+      :row-key="rowKey"
+      :row-selectable="rowSelectable"
+      :checkbox-props="checkboxProps"
     >
       <!-- 動態插槽：欄位、body-top、loading、empty 原樣轉傳給表格 -->
       <template v-for="name in tableSlotNames()" #[name]="slotProps">
@@ -91,10 +98,20 @@ const props = defineProps({
   showPagination: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.listCard.showPagination },
   showSummary: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.listCard.showSummary },
   tableProps: { type: Object, required: false, default: void 0 },
-  ui: { type: Object, required: false, default: void 0 }
+  ui: { type: Object, required: false, default: void 0 },
+  selectable: { type: Boolean, required: false, default: false },
+  selectAll: { type: Boolean, required: false, default: void 0 },
+  selectionHeader: { type: String, required: false, default: void 0 },
+  rowKey: { type: Function, required: false, skipCheck: true, default: void 0 },
+  rowSelectable: { type: Function, required: false, default: void 0 },
+  checkboxProps: { type: Object, required: false, default: void 0 }
 });
+const selected = defineModel("selected", { type: Array, ...{ default: () => [] } });
 const emit = defineEmits(["page-change"]);
-const resolved = useShuoComponentProps("listCard", props);
+const resolved = useShuoComponentProps(
+  "listCard",
+  props
+);
 const listUi = computed(() => resolved.ui);
 const slots = useSlots();
 const messages = useShuoMessages();

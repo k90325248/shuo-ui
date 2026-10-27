@@ -9,6 +9,7 @@ export const BUILT_IN_DEFAULTS = {
   phone: { size: "lg" },
   selectMenu: { size: "lg", format: "{label}", emptyValue: "", labelKey: "label", valueKey: "value" },
   checkbox: { size: "lg", trueValue: 1, falseValue: 0 },
+  switch: { size: "lg", color: void 0, loadingIcon: void 0 },
   radioGroup: {
     size: "lg",
     orientation: "auto",
@@ -41,6 +42,7 @@ export const BUILT_IN_DEFAULTS = {
     validateOn: void 0,
     ui: void 0
   },
+  table: { selectAll: true, checkboxProps: void 0 },
   listCard: {
     icon: "i-lucide-list",
     pageSize: 10,

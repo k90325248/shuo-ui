@@ -19,14 +19,14 @@
 ## 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v1.1.0
+pnpm add github:k90325248/shuo-ui#v1.2.0
 ```
 
 指定 tag 以固定版本；升級時改成新的 tag 即可，升級前請先看[更新說明](https://github.com/k90325248/shuo-ui/releases)。其他套件管理工具：
 
 ```bash
-npm install github:k90325248/shuo-ui#v1.1.0
-yarn add github:k90325248/shuo-ui#v1.1.0
+npm install github:k90325248/shuo-ui#v1.2.0
+yarn add github:k90325248/shuo-ui#v1.2.0
 ```
 
 建議一併安裝 lucide 圖示集（`pnpm add @iconify-json/lucide`），元件內建的圖示會打包進網站；沒有安裝時圖示改由 `@nuxt/icon` 在執行時載入。
@@ -120,6 +120,7 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(
 | `ShuoDatepicker`    | 日期、年月、日期時間，範圍               | `string`／範圍為 `[string, string]`             |
 | `ShuoCheckbox`      | 單一核取方塊                             | `string \| number \| boolean`（預設 `1`／`0`）  |
 | `ShuoCheckboxGroup` | 複選群組                                 | `string[]`                                      |
+| `ShuoSwitch`        | 開關，切換後可先執行處理函式             | `boolean`（可設定 `trueValue`／`falseValue`）   |
 | `ShuoRadioGroup`    | 單選群組                                 | `string`                                        |
 | `ShuoTextarea`      | 多行文字                                 | `string`                                        |
 | `ShuoFile`          | 單檔選擇與既有附件下載                   | `File \| null`                                  |

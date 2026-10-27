@@ -7,10 +7,12 @@ export const COMPONENT_DEFAULT_KEYS = {
   phone: ["size"],
   selectMenu: ["size", "format", "emptyValue", "labelKey", "valueKey"],
   checkbox: ["size", "trueValue", "falseValue"],
+  switch: ["size", "color", "loadingIcon"],
   radioGroup: ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"],
   checkboxGroup: ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"],
   datepicker: ["size", "clearable", "calendarIcon", "clearIcon", "roc", "separator", "yearRange"],
   queryCard: ["icon", "expandIcon", "collapseIcon", "validateOn", "ui"],
+  table: ["selectAll", "checkboxProps"],
   listCard: ["icon", "pageSize", "showPagination", "showSummary", "transition", "ui"],
   infoTooltip: ["icon"],
   tooltip: ["touch"]

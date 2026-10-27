@@ -22,8 +22,8 @@ export interface RadioGroupOption {
     label: string;
     /** 綁定值 */
     value: string;
-    /** 不支援選項說明：說明會撐高選項，破壞與輸入框對齊的固定高度。 */
-    description?: never;
+    /** 選項說明，顯示在選項文字下方並換行；有說明的選項會撐高，沒有說明的選項高度對齊輸入框。欄位名稱可由 descriptionKey 指定 */
+    description?: string;
     /** 是否停用此選項 */
     disabled?: boolean;
     /** 此選項的 class */
@@ -37,8 +37,8 @@ export interface CheckboxGroupOption {
     label: string;
     /** 綁定值 */
     value: string;
-    /** 不支援選項說明：說明會撐高選項，破壞與輸入框對齊的固定高度。 */
-    description?: never;
+    /** 選項說明，顯示在選項文字下方並換行；有說明的選項會撐高，沒有說明的選項高度對齊輸入框。欄位名稱可由 descriptionKey 指定 */
+    description?: string;
     /** 是否停用此選項 */
     disabled?: boolean;
     /** 勾選時顯示的圖示 */
@@ -49,12 +49,12 @@ export interface CheckboxGroupOption {
     ui?: ChoiceOptionUi<NuxtCheckboxGroupOption>;
 }
 /**
- * 轉換後的單選群組選項：保留原始欄位，`label`、`value` 改為依 `labelKey`、`valueKey` 解析的值，不含 `description`。
+ * 轉換後的單選群組選項：保留原始欄位，`label`、`value` 改為依 `labelKey`、`valueKey` 解析的值，`description` 原樣保留。
  * 原始資料本身的 `label`、`value` 欄位會被取代。
  */
 export type ResolvedRadioGroupOption<T extends object = RadioGroupOption> = Omit<T, 'label' | 'value' | 'description'> & RadioGroupOption;
 /**
- * 轉換後的複選群組選項：保留原始欄位，`label`、`value` 改為依 `labelKey`、`valueKey` 解析的值，不含 `description`。
+ * 轉換後的複選群組選項：保留原始欄位，`label`、`value` 改為依 `labelKey`、`valueKey` 解析的值，`description` 原樣保留。
  * 原始資料本身的 `label`、`value` 欄位會被取代。
  */
 export type ResolvedCheckboxGroupOption<T extends object = CheckboxGroupOption> = Omit<T, 'label' | 'value' | 'description'> & CheckboxGroupOption;

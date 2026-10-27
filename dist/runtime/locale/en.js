@@ -28,7 +28,13 @@ export default {
     selectMenu: { searchPlaceholder: "Search...", empty: "No options" },
     infoTooltip: { label: "More info" },
     queryCard: { title: "Filters", collapse: "Collapse ", expand: "Expand ", submit: "Search" },
-    table: { empty: "No data", loading: "Loading\u2026" },
+    table: {
+      empty: "No data",
+      loading: "Loading\u2026",
+      selectAll: "Select all",
+      selectRow: "Select row",
+      selectionHeader: ""
+    },
     listCard: {
       title: "Results",
       summary: "Showing {start} to {end} of {total} results."

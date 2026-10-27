@@ -1,8 +1,14 @@
 import type { TableData } from '@nuxt/ui';
 import type { ShuoTableProps } from '../types/components.js';
-export type { ShuoTableProps } from '../types/components.js';
+import { type TableRowKey } from '../utils/table-selection.js';
+export type { ShuoTableProps, TableCheckboxProps, TableSelectionProps } from '../types/components.js';
+export type { TableRowKey, TableRowKeyGetter } from '../utils/table-selection.js';
 declare const __VLS_export: <T extends TableData>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_exposed?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
-    props: import("vue").PublicProps & __VLS_PrettifyLocal<ShuoTableProps<T>> & (typeof globalThis extends {
+    props: import("vue").PublicProps & __VLS_PrettifyLocal<(ShuoTableProps<T> & {
+        selected?: TableRowKey[];
+    }) & {
+        "onUpdate:selected"?: ((value: TableRowKey[]) => any) | undefined;
+    }> & (typeof globalThis extends {
         __VLS_PROPS_FALLBACK: infer P;
     } ? P : {});
     expose: (exposed: {}) => void;
@@ -18,7 +24,7 @@ declare const __VLS_export: <T extends TableData>(__VLS_props: NonNullable<Await
     } & {
         empty?: (props: {}) => any;
     };
-    emit: {};
+    emit: (event: "update:selected", value: TableRowKey[]) => void;
 }>) => import("vue").VNode & {
     __ctx?: NonNullable<Awaited<typeof __VLS_setup>>;
 };

@@ -43,6 +43,11 @@ export declare const BUILT_IN_DEFAULTS: {
         trueValue: number;
         falseValue: number;
     };
+    switch: {
+        size: "lg";
+        color: undefined;
+        loadingIcon: undefined;
+    };
     radioGroup: {
         size: "lg";
         orientation: "auto";
@@ -74,6 +79,10 @@ export declare const BUILT_IN_DEFAULTS: {
         collapseIcon: string;
         validateOn: undefined;
         ui: undefined;
+    };
+    table: {
+        selectAll: true;
+        checkboxProps: undefined;
     };
     listCard: {
         icon: string;

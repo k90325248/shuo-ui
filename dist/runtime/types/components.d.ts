@@ -1,8 +1,9 @@
-import type { CardProps, CheckboxEmits as NuxtCheckboxEmits, CheckboxGroupEmits as NuxtCheckboxGroupEmits, CheckboxGroupProps as NuxtCheckboxGroupProps, CheckboxProps as NuxtCheckboxProps, EmitsToProps, FormProps, FormSchema, GetItemKeys, InputEmits, InputProps, RadioGroupEmits as NuxtRadioGroupEmits, RadioGroupProps as NuxtRadioGroupProps, SelectMenuEmits as USelectMenuEmits, SelectMenuItem, SelectMenuProps as USelectMenuProps, SlotClass, TableColumn, TableData, TableProps, TextareaEmits as NuxtTextareaEmits, TextareaProps as NuxtTextareaProps, TooltipProps as NuxtTooltipProps } from '@nuxt/ui';
+import type { CardProps, CheckboxEmits as NuxtCheckboxEmits, CheckboxGroupEmits as NuxtCheckboxGroupEmits, CheckboxGroupProps as NuxtCheckboxGroupProps, CheckboxProps as NuxtCheckboxProps, EmitsToProps, FormProps, FormSchema, GetItemKeys, InputEmits, InputProps, RadioGroupEmits as NuxtRadioGroupEmits, RadioGroupProps as NuxtRadioGroupProps, SelectMenuEmits as USelectMenuEmits, SelectMenuItem, SelectMenuProps as USelectMenuProps, SlotClass, SwitchEmits as NuxtSwitchEmits, SwitchProps as NuxtSwitchProps, TableColumn, TableData, TableProps, TextareaEmits as NuxtTextareaEmits, TextareaProps as NuxtTextareaProps, TooltipProps as NuxtTooltipProps } from '@nuxt/ui';
 import type { DateValue } from '@vuepic/vue-datepicker';
 import type { ChoiceGroupBreakpoint, ChoiceGroupOrientation } from '../composables/useChoiceGroup.js';
 import type { DatepickerMode, DatepickerValue } from '../utils/datepicker.js';
 import type { DecimalOption } from '../utils/number.js';
+import type { TableRowKeyGetter } from '../utils/table-selection.js';
 import type { TextMask } from '../utils/text-mask.js';
 import type { CheckboxGroupOption, RadioGroupOption } from './choice.js';
 /**
@@ -272,11 +273,12 @@ interface UnsupportedChoiceProps {
 /**
  * 沿用 Nuxt UI 核取方塊的參數與事件，僅供型別推導；值經 `$attrs` 轉給 UCheckbox。
  * 排除元件自行宣告或改寫語意的項目：勾選值由 trueValue／falseValue 決定；
- * 不支援 description、variant、indicator、highlight：說明與 card 外框會撐高選項、破壞與輸入框對齊的高度，
+ * 說明文字（description）可用：沒有說明時高度對齊輸入框，有說明時撐高、說明換行。
+ * 不支援 variant、indicator、highlight：card 外框會撐高選項、破壞與輸入框對齊的高度，
  * 移動勾選框會讓載入圖示對不上，highlight 只在 card 有作用。
  */
-type InheritedCheckboxProps = Omit<NuxtCheckboxProps<CheckboxValue>, keyof CheckboxOwnProps | 'modelValue' | 'defaultValue' | 'value' | 'description' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtCheckboxEmits<CheckboxValue>> & UnsupportedChoiceProps;
-/** 單個核取方塊參數；未列出的 Nuxt UI 核取方塊參數（icon、required 等）皆可直接使用；不支援 variant、indicator、highlight */
+type InheritedCheckboxProps = Omit<NuxtCheckboxProps<CheckboxValue>, keyof CheckboxOwnProps | 'modelValue' | 'defaultValue' | 'value' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtCheckboxEmits<CheckboxValue>> & UnsupportedChoiceProps;
+/** 單個核取方塊參數；未列出的 Nuxt UI 核取方塊參數（description、icon、required 等）皆可直接使用；不支援 variant、indicator、highlight */
 export interface CheckboxProps extends /* @vue-ignore */ InheritedCheckboxProps, CheckboxOwnProps {
 }
 /** 單個核取方塊自行宣告的參數 */
@@ -304,6 +306,53 @@ interface CheckboxOwnProps {
     /** 樣式覆寫，與內建樣式合併，同一 slot 衝突時以傳入值優先；可用函式取得預設值後自行取代 */
     ui?: CheckboxUi;
 }
+/** 開關的綁定值，預設為布林值；設定 `trueValue`、`falseValue` 時為對應的值 */
+export type SwitchValue = boolean | string | number;
+/**
+ * 開關切換後的處理函式，參數為切換後的值。
+ * 回傳 `false`（或 Promise 解析為 `false`）表示失敗，開關復原；其他回傳值表示成功，更新綁定值。
+ * 丟出錯誤時同樣復原，錯誤再往外拋。
+ */
+export type SwitchAction = (value: SwitchValue) => unknown;
+/** 開關樣式覆寫 */
+export type SwitchUi = Omit<NonNullable<NuxtSwitchProps['ui']>, 'wrapper'> & {
+    /** 外層，負責量測省略文字與掛 Tooltip */
+    wrapper?: SlotClass;
+};
+/** 開關自行宣告的參數 */
+interface SwitchOwnProps {
+    /** 輸入框識別碼 */
+    id?: string;
+    /** 欄位名稱 */
+    name?: string;
+    /** 是否停用，未設定時沿用表單狀態 */
+    disabled?: boolean;
+    /** 元件顏色 */
+    color?: NuxtSwitchProps['color'];
+    /** 元件尺寸，外框高度對齊同尺寸輸入框；未設定時依 UFormField 與全站設定，內建為 lg */
+    size?: NuxtSwitchProps['size'];
+    /** 顯示文字，單行顯示，超出寬度時截斷並以 Tooltip 顯示完整文字 */
+    label?: string;
+    /** 是否顯示載入中並停用 */
+    loading?: boolean;
+    /** 載入中的圖示 */
+    loadingIcon?: NuxtSwitchProps['loadingIcon'];
+    /** 是否顯示與原控制項同尺寸的骨架 */
+    skeleton?: boolean;
+    /** 切換後的處理函式：處理期間顯示載入中並停用，回傳 `false` 或丟出錯誤時復原，其他回傳值才更新綁定值 */
+    action?: SwitchAction;
+    /** 樣式覆寫，與內建樣式合併，同一 slot 衝突時以傳入值優先；可用函式取得預設值後自行取代 */
+    ui?: SwitchUi;
+}
+/**
+ * 沿用 Nuxt UI 開關的參數，僅供型別推導；值經 `$attrs` 轉給 USwitch。
+ * 綁定值由元件處理；`change` 事件在處理成功後才送出。
+ * 說明文字（description）可用：沒有說明時高度對齊輸入框，有說明時撐高、說明換行。
+ */
+type InheritedSwitchProps = Omit<NuxtSwitchProps<SwitchValue>, keyof SwitchOwnProps | 'modelValue' | 'defaultValue'> & ForwardedEvents<Omit<NuxtSwitchEmits<SwitchValue>, 'change'>>;
+/** 開關參數；未列出的 Nuxt UI 開關參數（description、checkedIcon、uncheckedIcon、trueValue、falseValue、required 等）皆可直接使用 */
+export interface SwitchProps extends /* @vue-ignore */ InheritedSwitchProps, SwitchOwnProps {
+}
 /** 單選群組排列模式：水平、垂直、網格或依視窗寬度自動切換。 */
 export type RadioGroupOrientation = ChoiceGroupOrientation | 'grid';
 /** 自動排列斷點，沿用 Tailwind 的 sm、md、lg、xl、2xl。 */
@@ -312,11 +361,12 @@ export type RadioGroupBreakpoint = ChoiceGroupBreakpoint;
 /**
  * 沿用 Nuxt UI 單選群組的參數與事件，僅供型別推導；值經 `$attrs` 轉給 URadioGroup。
  * 排除元件自行宣告或改寫語意的項目：選項與欄位名稱由元件轉換；
- * 不支援 descriptionKey、variant、indicator、highlight：說明與 card／table 外框會撐高選項、破壞與輸入框對齊的高度，
+ * 選項說明（descriptionKey 指定的欄位，預設 description）可用：沒有說明的選項高度對齊輸入框，有說明的選項撐高、說明換行。
+ * 不支援 variant、indicator、highlight：card／table 外框會撐高選項、破壞與輸入框對齊的高度，
  * 移動選項按鈕會讓載入圖示對不上，highlight 只在 card／table 有作用。
  */
-type InheritedRadioGroupProps = Omit<NuxtRadioGroupProps, keyof RadioGroupOwnProps | 'modelValue' | 'defaultValue' | 'descriptionKey' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtRadioGroupEmits> & UnsupportedChoiceProps;
-/** 單選群組參數；未列出的 Nuxt UI 單選群組參數（legend、required 等）皆可直接使用；不支援 variant、indicator、highlight */
+type InheritedRadioGroupProps = Omit<NuxtRadioGroupProps, keyof RadioGroupOwnProps | 'modelValue' | 'defaultValue' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtRadioGroupEmits> & UnsupportedChoiceProps;
+/** 單選群組參數；未列出的 Nuxt UI 單選群組參數（legend、descriptionKey、required 等）皆可直接使用；不支援 variant、indicator、highlight */
 export interface RadioGroupProps<T extends object = RadioGroupOption> extends /* @vue-ignore */ InheritedRadioGroupProps, RadioGroupOwnProps<T> {
 }
 /** 單選群組自行宣告的參數 */
@@ -356,11 +406,12 @@ export type CheckboxGroupBreakpoint = ChoiceGroupBreakpoint;
 /**
  * 沿用 Nuxt UI 複選群組的參數與事件，僅供型別推導；值經 `$attrs` 轉給 UCheckboxGroup。
  * 排除元件自行宣告或改寫語意的項目：選項與欄位名稱由元件轉換；
- * 不支援 descriptionKey、variant、indicator、highlight：說明與 card／table 外框會撐高選項、破壞與輸入框對齊的高度，
+ * 選項說明（descriptionKey 指定的欄位，預設 description）可用：沒有說明的選項高度對齊輸入框，有說明的選項撐高、說明換行。
+ * 不支援 variant、indicator、highlight：card／table 外框會撐高選項、破壞與輸入框對齊的高度，
  * 移動勾選框會讓載入圖示對不上，highlight 只在 card／table 有作用。
  */
-type InheritedCheckboxGroupProps = Omit<NuxtCheckboxGroupProps, keyof CheckboxGroupOwnProps | 'modelValue' | 'defaultValue' | 'descriptionKey' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtCheckboxGroupEmits> & UnsupportedChoiceProps;
-/** 複選群組參數；未列出的 Nuxt UI 複選群組參數（legend、max、required 等）皆可直接使用；不支援 variant、indicator、highlight */
+type InheritedCheckboxGroupProps = Omit<NuxtCheckboxGroupProps, keyof CheckboxGroupOwnProps | 'modelValue' | 'defaultValue' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtCheckboxGroupEmits> & UnsupportedChoiceProps;
+/** 複選群組參數；未列出的 Nuxt UI 複選群組參數（legend、descriptionKey、max、required 等）皆可直接使用；不支援 variant、indicator、highlight */
 export interface CheckboxGroupProps<T extends object = CheckboxGroupOption> extends /* @vue-ignore */ InheritedCheckboxGroupProps, CheckboxGroupOwnProps<T> {
 }
 /** 複選群組自行宣告的參數 */
@@ -476,8 +527,33 @@ export interface InfoTooltipProps {
     /** 樣式覆寫，與內建樣式合併，同一 slot 衝突時以傳入值優先；可用函式取得預設值後自行取代 */
     ui?: InfoTooltipUi;
 }
+/**
+ * 勾選欄核取方塊的外觀，套用到全選與每列的 UCheckbox，沿用 UCheckbox 的同名參數：
+ * - `color`、`size`：顏色與尺寸，未設定時沿用 UCheckbox（`primary`、`md`）
+ * - `icon`、`indeterminateIcon`：勾選與半選的圖示
+ * - `class`：核取方塊外層（UCheckbox 的 root）的 class
+ * - `ui`：各部位樣式（`root`、`container`、`base`、`indicator`、`icon` 等），與 UCheckbox 的主題合併
+ *
+ * 勾選狀態（`modelValue`）、停用（`disabled`）與無障礙名稱由表格控制，不開放設定。
+ */
+export type TableCheckboxProps = Pick<NuxtCheckboxProps, 'color' | 'size' | 'icon' | 'indeterminateIcon' | 'class' | 'ui'>;
+/** 表格勾選參數，ShuoTable 與 ShuoListCard 共用；勾選結果以 `v-model:selected` 綁定 key 陣列 */
+export interface TableSelectionProps<T extends TableData = TableData> {
+    /** 是否加上勾選欄；勾選欄放在最前面，`columns` 中有 `id: 'select'` 的欄位時改放在該位置 */
+    selectable?: boolean;
+    /** 開啟勾選時表頭是否顯示全選，只勾選目前這頁可勾選的資料 */
+    selectAll?: boolean;
+    /** 關閉全選時的勾選欄表頭文字 */
+    selectionHeader?: string;
+    /** 列的 key，勾選結果以此識別資料：欄位名稱或由資料組出 key 的函式；未設定時為列序號，後端分頁時請務必設定 */
+    rowKey?: TableRowKeyGetter<T>;
+    /** 判斷資料是否可勾選，回傳 `false` 的列停用勾選，全選也會略過 */
+    rowSelectable?: (row: T) => boolean;
+    /** 全選與每列核取方塊的外觀（UCheckbox 的 color、size、icon、indeterminateIcon、class、ui） */
+    checkboxProps?: TableCheckboxProps;
+}
 /** 表格參數 */
-export interface ShuoTableProps<T extends TableData> {
+export interface ShuoTableProps<T extends TableData = TableData> extends TableSelectionProps<T> {
     /** 表格資料，重新查詢期間請保留原值 */
     data: T[];
     /** 欄位設定，內容可透過對應 cell slot 自訂 */
@@ -604,7 +680,7 @@ export type ListCardUi = {
     headerRight?: SlotClass;
 };
 /** 清單卡片參數 */
-export interface ListCardProps<T extends TableData = TableData> {
+export interface ListCardProps<T extends TableData = TableData> extends TableSelectionProps<T> {
     /** 清單標題 */
     title?: string;
     /** 標題圖示，空字串可隱藏 */

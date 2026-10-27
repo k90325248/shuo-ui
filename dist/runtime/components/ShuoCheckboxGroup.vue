@@ -105,8 +105,7 @@ const options = computed(
     (item) => typeof item === "string" ? { label: item, value: item } : {
       ...item,
       label: getByPath(item, resolvedLabelKey.value),
-      value: getByPath(item, resolvedValueKey.value),
-      description: void 0
+      value: getByPath(item, resolvedValueKey.value)
     }
   )
 );
@@ -183,6 +182,11 @@ const appendProps = (item) => {
  * 選項文字旁附加內容（例如輸入框）的排列。
  * label 改為橫向排列且不裁切，避免使用端主題的 truncate 切掉輸入框與選項按鈕的 focus 外框；文字省略仍由 [data-choice-label] 處理。
  */
+/**
+ * 有說明文字時撐高：取消固定高度並頂端對齊，上下留白讓第一行文字仍落在原本高度的正中間，與沒有說明的欄位對齊；說明文字換行。
+ * `$height` 為對齊輸入框的高度，`$line` 為文字行高（與 Nuxt UI 選項按鈕外框同高）。
+ */
+/** 各尺寸的文字行高，對應 Nuxt UI 選項按鈕外框（xs、sm 為 h-4，md、lg 為 h-5，xl 為 h-6）。 */
 /** 單選與複選群組的尺寸變數及文字省略樣式；排列與寬度寫在元件的內建 ui，可由使用端覆寫。 */
 .form-checkbox-group {
   --choice-control-height: 2.25rem;
@@ -204,11 +208,50 @@ const appendProps = (item) => {
   --choice-control-height: 2.5rem;
   --choice-indicator-size: 1.25rem;
 }
+.form-checkbox-group {
+  --choice-line-height: 1.25rem;
+}
+.form-checkbox-group--xs, .form-checkbox-group--sm {
+  --choice-line-height: 1rem;
+}
+.form-checkbox-group--xl {
+  --choice-line-height: 1.5rem;
+}
 .form-checkbox-group [data-choice-label] {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.form-checkbox-group[data-orientation=horizontal]:has([data-slot=description]) {
+  width: 100%;
+}
+.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) {
+  width: 100%;
+  height: auto;
+  min-height: var(--choice-control-height);
+  align-items: flex-start;
+}
+.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) > [data-slot=item] {
+  height: auto;
+  min-height: var(--choice-control-height);
+  align-items: flex-start;
+  padding-block: calc((var(--choice-control-height) - var(--choice-line-height)) / 2);
+}
+.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) > [data-slot=item]:has([data-slot=description]) {
+  flex-grow: 1;
+}
+.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) > [data-slot=item]:has([data-slot=description]) > [data-slot=wrapper] {
+  flex-grow: 1;
+}
+.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) [data-slot=description] {
+  contain: inline-size;
+}
+.form-checkbox-group[data-layout=grid] :deep([data-slot='item']:has([data-slot='description'])) {
+  height: auto;
+  min-height: var(--choice-control-height);
+  align-items: flex-start;
+  padding-block: calc((var(--choice-control-height) - var(--choice-line-height)) / 2);
 }
 .form-checkbox-group :deep([data-slot='item']:has([data-choice-append])) {
   align-items: center;

@@ -57,6 +57,9 @@ declare const _default: {
         table: {
             empty: string;
             loading: string;
+            selectAll: string;
+            selectRow: string;
+            selectionHeader: string;
         };
         listCard: {
             title: string;

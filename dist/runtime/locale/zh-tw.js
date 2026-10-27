@@ -29,7 +29,16 @@ export default {
     selectMenu: { searchPlaceholder: "\u95DC\u9375\u5B57\u67E5\u8A62...", empty: "\u7121\u53EF\u7528\u9078\u9805" },
     infoTooltip: { label: "\u8CC7\u8A0A\u8AAA\u660E" },
     queryCard: { title: "\u67E5\u8A62\u689D\u4EF6", collapse: "\u6536\u5408", expand: "\u5C55\u958B", submit: "\u67E5\u8A62" },
-    table: { empty: "\u67E5\u7121\u8CC7\u6599", loading: "\u67E5\u8A62\u4E2D\u2026" },
+    table: {
+      empty: "\u67E5\u7121\u8CC7\u6599",
+      loading: "\u67E5\u8A62\u4E2D\u2026",
+      /** 勾選欄表頭的全選核取方塊 */
+      selectAll: "\u5168\u9078",
+      /** 每列的勾選核取方塊 */
+      selectRow: "\u9078\u53D6\u6B64\u5217",
+      /** 關閉全選時的勾選欄表頭文字 */
+      selectionHeader: ""
+    },
     listCard: {
       title: "\u67E5\u8A62\u7D50\u679C",
       /** `{total}` 為總筆數，`{start}`、`{end}` 為目前顯示的起訖筆數 */

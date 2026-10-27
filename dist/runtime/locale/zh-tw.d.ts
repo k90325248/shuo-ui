@@ -58,6 +58,12 @@ declare const _default: {
         table: {
             empty: string;
             loading: string;
+            /** 勾選欄表頭的全選核取方塊 */
+            selectAll: string;
+            /** 每列的勾選核取方塊 */
+            selectRow: string;
+            /** 關閉全選時的勾選欄表頭文字 */
+            selectionHeader: string;
         };
         listCard: {
             title: string;
