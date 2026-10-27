@@ -58,6 +58,16 @@ When the component is created while loading with no data, skeleton rows are show
 
 The title "Results" and the bottom summary switch with the locale ("Results" and "Showing 1 to 10 of 25 results." in English, "查詢結果" and its summary in Traditional Chinese), and can be overridden globally with the `listCard.title` and `listCard.summary` texts; "Loading…" and "No data" belong to the `table` group. See [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages).
 
+### Selection
+
+`selectable`, `select-all`, `selection-header`, `row-key`, `row-selectable`, `checkbox-props` and `v-model:selected` are passed to the table; see [Selection in ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#selection). Set `row-key` with server-side pagination: selections on other pages are kept when changing pages, so rows selected across pages can be handled together.
+
+<component-example name="list-card-selection">
+
+
+
+</component-example>
+
 ## Examples
 
 ### Title bar actions and footer content

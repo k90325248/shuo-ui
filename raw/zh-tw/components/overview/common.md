@@ -19,7 +19,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/overview/co
 
 ## 共用參數
 
-表單輸入元件（`ShuoInputText`、`ShuoInputNumber`、`ShuoSelectMenu`、`ShuoDatepicker`、`ShuoCheckbox`、`ShuoCheckboxGroup`、`ShuoRadioGroup`、`ShuoTextarea`、`ShuoFile`、`ShuoMonths`、`ShuoPhone`）都支援下列參數，各元件頁面不再重複列出：
+表單輸入元件（`ShuoInputText`、`ShuoInputNumber`、`ShuoSelectMenu`、`ShuoDatepicker`、`ShuoCheckbox`、`ShuoCheckboxGroup`、`ShuoRadioGroup`、`ShuoSwitch`、`ShuoTextarea`、`ShuoFile`、`ShuoMonths`、`ShuoPhone`）都支援下列參數，各元件頁面不再重複列出：
 
 <field-group>
 <field name="size" type="'xs' | 'sm' | 'md' | 'lg' | 'xl'" default="lg">
@@ -381,14 +381,40 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/overview/co
       —
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/shuo-ui/components/choice/switch">
+        <code>
+          ShuoSwitch
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        USwitch
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
 </tbody>
 </table>
 
 - 繼承的 props 只用於型別推導，執行時經 `$attrs` 傳給底層元件。
 - 元件自行處理的 props 不列入繼承，不會出現在自動補全，例如 `modelValue`。輸入框類元件（`ShuoInputText`、`ShuoInputNumber`、`ShuoTextarea`、`ShuoFile`）自行顯示載入圖示，固定使用 Nuxt UI 的 `appConfig.ui.icons.loading`，因此也排除 `loadingIcon`，寫了不會生效；`ShuoSelectMenu` 由 `USelectMenu` 顯示載入圖示，`loadingIcon` 照常可用。
 - 事件照常經 `$attrs` 轉給底層元件，型別取自底層元件的 emits，例如 `@blur` 的參數為 `FocusEvent`。
-- 核取方塊與群組不支援說明文字（`description`、`descriptionKey`）：說明會撐高選項，破壞與輸入框對齊的高度。
-- 核取方塊與群組也不支援 Nuxt UI 的 `variant`（card、table）、`indicator` 與 `highlight`：card、table 的外框與內距會撐高選項；`indicator` 會移動勾選框，載入中的轉圈圖示固定在左側勾選框的位置；`highlight` 只改 card、table 的外框顏色。傳入時型別會報錯，執行時也不會套用。
+- 核取方塊、開關與群組支援說明文字（`description`，群組以選項的 `description` 欄位或 `descriptionKey` 指定）：沒有說明時高度對齊同尺寸的輸入框；有說明時撐高，說明文字換行，第一行文字仍與沒有說明的欄位對齊。顯示文字（`label`）維持單行，超出時省略並以 Tooltip 顯示完整文字。
+- 核取方塊與群組不支援 Nuxt UI 的 `variant`（card、table）、`indicator` 與 `highlight`：card、table 的外框與內距會撐高選項；`indicator` 會移動勾選框，載入中的轉圈圖示固定在左側勾選框的位置；`highlight` 只改 card、table 的外框顏色。傳入時型別會報錯，執行時也不會套用。
 
 ### Slots
 

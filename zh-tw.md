@@ -201,7 +201,7 @@ ShuoInputText、ShuoInputNumber、ShuoTextarea
 
 <u-page-card icon="i-lucide-list-checks" title="選擇" to="https://k90325248.github.io/shuo-ui/components/choice/select-menu">
 
-ShuoSelectMenu、ShuoCheckbox、ShuoRadioGroup、ShuoCheckboxGroup
+ShuoSelectMenu、ShuoCheckbox、ShuoRadioGroup、ShuoCheckboxGroup、ShuoSwitch
 
 </u-page-card>
 

@@ -344,6 +344,10 @@ export default defineAppConfig({
       </code>
       
       、<code>
+        ShuoSwitch
+      </code>
+      
+      、<code>
         ShuoFile
       </code>
       

@@ -22,6 +22,7 @@ Every page below is available as raw markdown.
 - [CheckboxGroup](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/choice/checkbox-group.md): 複選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
 - [RadioGroup](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/choice/radio-group.md): 單選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
 - [SelectMenu](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/choice/select-menu.md): 下拉選單，可搜尋、多選，文字過長時顯示完整提示。
+- [Switch](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/choice/switch.md): 開關，切換後可先執行處理函式，成功才更新、失敗自動復原。
 - [Datepicker](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/date/datepicker.md): 日期選擇器，預設民國年，支援五種精度與範圍選擇。
 - [Months](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/date/months.md): 年月數換算輸入，可同時綁定總月數、年數與月數。
 - [InfoTooltip](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/helper/info-tooltip.md): 資訊圖示加提示，滑鼠移入、鍵盤聚焦或觸控長按即顯示。
@@ -44,6 +45,9 @@ Every page below is available as raw markdown.
 - [多語系與文案](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/theme/messages.md): 元件文案跟隨 Nuxt UI 的語系切換，並可依語系覆寫或加入其他語系。
 - [模組選項](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/theme/module-options.md): 在 nuxt.config.ts 以 shuoUi 設定元件庫。
 - [樣式與主題](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/theme/theming.md): 顏色、表單色票、內建主題，以及單一元件的 ui 覆寫規則。
+- [v1.0.1](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-0-1.md): 發佈於 2026年10月25日
+- [v1.1.0](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-1-0.md): 發佈於 2026年10月26日
+- [v1.2.0](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-2-0.md): 發佈於 2026年10月27日
 - [Months](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/field/months.md): 總月數與年、月的拆分與合併。
 - [Phone](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/field/phone.md): 市話號碼的區碼拆分與合併。
 - [Validation](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/form/validation.md): 搭配 Valibot 的共用驗證規則，錯誤訊息格式全站一致。
@@ -65,6 +69,7 @@ Every page below is available as raw markdown.
 - [CheckboxGroup](https://k90325248.github.io/shuo-ui/raw/en/components/choice/checkbox-group.md): Checkbox group that lays out by viewport width, with custom item fields and appended content.
 - [RadioGroup](https://k90325248.github.io/shuo-ui/raw/en/components/choice/radio-group.md): Radio group that lays out by viewport width, with custom item fields and appended content.
 - [SelectMenu](https://k90325248.github.io/shuo-ui/raw/en/components/choice/select-menu.md): Select menu with search and multiple selection, showing a full-text tooltip when the text is too long.
+- [Switch](https://k90325248.github.io/shuo-ui/raw/en/components/choice/switch.md): A switch that can run an action after toggling, updating only on success and reverting on failure.
 - [Datepicker](https://k90325248.github.io/shuo-ui/raw/en/components/date/datepicker.md): Date picker with ROC years by default, five precisions and range selection.
 - [Months](https://k90325248.github.io/shuo-ui/raw/en/components/date/months.md): Years and months input converted to total months, with total months, years and months all bindable.
 - [InfoTooltip](https://k90325248.github.io/shuo-ui/raw/en/components/helper/info-tooltip.md): Info icon with a tooltip, shown on hover, keyboard focus or long press on touch devices.
@@ -87,6 +92,9 @@ Every page below is available as raw markdown.
 - [Locales and messages](https://k90325248.github.io/shuo-ui/raw/en/getting-started/theme/messages.md): Component texts follow the Nuxt UI locale, and can be overridden per locale or extended with other locales.
 - [Module options](https://k90325248.github.io/shuo-ui/raw/en/getting-started/theme/module-options.md): Configure the component library with shuoUi in nuxt.config.ts.
 - [Theming](https://k90325248.github.io/shuo-ui/raw/en/getting-started/theme/theming.md): Colors, form color tokens, the built-in theme, and how the per-component ui prop is merged.
+- [v1.0.1](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-0-1.md): Released on October 25, 2026
+- [v1.1.0](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-1-0.md): Released on October 26, 2026
+- [v1.2.0](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-2-0.md): Released on October 27, 2026
 - [Months](https://k90325248.github.io/shuo-ui/raw/en/utils/field/months.md): Splitting total months into years and months, and combining them back.
 - [Phone](https://k90325248.github.io/shuo-ui/raw/en/utils/field/phone.md): Splitting and joining the area code of landline numbers.
 - [Validation](https://k90325248.github.io/shuo-ui/raw/en/utils/form/validation.md): Shared validation rules for Valibot, with consistent error messages across the site.

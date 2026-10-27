@@ -378,7 +378,19 @@ export default defineNuxtConfig({
         ShuoTable
       </code>
       
-       的空資料與查詢中文字）
+       的空資料與查詢中文字）、<code>
+        selectAll
+      </code>
+      
+      、<code>
+        selectRow
+      </code>
+      
+      （全選與每列核取方塊的無障礙名稱）、<code>
+        selectionHeader
+      </code>
+      
+      （關閉全選時的勾選欄表頭，預設空白）
     </td>
   </tr>
   

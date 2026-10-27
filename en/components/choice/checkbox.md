@@ -36,6 +36,16 @@ canonical_url: "https://k90325248.github.io/shuo-ui/en/components/choice/checkbo
 
 The label shows on one line and is truncated when wider than its container. A tooltip shows the full text on hover or focus, or on long press on touch devices (see [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#touch-long-press)); a long press that shows the tooltip does not change the checked state.
 
+### Description
+
+`description` shows below the label. Without a description, the height matches an input of the same size; with one, the checkbox grows and the description wraps, while the first line still lines up with fields next to it that have no description.
+
+<component-example name="checkbox-description">
+
+
+
+</component-example>
+
 ### Color and icon
 
 Uses the `color` and `icon` (the checked icon) of `UCheckbox`.

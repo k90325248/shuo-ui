@@ -344,6 +344,10 @@ The `class` you pass goes on the component's outer element, merged after `ui.roo
       </code>
       
       , <code>
+        ShuoSwitch
+      </code>
+      
+      , <code>
         ShuoFile
       </code>
       

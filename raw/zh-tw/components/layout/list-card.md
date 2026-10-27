@@ -58,6 +58,16 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/layout/list
 
 標題「查詢結果」與底部統計依語系切換（英文為「Results」「Showing 1 to 10 of 25 results.」），可由文案 `listCard.title`、`listCard.summary` 全域覆寫；「查詢中…」「查無資料」屬於 `table` 區塊，見[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)。
 
+### 勾選
+
+`selectable`、`select-all`、`selection-header`、`row-key`、`row-selectable`、`checkbox-props` 與 `v-model:selected` 轉傳給表格，用法見 [ShuoTable 的勾選](https://k90325248.github.io/shuo-ui/components/layout/table#%E5%8B%BE%E9%81%B8)。後端分頁時請設定 `row-key`，換頁後保留其他頁的勾選，可以一次處理多頁勾選的資料。
+
+<component-example name="list-card-selection">
+
+
+
+</component-example>
+
 ## 範例
 
 ### 標題列操作與底部內容

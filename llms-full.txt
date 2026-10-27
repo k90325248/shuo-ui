@@ -215,7 +215,7 @@ ShuoInputText、ShuoInputNumber、ShuoTextarea
 
 <u-page-card icon="i-lucide-list-checks" title="選擇" to="https://k90325248.github.io/shuo-ui/components/choice/select-menu">
 
-ShuoSelectMenu、ShuoCheckbox、ShuoRadioGroup、ShuoCheckboxGroup
+ShuoSelectMenu、ShuoCheckbox、ShuoRadioGroup、ShuoCheckboxGroup、ShuoSwitch
 
 </u-page-card>
 
@@ -309,6 +309,16 @@ ShuoInfoTooltip、ShuoTooltip
 </component-example>
 
 文字單行顯示，超過容器寬度時截斷，滑過或聚焦時以 Tooltip 顯示完整文字，觸控裝置長按顯示（見 [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#%E8%A7%B8%E6%8E%A7%E9%95%B7%E6%8C%89)）；長按顯示提示時不會改變勾選。
+
+### 說明文字
+
+`description` 顯示在文字下方。沒有說明時外框高度對齊同尺寸的輸入框；有說明時往下撐高，說明文字換行，第一行文字仍與旁邊沒有說明的欄位對齊。
+
+<component-example name="checkbox-description">
+
+
+
+</component-example>
 
 ### 顏色與圖示
 
@@ -596,6 +606,16 @@ ShuoInfoTooltip、ShuoTooltip
 - `#item-append` 的 `item` 是轉換後的物件，同時取得原始欄位（`item.Code`、`item.Name`）與 `item.label`、`item.value`。
 - 開發模式下，第一個物件選項缺少 `labelKey` 或 `valueKey` 指定的欄位時，主控台會警告一次（含元件與欄位名稱）；正式環境不檢查。`ShuoSelectMenu` 也有相同檢查。
 
+### 選項說明
+
+選項的 `description` 欄位（或以 `description-key` 指定的欄位）顯示在選項文字下方。沒有說明的選項高度對齊同尺寸的輸入框；有說明的選項往下撐高，說明文字換行。水平排列時整列一起撐高，所有選項的第一行文字互相對齊，說明不會擠壓其他選項的文字。
+
+<component-example name="checkbox-group-description">
+
+
+
+</component-example>
+
 ### 顏色與圖示
 
 沿用 `UCheckboxGroup` 的 `color` 與 `icon`：`color` 改變勾選時的顏色，`icon` 是勾選時顯示的圖示；單一選項也可用選項的 `icon` 欄位指定。
@@ -807,6 +827,28 @@ ShuoInfoTooltip、ShuoTooltip
   
   <tr>
     <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      選項說明，顯示在文字下方並換行；欄位名稱可由 <code>
+        descriptionKey
+      </code>
+      
+       指定
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
       其他欄位
     </td>
     
@@ -828,12 +870,6 @@ ShuoInfoTooltip、ShuoTooltip
   </tr>
 </tbody>
 </table>
-
-<warning>
-
-不支援 `description`：說明會撐高選項，破壞與輸入框對齊的高度，型別會報錯，執行時也不顯示。
-
-</warning>
 
 ## Slots
 
@@ -1157,6 +1193,16 @@ ShuoInfoTooltip、ShuoTooltip
 - `#item-append` 的 `item` 是轉換後的物件，同時取得原始欄位（`item.Code`、`item.Name`）與 `item.label`、`item.value`。
 - 開發模式下，第一個物件選項缺少 `labelKey` 或 `valueKey` 指定的欄位時，主控台會警告一次（含元件與欄位名稱）；正式環境不檢查。`ShuoSelectMenu` 也有相同檢查。
 
+### 選項說明
+
+選項的 `description` 欄位（或以 `description-key` 指定的欄位）顯示在選項文字下方。沒有說明的選項高度對齊同尺寸的輸入框；有說明的選項往下撐高，說明文字換行。水平排列時整列一起撐高，所有選項的第一行文字互相對齊，說明不會擠壓其他選項的文字。
+
+<component-example name="radio-group-description">
+
+
+
+</component-example>
+
 ### 顏色
 
 沿用 `URadioGroup` 的 `color`，改變選取時的顏色。
@@ -1350,6 +1396,28 @@ ShuoInfoTooltip、ShuoTooltip
   
   <tr>
     <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      選項說明，顯示在文字下方並換行；欄位名稱可由 <code>
+        descriptionKey
+      </code>
+      
+       指定
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
       其他欄位
     </td>
     
@@ -1371,12 +1439,6 @@ ShuoInfoTooltip、ShuoTooltip
   </tr>
 </tbody>
 </table>
-
-<warning>
-
-不支援 `description`：說明會撐高選項，破壞與輸入框對齊的高度，型別會報錯，執行時也不顯示。
-
-</warning>
 
 ## Slots
 
@@ -2023,6 +2085,382 @@ export default defineNuxtConfig({
 ---
 
 - [USelectMenu](https://ui.nuxt.com/docs/components/select-menu)
+
+
+# Switch
+
+> 開關，切換後可先執行處理函式，成功才更新、失敗自動復原。
+
+`v-model: boolean | string | number`，預設為布林值。除了 `action` 與文字省略之外，參數、事件與插槽都與 `USwitch` 相同。
+
+## 用法
+
+### 顯示文字與說明
+
+`label` 為開關旁的文字，`description` 為下方的說明。文字單行顯示，超過容器寬度時截斷，滑過或聚焦時以 Tooltip 顯示完整文字，觸控裝置長按顯示（見 [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#%E8%A7%B8%E6%8E%A7%E9%95%B7%E6%8C%89)），與[核取方塊](https://k90325248.github.io/shuo-ui/components/choice/checkbox#%E9%A1%AF%E7%A4%BA%E6%96%87%E5%AD%97)相同。說明文字會換行：沒有說明時外框高度對齊輸入框，有說明時往下撐高，第一行文字仍與旁邊的欄位對齊。
+
+<component-example name="switch-basic">
+
+
+
+</component-example>
+
+### 處理函式
+
+`action` 是切換後執行的處理函式，參數為切換後的值，可以回傳 Promise。適合切換當下就要呼叫 API 儲存的設定，例如啟用帳號、開啟通知。
+
+<component-example name="switch-action">
+
+
+
+</component-example>
+
+<table>
+<thead>
+  <tr>
+    <th>
+      階段
+    </th>
+    
+    <th>
+      開關畫面
+    </th>
+    
+    <th>
+      <code>
+        v-model
+      </code>
+    </th>
+    
+    <th>
+      <code>
+        change
+      </code>
+      
+       事件
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      處理中
+    </td>
+    
+    <td>
+      顯示切換後的值、載入中並停用
+    </td>
+    
+    <td>
+      不變
+    </td>
+    
+    <td>
+      不送出
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      成功
+    </td>
+    
+    <td>
+      維持切換後的值，解除載入與停用
+    </td>
+    
+    <td>
+      更新為切換後的值
+    </td>
+    
+    <td>
+      送出
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      失敗
+    </td>
+    
+    <td>
+      回到原本的值，解除載入與停用
+    </td>
+    
+    <td>
+      不變
+    </td>
+    
+    <td>
+      不送出
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      丟出錯誤
+    </td>
+    
+    <td>
+      同失敗
+    </td>
+    
+    <td>
+      不變
+    </td>
+    
+    <td>
+      不送出
+    </td>
+  </tr>
+</tbody>
+</table>
+
+- **判斷成功**：回傳 `false`（或 Promise 解析為 `false`）才算失敗，其他回傳值都算成功，包含沒有回傳值的 `async () => { await save(value) }`。
+- **錯誤**：處理函式丟出錯誤時開關一樣復原，錯誤會再往外拋，交給全域的錯誤處理或顯示在主控台。要提示使用者時，在處理函式內 `try`／`catch` 後顯示訊息並回傳 `false`，如上方範例。
+- **處理中**：開關停用，不會重複呼叫處理函式。處理中如果頁面改變了 `v-model`，以頁面的值為準，處理函式完成後不再覆蓋。
+- **沒有傳 action 時**，切換後立即更新 `v-model`，與 `USwitch` 相同。
+
+型別 `SwitchAction`、`SwitchValue` 可由 `#shuo-ui/components/ShuoSwitch.vue` 匯入。
+
+### 開啟與關閉的值
+
+`true-value`、`false-value` 為開啟與關閉時的綁定值，預設為 `true`、`false`。後端使用 `Y`／`N` 時改成對應的值，處理函式收到的也是這些值。
+
+<component-example name="switch-values">
+
+
+
+</component-example>
+
+### 尺寸與狀態
+
+`size` 未設定時依 `UFormField` 的尺寸與全站設定決定，內建為 `lg`，與其他輸入元件一致。沒有說明時外框高度對齊同尺寸的輸入框（`xs`～`xl` 為 24～40px），和其他欄位放在同一列時高度一致。`loading` 顯示載入圖示並停用；`disabled` 未設定時沿用表單狀態；`skeleton` 以同尺寸的骨架覆蓋。各狀態的共通行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common)。
+
+<component-example name="switch-states">
+
+
+
+</component-example>
+
+`size`、`color`、`loadingIcon` 可在[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)以 `components.switch` 統一設定。
+
+## 範例
+
+### 按鈕的處理中
+
+按鈕不需要另外包裝：`UButton` 的 `loading-auto` 會在 `@click` 回傳的 Promise 完成前顯示載入中並停用。
+
+```vue
+<UButton label="儲存" loading-auto @click="save" />
+```
+
+## Props
+
+<component-props name="ShuoSwitch">
+
+
+
+</component-props>
+
+## Events
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Event
+    </th>
+    
+    <th>
+      參數
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        change
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        Event
+      </code>
+    </td>
+    
+    <td>
+      切換完成後送出；有 <code>
+        action
+      </code>
+      
+       時在處理成功後才送出
+    </td>
+  </tr>
+</tbody>
+</table>
+
+`update:modelValue` 同樣在處理成功後才送出。
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      參數
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      取代顯示文字，與 USwitch 相同
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      取代說明，與 USwitch 相同
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## 樣式
+
+`ui` 可用 Nuxt UI `USwitch` 的所有 slot，合併規則見[單一元件的 `ui` prop](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)；`wrapper` 改為元件自有的外層：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      部位
+    </th>
+    
+    <th>
+      內建樣式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        wrapper
+      </code>
+    </td>
+    
+    <td>
+      外層，量測省略文字並掛 Tooltip
+    </td>
+    
+    <td>
+      <code>
+        inline-flex w-fit max-w-full min-w-0 align-top
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      開關外框（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        w-fit max-w-full min-w-0
+      </code>
+      
+      ，高度對齊同尺寸輸入框、垂直置中
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      文字（Nuxt UI）
+    </td>
+    
+    <td>
+      <code>
+        block truncate
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+高度也可用 `class="[--form-switch-height:1.25rem]"` 調整。`class` 落在開關外框，不影響外層。在 flex 中外層會隨空間收縮並截斷文字，要完整顯示文字時設定 `ui.wrapper` 為 `shrink-0`。
+
+## 更新紀錄
+
+<component-changelog name="ShuoSwitch">
+
+
+
+</component-changelog>
+
+---
+
+- [USwitch](https://ui.nuxt.com/docs/components/switch)
 
 
 # Datepicker
@@ -3146,6 +3584,16 @@ Nuxt UI 的 `UTooltip` 只在滑鼠移入或鍵盤聚焦時顯示，手機上點
 
 標題「查詢結果」與底部統計依語系切換（英文為「Results」「Showing 1 to 10 of 25 results.」），可由文案 `listCard.title`、`listCard.summary` 全域覆寫；「查詢中…」「查無資料」屬於 `table` 區塊，見[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)。
 
+### 勾選
+
+`selectable`、`select-all`、`selection-header`、`row-key`、`row-selectable`、`checkbox-props` 與 `v-model:selected` 轉傳給表格，用法見 [ShuoTable 的勾選](https://k90325248.github.io/shuo-ui/components/layout/table#%E5%8B%BE%E9%81%B8)。後端分頁時請設定 `row-key`，換頁後保留其他頁的勾選，可以一次處理多頁勾選的資料。
+
+<component-example name="list-card-selection">
+
+
+
+</component-example>
+
 ## 範例
 
 ### 標題列操作與底部內容
@@ -4108,6 +4556,31 @@ template ref 的 `getPagination()` 回傳目前頁碼與元件的每頁筆數；
 
 </component-example>
 
+### 勾選
+
+`selectable` 開啟後在最前面加上勾選欄，勾選結果以 `v-model:selected` 綁定 key 陣列。`row-key` 指定 key，可以是欄位名稱（例如 `row-key="id"`），或由整筆資料組出 key 的函式，勾選結果保留 key 原本的型別。表頭的全選只勾選目前這頁可勾選的資料，只勾了一部分時顯示半選；`select-all` 設為 `false` 時不顯示全選，改顯示 `selection-header` 的文字。
+
+<component-example name="table-selection">
+
+
+
+</component-example>
+
+- 未設定 `row-key` 時以列序號（`'0'`、`'1'`…）為 key，換頁後第一列仍是 `'0'`，會勾到不同的資料，後端分頁時請務必設定。
+- 換頁或重新查詢時保留已勾選的 key，包含不在目前資料中的其他頁；要取消所有勾選時把 `v-model:selected` 設為 `[]`。
+- 查詢中（`loading`）停用所有核取方塊。
+- `select-all` 可在[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)以 `components.table.selectAll` 統一設定。
+
+### 不可勾選的資料
+
+`row-selectable` 回傳 `false` 的資料停用勾選，全選時也會略過。範例的 key 由年度與序號組成（例如 `115-1`），已結案的資料不可勾選。
+
+<component-example name="table-selection-disabled">
+
+
+
+</component-example>
+
 ## 範例
 
 ### 可編輯表格
@@ -4150,6 +4623,224 @@ cell slot 多了 `interactionDisabled`，查詢中為 `true`，可用來停用�
 
 </component-example>
 
+### 勾選欄樣式
+
+`checkbox-props` 設定全選與每列核取方塊的外觀，兩者共用同一份設定。勾選欄格子的寬度與對齊則以 `columns` 中 `id` 為 `select` 的欄位設定，見[勾選欄位置與自訂勾選格](#%E5%8B%BE%E9%81%B8%E6%AC%84%E4%BD%8D%E7%BD%AE%E8%88%87%E8%87%AA%E8%A8%82%E5%8B%BE%E9%81%B8%E6%A0%BC)。
+
+<component-example name="table-selection-style">
+
+
+
+</component-example>
+
+<table>
+<thead>
+  <tr>
+    <th>
+      屬性
+    </th>
+    
+    <th>
+      型別
+    </th>
+    
+    <th>
+      說明
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        class
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        any
+      </code>
+    </td>
+    
+    <td>
+      核取方塊外層（UCheckbox 的 <code>
+        root
+      </code>
+      
+      ）的 class
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ui
+      </code>
+    </td>
+    
+    <td>
+      UCheckbox 的 <code>
+        ui
+      </code>
+    </td>
+    
+    <td>
+      各部位樣式：<code>
+        root
+      </code>
+      
+      、<code>
+        container
+      </code>
+      
+      、<code>
+        base
+      </code>
+      
+      （方框）、<code>
+        indicator
+      </code>
+      
+      （勾選底色）、<code>
+        icon
+      </code>
+      
+       等，與 UCheckbox 的主題合併；可用函式取得預設值後自行取代
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        color
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        'primary'
+      </code>
+      
+      、<code>
+        'neutral'
+      </code>
+      
+       等主題色
+    </td>
+    
+    <td>
+      勾選後的底色，未設定時為 <code>
+        primary
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        size
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        'xs'
+      </code>
+      
+      、<code>
+        'sm'
+      </code>
+      
+      、<code>
+        'md'
+      </code>
+      
+      、<code>
+        'lg'
+      </code>
+      
+      、<code>
+        'xl'
+      </code>
+    </td>
+    
+    <td>
+      方框尺寸，未設定時為 <code>
+        md
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        icon
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      勾選時的圖示，未設定時沿用 Nuxt UI 的 <code>
+        check
+      </code>
+      
+       圖示
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        indeterminateIcon
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      半選時的圖示，未設定時沿用 Nuxt UI 的 <code>
+        minus
+      </code>
+      
+       圖示
+    </td>
+  </tr>
+</tbody>
+</table>
+
+- 型別為 `TableCheckboxProps`，可由 `#shuo-ui/components/ShuoTable.vue` 匯入。
+- 勾選狀態、停用與無障礙名稱由表格控制，不能透過 `checkbox-props` 設定；`variant` 的 `card` 樣式不適合放在表格內，也不開放。
+- 全選與每列要不同外觀時，以 `#select-header` 或 `#select-cell` 插槽自行放 `UCheckbox`。
+- 可在[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)以 `components.table.checkboxProps` 統一設定（不能寫函式）。頁面明確傳入 `checkbox-props` 時整個取代全站設定，不逐項合併。
+
+### 勾選欄位置與自訂勾選格
+
+勾選欄預設放在最前面。要放在其他位置時，在 `columns` 加上 `id` 為 `select` 的欄位，勾選欄就放在該位置，這個欄位的設定也會套用到勾選欄；`meta.class` 的 `th`、`td` 會分別取代內建的 `w-px`（貼合核取方塊的寬度），只寫 `td` 時表頭仍為 `w-px`。
+
+```ts
+const columns: TableColumn<Row>[] = [
+  { accessorKey: 'name', header: '名稱' },
+
+  // 勾選欄放在名稱後面
+  { id: 'select', meta: { class: { td: 'bg-muted' } } },
+
+  { accessorKey: 'amount', header: '金額' }
+];
+```
+
+`#select-header`、`#select-cell` 插槽可取代內建的全選與核取方塊，參數與 `UTable` 相同，例如以 `row.getIsSelected()` 取得勾選狀態、`row.toggleSelected()` 切換勾選、`row.getCanSelect()` 判斷是否可勾選。
+
 ## Props
 
 <component-props name="ShuoTable">
@@ -4160,7 +4851,9 @@ cell slot 多了 `interactionDisabled`，查詢中為 `true`，可用來停用�
 
 `tableProps.paginationOptions.manualPagination` 固定為 `true`，分頁由後端處理；欄位顯示取自 `tableProps.state.columnVisibility`，直接傳入的 `tableProps.columnVisibility` 不會生效。
 
-「查詢中…」與「查無資料」依語系切換（英文為「Loading…」「No data」），可由文案 `table.loading`、`table.empty` 全域覆寫，見[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)。表頭、儲存格等樣式用 `tableProps.ui` 設定，與內建樣式合併。
+開啟 `selectable` 時，勾選狀態由 `v-model:selected` 控制，`tableProps` 的 `rowSelection` 與 `onUpdate:rowSelection` 不會生效；未開啟時仍可照 `UTable` 的寫法自行以 `tableProps` 控制勾選。`row-key` 未開啟勾選時也會作為 `UTable` 的 `getRowId`。
+
+「查詢中…」與「查無資料」依語系切換（英文為「Loading…」「No data」），可由文案 `table.loading`、`table.empty` 全域覆寫，見[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)；全選與每列核取方塊的無障礙名稱（「全選」「選取此列」）及關閉全選時的表頭文字（預設空白）由 `table.selectAll`、`table.selectRow`、`table.selectionHeader` 設定。表頭、儲存格等樣式用 `tableProps.ui` 設定，與內建樣式合併。
 
 ## Slots
 
@@ -4243,6 +4936,28 @@ cell slot 多了 `interactionDisabled`，查詢中為 `true`，可用來停用�
       查詢中與空資料的內容
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        select-header
+      </code>
+      
+      、<code>
+        select-cell
+      </code>
+    </td>
+    
+    <td>
+      原參數＋<code>
+        interactionDisabled
+      </code>
+    </td>
+    
+    <td>
+      取代勾選欄的全選與核取方塊
+    </td>
+  </tr>
 </tbody>
 </table>
 
@@ -4275,7 +4990,7 @@ cell slot 多了 `interactionDisabled`，查詢中為 `true`，可用來停用�
 
 ## 共用參數
 
-表單輸入元件（`ShuoInputText`、`ShuoInputNumber`、`ShuoSelectMenu`、`ShuoDatepicker`、`ShuoCheckbox`、`ShuoCheckboxGroup`、`ShuoRadioGroup`、`ShuoTextarea`、`ShuoFile`、`ShuoMonths`、`ShuoPhone`）都支援下列參數，各元件頁面不再重複列出：
+表單輸入元件（`ShuoInputText`、`ShuoInputNumber`、`ShuoSelectMenu`、`ShuoDatepicker`、`ShuoCheckbox`、`ShuoCheckboxGroup`、`ShuoRadioGroup`、`ShuoSwitch`、`ShuoTextarea`、`ShuoFile`、`ShuoMonths`、`ShuoPhone`）都支援下列參數，各元件頁面不再重複列出：
 
 <field-group>
 <field name="size" type="'xs' | 'sm' | 'md' | 'lg' | 'xl'" default="lg">
@@ -4637,14 +5352,40 @@ cell slot 多了 `interactionDisabled`，查詢中為 `true`，可用來停用�
       —
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/shuo-ui/components/choice/switch">
+        <code>
+          ShuoSwitch
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        USwitch
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
 </tbody>
 </table>
 
 - 繼承的 props 只用於型別推導，執行時經 `$attrs` 傳給底層元件。
 - 元件自行處理的 props 不列入繼承，不會出現在自動補全，例如 `modelValue`。輸入框類元件（`ShuoInputText`、`ShuoInputNumber`、`ShuoTextarea`、`ShuoFile`）自行顯示載入圖示，固定使用 Nuxt UI 的 `appConfig.ui.icons.loading`，因此也排除 `loadingIcon`，寫了不會生效；`ShuoSelectMenu` 由 `USelectMenu` 顯示載入圖示，`loadingIcon` 照常可用。
 - 事件照常經 `$attrs` 轉給底層元件，型別取自底層元件的 emits，例如 `@blur` 的參數為 `FocusEvent`。
-- 核取方塊與群組不支援說明文字（`description`、`descriptionKey`）：說明會撐高選項，破壞與輸入框對齊的高度。
-- 核取方塊與群組也不支援 Nuxt UI 的 `variant`（card、table）、`indicator` 與 `highlight`：card、table 的外框與內距會撐高選項；`indicator` 會移動勾選框，載入中的轉圈圖示固定在左側勾選框的位置；`highlight` 只改 card、table 的外框顏色。傳入時型別會報錯，執行時也不會套用。
+- 核取方塊、開關與群組支援說明文字（`description`，群組以選項的 `description` 欄位或 `descriptionKey` 指定）：沒有說明時高度對齊同尺寸的輸入框；有說明時撐高，說明文字換行，第一行文字仍與沒有說明的欄位對齊。顯示文字（`label`）維持單行，超出時省略並以 Tooltip 顯示完整文字。
+- 核取方塊與群組不支援 Nuxt UI 的 `variant`（card、table）、`indicator` 與 `highlight`：card、table 的外框與內距會撐高選項；`indicator` 會移動勾選框，載入中的轉圈圖示固定在左側勾選框的位置；`highlight` 只改 card、table 的外框顏色。傳入時型別會報錯，執行時也不會套用。
 
 ### Slots
 
@@ -6796,15 +7537,15 @@ const schema = v.object({
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v1.1.0
+pnpm add github:k90325248/shuo-ui#v1.2.0
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v1.1.0
+npm install github:k90325248/shuo-ui#v1.2.0
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v1.1.0
+yarn add github:k90325248/shuo-ui#v1.2.0
 ```
 
 </code-group>
@@ -7166,6 +7907,36 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => {
       <code>
         string[]
       </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/shuo-ui/components/choice/switch">
+        <code>
+          ShuoSwitch
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      開關，切換後可先執行處理函式
+    </td>
+    
+    <td>
+      <code>
+        boolean
+      </code>
+      
+      （可設定 <code>
+        trueValue
+      </code>
+      
+      ／<code>
+        falseValue
+      </code>
+      
+      ）
     </td>
   </tr>
   
@@ -7740,6 +8511,34 @@ export default defineNuxtConfig({
   <tr>
     <td>
       <code>
+        switch
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        color
+      </code>
+      
+      、<code>
+        loadingIcon
+      </code>
+      
+      （未設定時沿用 Nuxt UI）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
         radioGroup
       </code>
     </td>
@@ -7918,6 +8717,34 @@ export default defineNuxtConfig({
       ）、<code>
         ui
       </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        table
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        selectAll
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        checkboxProps
+      </code>
+      
+      （勾選欄核取方塊的外觀，未設定時沿用 UCheckbox），也套用到 <code>
+        ShuoListCard
+      </code>
+      
+       內的表格
     </td>
   </tr>
   
@@ -8601,7 +9428,19 @@ export default defineNuxtConfig({
         ShuoTable
       </code>
       
-       的空資料與查詢中文字）
+       的空資料與查詢中文字）、<code>
+        selectAll
+      </code>
+      
+      、<code>
+        selectRow
+      </code>
+      
+      （全選與每列核取方塊的無障礙名稱）、<code>
+        selectionHeader
+      </code>
+      
+      （關閉全選時的勾選欄表頭，預設空白）
     </td>
   </tr>
   
@@ -9191,6 +10030,10 @@ export default defineAppConfig({
       </code>
       
       、<code>
+        ShuoSwitch
+      </code>
+      
+      、<code>
         ShuoFile
       </code>
       
@@ -9245,6 +10088,521 @@ export default defineAppConfig({
   </tr>
 </tbody>
 </table>
+
+
+# v1.0.1
+
+> 發佈於 2026年10月25日
+
+> `1.0.0` 在未安裝 `@iconify-json/lucide` 的專案中無法建置，已撤回，請直接使用 `1.0.1`。本版內容即第一個正式版本，並包含下方的修正。
+
+Shuo UI 第一個正式版本：依照我們專案的表單寫法整理出來的 [Nuxt UI](https://ui.nuxt.com) 元件，以 Nuxt Module 提供，共 15 個元件。完整說明與可操作的範例見[文件網站](https://k90325248.github.io/shuo-ui/)。
+
+## ✨ Highlights
+
+### 🧩 建立在 Nuxt UI 之上
+
+元件包裝 Nuxt UI，沒有另外宣告的 Nuxt UI 參數、slot 與 ref 都能直接使用，型別也會一併推導，照 Nuxt UI 文件使用即可：[沿用 Nuxt UI](https://k90325248.github.io/shuo-ui/components/overview/common#%E6%B2%BF%E7%94%A8-nuxt-ui)
+
+```vue
+<ShuoInputText v-model="keyword" variant="soft" icon="i-lucide-search" />
+```
+
+### 🇹🇼 繁體中文與台灣常用格式
+
+文案預設繁體中文，並內建專案中常見的格式：身分證字號遮蔽、金額千分位、民國年日期、區碼與電話、年月數換算。綁定值維持原始資料（西元日期、純數字），只在顯示時轉換。
+
+```vue
+<ShuoInputText v-model="idNumber" :mask="4" />
+<ShuoInputNumber v-model="amount" unit />
+<!-- 顯示 115/10/25，綁定值為 2026/10/25 -->
+<ShuoDatepicker v-model="applyDate" />
+```
+
+### 📐 一致的尺寸與狀態
+
+所有表單輸入元件共用 `size`、`disabled`、`loading`、`skeleton`、`id`、`name`，同尺寸的元件高度一致，並會跟著 `UFormField` 與 `UForm` 的尺寸、停用與錯誤狀態走：[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common)
+
+```vue
+<UForm :schema="schema" :state="state" :disabled="saving">
+  <UFormField label="金額" name="amount" size="md">
+    <ShuoInputNumber v-model="state.amount" :skeleton="loading" />
+  </UFormField>
+</UForm>
+```
+
+### ⚙️ 全站預設值與共用驗證規則
+
+尺寸、顯示格式、圖示等可在 `nuxt.config.ts` 統一設定，元件上明確傳入的值仍然優先；常用的 Valibot 驗證規則已自動匯入，錯誤訊息格式全站一致：[元件全站預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)、[表單驗證](https://k90325248.github.io/shuo-ui/getting-started/form/validation)
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@nuxt/ui', '@shuo/ui'],
+  shuoUi: {
+    components: {
+      selectMenu: { format: '{value}_{label}' },
+      listCard: { pageSize: 20 }
+    }
+  }
+});
+```
+
+```ts
+const schema = v.object({
+  name: requiredText('姓名'),
+  amount: requiredNumber('金額')
+});
+```
+
+### 🔎 查詢頁版面
+
+`ShuoQueryCard` 放查詢條件、`ShuoListCard` 放查詢結果與後端分頁，查詢中的骨架、空資料與高度過渡都已處理：[查詢條件卡片](https://k90325248.github.io/shuo-ui/components/layout/query-card)、[清單卡片](https://k90325248.github.io/shuo-ui/components/layout/list-card)
+
+## 🚀 新增元件
+
+- **InputText:** 單行文字輸入，可遮蔽全部或最後幾碼（[文件](https://k90325248.github.io/shuo-ui/components/text/input-text)）
+- **InputNumber:** 數字輸入，離開輸入框後顯示千分位，可指定小數位數與單位（[文件](https://k90325248.github.io/shuo-ui/components/text/input-number)）
+- **Textarea:** 多行文字輸入，保留換行，可自動調整高度（[文件](https://k90325248.github.io/shuo-ui/components/text/textarea)）
+- **SelectMenu:** 下拉選單，可搜尋、多選，文字過長時顯示完整提示（[文件](https://k90325248.github.io/shuo-ui/components/choice/select-menu)）
+- **Datepicker:** 日期選擇器，預設民國年，支援五種精度與範圍選擇（[文件](https://k90325248.github.io/shuo-ui/components/date/datepicker)）
+- **Checkbox:** 單一核取方塊，可自訂勾選值，文字旁可放附加內容（[文件](https://k90325248.github.io/shuo-ui/components/choice/checkbox)）
+- **RadioGroup:** 單選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容（[文件](https://k90325248.github.io/shuo-ui/components/choice/radio-group)）
+- **CheckboxGroup:** 複選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容（[文件](https://k90325248.github.io/shuo-ui/components/choice/checkbox-group)）
+- **File:** 單檔選擇與既有附件下載，選檔不會自動上傳（[文件](https://k90325248.github.io/shuo-ui/components/phone-file/file)）
+- **Months:** 年月數換算輸入，可同時綁定總月數、年數與月數（[文件](https://k90325248.github.io/shuo-ui/components/date/months)）
+- **Phone:** 市話號碼，兩個輸入框分別輸入區碼與電話（[文件](https://k90325248.github.io/shuo-ui/components/phone-file/phone)）
+- **QueryCard:** 可收合的查詢條件卡片，內含 UForm，欄位以響應式格線排列（[文件](https://k90325248.github.io/shuo-ui/components/layout/query-card)）
+- **ListCard:** 查詢結果清單卡片，包含標題列、表格與後端分頁（[文件](https://k90325248.github.io/shuo-ui/components/layout/list-card)）
+- **Table:** 基於 UTable 的純表格，含骨架、空資料與高度過渡（[文件](https://k90325248.github.io/shuo-ui/components/layout/table)）
+- **InfoTooltip:** 資訊圖示加提示，滑鼠移入或鍵盤聚焦即顯示（[文件](https://k90325248.github.io/shuo-ui/components/helper/info-tooltip)）
+
+## 🐛 Bug Fixes
+
+- **module:** 只把已安裝圖示集的圖示加入 `@nuxt/icon` 的 client bundle。`1.0.0` 固定加入內建的 lucide 圖示，專案沒有安裝 `@iconify-json/lucide` 時，`nuxt build`、`nuxt generate` 會因無法產生 client bundle 而失敗；現在沒有安裝也能建置，圖示改由 `@nuxt/icon` 在執行時載入。建議一併安裝 `@iconify-json/lucide`，讓圖示直接打包進網站。
+
+## ⚠️ 使用前須知
+
+- 核取方塊與選項群組（`ShuoCheckbox`、`ShuoRadioGroup`、`ShuoCheckboxGroup`）的高度與輸入框對齊，因此不支援 Nuxt UI 的說明文字（`description`、`descriptionKey`）、`variant`（card、table）、`indicator` 與 `highlight`，傳入時型別會報錯，執行時也不會套用。
+- `ShuoInputNumber` 不提供原生 `min`、`max`、`step`，數值範圍請用驗證規則。
+- 選檔不會自動上傳：`ShuoFile` 只負責選擇與下載，上傳時機由頁面決定。
+
+## 📦 安裝
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.0.1
+pnpm add @iconify-json/lucide # 建議，圖示會直接打包
+```
+
+在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
+
+## 📋 需求
+
+<table>
+<thead>
+  <tr>
+    <th>
+      套件
+    </th>
+    
+    <th>
+      版本
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.0.1)
+
+
+# v1.1.0
+
+> 發佈於 2026年10月26日
+
+新增 `ShuoTooltip`，手機上長按即可查看所有提示；元件文案改為跟隨 Nuxt UI 的語系，內建繁體中文與英文。文件網站同步推出英文版，並重新整理成分頁與分組。升級前請先看下方的「升級須知」：自動匯入的函式範圍與元件文案的語系行為有調整。
+
+## ✨ Highlights
+
+### 📱 手機上長按查看提示
+
+Nuxt UI 的 `UTooltip` 只在滑鼠移入或鍵盤聚焦時顯示，手機上點擊、按住都不會出現。新的 `ShuoTooltip` 沿用 `UTooltip` 的全部參數與 slot，補上觸控裝置的長按顯示；`ShuoInfoTooltip` 與下拉選單、日期選擇器、檔案選擇、核取方塊、選項群組的文字截斷提示都改用它，在手機上一樣長按顯示：[Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip)
+
+```vue
+<ShuoTooltip text="儲存草稿">
+  <UButton label="儲存" />
+</ShuoTooltip>
+```
+
+長按顯示提示時不會觸發原本的點擊、勾選或開啟選單。要恢復 Nuxt UI 原本的行為，單一元件傳 `:touch="false"`，或在全站設定 `components.tooltip.touch: false`。
+
+### 🌐 元件文案跟隨 Nuxt UI 語系
+
+驗證訊息、無障礙名稱、提示文字、日期選擇器的月份與星期等文案，跟著 `<UApp :locale>` 切換，內建繁體中文與英文，已顯示的元件會立即更新。文案可依語系覆寫，也可以加入內建以外的語系：[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)
+
+```ts
+export default defineNuxtConfig({
+  shuoUi: {
+    locale: 'zh-TW', // 頁面沒有設定 UApp 語系時使用
+    locales: {
+      en: { listCard: { title: 'Search results' } }
+    }
+  }
+});
+```
+
+### 🌙 深色模式的表單色票
+
+停用中的輸入框在深色模式改用較暗的底色與較亮的文字，不再沿用淺色模式的顏色；輸入框邊框在深色模式改用較亮的主色。停用色也從固定的灰色改為 Nuxt UI 的中性色，色調跟著專案 `app.config.ts` 的 `ui.colors.neutral`。顏色由 `--ui-form-*` 變數決定，可在專案 CSS 以 `:root` 與 `.dark` 分別覆寫：[表單色票](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#%E8%A1%A8%E5%96%AE%E8%89%B2%E7%A5%A8)
+
+## 🚀 新增元件
+
+- **Tooltip:** 基於 UTooltip 的提示，補上觸控裝置長按顯示（[文件](https://k90325248.github.io/shuo-ui/components/helper/tooltip)）
+
+## 🐛 Bug Fixes
+
+- **InputText:** 遮蔽的文字切換為明碼時，不再先閃一下所有文字。
+- **Months:** 「年」「月」單位的寬度依文字調整，英文的 `yr`、`mo` 不會被截斷。
+
+## ⚠️ 升級須知
+
+### 只自動匯入公開的工具函式
+
+先前模組會自動匯入 `runtime/utils` 與 `runtime/composables` 底下的所有函式，元件內部使用的工具也一併暴露給專案。現在只自動匯入下列公開函式，參數與範例見文件網站新的[工具函式](https://k90325248.github.io/shuo-ui/utils/form/validation)分頁：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      分類
+    </th>
+    
+    <th>
+      函式
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      驗證規則
+    </td>
+    
+    <td>
+      <code>
+        requiredText
+      </code>
+      
+      、<code>
+        requiredNumber
+      </code>
+      
+      、<code>
+        requiredArray
+      </code>
+      
+      、<code>
+        optionalEmail
+      </code>
+      
+      、<code>
+        optionalNonNegativeNumber
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      顯示格式
+    </td>
+    
+    <td>
+      <code>
+        formatDateDisplay
+      </code>
+      
+      、<code>
+        parseDateValue
+      </code>
+      
+      、<code>
+        formatNumberDisplay
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      欄位拆合
+    </td>
+    
+    <td>
+      <code>
+        splitPhone
+      </code>
+      
+      、<code>
+        joinPhone
+      </code>
+      
+      、<code>
+        splitMonths
+      </code>
+      
+      、<code>
+        combineMonths
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      設定
+    </td>
+    
+    <td>
+      <code>
+        resolveShuoDefault
+      </code>
+      
+      、<code>
+        getShuoComponentDefaults
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+`getShuoMessages`、`setShuoMessages`、`formatMessage`、`toNumberText`、`getDecimalPlaces`、`filterPhoneInput`、`getDateModelFormat`、`isValidDateSeparator`、`useChoiceGroup`、`useTruncatedText` 等內部函式不再自動匯入。專案有用到時，建置會出現找不到函式的錯誤；這些函式不屬於公開 API，之後可能調整，建議改用上表的公開函式或模組選項（例如文案改用 `shuoUi.messages`、`shuoUi.locales` 覆寫）。
+
+### 元件文案跟隨 UApp 的語系
+
+先前元件文案固定為繁體中文。現在元件會跟隨 `<UApp :locale>`：
+
+- 沒有設定 `UApp` 的 `locale`，或設定為繁體中文時，畫面和先前相同。
+- 設定了其他語系（例如英文）的專案，升級後元件文案會跟著變成該語系。需要調整文字時，以 `shuoUi.locales` 依語系覆寫，見[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages#%E8%A6%86%E5%AF%AB%E6%96%87%E6%A1%88)。
+
+## 📖 文件網站
+
+- **英文版：** 右上角可切換繁體中文與英文，網址改為 `/zh-tw/...` 與 `/en/...`，根網址依上次選擇的語言導向。1.0.1 的頁面網址已不再使用，請從[首頁](https://k90325248.github.io/shuo-ui/)重新進入。
+- **分頁與分組：** 內容分成「開始使用」「元件」「工具函式」三個分頁，左側選單依用途分組。
+- **主題選單：** 右上角的調色盤可即時切換主題色、字型、圓角、元件尺寸、民國／西元年與元件語系，並匯出對應的 `app.config.ts`、CSS 與 `nuxt.config.ts`。
+
+## 📦 安裝
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.1.0
+pnpm add @iconify-json/lucide # 建議，圖示會直接打包
+```
+
+在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
+
+## 📋 需求
+
+<table>
+<thead>
+  <tr>
+    <th>
+      套件
+    </th>
+    
+    <th>
+      版本
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.1.0)
+
+
+# v1.2.0
+
+> 發佈於 2026年10月27日
+
+新增 `ShuoSwitch`，切換後可以先呼叫 API，成功才更新、失敗自動復原；表格與清單卡片支援勾選；核取方塊、選項群組與開關支援說明文字。文件網站的元件更新紀錄改為依語系顯示。升級前請先看下方的「升級須知」：選項資料原本就帶有 `description` 欄位的群組，升級後會顯示說明。
+
+## ✨ Highlights
+
+### 🔀 切換後先處理、成功才更新的開關
+
+新的 `ShuoSwitch` 沿用 `USwitch` 的參數，多了 `action`：切換後先顯示新的值並進入載入中、停用，處理函式回傳 `false` 或丟出錯誤時自動復原，其他回傳值才更新 `v-model` 並送出 `change`。適合切換當下就要呼叫 API 儲存的設定：[Switch](https://k90325248.github.io/shuo-ui/components/choice/switch)
+
+```vue
+<ShuoSwitch v-model="enabled" label="啟用帳號" :action="(value) => api.setEnabled(value)" />
+```
+
+高度與同尺寸的輸入框一致，文字過長時省略並以 Tooltip 顯示完整文字，與核取方塊相同；`size`、`color`、`loadingIcon` 可在全站設定 `components.switch`。按鈕不需要另外包裝，`UButton` 的 `loading-auto` 已提供相同的處理中狀態。
+
+### ☑️ 表格與清單卡片勾選
+
+`ShuoTable` 與 `ShuoListCard` 加上 `selectable` 後，在最前面加上勾選欄，勾選結果以 `v-model:selected` 綁定 key 陣列：[Table 的勾選](https://k90325248.github.io/shuo-ui/components/layout/table#%E5%8B%BE%E9%81%B8)
+
+```vue
+<ShuoListCard
+  v-model:selected="selected"
+  :data="rows"
+  :columns="columns"
+  selectable
+  row-key="ID"
+  :row-selectable="(row) => row.status !== '已結案'"
+  @page-change="search"
+/>
+```
+
+- `row-key` 為欄位名稱或函式；後端分頁時換頁仍保留其他頁的勾選，可以一次處理多頁勾選的資料。
+- 表頭的全選只勾選目前這頁可勾選的資料，部分勾選時顯示半選；`select-all` 設為 `false` 時改顯示 `selection-header` 的文字。
+- `row-selectable` 回傳 `false` 的資料停用勾選；查詢中停用所有核取方塊。
+- `checkbox-props` 設定核取方塊的 `class`、`ui`、`color`、`size` 與圖示；`columns` 中放 `{ id: 'select' }` 可指定勾選欄的位置，`#select-header`、`#select-cell` 插槽可完全自訂。
+- `selectAll`、`checkboxProps` 可在全站設定 `components.table`。
+
+沒有開啟 `selectable` 時行為不變，先前以 `tableProps` 自行控制勾選的寫法照常可用。
+
+### 📝 核取方塊、選項群組與開關的說明文字
+
+`ShuoCheckbox`、`ShuoRadioGroup`、`ShuoCheckboxGroup` 與 `ShuoSwitch` 支援說明文字（群組以選項的 `description` 欄位或 `description-key` 指定）。沒有說明時高度仍與輸入框一致；有說明時往下撐高、說明換行，第一行文字仍與旁邊的欄位對齊。水平排列的群組整列一起撐高，說明不會擠壓其他選項的文字：[Checkbox 的說明文字](https://k90325248.github.io/shuo-ui/components/choice/checkbox#%E8%AA%AA%E6%98%8E%E6%96%87%E5%AD%97)
+
+```vue
+<ShuoCheckbox v-model="subscribe" label="訂閱電子報" description="每週寄送一次最新公告，可以隨時取消" />
+```
+
+## 🚀 新增元件
+
+- **Switch:** 開關，切換後可先執行處理函式，成功才更新綁定值，失敗或丟出錯誤時自動復原（[文件](https://k90325248.github.io/shuo-ui/components/choice/switch)）
+
+## ⚠️ 升級須知
+
+### 選項資料的 description 欄位會顯示
+
+先前單選與複選群組不顯示選項說明，選項資料就算帶有 `description` 欄位也會被忽略。現在會顯示在選項文字下方，並讓選項撐高。
+
+選項直接使用後端資料、而資料剛好有 `description` 欄位（例如代碼表的備註）時，升級後畫面會多出說明。不想顯示時，在傳入前移除該欄位：
+
+```ts
+const options = computed(() => codes.value.map(({ description: _description, ...item }) => item));
+```
+
+## 📖 文件網站
+
+- **版本紀錄：** 標題列新增「版本紀錄」分頁，可查看每個版本的發佈說明，與 GitHub Release 內容相同，英文版顯示英文說明。
+- **更新紀錄依語系顯示：** 元件頁最後的更新紀錄改為依文件語系顯示中文或英文說明，不再顯示 `feat:`、`fix:` 等前綴。
+- **新頁面：** 新增 [Switch](https://k90325248.github.io/shuo-ui/components/choice/switch)；Table、ListCard、Checkbox、RadioGroup、CheckboxGroup 頁新增勾選與說明文字的用法與範例；共用參數頁的範例加入開關。
+
+## 📦 安裝
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.2.0
+pnpm add @iconify-json/lucide # 建議，圖示會直接打包
+```
+
+在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
+
+## 📋 需求
+
+<table>
+<thead>
+  <tr>
+    <th>
+      套件
+    </th>
+    
+    <th>
+      版本
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.0)
 
 
 # Months
@@ -10153,7 +11511,7 @@ ShuoInputText, ShuoInputNumber, ShuoTextarea
 
 <u-page-card icon="i-lucide-list-checks" title="Choice" to="https://k90325248.github.io/shuo-ui/components/choice/select-menu">
 
-ShuoSelectMenu, ShuoCheckbox, ShuoRadioGroup, ShuoCheckboxGroup
+ShuoSelectMenu, ShuoCheckbox, ShuoRadioGroup, ShuoCheckboxGroup, ShuoSwitch
 
 </u-page-card>
 
@@ -10247,6 +11605,16 @@ Start with your first form
 </component-example>
 
 The label shows on one line and is truncated when wider than its container. A tooltip shows the full text on hover or focus, or on long press on touch devices (see [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#touch-long-press)); a long press that shows the tooltip does not change the checked state.
+
+### Description
+
+`description` shows below the label. Without a description, the height matches an input of the same size; with one, the checkbox grows and the description wraps, while the first line still lines up with fields next to it that have no description.
+
+<component-example name="checkbox-description">
+
+
+
+</component-example>
 
 ### Color and icon
 
@@ -10536,6 +11904,16 @@ When the back-end item fields are not `label` and `value` (for example `{ Code, 
 - The `item` of `#item-append` is the converted object, with both the original fields (`item.Code`, `item.Name`) and `item.label`, `item.value`.
 - In development mode, when the first object item lacks the field set by `labelKey` or `valueKey`, the console warns once (with the component and field names); production does not check. `ShuoSelectMenu` has the same check.
 
+### Item descriptions
+
+An item's `description` field (or the field set by `description-key`) shows below its label. Items without a description match the height of an input of the same size; items with one grow and wrap the description. In horizontal layout the whole row grows, the first lines of all items stay aligned, and the description does not squeeze the labels of other items.
+
+<component-example name="checkbox-group-description">
+
+
+
+</component-example>
+
 ### Color and icon
 
 Uses the `color` and `icon` of `UCheckboxGroup`: `color` changes the checked color, and `icon` is the icon shown when checked; a single item can also set its own with the item's `icon` field.
@@ -10743,6 +12121,26 @@ Items (`CheckboxGroupOption`) use Nuxt UI's item fields, with `value` limited to
   
   <tr>
     <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      Item description, shown below the label and wrapped; the field name can be set with <code>
+        descriptionKey
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
       Other fields
     </td>
     
@@ -10762,12 +12160,6 @@ Items (`CheckboxGroupOption`) use Nuxt UI's item fields, with `value` limited to
   </tr>
 </tbody>
 </table>
-
-<warning>
-
-`description` is not supported: a description makes the items taller and breaks the height alignment with inputs. It is a type error and is not shown at runtime.
-
-</warning>
 
 ## Slots
 
@@ -11097,6 +12489,16 @@ When the back-end item fields are not `label` and `value` (for example `{ Code, 
 - The `item` of `#item-append` is the converted object, with both the original fields (`item.Code`, `item.Name`) and `item.label`, `item.value`.
 - In development mode, when the first object item lacks the field set by `labelKey` or `valueKey`, the console warns once (with the component and field names); production does not check. `ShuoSelectMenu` has the same check.
 
+### Item descriptions
+
+An item's `description` field (or the field set by `description-key`) shows below its label. Items without a description match the height of an input of the same size; items with one grow and wrap the description. In horizontal layout the whole row grows, the first lines of all items stay aligned, and the description does not squeeze the labels of other items.
+
+<component-example name="radio-group-description">
+
+
+
+</component-example>
+
 ### Color
 
 Uses the `color` of `URadioGroup` to change the selected color.
@@ -11286,6 +12688,26 @@ Items (`RadioGroupOption`) use Nuxt UI's item fields, with `value` limited to st
   
   <tr>
     <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      Item description, shown below the label and wrapped; the field name can be set with <code>
+        descriptionKey
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
       Other fields
     </td>
     
@@ -11305,12 +12727,6 @@ Items (`RadioGroupOption`) use Nuxt UI's item fields, with `value` limited to st
   </tr>
 </tbody>
 </table>
-
-<warning>
-
-`description` is not supported: a description makes the items taller and breaks the height alignment with inputs. It is a type error and is not shown at runtime.
-
-</warning>
 
 ## Slots
 
@@ -11959,6 +13375,382 @@ To make it narrower, set `ui.wrapper` (for example `w-40`), and the trigger butt
 ---
 
 - [USelectMenu](https://ui.nuxt.com/docs/components/select-menu)
+
+
+# Switch
+
+> A switch that can run an action after toggling, updating only on success and reverting on failure.
+
+`v-model: boolean | string | number`, boolean by default. Apart from `action` and label truncation, its props, events and slots are the same as `USwitch`.
+
+## Usage
+
+### Label and description
+
+`label` is the text next to the switch and `description` the text below it. It shows on one line and is truncated when wider than its container. A tooltip shows the full text on hover or focus, or on long press on touch devices (see [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#touch-long-press)), the same as the [checkbox](https://k90325248.github.io/shuo-ui/components/choice/checkbox#label). The description wraps: without one the height matches an input, and with one the switch grows while its first line still lines up with fields next to it.
+
+<component-example name="switch-basic">
+
+
+
+</component-example>
+
+### Action
+
+`action` runs after toggling, receives the new value and may return a Promise. Use it for settings that are saved through an API as soon as they change, such as enabling an account or notifications.
+
+<component-example name="switch-action">
+
+
+
+</component-example>
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Stage
+    </th>
+    
+    <th>
+      Switch
+    </th>
+    
+    <th>
+      <code>
+        v-model
+      </code>
+    </th>
+    
+    <th>
+      <code>
+        change
+      </code>
+      
+       event
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Pending
+    </td>
+    
+    <td>
+      Shows the new value, loading and disabled
+    </td>
+    
+    <td>
+      Unchanged
+    </td>
+    
+    <td>
+      Not emitted
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      Success
+    </td>
+    
+    <td>
+      Keeps the new value, loading and disabled end
+    </td>
+    
+    <td>
+      Updated to the new value
+    </td>
+    
+    <td>
+      Emitted
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      Failure
+    </td>
+    
+    <td>
+      Goes back to the old value, loading and disabled end
+    </td>
+    
+    <td>
+      Unchanged
+    </td>
+    
+    <td>
+      Not emitted
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      Error
+    </td>
+    
+    <td>
+      Same as failure
+    </td>
+    
+    <td>
+      Unchanged
+    </td>
+    
+    <td>
+      Not emitted
+    </td>
+  </tr>
+</tbody>
+</table>
+
+- **Success**: only returning `false` (or a Promise resolving to `false`) counts as a failure. Any other value is a success, including no return value as in `async () => { await save(value) }`.
+- **Errors**: when the action throws, the switch reverts the same way and the error is thrown again, for the global error handler or the console. To notify the user, `try`/`catch` inside the action, show a message and return `false`, as in the example above.
+- **Pending**: the switch is disabled, so the action is not called twice. If the page changes `v-model` while pending, the page's value wins and is not overwritten when the action finishes.
+- **Without action**, `v-model` updates right after toggling, the same as `USwitch`.
+
+The `SwitchAction` and `SwitchValue` types can be imported from `#shuo-ui/components/ShuoSwitch.vue`.
+
+### On and off values
+
+`true-value` and `false-value` are the bound values when on and off, `true` and `false` by default. Change them when the back end uses `Y`/`N`; the action receives these values too.
+
+<component-example name="switch-values">
+
+
+
+</component-example>
+
+### Size and states
+
+When `size` is not set, it follows the `UFormField` size and the site-wide setting, `lg` built in, the same as the other input components. Without a description, the switch height matches an input of the same size (24 to 40px for `xs` to `xl`), so it lines up with other fields in the same row. `loading` shows a loading icon and disables the switch; `disabled` follows the form state when not set; `skeleton` covers it with a skeleton of the same size. See [Common props](https://k90325248.github.io/shuo-ui/components/overview/common) for the shared behavior of the states.
+
+<component-example name="switch-states">
+
+
+
+</component-example>
+
+`size`, `color` and `loadingIcon` can be set site-wide with `components.switch` in [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults).
+
+## Examples
+
+### Loading state on buttons
+
+Buttons need no wrapper: with `loading-auto`, `UButton` shows loading and is disabled until the Promise returned by `@click` settles.
+
+```vue
+<UButton label="Save" loading-auto @click="save" />
+```
+
+## Props
+
+<component-props name="ShuoSwitch">
+
+
+
+</component-props>
+
+## Events
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Event
+    </th>
+    
+    <th>
+      Payload
+    </th>
+    
+    <th>
+      Description
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        change
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        Event
+      </code>
+    </td>
+    
+    <td>
+      Emitted after toggling; with <code>
+        action
+      </code>
+      
+      , only after the action succeeds
+    </td>
+  </tr>
+</tbody>
+</table>
+
+`update:modelValue` is also emitted only after the action succeeds.
+
+## Slots
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      Props
+    </th>
+    
+    <th>
+      Description
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      Replaces the label, the same as USwitch
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      Replaces the description, the same as USwitch
+    </td>
+  </tr>
+</tbody>
+</table>
+
+## Styling
+
+`ui` accepts every slot of Nuxt UI `USwitch`, merged as described in [Per-component `ui` prop](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#per-component-ui-prop); `wrapper` is the component's own outer wrapper instead:
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      Part
+    </th>
+    
+    <th>
+      Built-in style
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        wrapper
+      </code>
+    </td>
+    
+    <td>
+      Outer wrapper that measures truncation and holds the tooltip
+    </td>
+    
+    <td>
+      <code>
+        inline-flex w-fit max-w-full min-w-0 align-top
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      Switch box (Nuxt UI)
+    </td>
+    
+    <td>
+      <code>
+        w-fit max-w-full min-w-0
+      </code>
+      
+      , height matching an input of the same size, centered
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      Label (Nuxt UI)
+    </td>
+    
+    <td>
+      <code>
+        block truncate
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+You can also adjust the height with `class="[--form-switch-height:1.25rem]"`. `class` goes on the switch box, not the outer wrapper. Inside a flex container, the wrapper shrinks with the available space and truncates the label; set `ui.wrapper` to `shrink-0` to show the full label.
+
+## Changelog
+
+<component-changelog name="ShuoSwitch">
+
+
+
+</component-changelog>
+
+---
+
+- [USwitch](https://ui.nuxt.com/docs/components/switch)
 
 
 # Datepicker
@@ -13084,6 +14876,16 @@ When the component is created while loading with no data, skeleton rows are show
 
 The title "Results" and the bottom summary switch with the locale ("Results" and "Showing 1 to 10 of 25 results." in English, "查詢結果" and its summary in Traditional Chinese), and can be overridden globally with the `listCard.title` and `listCard.summary` texts; "Loading…" and "No data" belong to the `table` group. See [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages).
 
+### Selection
+
+`selectable`, `select-all`, `selection-header`, `row-key`, `row-selectable`, `checkbox-props` and `v-model:selected` are passed to the table; see [Selection in ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#selection). Set `row-key` with server-side pagination: selections on other pages are kept when changing pages, so rows selected across pages can be handled together.
+
+<component-example name="list-card-selection">
+
+
+
+</component-example>
+
 ## Examples
 
 ### Title bar actions and footer content
@@ -14040,6 +15842,31 @@ When the row count or content height changes, the data area height changes smoot
 
 </component-example>
 
+### Selection
+
+`selectable` adds a selection column at the front, and the selection is bound to an array of keys with `v-model:selected`. `row-key` sets the key: a field name (such as `row-key="id"`) or a function that builds the key from the row; the selection keeps the original type of the keys. Select all in the header only selects the selectable rows on the current page, and shows an indeterminate state when only some are selected. With `select-all` set to `false`, the header shows the `selection-header` text instead.
+
+<component-example name="table-selection">
+
+
+
+</component-example>
+
+- Without `row-key`, the row index (`'0'`, `'1'`…) is the key. The first row is still `'0'` after changing pages and selects different data, so always set it with server-side pagination.
+- Selected keys are kept when changing pages or re-querying, including those on other pages; set `v-model:selected` to `[]` to clear the selection.
+- All checkboxes are disabled while loading (`loading`).
+- `select-all` can be set site-wide with `components.table.selectAll` in [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults).
+
+### Rows that cannot be selected
+
+Rows for which `row-selectable` returns `false` cannot be selected and are skipped by select all. In this example the key combines the year and number (such as `115-1`), and closed rows cannot be selected.
+
+<component-example name="table-selection-disabled">
+
+
+
+</component-example>
+
 ## Examples
 
 ### Editable table
@@ -14082,6 +15909,228 @@ Replace the built-in texts with `#loading` and `#empty`. `#loading` only shows w
 
 </component-example>
 
+### Selection checkbox styles
+
+`checkbox-props` sets the appearance of the select-all and row checkboxes, which share the same settings. The width and alignment of the selection column cells are set with a column whose `id` is `select` in `columns`; see [Selection column position and custom cells](#selection-column-position-and-custom-cells).
+
+<component-example name="table-selection-style">
+
+
+
+</component-example>
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Property
+    </th>
+    
+    <th>
+      Type
+    </th>
+    
+    <th>
+      Description
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        class
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        any
+      </code>
+    </td>
+    
+    <td>
+      Class of the checkbox wrapper (the <code>
+        root
+      </code>
+      
+       of UCheckbox)
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ui
+      </code>
+      
+       of UCheckbox
+    </td>
+    
+    <td>
+      Part styles: <code>
+        root
+      </code>
+      
+      , <code>
+        container
+      </code>
+      
+      , <code>
+        base
+      </code>
+      
+       (the box), <code>
+        indicator
+      </code>
+      
+       (checked background), <code>
+        icon
+      </code>
+      
+       and so on, merged with the UCheckbox theme; a function receives the defaults so you can replace them
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        color
+      </code>
+    </td>
+    
+    <td>
+      Theme colors such as <code>
+        'primary'
+      </code>
+      
+      , <code>
+        'neutral'
+      </code>
+    </td>
+    
+    <td>
+      Background when checked; <code>
+        primary
+      </code>
+      
+       when not set
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        size
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        'xs'
+      </code>
+      
+      , <code>
+        'sm'
+      </code>
+      
+      , <code>
+        'md'
+      </code>
+      
+      , <code>
+        'lg'
+      </code>
+      
+      , <code>
+        'xl'
+      </code>
+    </td>
+    
+    <td>
+      Box size; <code>
+        md
+      </code>
+      
+       when not set
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        icon
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      Icon when checked; the Nuxt UI <code>
+        check
+      </code>
+      
+       icon when not set
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        indeterminateIcon
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      Icon when partly selected; the Nuxt UI <code>
+        minus
+      </code>
+      
+       icon when not set
+    </td>
+  </tr>
+</tbody>
+</table>
+
+- The type is `TableCheckboxProps`, importable from `#shuo-ui/components/ShuoTable.vue`.
+- The checked state, disabled state and accessible names are controlled by the table and cannot be set with `checkbox-props`; the `card` style of `variant` does not fit in a table and is not available either.
+- For different styles on the select-all and row checkboxes, put your own `UCheckbox` in the `#select-header` or `#select-cell` slot.
+- It can be set site-wide with `components.table.checkboxProps` in [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults) (no functions). A `checkbox-props` passed on the page replaces the site-wide value as a whole instead of merging it.
+
+### Selection column position and custom cells
+
+The selection column is placed at the front by default. To place it elsewhere, add a column with `id` set to `select` to `columns`; the selection column takes its position, and the column's settings apply to it. `th` and `td` in `meta.class` each replace the built-in `w-px` (fitting the checkbox width); with only `td` set, the header keeps `w-px`.
+
+```ts
+const columns: TableColumn<Row>[] = [
+  { accessorKey: 'name', header: 'Name' },
+
+  // Selection column after the name
+  { id: 'select', meta: { class: { td: 'bg-muted' } } },
+
+  { accessorKey: 'amount', header: 'Amount' }
+];
+```
+
+The `#select-header` and `#select-cell` slots replace the built-in select-all and row checkboxes, with the same props as `UTable`: for example `row.getIsSelected()` for the state, `row.toggleSelected()` to toggle it, and `row.getCanSelect()` to check whether the row can be selected.
+
 ## Props
 
 <component-props name="ShuoTable">
@@ -14092,7 +16141,9 @@ Replace the built-in texts with `#loading` and `#empty`. `#loading` only shows w
 
 `tableProps.paginationOptions.manualPagination` is always `true`, with pagination handled by the back end; column visibility comes from `tableProps.state.columnVisibility`, and `tableProps.columnVisibility` passed directly has no effect.
 
-"Loading…" and "No data" switch with the locale ("查詢中…" and "查無資料" in Traditional Chinese), and can be overridden globally with the `table.loading` and `table.empty` texts; see [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages). Set styles for headers, cells and so on with `tableProps.ui`, merged with the built-in styles.
+With `selectable` on, the selection is controlled by `v-model:selected`, and `rowSelection` and `onUpdate:rowSelection` in `tableProps` have no effect; without it you can still control selection through `tableProps` as with `UTable`. `row-key` is also used as the `getRowId` of `UTable` when selection is off.
+
+"Loading…" and "No data" switch with the locale ("查詢中…" and "查無資料" in Traditional Chinese), and can be overridden globally with the `table.loading` and `table.empty` texts; see [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages). The accessible names of the select-all and row checkboxes ("Select all", "Select row") and the header text when select all is off (empty by default) come from `table.selectAll`, `table.selectRow` and `table.selectionHeader`. Set styles for headers, cells and so on with `tableProps.ui`, merged with the built-in styles.
 
 ## Slots
 
@@ -14175,6 +16226,28 @@ Replace the built-in texts with `#loading` and `#empty`. `#loading` only shows w
       Loading and empty-data content
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        select-header
+      </code>
+      
+      , <code>
+        select-cell
+      </code>
+    </td>
+    
+    <td>
+      Original props + <code>
+        interactionDisabled
+      </code>
+    </td>
+    
+    <td>
+      Replace the select-all and row checkboxes
+    </td>
+  </tr>
 </tbody>
 </table>
 
@@ -14207,7 +16280,7 @@ Use the selects above to switch size and state, and every component below change
 
 ## Shared props
 
-The form input components (`ShuoInputText`, `ShuoInputNumber`, `ShuoSelectMenu`, `ShuoDatepicker`, `ShuoCheckbox`, `ShuoCheckboxGroup`, `ShuoRadioGroup`, `ShuoTextarea`, `ShuoFile`, `ShuoMonths`, `ShuoPhone`) all support the props below, which are not repeated on each component page:
+The form input components (`ShuoInputText`, `ShuoInputNumber`, `ShuoSelectMenu`, `ShuoDatepicker`, `ShuoCheckbox`, `ShuoCheckboxGroup`, `ShuoRadioGroup`, `ShuoSwitch`, `ShuoTextarea`, `ShuoFile`, `ShuoMonths`, `ShuoPhone`) all support the props below, which are not repeated on each component page:
 
 <field-group>
 <field name="size" type="'xs' | 'sm' | 'md' | 'lg' | 'xl'" default="lg">
@@ -14569,14 +16642,40 @@ Shuo components that wrap a Nuxt UI component inherit the props types of the und
       —
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/shuo-ui/components/choice/switch">
+        <code>
+          ShuoSwitch
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        USwitch
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
 </tbody>
 </table>
 
 - Inherited props are only used for type inference; at runtime they are passed to the underlying component through `$attrs`.
 - Props the component handles itself are not inherited and do not show up in autocompletion, such as `modelValue`. Input-style components (`ShuoInputText`, `ShuoInputNumber`, `ShuoTextarea`, `ShuoFile`) show their own loading icon, always using Nuxt UI's `appConfig.ui.icons.loading`, so `loadingIcon` is excluded as well and has no effect. `ShuoSelectMenu` lets `USelectMenu` show the loading icon, so `loadingIcon` works as usual.
 - Events are forwarded to the underlying component through `$attrs` as usual, with types taken from the underlying component's emits; for example, the argument of `@blur` is a `FocusEvent`.
-- Checkboxes and groups do not support descriptions (`description`, `descriptionKey`): a description makes the options taller and breaks the height alignment with inputs.
-- Checkboxes and groups also do not support Nuxt UI's `variant` (card, table), `indicator` or `highlight`: the border and padding of card and table make options taller; `indicator` moves the checkbox, while the loading spinner stays where the left checkbox is; `highlight` only changes the border color of card and table. Passing them is a type error and they are not applied at runtime.
+- Checkboxes, switches and groups support descriptions (`description`; for groups, the item's `description` field or the field set by `descriptionKey`): without a description the height matches an input of the same size; with one, the item grows and the description wraps, while its first line still lines up with fields without a description. The label stays on one line and is truncated with a tooltip showing the full text.
+- Checkboxes and groups do not support Nuxt UI's `variant` (card, table), `indicator` or `highlight`: the border and padding of card and table make options taller; `indicator` moves the checkbox, while the loading spinner stays where the left checkbox is; `highlight` only changes the border color of card and table. Passing them is a type error and they are not applied at runtime.
 
 ### Slots
 
@@ -16746,15 +18845,15 @@ Pin a version with a tag, and change it to the new tag when upgrading. See [GitH
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v1.1.0
+pnpm add github:k90325248/shuo-ui#v1.2.0
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v1.1.0
+npm install github:k90325248/shuo-ui#v1.2.0
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v1.1.0
+yarn add github:k90325248/shuo-ui#v1.2.0
 ```
 
 </code-group>
@@ -17118,6 +19217,36 @@ The `name` of `UFormField` must match the field name in the schema and state; th
       <code>
         string[]
       </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/shuo-ui/components/choice/switch">
+        <code>
+          ShuoSwitch
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      Switch that can run an action after toggling
+    </td>
+    
+    <td>
+      <code>
+        boolean
+      </code>
+      
+       (<code>
+        trueValue
+      </code>
+      
+      /<code>
+        falseValue
+      </code>
+      
+       configurable)
     </td>
   </tr>
   
@@ -17692,6 +19821,34 @@ Only the props in the table below can be set site-wide. State props such as `dis
   <tr>
     <td>
       <code>
+        switch
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+       (<code>
+        lg
+      </code>
+      
+      ), <code>
+        color
+      </code>
+      
+      , <code>
+        loadingIcon
+      </code>
+      
+       (Nuxt UI defaults when not set)
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
         radioGroup
       </code>
     </td>
@@ -17869,6 +20026,32 @@ Only the props in the table below can be set site-wide. State props such as `dis
       
       's default), <code>
         ui
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        table
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        selectAll
+      </code>
+      
+       (<code>
+        true
+      </code>
+      
+      ), <code>
+        checkboxProps
+      </code>
+      
+       (selection checkbox appearance; UCheckbox defaults when not set), also apply to the table inside <code>
+        ShuoListCard
       </code>
     </td>
   </tr>
@@ -18553,7 +20736,19 @@ An added locale does not change the language of the date picker calendar; month 
         ShuoTable
       </code>
       
-      )
+      ), <code>
+        selectAll
+      </code>
+      
+      , <code>
+        selectRow
+      </code>
+      
+       (accessible names of the select-all and row checkboxes), <code>
+        selectionHeader
+      </code>
+      
+       (the selection column header when select all is off, empty by default)
     </td>
   </tr>
   
@@ -19143,6 +21338,10 @@ The `class` you pass goes on the component's outer element, merged after `ui.roo
       </code>
       
       , <code>
+        ShuoSwitch
+      </code>
+      
+      , <code>
         ShuoFile
       </code>
       
@@ -19197,6 +21396,525 @@ The `class` you pass goes on the component's outer element, merged after `ui.roo
   </tr>
 </tbody>
 </table>
+
+
+# v1.0.1
+
+> Released on October 25, 2026
+
+> `1.0.0` failed to build in projects without `@iconify-json/lucide` and has been withdrawn; use `1.0.1` instead. This release is the first stable version and includes the fix below.
+
+The first stable release of Shuo UI: [Nuxt UI](https://ui.nuxt.com) components shaped around the way our projects write forms, shipped as a Nuxt module with 15 components. See the [docs site](https://k90325248.github.io/shuo-ui/) for full guides and live examples.
+
+## ✨ Highlights
+
+### 🧩 Built on Nuxt UI
+
+The components wrap Nuxt UI. Nuxt UI props, slots and refs that are not redeclared can be used directly, with types inferred, so you can follow the Nuxt UI docs: [Built on Nuxt UI](https://k90325248.github.io/shuo-ui/components/overview/common#built-on-nuxt-ui)
+
+```vue
+<ShuoInputText v-model="keyword" variant="soft" icon="i-lucide-search" />
+```
+
+### 🇹🇼 Traditional Chinese and Taiwanese formats
+
+Texts default to Traditional Chinese, with formats common in our projects built in: masked ID numbers, thousands separators, ROC-year dates, area codes and phone numbers, and year/month conversion. Bound values keep the raw data (Gregorian dates, plain numbers) and are only converted for display.
+
+```vue
+<ShuoInputText v-model="idNumber" :mask="4" />
+<ShuoInputNumber v-model="amount" unit />
+<!-- Shows 115/10/25; the bound value is 2026/10/25 -->
+<ShuoDatepicker v-model="applyDate" />
+```
+
+### 📐 Consistent sizes and states
+
+All form inputs share `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. Components of the same size have the same height and follow the size, disabled and error states of `UFormField` and `UForm`: [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common)
+
+```vue
+<UForm :schema="schema" :state="state" :disabled="saving">
+  <UFormField label="Amount" name="amount" size="md">
+    <ShuoInputNumber v-model="state.amount" :skeleton="loading" />
+  </UFormField>
+</UForm>
+```
+
+### ⚙️ Site-wide defaults and shared validation rules
+
+Sizes, display formats, icons and more can be set once in `nuxt.config.ts`, while values passed on a component still win. Common Valibot rules are auto-imported, with consistent error messages across the site: [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults), [Validation](https://k90325248.github.io/shuo-ui/getting-started/form/validation)
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@nuxt/ui', '@shuo/ui'],
+  shuoUi: {
+    components: {
+      selectMenu: { format: '{value}_{label}' },
+      listCard: { pageSize: 20 }
+    }
+  }
+});
+```
+
+```ts
+const schema = v.object({
+  name: requiredText('Name'),
+  amount: requiredNumber('Amount')
+});
+```
+
+### 🔎 Query page layout
+
+`ShuoQueryCard` holds the query fields and `ShuoListCard` the results with server-side pagination, with loading skeletons, empty data and height transitions handled: [QueryCard](https://k90325248.github.io/shuo-ui/components/layout/query-card), [ListCard](https://k90325248.github.io/shuo-ui/components/layout/list-card)
+
+## 🚀 New components
+
+- **InputText:** Single-line text input that can mask all or the last characters ([docs](https://k90325248.github.io/shuo-ui/components/text/input-text))
+- **InputNumber:** Number input with thousands separators after blur, configurable decimals and unit ([docs](https://k90325248.github.io/shuo-ui/components/text/input-number))
+- **Textarea:** Multi-line text input that keeps line breaks and can resize automatically ([docs](https://k90325248.github.io/shuo-ui/components/text/textarea))
+- **SelectMenu:** Select menu with search and multiple selection, showing the full text when truncated ([docs](https://k90325248.github.io/shuo-ui/components/choice/select-menu))
+- **Datepicker:** Date picker with ROC years by default, five precisions and range selection ([docs](https://k90325248.github.io/shuo-ui/components/date/datepicker))
+- **Checkbox:** Single checkbox with custom checked values and content next to the label ([docs](https://k90325248.github.io/shuo-ui/components/choice/checkbox))
+- **RadioGroup:** Radio group that lays out by viewport width, with custom item fields and item content ([docs](https://k90325248.github.io/shuo-ui/components/choice/radio-group))
+- **CheckboxGroup:** Checkbox group that lays out by viewport width, with custom item fields and item content ([docs](https://k90325248.github.io/shuo-ui/components/choice/checkbox-group))
+- **File:** Single file selection and download of an existing attachment; selecting does not upload ([docs](https://k90325248.github.io/shuo-ui/components/phone-file/file))
+- **Months:** Year and month input that can bind the total months, years and months at once ([docs](https://k90325248.github.io/shuo-ui/components/date/months))
+- **Phone:** Landline number with separate inputs for the area code and number ([docs](https://k90325248.github.io/shuo-ui/components/phone-file/phone))
+- **QueryCard:** Collapsible query card with a UForm inside and fields on a responsive grid ([docs](https://k90325248.github.io/shuo-ui/components/layout/query-card))
+- **ListCard:** Results card with a title bar, table and server-side pagination ([docs](https://k90325248.github.io/shuo-ui/components/layout/list-card))
+- **Table:** Plain table based on UTable, with skeletons, empty data and height transitions ([docs](https://k90325248.github.io/shuo-ui/components/layout/table))
+- **InfoTooltip:** Info icon with a tooltip shown on hover or keyboard focus ([docs](https://k90325248.github.io/shuo-ui/components/helper/info-tooltip))
+
+## 🐛 Bug Fixes
+
+- **module:** Only icons from installed icon collections are added to the `@nuxt/icon` client bundle. `1.0.0` always added the built-in lucide icons, so `nuxt build` and `nuxt generate` failed to create the client bundle in projects without `@iconify-json/lucide`. Projects without it now build, and icons are loaded by `@nuxt/icon` at runtime. Installing `@iconify-json/lucide` is still recommended so icons are bundled into the site.
+
+## ⚠️ Before you start
+
+- Checkboxes and choice groups (`ShuoCheckbox`, `ShuoRadioGroup`, `ShuoCheckboxGroup`) match the height of inputs, so they do not support Nuxt UI descriptions (`description`, `descriptionKey`), `variant` (card, table), `indicator` or `highlight`. Passing them is a type error and they are not applied at runtime.
+- `ShuoInputNumber` has no native `min`, `max` or `step`; use validation rules for ranges.
+- Selecting a file does not upload it: `ShuoFile` only handles selection and download, and the page decides when to upload.
+
+## 📦 Installation
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.0.1
+pnpm add @iconify-json/lucide # recommended, icons are bundled
+```
+
+Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
+
+## 📋 Requirements
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Package
+    </th>
+    
+    <th>
+      Version
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.0.1)
+
+
+# v1.1.0
+
+> Released on October 26, 2026
+
+Adds `ShuoTooltip`, so every tooltip can be shown with a long press on phones; component texts now follow the Nuxt UI locale, with Traditional Chinese and English built in. The docs site gains an English version and is reorganized into tabs and groups. Before upgrading, read "Upgrade notes" below: the auto-imported functions and the locale behavior of component texts have changed.
+
+## ✨ Highlights
+
+### 📱 Long press for tooltips on phones
+
+Nuxt UI's `UTooltip` only opens on hover or keyboard focus, so tapping or holding on a phone shows nothing. The new `ShuoTooltip` keeps all `UTooltip` props and slots and adds long press on touch devices. `ShuoInfoTooltip` and the truncated-text tooltips of the select menu, datepicker, file, checkbox and choice groups all use it, so they also open with a long press on phones: [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip)
+
+```vue
+<ShuoTooltip text="Save draft">
+  <UButton label="Save" />
+</ShuoTooltip>
+```
+
+A long press that shows a tooltip does not trigger the original click, check or menu. To keep Nuxt UI's original behavior, pass `:touch="false"` on a component or set `components.tooltip.touch: false` site-wide.
+
+### 🌐 Component texts follow the Nuxt UI locale
+
+Validation messages, accessible names, tooltips, and the months and weekdays of the datepicker follow `<UApp :locale>`, with Traditional Chinese and English built in; mounted components update immediately. Texts can be overridden per locale, and other locales can be added: [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)
+
+```ts
+export default defineNuxtConfig({
+  shuoUi: {
+    locale: 'zh-TW', // used when the page does not set a UApp locale
+    locales: {
+      en: { listCard: { title: 'Search results' } }
+    }
+  }
+});
+```
+
+### 🌙 Form color tokens for dark mode
+
+Disabled inputs in dark mode now use a darker background and lighter text instead of the light mode colors, and input borders use a lighter primary color. The disabled color also changed from a fixed gray to Nuxt UI's neutral color, following `ui.colors.neutral` in your `app.config.ts`. The colors come from the `--ui-form-*` variables, which you can override in your CSS for `:root` and `.dark`: [Form color tokens](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#form-color-tokens)
+
+## 🚀 New components
+
+- **Tooltip:** Tooltip based on UTooltip that also opens with a long press on touch devices ([docs](https://k90325248.github.io/shuo-ui/components/helper/tooltip))
+
+## 🐛 Bug Fixes
+
+- **InputText:** Revealing masked text no longer briefly flashes the whole value.
+- **Months:** The year and month units grow with their text, so the English `yr` and `mo` are no longer cut off.
+
+## ⚠️ Upgrade notes
+
+### Only public utility functions are auto-imported
+
+The module used to auto-import every function under `runtime/utils` and `runtime/composables`, exposing internal helpers to projects. Now only the public functions below are auto-imported; see the new [Utilities](https://k90325248.github.io/shuo-ui/utils/form/validation) tab for parameters and examples:
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Category
+    </th>
+    
+    <th>
+      Functions
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Validation
+    </td>
+    
+    <td>
+      <code>
+        requiredText
+      </code>
+      
+      , <code>
+        requiredNumber
+      </code>
+      
+      , <code>
+        requiredArray
+      </code>
+      
+      , <code>
+        optionalEmail
+      </code>
+      
+      , <code>
+        optionalNonNegativeNumber
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      Formatting
+    </td>
+    
+    <td>
+      <code>
+        formatDateDisplay
+      </code>
+      
+      , <code>
+        parseDateValue
+      </code>
+      
+      , <code>
+        formatNumberDisplay
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      Field helpers
+    </td>
+    
+    <td>
+      <code>
+        splitPhone
+      </code>
+      
+      , <code>
+        joinPhone
+      </code>
+      
+      , <code>
+        splitMonths
+      </code>
+      
+      , <code>
+        combineMonths
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      Settings
+    </td>
+    
+    <td>
+      <code>
+        resolveShuoDefault
+      </code>
+      
+      , <code>
+        getShuoComponentDefaults
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+Internal functions such as `getShuoMessages`, `setShuoMessages`, `formatMessage`, `toNumberText`, `getDecimalPlaces`, `filterPhoneInput`, `getDateModelFormat`, `isValidDateSeparator`, `useChoiceGroup` and `useTruncatedText` are no longer auto-imported. If your project uses them, the build reports missing functions. They are not public API and may change, so use the public functions above or module options instead (for example, override texts with `shuoUi.messages` or `shuoUi.locales`).
+
+### Component texts follow the UApp locale
+
+Component texts used to be fixed to Traditional Chinese. Components now follow `<UApp :locale>`:
+
+- Projects without a `UApp` `locale`, or with Traditional Chinese, look the same as before.
+- Projects with another locale (for example English) will see component texts in that locale after upgrading. To adjust the wording, override it per locale with `shuoUi.locales`; see [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages#overriding-messages).
+
+## 📖 Docs site
+
+- **English version:** Switch between Traditional Chinese and English at the top right. URLs are now `/zh-tw/...` and `/en/...`, and the root URL redirects to the language you chose last. The 1.0.1 page URLs are no longer used; start again from the [home page](https://k90325248.github.io/shuo-ui/).
+- **Tabs and groups:** Content is split into Getting started, Components and Utilities tabs, with the left menu grouped by purpose.
+- **Theme menu:** The palette at the top right switches the primary color, font, radius, component size, ROC/Gregorian years and component locale on the fly, and exports the matching `app.config.ts`, CSS and `nuxt.config.ts`.
+
+## 📦 Installation
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.1.0
+pnpm add @iconify-json/lucide # recommended, icons are bundled
+```
+
+Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
+
+## 📋 Requirements
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Package
+    </th>
+    
+    <th>
+      Version
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.1.0)
+
+
+# v1.2.0
+
+> Released on October 27, 2026
+
+Adds `ShuoSwitch`, which can call an API after toggling, updating only on success and reverting on failure; tables and list cards support row selection; checkboxes, choice groups and switches support descriptions. Component changelogs on the docs site now follow the docs language. Before upgrading, read "Upgrade notes" below: choice groups whose item data already has a `description` field will show it after upgrading.
+
+## ✨ Highlights
+
+### 🔀 A switch that confirms the change before updating
+
+The new `ShuoSwitch` keeps the props of `USwitch` and adds `action`: after toggling, it shows the new value, loading and disabled. If the action returns `false` or throws, the switch reverts; any other result updates `v-model` and emits `change`. Use it for settings saved through an API as soon as they change: [Switch](https://k90325248.github.io/shuo-ui/components/choice/switch)
+
+```vue
+<ShuoSwitch v-model="enabled" label="Enable account" :action="(value) => api.setEnabled(value)" />
+```
+
+Its height matches inputs of the same size, and a long label is truncated with a tooltip showing the full text, the same as the checkbox. `size`, `color` and `loadingIcon` can be set site-wide with `components.switch`. Buttons need no wrapper: `loading-auto` on `UButton` already provides the same loading state.
+
+### ☑️ Row selection in tables and list cards
+
+With `selectable`, `ShuoTable` and `ShuoListCard` add a selection column at the front, and the selection is bound to an array of keys with `v-model:selected`: [Selection in Table](https://k90325248.github.io/shuo-ui/components/layout/table#selection)
+
+```vue
+<ShuoListCard
+  v-model:selected="selected"
+  :data="rows"
+  :columns="columns"
+  selectable
+  row-key="ID"
+  :row-selectable="(row) => row.status !== 'Closed'"
+  @page-change="search"
+/>
+```
+
+- `row-key` is a field name or a function. With server-side pagination, selections on other pages are kept when changing pages, so rows selected across pages can be handled together.
+- Select all in the header only selects the selectable rows on the current page and shows an indeterminate state when only some are selected; with `select-all` set to `false`, the header shows the `selection-header` text instead.
+- Rows for which `row-selectable` returns `false` cannot be selected; all checkboxes are disabled while loading.
+- `checkbox-props` sets the `class`, `ui`, `color`, `size` and icons of the checkboxes. Put `{ id: 'select' }` in `columns` to place the selection column, or replace it entirely with the `#select-header` and `#select-cell` slots.
+- `selectAll` and `checkboxProps` can be set site-wide with `components.table`.
+
+Without `selectable` nothing changes, and controlling selection yourself through `tableProps` still works.
+
+### 📝 Descriptions on checkboxes, choice groups and switches
+
+`ShuoCheckbox`, `ShuoRadioGroup`, `ShuoCheckboxGroup` and `ShuoSwitch` support descriptions (for groups, the item's `description` field or the field set by `description-key`). Without a description the height still matches inputs; with one the control grows and the description wraps, while the first line stays aligned with the fields next to it. In horizontal groups the whole row grows, and the description does not squeeze the labels of other items: [Checkbox description](https://k90325248.github.io/shuo-ui/components/choice/checkbox#description)
+
+```vue
+<ShuoCheckbox
+  v-model="subscribe"
+  label="Subscribe to the newsletter"
+  description="A weekly email; unsubscribe at any time"
+/>
+```
+
+## 🚀 New components
+
+- **Switch:** Switch that can run an action after toggling, updating the bound value only on success and reverting on failure or errors ([docs](https://k90325248.github.io/shuo-ui/components/choice/switch))
+
+## ⚠️ Upgrade notes
+
+### The description field of items is shown
+
+Radio and checkbox groups used to hide item descriptions, ignoring any `description` field in the item data. It is now shown below the item label and makes the item taller.
+
+If your items come straight from back-end data that happens to have a `description` field (for example remarks in a code table), the page will show it after upgrading. To hide it, remove the field before passing the items:
+
+```ts
+const options = computed(() => codes.value.map(({ description: _description, ...item }) => item));
+```
+
+## 📖 Docs site
+
+- **Releases:** A new Releases tab in the header shows the release notes of every version, the same as the GitHub Releases, in English on the English site.
+- **Localized changelogs:** The changelog at the end of each component page now shows English or Chinese text by docs language, without `feat:` or `fix:` prefixes.
+- **New pages:** A new [Switch](https://k90325248.github.io/shuo-ui/components/choice/switch) page; the Table, ListCard, Checkbox, RadioGroup and CheckboxGroup pages add usage and examples for selection and descriptions; the examples on the shared props page include the switch.
+
+## 📦 Installation
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.2.0
+pnpm add @iconify-json/lucide # recommended, icons are bundled
+```
+
+Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
+
+## 📋 Requirements
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Package
+    </th>
+    
+    <th>
+      Version
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.0)
 
 
 # Months

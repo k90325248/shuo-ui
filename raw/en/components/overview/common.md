@@ -19,7 +19,7 @@ Use the selects above to switch size and state, and every component below change
 
 ## Shared props
 
-The form input components (`ShuoInputText`, `ShuoInputNumber`, `ShuoSelectMenu`, `ShuoDatepicker`, `ShuoCheckbox`, `ShuoCheckboxGroup`, `ShuoRadioGroup`, `ShuoTextarea`, `ShuoFile`, `ShuoMonths`, `ShuoPhone`) all support the props below, which are not repeated on each component page:
+The form input components (`ShuoInputText`, `ShuoInputNumber`, `ShuoSelectMenu`, `ShuoDatepicker`, `ShuoCheckbox`, `ShuoCheckboxGroup`, `ShuoRadioGroup`, `ShuoSwitch`, `ShuoTextarea`, `ShuoFile`, `ShuoMonths`, `ShuoPhone`) all support the props below, which are not repeated on each component page:
 
 <field-group>
 <field name="size" type="'xs' | 'sm' | 'md' | 'lg' | 'xl'" default="lg">
@@ -381,14 +381,40 @@ Shuo components that wrap a Nuxt UI component inherit the props types of the und
       —
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <a href="https://k90325248.github.io/shuo-ui/components/choice/switch">
+        <code>
+          ShuoSwitch
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      <code>
+        USwitch
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      —
+    </td>
+  </tr>
 </tbody>
 </table>
 
 - Inherited props are only used for type inference; at runtime they are passed to the underlying component through `$attrs`.
 - Props the component handles itself are not inherited and do not show up in autocompletion, such as `modelValue`. Input-style components (`ShuoInputText`, `ShuoInputNumber`, `ShuoTextarea`, `ShuoFile`) show their own loading icon, always using Nuxt UI's `appConfig.ui.icons.loading`, so `loadingIcon` is excluded as well and has no effect. `ShuoSelectMenu` lets `USelectMenu` show the loading icon, so `loadingIcon` works as usual.
 - Events are forwarded to the underlying component through `$attrs` as usual, with types taken from the underlying component's emits; for example, the argument of `@blur` is a `FocusEvent`.
-- Checkboxes and groups do not support descriptions (`description`, `descriptionKey`): a description makes the options taller and breaks the height alignment with inputs.
-- Checkboxes and groups also do not support Nuxt UI's `variant` (card, table), `indicator` or `highlight`: the border and padding of card and table make options taller; `indicator` moves the checkbox, while the loading spinner stays where the left checkbox is; `highlight` only changes the border color of card and table. Passing them is a type error and they are not applied at runtime.
+- Checkboxes, switches and groups support descriptions (`description`; for groups, the item's `description` field or the field set by `descriptionKey`): without a description the height matches an input of the same size; with one, the item grows and the description wraps, while its first line still lines up with fields without a description. The label stays on one line and is truncated with a tooltip showing the full text.
+- Checkboxes and groups do not support Nuxt UI's `variant` (card, table), `indicator` or `highlight`: the border and padding of card and table make options taller; `indicator` moves the checkbox, while the loading spinner stays where the left checkbox is; `highlight` only changes the border color of card and table. Passing them is a type error and they are not applied at runtime.
 
 ### Slots
 

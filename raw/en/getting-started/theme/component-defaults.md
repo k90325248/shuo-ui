@@ -393,6 +393,34 @@ Only the props in the table below can be set site-wide. State props such as `dis
   <tr>
     <td>
       <code>
+        switch
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+       (<code>
+        lg
+      </code>
+      
+      ), <code>
+        color
+      </code>
+      
+      , <code>
+        loadingIcon
+      </code>
+      
+       (Nuxt UI defaults when not set)
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
         radioGroup
       </code>
     </td>
@@ -570,6 +598,32 @@ Only the props in the table below can be set site-wide. State props such as `dis
       
       's default), <code>
         ui
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        table
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        selectAll
+      </code>
+      
+       (<code>
+        true
+      </code>
+      
+      ), <code>
+        checkboxProps
+      </code>
+      
+       (selection checkbox appearance; UCheckbox defaults when not set), also apply to the table inside <code>
+        ShuoListCard
       </code>
     </td>
   </tr>

@@ -58,6 +58,16 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
 - `#item-append` 的 `item` 是轉換後的物件，同時取得原始欄位（`item.Code`、`item.Name`）與 `item.label`、`item.value`。
 - 開發模式下，第一個物件選項缺少 `labelKey` 或 `valueKey` 指定的欄位時，主控台會警告一次（含元件與欄位名稱）；正式環境不檢查。`ShuoSelectMenu` 也有相同檢查。
 
+### 選項說明
+
+選項的 `description` 欄位（或以 `description-key` 指定的欄位）顯示在選項文字下方。沒有說明的選項高度對齊同尺寸的輸入框；有說明的選項往下撐高，說明文字換行。水平排列時整列一起撐高，所有選項的第一行文字互相對齊，說明不會擠壓其他選項的文字。
+
+<component-example name="radio-group-description">
+
+
+
+</component-example>
+
 ### 顏色
 
 沿用 `URadioGroup` 的 `color`，改變選取時的顏色。
@@ -251,6 +261,28 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
   
   <tr>
     <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      選項說明，顯示在文字下方並換行；欄位名稱可由 <code>
+        descriptionKey
+      </code>
+      
+       指定
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
       其他欄位
     </td>
     
@@ -272,12 +304,6 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
   </tr>
 </tbody>
 </table>
-
-<warning>
-
-不支援 `description`：說明會撐高選項，破壞與輸入框對齊的高度，型別會報錯，執行時也不顯示。
-
-</warning>
 
 ## Slots
 

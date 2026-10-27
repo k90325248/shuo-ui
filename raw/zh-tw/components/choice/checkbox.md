@@ -36,6 +36,16 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/chec
 
 文字單行顯示，超過容器寬度時截斷，滑過或聚焦時以 Tooltip 顯示完整文字，觸控裝置長按顯示（見 [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#%E8%A7%B8%E6%8E%A7%E9%95%B7%E6%8C%89)）；長按顯示提示時不會改變勾選。
 
+### 說明文字
+
+`description` 顯示在文字下方。沒有說明時外框高度對齊同尺寸的輸入框；有說明時往下撐高，說明文字換行，第一行文字仍與旁邊沒有說明的欄位對齊。
+
+<component-example name="checkbox-description">
+
+
+
+</component-example>
+
 ### 顏色與圖示
 
 沿用 `UCheckbox` 的 `color` 與 `icon`（勾選時的圖示）。

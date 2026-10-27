@@ -271,6 +271,36 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => {
   
   <tr>
     <td>
+      <a href="https://k90325248.github.io/shuo-ui/components/choice/switch">
+        <code>
+          ShuoSwitch
+        </code>
+      </a>
+    </td>
+    
+    <td>
+      開關，切換後可先執行處理函式
+    </td>
+    
+    <td>
+      <code>
+        boolean
+      </code>
+      
+      （可設定 <code>
+        trueValue
+      </code>
+      
+      ／<code>
+        falseValue
+      </code>
+      
+      ）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
       <a href="https://k90325248.github.io/shuo-ui/components/phone-file/file">
         <code>
           ShuoFile

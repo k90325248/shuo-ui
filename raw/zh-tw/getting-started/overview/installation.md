@@ -64,15 +64,15 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/getting-started/overvi
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v1.1.0
+pnpm add github:k90325248/shuo-ui#v1.2.0
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v1.1.0
+npm install github:k90325248/shuo-ui#v1.2.0
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v1.1.0
+yarn add github:k90325248/shuo-ui#v1.2.0
 ```
 
 </code-group>

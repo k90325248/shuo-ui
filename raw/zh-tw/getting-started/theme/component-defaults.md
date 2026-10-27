@@ -393,6 +393,34 @@ export default defineNuxtConfig({
   <tr>
     <td>
       <code>
+        switch
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        size
+      </code>
+      
+      （<code>
+        lg
+      </code>
+      
+      ）、<code>
+        color
+      </code>
+      
+      、<code>
+        loadingIcon
+      </code>
+      
+      （未設定時沿用 Nuxt UI）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
         radioGroup
       </code>
     </td>
@@ -571,6 +599,34 @@ export default defineNuxtConfig({
       ）、<code>
         ui
       </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        table
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        selectAll
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        checkboxProps
+      </code>
+      
+      （勾選欄核取方塊的外觀，未設定時沿用 UCheckbox），也套用到 <code>
+        ShuoListCard
+      </code>
+      
+       內的表格
     </td>
   </tr>
   

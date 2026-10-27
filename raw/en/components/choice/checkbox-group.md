@@ -58,6 +58,16 @@ When the back-end item fields are not `label` and `value` (for example `{ Code, 
 - The `item` of `#item-append` is the converted object, with both the original fields (`item.Code`, `item.Name`) and `item.label`, `item.value`.
 - In development mode, when the first object item lacks the field set by `labelKey` or `valueKey`, the console warns once (with the component and field names); production does not check. `ShuoSelectMenu` has the same check.
 
+### Item descriptions
+
+An item's `description` field (or the field set by `description-key`) shows below its label. Items without a description match the height of an input of the same size; items with one grow and wrap the description. In horizontal layout the whole row grows, the first lines of all items stay aligned, and the description does not squeeze the labels of other items.
+
+<component-example name="checkbox-group-description">
+
+
+
+</component-example>
+
 ### Color and icon
 
 Uses the `color` and `icon` of `UCheckboxGroup`: `color` changes the checked color, and `icon` is the icon shown when checked; a single item can also set its own with the item's `icon` field.
@@ -265,6 +275,26 @@ Items (`CheckboxGroupOption`) use Nuxt UI's item fields, with `value` limited to
   
   <tr>
     <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        string
+      </code>
+    </td>
+    
+    <td>
+      Item description, shown below the label and wrapped; the field name can be set with <code>
+        descriptionKey
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
       Other fields
     </td>
     
@@ -284,12 +314,6 @@ Items (`CheckboxGroupOption`) use Nuxt UI's item fields, with `value` limited to
   </tr>
 </tbody>
 </table>
-
-<warning>
-
-`description` is not supported: a description makes the items taller and breaks the height alignment with inputs. It is a type error and is not shown at runtime.
-
-</warning>
 
 ## Slots
 

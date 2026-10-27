@@ -378,7 +378,19 @@ An added locale does not change the language of the date picker calendar; month 
         ShuoTable
       </code>
       
-      )
+      ), <code>
+        selectAll
+      </code>
+      
+      , <code>
+        selectRow
+      </code>
+      
+       (accessible names of the select-all and row checkboxes), <code>
+        selectionHeader
+      </code>
+      
+       (the selection column header when select all is off, empty by default)
     </td>
   </tr>
   
