@@ -9,6 +9,8 @@
 - [Sitemap (Markdown): every page on the site](https://k90325248.github.io/shuo-ui/sitemap.md)
 - [llms.txt: index of the documentation for LLMs](https://k90325248.github.io/shuo-ui/llms.txt)
 - [llms-full.txt: the full documentation as a single file](https://k90325248.github.io/shuo-ui/llms-full.txt)
+- [Agent skills index: every skill published by this site](https://k90325248.github.io/shuo-ui/.well-known/skills/index.json)
+- [Agent skill: shuo-ui](https://k90325248.github.io/shuo-ui/.well-known/skills/shuo-ui/SKILL.md)
 - [OpenAPI document: every route this site serves to agents](https://k90325248.github.io/shuo-ui/openapi.json)
 
 Every page on this site is available as raw markdown: append `.md` to its
@@ -274,6 +276,8 @@ ShuoInfoTooltip、ShuoTooltip
 - [Sitemap (Markdown): every page on the site](https://k90325248.github.io/shuo-ui/sitemap.md)
 - [llms.txt: index of the documentation for LLMs](https://k90325248.github.io/shuo-ui/llms.txt)
 - [llms-full.txt: the full documentation as a single file](https://k90325248.github.io/shuo-ui/llms-full.txt)
+- [Agent skills index: every skill published by this site](https://k90325248.github.io/shuo-ui/.well-known/skills/index.json)
+- [Agent skill: shuo-ui](https://k90325248.github.io/shuo-ui/.well-known/skills/shuo-ui/SKILL.md)
 - [OpenAPI document: every route this site serves to agents](https://k90325248.github.io/shuo-ui/openapi.json)
 
 
@@ -7353,6 +7357,190 @@ import type { ShuoComponentDefaults } from '#shuo-ui/types/component-defaults';
 - 圖示使用 Iconify（`i-lucide-*`）。元件庫用到的圖示，以及 `shuoUi.components` 設定的圖示，會由模組自動加入 `@nuxt/icon` 的 client bundle；只在頁面以 prop 傳入的其他圖示需自行加入 `icon.clientBundle.icons` 或維持執行期圖示 API。若專案停用執行期圖示 API（`icon.provider: 'none'`），請安裝 `@iconify-json/lucide` 讓圖示能在建置時打包。
 
 
+# LLMs.txt
+
+> 讓 Cursor、Windsurf、GitHub Copilot、ChatGPT、Claude 等 AI 工具理解 Shuo UI 的元件、設定與寫法。
+
+## 什麼是 LLMs.txt？
+
+LLMs.txt 是專為大型語言模型（LLM）設計的文件格式。Shuo UI 的文件網站提供 LLMs.txt 檔案，整理元件庫的元件、props、工具函式與使用方式，讓 AI 工具能據此協助開發。
+
+## 可用的路徑
+
+- **/llms.txt**：所有頁面的索引，每頁附上標題、說明與 markdown 連結（約 4K tokens）
+- **/llms-full.txt**：完整文件合併成單一檔案，包含元件範例、props、工具函式與版本紀錄（超過 10 萬 tokens）
+
+兩個檔案都同時收錄繁體中文與英文的頁面。
+
+## 選擇合適的檔案
+
+<note>
+
+**大多數情況請先用 /llms.txt**，它包含所有頁面的連結，一般的 context window 就放得下，AI 工具可以再依需要讀取個別頁面。只有在需要完整範例、且 AI 工具支援大型 context（200K tokens 以上）時才使用 `/llms-full.txt`。
+
+</note>
+
+## 單一頁面的 markdown 版本
+
+每個頁面都有 markdown 版本，在網址後面加上 `.md` 即可，例如：
+
+- [`/zh-tw/getting-started/overview/installation.md`](https://k90325248.github.io/shuo-ui/zh-tw/getting-started/overview/installation.md)
+- [`/en/components/text/input-text.md`](https://k90325248.github.io/shuo-ui/en/components/text/input-text.md)
+
+只需要某個元件的說明時，直接提供該頁的 markdown 比整份文件更省 tokens。
+
+## 使用注意事項
+
+<warning>
+
+**@ 符號必須手動輸入**：在 Cursor 或 Windsurf 的對話框中，`@` 符號要親手輸入，貼上的 `@` 不會被辨識為 context 引用。
+
+</warning>
+
+## 搭配 AI 工具使用
+
+### Cursor
+
+在 Cursor 中引用 LLMs.txt，讓 AI 更準確地協助撰寫 Shuo UI 表單。
+
+#### 使用方式
+
+1. **直接引用**：提問時附上 LLMs.txt 的網址
+2. 使用 `@docs` 將網址加入專案的 context
+
+[進一步了解 Cursor 的提示與 `@` 引用](https://cursor.com/docs/agent/prompting)
+
+### Windsurf
+
+Windsurf 可以直接讀取 Shuo UI 的 LLMs.txt，了解元件用法與慣例。
+
+#### 在 Windsurf 中使用
+
+- 使用 `@docs` 引用 LLMs.txt 的網址
+- 在 workspace 建立固定規則，引用這些網址
+
+[進一步了解 Windsurf 的網頁與文件搜尋](https://docs.windsurf.com/windsurf/cascade/web-search)
+
+### 其他 AI 工具
+
+任何支援 LLMs.txt 的 AI 工具都可以透過這些路徑理解 Shuo UI。
+
+#### ChatGPT、Claude 等 LLM 的提示範例
+
+- 「請參考 Shuo UI 文件：[https://k90325248.github.io/shuo-ui/llms.txt](https://k90325248.github.io/shuo-ui/llms.txt)」
+- 「請依照 Shuo UI 完整文件撰寫：[https://k90325248.github.io/shuo-ui/llms-full.txt](https://k90325248.github.io/shuo-ui/llms-full.txt)」
+
+## 網站地圖
+
+所有頁面的清單見[網站地圖](https://k90325248.github.io/shuo-ui/sitemap.md)。
+
+
+# Skills
+
+> 安裝 Shuo UI 的 skill，讓 AI coding agent 熟悉元件、表單驗證與全站設定的寫法。
+
+## 什麼是 Skills？
+
+Skills 是結構化的知識檔案，提供 AI coding agent 關於函式庫、框架或程式碼庫的 context。agent 會直接把 skill 載入 context，在整段對話中隨時參考。
+
+Shuo UI 提供一個**使用 skill**，教 AI agent 用 Shuo UI 撰寫表單與查詢頁面。
+
+## 使用方式
+
+使用 skill 讓 AI agent 完整了解如何以 Shuo UI 開發，涵蓋：
+
+- 安裝與 CSS 設定
+- 17 個元件的 v-model 型別、主要 props、slots 與常見陷阱
+- 搭配 `UForm`、`UFormField` 與 Valibot 的表單驗證，以及共用規則（`requiredText` 等）
+- 各元件的空值約定與初始 state 寫法
+- 查詢條件卡片搭配結果清單的伺服器端分頁寫法
+- `shuoUi` 模組選項：全站預設值、語系與文案、主題
+- 日期、數字、電話、月數的顯示工具函式
+
+skill 附有額外的 references，agent 依任務需要才讀取，回答更聚焦也更省 context。需要完整 props 表或更多範例時，skill 會引導 agent 讀取文件網站上對應頁面的 [markdown 版本](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt#%E5%96%AE%E4%B8%80%E9%A0%81%E9%9D%A2%E7%9A%84-markdown-%E7%89%88%E6%9C%AC)。
+
+<note>
+
+安裝後，在 agent 的對話框輸入 `/shuo-ui` 即可呼叫這個 skill。
+
+</note>
+
+### Skills CLI
+
+[`skills`](https://skills.sh) CLI 是安裝 Shuo UI skill 最簡單的方式，支援 Cursor、Claude Code、Codex、Windsurf、Cline 等多種 agent。
+
+```bash
+npx skills add k90325248/shuo-ui
+```
+
+用 `--agent` 指定 agent：
+
+```bash
+npx skills add k90325248/shuo-ui --agent cursor
+npx skills add k90325248/shuo-ui --agent claude-code
+```
+
+或安裝到全域，讓所有專案都能使用：
+
+```bash
+npx skills add k90325248/shuo-ui --global
+```
+
+如果從 GitHub clone 的速度較慢，也可以直接從文件網站安裝：
+
+```bash
+npx skills add https://k90325248.github.io/shuo-ui
+```
+
+<tip>
+
+前往 [skills.sh](https://skills.sh) 了解 skills 生態系並瀏覽其他 skill。
+
+</tip>
+
+### Cursor
+
+#### 快速安裝
+
+點擊下方按鈕，直接在 Cursor 安裝 Shuo UI skill：
+
+<u-button color="neutral" icon="i-simple-icons-cursor" label="安裝 Skill" to="cursor://anysphere.cursor-deeplink/install-skill?url=https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui" variant="outline">
+
+
+
+</u-button>
+
+#### 手動設定
+
+1. 開啟 Cursor，前往「Settings」>「Skills」
+2. 點擊「Add skill」並輸入以下網址：
+
+```text
+https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui
+```
+
+### Claude Code
+
+<note>
+
+**請先安裝 Claude Code。** 安裝方式見 [Anthropic 的文件](https://docs.anthropic.com/en/docs/claude-code/quickstart)。
+
+</note>
+
+使用 CLI 指令加入 skill：
+
+```bash
+claude skill add https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui
+```
+
+### 其他 AI 工具
+
+skill 檔案都公開在 GitHub 上，任何支援自訂 context 或指示的 AI 工具都可以直接引用：
+
+- **skill 主檔**：[`skills/shuo-ui/SKILL.md`](https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui/SKILL.md)
+- **完整 skill 目錄**：[`skills/shuo-ui/`](https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui)
+
+
 # 表單驗證
 
 > 以 UForm、UFormField 與 Valibot 驗證表單，搭配內建的共用規則。
@@ -7537,15 +7725,15 @@ const schema = v.object({
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v1.2.0
+pnpm add github:k90325248/shuo-ui#v1.2.1
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v1.2.0
+npm install github:k90325248/shuo-ui#v1.2.1
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v1.2.0
+yarn add github:k90325248/shuo-ui#v1.2.1
 ```
 
 </code-group>
@@ -10605,6 +10793,91 @@ pnpm add @iconify-json/lucide # 建議，圖示會直接打包
 - [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.0)
 
 
+# v1.2.1
+
+> 發佈於 2026年10月27日
+
+文件網站新增「Agents」分組，讓 Cursor、Claude Code 等 AI 工具也能正確使用 Shuo UI：提供 LLMs.txt，以及可直接安裝的 Shuo UI skill。元件沒有任何變更，從 1.2.0 升級不需要修改程式碼。
+
+## ✨ Highlights
+
+### 🤖 給 AI 工具的 Skill
+
+新的 `shuo-ui` skill 教 AI coding agent 用 Shuo UI 撰寫表單與查詢頁面：各元件的 v-model 型別與空值約定、搭配 `UForm` 與 Valibot 的驗證規則、查詢卡片搭配清單卡片的分頁寫法、`shuoUi` 全站設定等。安裝後在 agent 的對話框輸入 `/shuo-ui` 即可呼叫：[Skills](https://k90325248.github.io/shuo-ui/getting-started/agents/skills)
+
+```bash
+npx skills add k90325248/shuo-ui
+```
+
+- Cursor 可在文件頁按「安裝 Skill」一鍵安裝，Claude Code 使用 `claude skill add`，其他工具可直接引用 GitHub 上的 `skills/shuo-ui/SKILL.md`。
+- skill 檔案放在公開 repo 的 `skills/shuo-ui`，也發佈在文件網站的 `/.well-known/skills/`；套件本身不包含這些檔案，安裝的內容與 1.2.0 相同。
+
+### 📄 LLMs.txt
+
+文件網站提供 [`/llms.txt`](https://k90325248.github.io/shuo-ui/llms.txt)（所有頁面的索引）與 [`/llms-full.txt`](https://k90325248.github.io/shuo-ui/llms-full.txt)（完整文件），每個頁面也可在網址後加上 `.md` 取得 markdown 版本。在 ChatGPT、Claude 等工具中提供這些網址，AI 就能依照文件回答：[LLMs.txt](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt)
+
+## 📖 文件網站
+
+- **新頁面：** 「開始使用」新增 Agents 分組，包含 [LLMs.txt](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt) 與 [Skills](https://k90325248.github.io/shuo-ui/getting-started/agents/skills)。
+
+## 📦 安裝
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.2.1
+pnpm add @iconify-json/lucide # 建議，圖示會直接打包
+```
+
+在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
+
+## 📋 需求
+
+<table>
+<thead>
+  <tr>
+    <th>
+      套件
+    </th>
+    
+    <th>
+      版本
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.1)
+
+
 # Months
 
 > 總月數與年、月的拆分與合併。
@@ -11570,6 +11843,8 @@ Start with your first form
 - [Sitemap (Markdown): every page on the site](https://k90325248.github.io/shuo-ui/sitemap.md)
 - [llms.txt: index of the documentation for LLMs](https://k90325248.github.io/shuo-ui/llms.txt)
 - [llms-full.txt: the full documentation as a single file](https://k90325248.github.io/shuo-ui/llms-full.txt)
+- [Agent skills index: every skill published by this site](https://k90325248.github.io/shuo-ui/.well-known/skills/index.json)
+- [Agent skill: shuo-ui](https://k90325248.github.io/shuo-ui/.well-known/skills/shuo-ui/SKILL.md)
 - [OpenAPI document: every route this site serves to agents](https://k90325248.github.io/shuo-ui/openapi.json)
 
 
@@ -18661,6 +18936,190 @@ Component props types can also be imported from `#shuo-ui/types/components` (suc
 - Icons use Iconify (`i-lucide-*`). Icons used by the component library, and icons set in `shuoUi.components`, are added to the `@nuxt/icon` client bundle by the module automatically. Other icons passed as props in your pages must be added to `icon.clientBundle.icons` yourself, or keep the runtime icon API. If your project disables the runtime icon API (`icon.provider: 'none'`), install `@iconify-json/lucide` so the icons can be bundled at build time.
 
 
+# LLMs.txt
+
+> How to get AI tools like Cursor, Windsurf, GitHub Copilot, ChatGPT, and Claude to understand Shuo UI components, settings, and conventions.
+
+## What is LLMs.txt?
+
+LLMs.txt is a documentation format designed for large language models (LLMs). The Shuo UI docs site provides LLMs.txt files that cover the library's components, props, utilities, and usage, so AI tools can use them to help with development.
+
+## Available routes
+
+- **/llms.txt**: an index of every page, with its title, description, and markdown link (~4K tokens)
+- **/llms-full.txt**: the full documentation in a single file, including component examples, props, utilities, and release notes (100K+ tokens)
+
+Both files include the Traditional Chinese and English pages.
+
+## Choosing the right file
+
+<note>
+
+**Start with /llms.txt in most cases.** It links to every page and fits in a standard context window, and the AI tool can fetch individual pages as needed. Use `/llms-full.txt` only when you need the complete examples and your AI tool supports large contexts (200K+ tokens).
+
+</note>
+
+## Markdown version of a single page
+
+Every page has a markdown version: add `.md` to its URL, for example:
+
+- [`/zh-tw/getting-started/overview/installation.md`](https://k90325248.github.io/shuo-ui/zh-tw/getting-started/overview/installation.md)
+- [`/en/components/text/input-text.md`](https://k90325248.github.io/shuo-ui/en/components/text/input-text.md)
+
+When you only need one component, passing its page's markdown uses far fewer tokens than the whole documentation.
+
+## Important usage notes
+
+<warning>
+
+**The @ symbol must be typed manually.** In Cursor or Windsurf, type `@` by hand in the chat; a pasted `@` is not recognized as a context reference.
+
+</warning>
+
+## Usage with AI tools
+
+### Cursor
+
+Reference the LLMs.txt files in Cursor to get more accurate help writing Shuo UI forms.
+
+#### How to use
+
+1. **Direct reference**: include the LLMs.txt URLs when asking questions
+2. Add the URLs to your project context with `@docs`
+
+[Read more about prompting and `@` mentions in Cursor](https://cursor.com/docs/agent/prompting)
+
+### Windsurf
+
+Windsurf can read the Shuo UI LLMs.txt files directly to learn component usage and conventions.
+
+#### Using LLMs.txt with Windsurf
+
+- Use `@docs` to reference the LLMs.txt URLs
+- Create persistent rules in your workspace that reference these URLs
+
+[Read more about Windsurf web and docs search](https://docs.windsurf.com/windsurf/cascade/web-search)
+
+### Other AI tools
+
+Any AI tool that supports LLMs.txt can use these routes to understand Shuo UI.
+
+#### Prompt examples for ChatGPT, Claude, or other LLMs
+
+- "Using the Shuo UI documentation from [https://k90325248.github.io/shuo-ui/llms.txt](https://k90325248.github.io/shuo-ui/llms.txt)"
+- "Follow the complete Shuo UI documentation from [https://k90325248.github.io/shuo-ui/llms-full.txt](https://k90325248.github.io/shuo-ui/llms-full.txt)"
+
+## Sitemap
+
+See the [sitemap](https://k90325248.github.io/shuo-ui/sitemap.md) for every page.
+
+
+# Skills
+
+> Install the Shuo UI skill to give AI coding agents knowledge of the components, form validation and site-wide settings.
+
+## What are Skills?
+
+Skills are structured knowledge files that give AI coding agents context about a library, framework, or codebase. The agent loads a skill directly into its context and can refer to it throughout the conversation.
+
+Shuo UI provides a **usage skill** that teaches AI agents to build forms and query pages with Shuo UI.
+
+## Usage
+
+The usage skill gives AI agents comprehensive knowledge about building with Shuo UI. It covers:
+
+- Installation and CSS setup
+- The v-model types, main props, slots and common pitfalls of all 17 components
+- Form validation with `UForm`, `UFormField` and Valibot, and the shared rules (`requiredText` and others)
+- The empty-value contract of each component and how to initialize state
+- The query card with a result list and server-side pagination
+- The `shuoUi` module options: site-wide defaults, locales and messages, theming
+- Display utilities for dates, numbers, phones and months
+
+The skill includes additional references that the AI agent loads on demand based on the task, keeping responses focused and context-efficient. When it needs a full props table or more examples, the skill points the agent to the [markdown version](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt#markdown-version-of-a-single-page) of the matching docs page.
+
+<note>
+
+Once installed, you can invoke the skill by typing `/shuo-ui` in your agent's chat.
+
+</note>
+
+### Skills CLI
+
+The [`skills`](https://skills.sh) CLI is the easiest way to install the Shuo UI skill. It supports many agents, including Cursor, Claude Code, Codex, Windsurf and Cline.
+
+```bash
+npx skills add k90325248/shuo-ui
+```
+
+Target specific agents with the `--agent` flag:
+
+```bash
+npx skills add k90325248/shuo-ui --agent cursor
+npx skills add k90325248/shuo-ui --agent claude-code
+```
+
+Or install globally so the skill is available across all your projects:
+
+```bash
+npx skills add k90325248/shuo-ui --global
+```
+
+If cloning from GitHub is slow on your network, you can install directly from the docs site instead:
+
+```bash
+npx skills add https://k90325248.github.io/shuo-ui
+```
+
+<tip>
+
+Visit [skills.sh](https://skills.sh) to learn more about the skills ecosystem and browse other skills.
+
+</tip>
+
+### Cursor
+
+#### Quick install
+
+Click the button below to install the Shuo UI skill directly in Cursor:
+
+<u-button color="neutral" icon="i-simple-icons-cursor" label="Install Skill" to="cursor://anysphere.cursor-deeplink/install-skill?url=https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui" variant="outline">
+
+
+
+</u-button>
+
+#### Manual setup
+
+1. Open Cursor and go to "Settings" > "Skills"
+2. Click "Add skill" and enter the following URL:
+
+```text
+https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui
+```
+
+### Claude Code
+
+<note>
+
+**Make sure Claude Code is installed.** See [Anthropic's documentation](https://docs.anthropic.com/en/docs/claude-code/quickstart) for installation instructions.
+
+</note>
+
+Add the skill using the CLI command:
+
+```bash
+claude skill add https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui
+```
+
+### Other AI tools
+
+The skill files are publicly available on GitHub. You can reference them directly in any AI tool that supports custom context or instructions:
+
+- **Skill entry point**: [`skills/shuo-ui/SKILL.md`](https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui/SKILL.md)
+- **Full skill directory**: [`skills/shuo-ui/`](https://github.com/k90325248/shuo-ui/tree/main/skills/shuo-ui)
+
+
 # Validation
 
 > Validate forms with UForm, UFormField and Valibot, using the built-in shared rules.
@@ -18845,15 +19304,15 @@ Pin a version with a tag, and change it to the new tag when upgrading. See [GitH
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v1.2.0
+pnpm add github:k90325248/shuo-ui#v1.2.1
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v1.2.0
+npm install github:k90325248/shuo-ui#v1.2.1
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v1.2.0
+yarn add github:k90325248/shuo-ui#v1.2.1
 ```
 
 </code-group>
@@ -21915,6 +22374,91 @@ Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your 
 ---
 
 - [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.0)
+
+
+# v1.2.1
+
+> Released on October 27, 2026
+
+The docs site adds an "Agents" group so AI tools such as Cursor and Claude Code can use Shuo UI correctly: LLMs.txt, and a Shuo UI skill you can install directly. No components changed; upgrading from 1.2.0 needs no code changes.
+
+## ✨ Highlights
+
+### 🤖 A skill for AI tools
+
+The new `shuo-ui` skill teaches AI coding agents to build forms and query pages with Shuo UI: the v-model types and empty values of each component, validation with `UForm` and Valibot, the query card with a paginated list card, the `shuoUi` site-wide settings and more. Once installed, type `/shuo-ui` in your agent's chat to invoke it: [Skills](https://k90325248.github.io/shuo-ui/getting-started/agents/skills)
+
+```bash
+npx skills add k90325248/shuo-ui
+```
+
+- Cursor can install it with one click from the "Install Skill" button on the docs page, Claude Code uses `claude skill add`, and other tools can reference `skills/shuo-ui/SKILL.md` on GitHub directly.
+- The skill files live in `skills/shuo-ui` of the public repo and are also published at `/.well-known/skills/` on the docs site. The package does not include them, so what you install is the same as 1.2.0.
+
+### 📄 LLMs.txt
+
+The docs site provides [`/llms.txt`](https://k90325248.github.io/shuo-ui/llms.txt) (an index of every page) and [`/llms-full.txt`](https://k90325248.github.io/shuo-ui/llms-full.txt) (the full documentation), and every page has a markdown version: add `.md` to its URL. Give these URLs to tools such as ChatGPT or Claude so they answer from the docs: [LLMs.txt](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt)
+
+## 📖 Docs site
+
+- **New pages:** Getting started has a new Agents group with [LLMs.txt](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt) and [Skills](https://k90325248.github.io/shuo-ui/getting-started/agents/skills).
+
+## 📦 Installation
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.2.1
+pnpm add @iconify-json/lucide # recommended, icons are bundled
+```
+
+Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
+
+## 📋 Requirements
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Package
+    </th>
+    
+    <th>
+      Version
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.1)
 
 
 # Months

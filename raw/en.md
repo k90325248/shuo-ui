@@ -260,6 +260,8 @@ Start with your first form
 - [Sitemap (Markdown): every page on the site](https://k90325248.github.io/shuo-ui/sitemap.md)
 - [llms.txt: index of the documentation for LLMs](https://k90325248.github.io/shuo-ui/llms.txt)
 - [llms-full.txt: the full documentation as a single file](https://k90325248.github.io/shuo-ui/llms-full.txt)
+- [Agent skills index: every skill published by this site](https://k90325248.github.io/shuo-ui/.well-known/skills/index.json)
+- [Agent skill: shuo-ui](https://k90325248.github.io/shuo-ui/.well-known/skills/shuo-ui/SKILL.md)
 - [OpenAPI document: every route this site serves to agents](https://k90325248.github.io/shuo-ui/openapi.json)
 
 

@@ -37,6 +37,8 @@ Every page below is available as raw markdown.
 - [InputText](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/text/input-text.md): 單行文字輸入，可遮蔽全部或最後幾碼。
 - [Textarea](https://k90325248.github.io/shuo-ui/raw/zh-tw/components/text/textarea.md): 多行文字輸入，保留換行，可自動調整高度。
 - [自動匯入與型別](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/advanced/auto-imports.md): 自動匯入的元件與工具函式、型別別名，以及與 Nuxt UI 搭配的注意事項。
+- [LLMs.txt](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/agents/llms-txt.md): 讓 Cursor、Windsurf、GitHub Copilot、ChatGPT、Claude 等 AI 工具理解 Shuo UI 的元件、設定與寫法。
+- [Skills](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/agents/skills.md): 安裝 Shuo UI 的 skill，讓 AI coding agent 熟悉元件、表單驗證與全站設定的寫法。
 - [表單驗證](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/form/validation.md): 以 UForm、UFormField 與 Valibot 驗證表單，搭配內建的共用規則。
 - [安裝](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/overview/installation.md): 在 Nuxt 專案中安裝並啟用 Shuo UI。
 - [簡介](https://k90325248.github.io/shuo-ui/raw/zh-tw/getting-started/overview/introduction.md): Shuo UI 是什麼、適合用在哪裡。
@@ -48,6 +50,7 @@ Every page below is available as raw markdown.
 - [v1.0.1](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-0-1.md): 發佈於 2026年10月25日
 - [v1.1.0](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-1-0.md): 發佈於 2026年10月26日
 - [v1.2.0](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-2-0.md): 發佈於 2026年10月27日
+- [v1.2.1](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-2-1.md): 發佈於 2026年10月27日
 - [Months](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/field/months.md): 總月數與年、月的拆分與合併。
 - [Phone](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/field/phone.md): 市話號碼的區碼拆分與合併。
 - [Validation](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/form/validation.md): 搭配 Valibot 的共用驗證規則，錯誤訊息格式全站一致。
@@ -84,6 +87,8 @@ Every page below is available as raw markdown.
 - [InputText](https://k90325248.github.io/shuo-ui/raw/en/components/text/input-text.md): Single-line text input that can mask all or the last few characters.
 - [Textarea](https://k90325248.github.io/shuo-ui/raw/en/components/text/textarea.md): Multi-line text input that keeps line breaks and can resize automatically.
 - [Auto-imports and types](https://k90325248.github.io/shuo-ui/raw/en/getting-started/advanced/auto-imports.md): Auto-imported components and utilities, type aliases, and notes on using them with Nuxt UI.
+- [LLMs.txt](https://k90325248.github.io/shuo-ui/raw/en/getting-started/agents/llms-txt.md): How to get AI tools like Cursor, Windsurf, GitHub Copilot, ChatGPT, and Claude to understand Shuo UI components, settings, and conventions.
+- [Skills](https://k90325248.github.io/shuo-ui/raw/en/getting-started/agents/skills.md): Install the Shuo UI skill to give AI coding agents knowledge of the components, form validation and site-wide settings.
 - [Validation](https://k90325248.github.io/shuo-ui/raw/en/getting-started/form/validation.md): Validate forms with UForm, UFormField and Valibot, using the built-in shared rules.
 - [Installation](https://k90325248.github.io/shuo-ui/raw/en/getting-started/overview/installation.md): Install and enable Shuo UI in a Nuxt project.
 - [Introduction](https://k90325248.github.io/shuo-ui/raw/en/getting-started/overview/introduction.md): What Shuo UI is and where it fits.
@@ -95,6 +100,7 @@ Every page below is available as raw markdown.
 - [v1.0.1](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-0-1.md): Released on October 25, 2026
 - [v1.1.0](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-1-0.md): Released on October 26, 2026
 - [v1.2.0](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-2-0.md): Released on October 27, 2026
+- [v1.2.1](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-2-1.md): Released on October 27, 2026
 - [Months](https://k90325248.github.io/shuo-ui/raw/en/utils/field/months.md): Splitting total months into years and months, and combining them back.
 - [Phone](https://k90325248.github.io/shuo-ui/raw/en/utils/field/phone.md): Splitting and joining the area code of landline numbers.
 - [Validation](https://k90325248.github.io/shuo-ui/raw/en/utils/form/validation.md): Shared validation rules for Valibot, with consistent error messages across the site.
