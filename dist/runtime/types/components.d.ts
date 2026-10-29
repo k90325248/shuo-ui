@@ -564,6 +564,10 @@ export interface ShuoTableProps<T extends TableData = TableData> extends TableSe
     empty?: string;
     /** 是否在高度變化與重新查詢淡化時播放過渡，預設開啟 */
     transition?: boolean;
+    /** 初次載入骨架的列數，預設為 3 */
+    skeletonRows?: number;
+    /** 每條骨架的 class，用來設定高度等樣式，預設為 `h-6`（24px） */
+    skeletonClass?: string;
     /** 額外 Table 設定 */
     tableProps?: Partial<TableProps<T>>;
 }
@@ -705,6 +709,10 @@ export interface ListCardProps<T extends TableData = TableData> extends TableSel
     showPagination?: boolean;
     /** 是否顯示筆數與範圍 */
     showSummary?: boolean;
+    /** 初次載入骨架的列數，未設定時沿用表格的全站設定，內建為 3 */
+    skeletonRows?: number;
+    /** 每條骨架的 class，用來設定高度等樣式，未設定時沿用表格的全站設定，內建為 `h-6`（24px） */
+    skeletonClass?: string;
     /** 額外 Table 設定 */
     tableProps?: Partial<TableProps<T>>;
     /** 樣式覆寫，與內建樣式合併，同一 slot 衝突時以傳入值優先；可用函式取得預設值後自行取代 */

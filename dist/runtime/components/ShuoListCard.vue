@@ -32,6 +32,8 @@
       :loading="loading"
       :empty="empty"
       :transition="resolved.transition"
+      :skeleton-rows="skeletonRows"
+      :skeleton-class="skeletonClass"
       :table-props="tableProps"
       :selectable="selectable"
       :select-all="selectAll"
@@ -97,6 +99,8 @@ const props = defineProps({
   pageSize: { type: Number, required: false, default: BUILT_IN_DEFAULTS.listCard.pageSize },
   showPagination: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.listCard.showPagination },
   showSummary: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.listCard.showSummary },
+  skeletonRows: { type: Number, required: false, default: void 0 },
+  skeletonClass: { type: String, required: false, default: void 0 },
   tableProps: { type: Object, required: false, default: void 0 },
   ui: { type: Object, required: false, default: void 0 },
   selectable: { type: Boolean, required: false, default: false },

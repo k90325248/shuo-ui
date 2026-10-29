@@ -83,6 +83,8 @@ export declare const BUILT_IN_DEFAULTS: {
     table: {
         selectAll: true;
         checkboxProps: undefined;
+        skeletonRows: number;
+        skeletonClass: string;
     };
     listCard: {
         icon: string;

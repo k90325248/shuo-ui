@@ -14,7 +14,7 @@ export declare const COMPONENT_DEFAULT_KEYS: {
     readonly checkboxGroup: readonly ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"];
     readonly datepicker: readonly ["size", "clearable", "calendarIcon", "clearIcon", "roc", "separator", "yearRange"];
     readonly queryCard: readonly ["icon", "expandIcon", "collapseIcon", "validateOn", "ui"];
-    readonly table: readonly ["selectAll", "checkboxProps"];
+    readonly table: readonly ["selectAll", "checkboxProps", "skeletonRows", "skeletonClass"];
     readonly listCard: readonly ["icon", "pageSize", "showPagination", "showSummary", "transition", "ui"];
     readonly infoTooltip: readonly ["icon"];
     readonly tooltip: readonly ["touch"];

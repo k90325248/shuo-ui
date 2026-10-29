@@ -12,7 +12,7 @@ export const COMPONENT_DEFAULT_KEYS = {
   checkboxGroup: ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"],
   datepicker: ["size", "clearable", "calendarIcon", "clearIcon", "roc", "separator", "yearRange"],
   queryCard: ["icon", "expandIcon", "collapseIcon", "validateOn", "ui"],
-  table: ["selectAll", "checkboxProps"],
+  table: ["selectAll", "checkboxProps", "skeletonRows", "skeletonClass"],
   listCard: ["icon", "pageSize", "showPagination", "showSummary", "transition", "ui"],
   infoTooltip: ["icon"],
   tooltip: ["touch"]

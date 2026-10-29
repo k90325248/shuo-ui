@@ -50,12 +50,12 @@
             />
           </template>
 
-          <!-- 初次載入：依欄位數顯示 3 列骨架，每條高 24px -->
+          <!-- 初次載入：依欄位數顯示骨架，列數與每條骨架的 class 可由 prop 或全站設定調整（內建 3 列、高 24px） -->
           <template #body-top>
             <template v-if="initialLoading">
-              <tr v-for="row in 3" :key="row" aria-hidden="true">
+              <tr v-for="row in skeletonRowCount" :key="row" aria-hidden="true">
                 <td v-for="column in skeletonColumns" :key="column" class="px-4 py-2">
-                  <USkeleton class="h-6 w-full min-w-16" />
+                  <USkeleton :class="['w-full min-w-16', resolved.skeletonClass]" />
                 </td>
               </tr>
             </template>
@@ -94,6 +94,8 @@ const props = defineProps({
   loading: { type: Boolean, required: false, default: false },
   empty: { type: String, required: false },
   transition: { type: Boolean, required: false, default: true },
+  skeletonRows: { type: Number, required: false, default: BUILT_IN_DEFAULTS.table.skeletonRows },
+  skeletonClass: { type: String, required: false, default: BUILT_IN_DEFAULTS.table.skeletonClass },
   tableProps: { type: Object, required: false, default: void 0 },
   selectable: { type: Boolean, required: false, default: false },
   selectAll: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.table.selectAll },
@@ -160,6 +162,7 @@ const forwardedTableProps = computed(() => ({
   }
 }));
 const skeletonColumns = computed(() => countColumns(tableColumns.value));
+const skeletonRowCount = computed(() => Math.max(1, Math.floor(resolved.skeletonRows) || 1));
 const tableUi = computed(() => {
   const ui = props.tableProps?.ui;
   const body = ["common-table-body", props.transition ? void 0 : "common-table-body--instant"];

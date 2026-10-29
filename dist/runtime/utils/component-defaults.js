@@ -42,7 +42,7 @@ export const BUILT_IN_DEFAULTS = {
     validateOn: void 0,
     ui: void 0
   },
-  table: { selectAll: true, checkboxProps: void 0 },
+  table: { selectAll: true, checkboxProps: void 0, skeletonRows: 3, skeletonClass: "h-6" },
   listCard: {
     icon: "i-lucide-list",
     pageSize: 10,

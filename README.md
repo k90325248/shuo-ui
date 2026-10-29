@@ -19,14 +19,14 @@
 ## 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v1.2.1
+pnpm add github:k90325248/shuo-ui#v1.3.0
 ```
 
 指定 tag 以固定版本；升級時改成新的 tag 即可，升級前請先看[更新說明](https://github.com/k90325248/shuo-ui/releases)。其他套件管理工具：
 
 ```bash
-npm install github:k90325248/shuo-ui#v1.2.1
-yarn add github:k90325248/shuo-ui#v1.2.1
+npm install github:k90325248/shuo-ui#v1.3.0
+yarn add github:k90325248/shuo-ui#v1.3.0
 ```
 
 建議一併安裝 lucide 圖示集（`pnpm add @iconify-json/lucide`），元件內建的圖示會打包進網站；沒有安裝時圖示改由 `@nuxt/icon` 在執行時載入。
