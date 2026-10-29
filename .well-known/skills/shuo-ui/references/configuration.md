@@ -38,7 +38,7 @@ Precedence: prop written on the component (any value, even `false` or `null`) > 
 | `checkboxGroup` | Same as `radioGroup`                                                                                                        |
 | `datepicker`    | `size`, `clearable` (`false`), `calendarIcon`, `clearIcon`, `roc` (`true`), `separator` (`/`), `yearRange` (`[1900, 2100]`) |
 | `queryCard`     | `icon`, `expandIcon`, `collapseIcon`, `validateOn`, `ui`                                                                    |
-| `table`         | `selectAll` (`true`), `checkboxProps` (also applies inside `ShuoListCard`)                                                  |
+| `table`         | `selectAll` (`true`), `checkboxProps`, `skeletonRows` (`3`), `skeletonClass` (`h-6`) (also apply inside `ShuoListCard`)     |
 | `listCard`      | `icon`, `pageSize` (`10`), `showPagination` (`true`), `showSummary` (`true`), `transition` (`true`), `ui`                   |
 | `infoTooltip`   | `icon`                                                                                                                      |
 | `tooltip`       | `touch` (`true`; also affects tooltips inside the library)                                                                  |

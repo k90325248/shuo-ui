@@ -35,6 +35,12 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/layout/tabl
 
 骨架欄數以葉節點欄位計算，並排除 `tableProps.state.columnVisibility` 隱藏的欄位。
 
+列數由 `skeleton-rows` 設定（預設 `3`，至少 1 列）；每條骨架的高度等樣式由 `skeleton-class` 設定（預設 `h-6`，即 24px），傳入時整個取代預設值。兩者都可在[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)以 `components.table.skeletonRows`、`components.table.skeletonClass` 統一設定，也套用到 `ShuoListCard`。
+
+```vue
+<ShuoTable :data="rows" :columns="columns" :loading="loading" :skeleton-rows="5" skeleton-class="h-8" />
+```
+
 ### 過渡
 
 資料筆數或內容高度改變時，資料區高度以 0.2 秒平滑變化；重新查詢且已有資料時，資料淡化為 0.5。`transition` 設為 `false` 時高度直接跟著內容，淡化不播放過渡。使用者偏好減少動態效果時一律不播放。

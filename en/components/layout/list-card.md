@@ -48,7 +48,7 @@ The `PageRequest` type can be imported from `#shuo-ui/types/pagination`; see [Au
 
 ### Loading and empty data
 
-When the component is created while loading with no data, skeleton rows are shown; when re-querying with existing data, the data fades and switches with a height transition. `empty` is the empty-data text, using the table default when not set; with `transition` set to `false`, no transition plays. The behavior is the same as [ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#loading-and-empty-data).
+When the component is created while loading with no data, skeleton rows are shown; when re-querying with existing data, the data fades and switches with a height transition. `empty` is the empty-data text, using the table default when not set; with `transition` set to `false`, no transition plays. Set the skeleton row count and height with `skeleton-rows` and `skeleton-class`; when not passed, they follow the site-wide `components.table` settings. The behavior is the same as [ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#loading-and-empty-data).
 
 <component-example name="list-card-states">
 

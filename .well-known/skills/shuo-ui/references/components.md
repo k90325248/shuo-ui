@@ -148,7 +148,7 @@ Same as `ShuoRadioGroup` (items, orientation, keys, `item-append` with `{ item, 
 
 ### ShuoListCard
 
-- Props: `data`, `columns` (`TableColumn<T>[]` from `@nuxt/ui`), `total`, `page` (default 1), `page-size` (default 10), `loading`, `title`, `icon`, `empty`, `show-pagination`, `show-summary`, `transition`, `table-props`, selection props (as `ShuoTable`).
+- Props: `data`, `columns` (`TableColumn<T>[]` from `@nuxt/ui`), `total`, `page` (default 1), `page-size` (default 10), `loading`, `title`, `icon`, `empty`, `show-pagination`, `show-summary`, `transition`, `skeleton-rows`, `skeleton-class`, `table-props`, selection props (as `ShuoTable`).
 - Event `page-change` with `{ PageNumber, PageSize }`: query, then update `data`, `total`, `page`. Not emitted while loading.
 - Expose `getPagination(page?)` → `{ PageNumber, PageSize }`; use `getPagination(1)` for a new search.
 - Slots: `title`, `header-right`, `<column>-cell` and other `UTable` slots (with extra `interactionDisabled`), `body-top`, `footer`, `loading`, `empty`.
@@ -158,7 +158,7 @@ Same as `ShuoRadioGroup` (items, orientation, keys, `item-append` with `{ item, 
 ### ShuoTable
 
 - `UTable` without card or pagination, for modals or your own `UCard`. Props: `data`, `columns`, `loading`, `empty`, `transition`, `table-props` (pass `UTable` props such as `sticky`, `ui` here).
-- Skeleton rows when created with `loading` and no data.
+- Skeleton rows when created with `loading` and no data: `skeleton-rows` (default 3), `skeleton-class` (default `h-6`, the bar height); site-wide via `components.table`.
 - Selection: `selectable`, `v-model:selected` (array of keys), `row-key` (field name or function; default is the row index), `row-selectable(row)`, `select-all` (default `true`), `selection-header`, `checkbox-props`. Place the selection column with a `{ id: 'select' }` column; slots `select-header`, `select-cell`.
 - Cell slots receive `interactionDisabled` to disable row buttons while loading.
 

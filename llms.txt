@@ -51,6 +51,7 @@ Every page below is available as raw markdown.
 - [v1.1.0](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-1-0.md): 發佈於 2026年10月26日
 - [v1.2.0](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-2-0.md): 發佈於 2026年10月27日
 - [v1.2.1](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-2-1.md): 發佈於 2026年10月27日
+- [v1.3.0](https://k90325248.github.io/shuo-ui/raw/zh-tw/releases/versions/v1-3-0.md): 發佈於 2026年10月29日
 - [Months](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/field/months.md): 總月數與年、月的拆分與合併。
 - [Phone](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/field/phone.md): 市話號碼的區碼拆分與合併。
 - [Validation](https://k90325248.github.io/shuo-ui/raw/zh-tw/utils/form/validation.md): 搭配 Valibot 的共用驗證規則，錯誤訊息格式全站一致。
@@ -101,6 +102,7 @@ Every page below is available as raw markdown.
 - [v1.1.0](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-1-0.md): Released on October 26, 2026
 - [v1.2.0](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-2-0.md): Released on October 27, 2026
 - [v1.2.1](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-2-1.md): Released on October 27, 2026
+- [v1.3.0](https://k90325248.github.io/shuo-ui/raw/en/releases/versions/v1-3-0.md): Released on October 29, 2026
 - [Months](https://k90325248.github.io/shuo-ui/raw/en/utils/field/months.md): Splitting total months into years and months, and combining them back.
 - [Phone](https://k90325248.github.io/shuo-ui/raw/en/utils/field/phone.md): Splitting and joining the area code of landline numbers.
 - [Validation](https://k90325248.github.io/shuo-ui/raw/en/utils/form/validation.md): Shared validation rules for Valibot, with consistent error messages across the site.

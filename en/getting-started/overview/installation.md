@@ -64,15 +64,15 @@ Pin a version with a tag, and change it to the new tag when upgrading. See [GitH
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v1.2.1
+pnpm add github:k90325248/shuo-ui#v1.3.0
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v1.2.1
+npm install github:k90325248/shuo-ui#v1.3.0
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v1.2.1
+yarn add github:k90325248/shuo-ui#v1.3.0
 ```
 
 </code-group>

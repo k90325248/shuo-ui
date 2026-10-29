@@ -622,7 +622,23 @@ Only the props in the table below can be set site-wide. State props such as `dis
         checkboxProps
       </code>
       
-       (selection checkbox appearance; UCheckbox defaults when not set), also apply to the table inside <code>
+       (selection checkbox appearance; UCheckbox defaults when not set), <code>
+        skeletonRows
+      </code>
+      
+       (<code>
+        3
+      </code>
+      
+      ), <code>
+        skeletonClass
+      </code>
+      
+       (<code>
+        h-6
+      </code>
+      
+      ), also apply to the table inside <code>
         ShuoListCard
       </code>
     </td>

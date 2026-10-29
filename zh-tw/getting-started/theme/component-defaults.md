@@ -622,7 +622,23 @@ export default defineNuxtConfig({
         checkboxProps
       </code>
       
-      （勾選欄核取方塊的外觀，未設定時沿用 UCheckbox），也套用到 <code>
+      （勾選欄核取方塊的外觀，未設定時沿用 UCheckbox）、<code>
+        skeletonRows
+      </code>
+      
+      （<code>
+        3
+      </code>
+      
+      ）、<code>
+        skeletonClass
+      </code>
+      
+      （<code>
+        h-6
+      </code>
+      
+      ），也套用到 <code>
         ShuoListCard
       </code>
       

@@ -3578,7 +3578,7 @@ Nuxt UI 的 `UTooltip` 只在滑鼠移入或鍵盤聚焦時顯示，手機上點
 
 ### 查詢中與空資料
 
-元件建立時即在查詢且沒有資料時顯示骨架列；已有資料時重新查詢，資料淡化並以高度過渡切換。`empty` 為空資料說明，未設定時沿用表格預設；`transition` 為 `false` 時不播放過渡。行為與 [ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#%E6%9F%A5%E8%A9%A2%E4%B8%AD%E8%88%87%E7%A9%BA%E8%B3%87%E6%96%99) 相同。
+元件建立時即在查詢且沒有資料時顯示骨架列；已有資料時重新查詢，資料淡化並以高度過渡切換。`empty` 為空資料說明，未設定時沿用表格預設；`transition` 為 `false` 時不播放過渡。骨架列數與高度由 `skeleton-rows`、`skeleton-class` 設定，未傳入時沿用 `components.table` 的全站設定。行為與 [ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#%E6%9F%A5%E8%A9%A2%E4%B8%AD%E8%88%87%E7%A9%BA%E8%B3%87%E6%96%99) 相同。
 
 <component-example name="list-card-states">
 
@@ -4549,6 +4549,12 @@ template ref 的 `getPagination()` 回傳目前頁碼與元件的每頁筆數；
 </component-example>
 
 骨架欄數以葉節點欄位計算，並排除 `tableProps.state.columnVisibility` 隱藏的欄位。
+
+列數由 `skeleton-rows` 設定（預設 `3`，至少 1 列）；每條骨架的高度等樣式由 `skeleton-class` 設定（預設 `h-6`，即 24px），傳入時整個取代預設值。兩者都可在[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)以 `components.table.skeletonRows`、`components.table.skeletonClass` 統一設定，也套用到 `ShuoListCard`。
+
+```vue
+<ShuoTable :data="rows" :columns="columns" :loading="loading" :skeleton-rows="5" skeleton-class="h-8" />
+```
 
 ### 過渡
 
@@ -7725,15 +7731,15 @@ const schema = v.object({
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v1.2.1
+pnpm add github:k90325248/shuo-ui#v1.3.0
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v1.2.1
+npm install github:k90325248/shuo-ui#v1.3.0
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v1.2.1
+yarn add github:k90325248/shuo-ui#v1.3.0
 ```
 
 </code-group>
@@ -8928,7 +8934,23 @@ export default defineNuxtConfig({
         checkboxProps
       </code>
       
-      （勾選欄核取方塊的外觀，未設定時沿用 UCheckbox），也套用到 <code>
+      （勾選欄核取方塊的外觀，未設定時沿用 UCheckbox）、<code>
+        skeletonRows
+      </code>
+      
+      （<code>
+        3
+      </code>
+      
+      ）、<code>
+        skeletonClass
+      </code>
+      
+      （<code>
+        h-6
+      </code>
+      
+      ），也套用到 <code>
         ShuoListCard
       </code>
       
@@ -10876,6 +10898,96 @@ pnpm add @iconify-json/lucide # 建議，圖示會直接打包
 ---
 
 - [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.1)
+
+
+# v1.3.0
+
+> 發佈於 2026年10月29日
+
+表格與清單卡片的初次載入骨架可以調整列數與高度，也可以全站設定。沒有設定時與 1.2.1 相同，升級不需要修改程式碼。
+
+## ✨ Highlights
+
+### 🦴 調整初次載入骨架的列數與高度
+
+`ShuoTable` 與 `ShuoListCard` 新增 `skeleton-rows` 與 `skeleton-class`：前者設定骨架列數（預設 `3`，至少 1 列），後者設定每條骨架的高度等樣式（預設 `h-6`，即 24px，傳入時整個取代預設值）：[Table 的初次載入骨架](https://k90325248.github.io/shuo-ui/components/layout/table#%E5%88%9D%E6%AC%A1%E8%BC%89%E5%85%A5%E9%AA%A8%E6%9E%B6)
+
+```vue
+<ShuoListCard :data="rows" :columns="columns" :loading="loading" :skeleton-rows="5" skeleton-class="h-8" />
+```
+
+兩者都可在全站設定 `components.table` 統一調整，也套用到 `ShuoListCard` 內的表格；頁面明確傳入時優先：
+
+```ts
+export default defineNuxtConfig({
+  shuoUi: {
+    components: {
+      table: { skeletonRows: 5, skeletonClass: 'h-8' }
+    }
+  }
+});
+```
+
+## 📖 文件網站
+
+- Table、ListCard 與[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)頁新增骨架列數與高度的說明。
+
+## 📦 安裝
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.3.0
+pnpm add @iconify-json/lucide # 建議，圖示會直接打包
+```
+
+在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
+
+## 📋 需求
+
+<table>
+<thead>
+  <tr>
+    <th>
+      套件
+    </th>
+    
+    <th>
+      版本
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.3.0)
 
 
 # Months
@@ -15141,7 +15253,7 @@ The `PageRequest` type can be imported from `#shuo-ui/types/pagination`; see [Au
 
 ### Loading and empty data
 
-When the component is created while loading with no data, skeleton rows are shown; when re-querying with existing data, the data fades and switches with a height transition. `empty` is the empty-data text, using the table default when not set; with `transition` set to `false`, no transition plays. The behavior is the same as [ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#loading-and-empty-data).
+When the component is created while loading with no data, skeleton rows are shown; when re-querying with existing data, the data fades and switches with a height transition. `empty` is the empty-data text, using the table default when not set; with `transition` set to `false`, no transition plays. Set the skeleton row count and height with `skeleton-rows` and `skeleton-class`; when not passed, they follow the site-wide `components.table` settings. The behavior is the same as [ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#loading-and-empty-data).
 
 <component-example name="list-card-states">
 
@@ -16106,6 +16218,12 @@ When the component is created while loading (`loading` is `true`) with no data, 
 </component-example>
 
 The skeleton column count uses leaf columns and excludes columns hidden by `tableProps.state.columnVisibility`.
+
+Set the row count with `skeleton-rows` (default `3`, at least 1 row), and the height and other styles of each skeleton bar with `skeleton-class` (default `h-6`, i.e. 24px), which replaces the default as a whole. Both can be set site-wide with `components.table.skeletonRows` and `components.table.skeletonClass` in [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults), and also apply to `ShuoListCard`.
+
+```vue
+<ShuoTable :data="rows" :columns="columns" :loading="loading" :skeleton-rows="5" skeleton-class="h-8" />
+```
 
 ### Transition
 
@@ -19304,15 +19422,15 @@ Pin a version with a tag, and change it to the new tag when upgrading. See [GitH
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v1.2.1
+pnpm add github:k90325248/shuo-ui#v1.3.0
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v1.2.1
+npm install github:k90325248/shuo-ui#v1.3.0
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v1.2.1
+yarn add github:k90325248/shuo-ui#v1.3.0
 ```
 
 </code-group>
@@ -20509,7 +20627,23 @@ Only the props in the table below can be set site-wide. State props such as `dis
         checkboxProps
       </code>
       
-       (selection checkbox appearance; UCheckbox defaults when not set), also apply to the table inside <code>
+       (selection checkbox appearance; UCheckbox defaults when not set), <code>
+        skeletonRows
+      </code>
+      
+       (<code>
+        3
+      </code>
+      
+      ), <code>
+        skeletonClass
+      </code>
+      
+       (<code>
+        h-6
+      </code>
+      
+      ), also apply to the table inside <code>
         ShuoListCard
       </code>
     </td>
@@ -22459,6 +22593,96 @@ Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your 
 ---
 
 - [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.1)
+
+
+# v1.3.0
+
+> Released on October 29, 2026
+
+The first-load skeleton of tables and list cards now has a configurable row count and height, also site-wide. Without these settings everything behaves as in 1.2.1; upgrading needs no code changes.
+
+## ✨ Highlights
+
+### 🦴 Configure the first-load skeleton rows and height
+
+`ShuoTable` and `ShuoListCard` add `skeleton-rows` and `skeleton-class`: the first sets the skeleton row count (default `3`, at least 1 row), the second the height and other styles of each skeleton bar (default `h-6`, i.e. 24px, replaced as a whole when passed): [First-load skeleton in Table](https://k90325248.github.io/shuo-ui/components/layout/table#first-load-skeleton)
+
+```vue
+<ShuoListCard :data="rows" :columns="columns" :loading="loading" :skeleton-rows="5" skeleton-class="h-8" />
+```
+
+Both can be set site-wide with `components.table`, which also applies to the table inside `ShuoListCard`; values passed on the page win:
+
+```ts
+export default defineNuxtConfig({
+  shuoUi: {
+    components: {
+      table: { skeletonRows: 5, skeletonClass: 'h-8' }
+    }
+  }
+});
+```
+
+## 📖 Docs site
+
+- The Table, ListCard and [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults) pages describe the skeleton row count and height.
+
+## 📦 Installation
+
+```bash
+pnpm add github:k90325248/shuo-ui#v1.3.0
+pnpm add @iconify-json/lucide # recommended, icons are bundled
+```
+
+Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
+
+## 📋 Requirements
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Package
+    </th>
+    
+    <th>
+      Version
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.0
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.3.0)
 
 
 # Months

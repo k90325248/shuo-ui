@@ -35,6 +35,12 @@ When the component is created while loading (`loading` is `true`) with no data, 
 
 The skeleton column count uses leaf columns and excludes columns hidden by `tableProps.state.columnVisibility`.
 
+Set the row count with `skeleton-rows` (default `3`, at least 1 row), and the height and other styles of each skeleton bar with `skeleton-class` (default `h-6`, i.e. 24px), which replaces the default as a whole. Both can be set site-wide with `components.table.skeletonRows` and `components.table.skeletonClass` in [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults), and also apply to `ShuoListCard`.
+
+```vue
+<ShuoTable :data="rows" :columns="columns" :loading="loading" :skeleton-rows="5" skeleton-class="h-8" />
+```
+
 ### Transition
 
 When the row count or content height changes, the data area height changes smoothly over 0.2 seconds; when re-querying with existing data, the data fades to 0.5 opacity. With `transition` set to `false`, the height follows the content directly and the fade has no transition. Nothing is animated when the user prefers reduced motion.

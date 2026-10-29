@@ -48,7 +48,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/layout/list
 
 ### 查詢中與空資料
 
-元件建立時即在查詢且沒有資料時顯示骨架列；已有資料時重新查詢，資料淡化並以高度過渡切換。`empty` 為空資料說明，未設定時沿用表格預設；`transition` 為 `false` 時不播放過渡。行為與 [ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#%E6%9F%A5%E8%A9%A2%E4%B8%AD%E8%88%87%E7%A9%BA%E8%B3%87%E6%96%99) 相同。
+元件建立時即在查詢且沒有資料時顯示骨架列；已有資料時重新查詢，資料淡化並以高度過渡切換。`empty` 為空資料說明，未設定時沿用表格預設；`transition` 為 `false` 時不播放過渡。骨架列數與高度由 `skeleton-rows`、`skeleton-class` 設定，未傳入時沿用 `components.table` 的全站設定。行為與 [ShuoTable](https://k90325248.github.io/shuo-ui/components/layout/table#%E6%9F%A5%E8%A9%A2%E4%B8%AD%E8%88%87%E7%A9%BA%E8%B3%87%E6%96%99) 相同。
 
 <component-example name="list-card-states">
 

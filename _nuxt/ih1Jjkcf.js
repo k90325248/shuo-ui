@@ -1,0 +1,2 @@
+import{D as e,On as t,k as n,mt as r,qt as i,un as a,v as o,vn as s}from"./DVRkMeDb.js";import{t as c}from"./B8kVjmc4.js";import{t as l}from"./BqG159Qp.js";import{t as u}from"./CAyXecP_.js";var d=n({__name:`info-tooltip-form-field`,setup(n){let d=s(2026);return(n,s)=>{let f=u,p=l,m=c;return r(),o(m,{label:`年份範圍`},{hint:i(()=>[e(f,{label:`年份範圍說明`,text:`輸入西元年份。
+民國模式最低為 1911 年。`})]),default:i(()=>[e(p,{modelValue:t(d),"onUpdate:modelValue":s[0]||=e=>a(d)?d.value=e:null,"thousand-separator":!1},null,8,[`modelValue`])]),_:1})}}});export{d as default};
