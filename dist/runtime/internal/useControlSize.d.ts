@@ -1,8 +1,17 @@
-import type { ComputedRef } from 'vue';
+import type { ComponentInternalInstance, ComputedRef } from 'vue';
 import type { InputProps } from '@nuxt/ui';
 import type { ShuoComponentName } from '../types/component-defaults.js';
 /** 元件尺寸 */
 export type ControlSize = NonNullable<InputProps['size']>;
+/** 元件實例上的 provide 資料；Vue 未公開此欄位的型別。 */
+type InstanceWithProvides = ComponentInternalInstance & {
+    provides?: Record<PropertyKey, unknown>;
+};
+/**
+ * 找出實際 provide 指定 key 的祖先元件。
+ * 沒有呼叫 provide 的元件與父層共用同一個 provides 物件，所以要往上找到 provides 與父層不同的那一層。
+ */
+export declare const findProvider: (instance: ComponentInternalInstance | null, key: symbol) => InstanceWithProvides | undefined;
 /**
  * 決定元件尺寸：明確傳入的 size > UFormField 明確寫的 size > 全站預設 > UFormField 的主題預設 > 內建預設（'lg'）。
  * - `props` 必須是原始 props（不經 useShuoComponentProps），`size` 也不能在 withDefaults 設預設值，否則全站預設會被當成明確傳入。
@@ -14,3 +23,4 @@ export type ControlSize = NonNullable<InputProps['size']>;
 export declare const useControlSize: (name: ShuoComponentName, props: {
     size?: InputProps["size"];
 }) => ComputedRef<ControlSize>;
+export {};

@@ -7,7 +7,15 @@ export const BUILT_IN_DEFAULTS = {
   file: { size: "lg", clearIcon: "i-lucide-x", downloadIcon: "i-lucide-download", selectIcon: "i-lucide-paperclip" },
   months: { size: "lg" },
   phone: { size: "lg" },
-  selectMenu: { size: "lg", format: "{label}", emptyValue: "", labelKey: "label", valueKey: "value" },
+  selectMenu: {
+    size: "lg",
+    format: "{label}",
+    emptyValue: "",
+    labelKey: "label",
+    valueKey: "value",
+    clear: true,
+    clearIcon: "i-lucide-x"
+  },
   checkbox: { size: "lg", trueValue: 1, falseValue: 0 },
   switch: { size: "lg", color: void 0, loadingIcon: void 0 },
   radioGroup: {
@@ -28,7 +36,7 @@ export const BUILT_IN_DEFAULTS = {
   },
   datepicker: {
     size: "lg",
-    clearable: false,
+    clear: true,
     calendarIcon: "i-lucide-calendar",
     clearIcon: "i-lucide-x",
     roc: true,

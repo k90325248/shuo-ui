@@ -76,7 +76,7 @@ pnpm add valibot
 
     <!-- 申請日期 -->
     <UFormField label="申請日期" name="date">
-      <ShuoDatepicker v-model="state.date" clearable />
+      <ShuoDatepicker v-model="state.date" />
     </UFormField>
 
     <UButton type="submit" label="送出" />

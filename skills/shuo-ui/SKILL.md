@@ -101,7 +101,7 @@ The app must be wrapped in `<UApp>` (toasts and tooltips depend on it).
     </UFormField>
 
     <UFormField label="Application date" name="date" required>
-      <ShuoDatepicker v-model="state.date" clearable />
+      <ShuoDatepicker v-model="state.date" />
     </UFormField>
 
     <UButton type="submit" label="Submit" />

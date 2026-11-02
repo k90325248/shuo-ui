@@ -138,6 +138,7 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps } from "../internal/useShuoComponentProps";
 import { useControlSize } from "../internal/useControlSize";
+import { useClearButton } from "../internal/useClearButton";
 import ShuoTooltip from "./ShuoTooltip.vue";
 defineOptions({ inheritAttrs: false });
 const props = defineProps({
@@ -145,7 +146,7 @@ const props = defineProps({
   modelValue: { type: null, required: false },
   start: { type: String, required: false },
   end: { type: String, required: false },
-  clearable: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.datepicker.clearable },
+  clear: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.datepicker.clear },
   calendarIcon: { type: String, required: false, default: BUILT_IN_DEFAULTS.datepicker.calendarIcon },
   clearIcon: { type: String, required: false, default: BUILT_IN_DEFAULTS.datepicker.clearIcon },
   disabled: { type: Boolean, required: false, default: false },
@@ -217,7 +218,7 @@ const picker = useTemplateRef("picker");
 const tooltipRoot = useTemplateRef("tooltipRoot");
 const isMenuOpen = ref(false);
 const rocDisplay = computed(() => resolved.roc);
-const showClear = computed(() => resolved.clearable);
+const showClear = useClearButton("datepicker", props);
 const fieldState = computed(() => fieldColor.value === "error" ? false : props.state);
 const separator = computed(
   () => isValidDateSeparator(resolved.separator) ? resolved.separator : DEFAULT_DATE_SEPARATOR

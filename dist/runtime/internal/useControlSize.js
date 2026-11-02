@@ -1,7 +1,7 @@
 import { formFieldInjectionKey } from "@nuxt/ui/composables";
 import { BUILT_IN_DEFAULTS, getShuoComponentDefaults } from "../utils/component-defaults.js";
 import { isPropDefined } from "./prop-defined.js";
-const findProvider = (instance, key) => {
+export const findProvider = (instance, key) => {
   let current = instance?.parent;
   while (current) {
     const parent = current.parent;

@@ -37,6 +37,8 @@ export declare const BUILT_IN_DEFAULTS: {
         emptyValue: "";
         labelKey: string;
         valueKey: string;
+        clear: true;
+        clearIcon: string;
     };
     checkbox: {
         size: "lg";
@@ -66,7 +68,7 @@ export declare const BUILT_IN_DEFAULTS: {
     };
     datepicker: {
         size: "lg";
-        clearable: false;
+        clear: true;
         calendarIcon: string;
         clearIcon: string;
         roc: true;

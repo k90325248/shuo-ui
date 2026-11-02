@@ -23,25 +23,25 @@ export default defineNuxtConfig({
 
 Precedence: prop written on the component (any value, even `false` or `null`) > `shuoUi.components.<key>` > built-in default. Keys are camelCase without the prefix and do not change with `prefix`.
 
-| Key             | Configurable props (built-in default)                                                                                       |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `inputText`     | `size` (`lg`), `hideMaskToggle` (`false`), `revealIcon`, `concealIcon`                                                      |
-| `inputNumber`   | `size`, `unit` (`false`; boolean only), `thousandSeparator` (`true`)                                                        |
-| `textarea`      | `size`, `autoresize`, `rows`, `maxrows`, `fixed`                                                                            |
-| `file`          | `size`, `clearIcon`, `downloadIcon`, `selectIcon`                                                                           |
-| `months`        | `size`                                                                                                                      |
-| `phone`         | `size`                                                                                                                      |
-| `selectMenu`    | `size`, `format` (`{label}`), `emptyValue` (`''`), `labelKey` (`label`), `valueKey` (`value`)                               |
-| `checkbox`      | `size`, `trueValue` (`1`), `falseValue` (`0`)                                                                               |
-| `switch`        | `size`, `color`, `loadingIcon`                                                                                              |
-| `radioGroup`    | `size`, `orientation` (`auto`), `breakpoint` (`md`), `ui`, `labelKey`, `valueKey`                                           |
-| `checkboxGroup` | Same as `radioGroup`                                                                                                        |
-| `datepicker`    | `size`, `clearable` (`false`), `calendarIcon`, `clearIcon`, `roc` (`true`), `separator` (`/`), `yearRange` (`[1900, 2100]`) |
-| `queryCard`     | `icon`, `expandIcon`, `collapseIcon`, `validateOn`, `ui`                                                                    |
-| `table`         | `selectAll` (`true`), `checkboxProps`, `skeletonRows` (`3`), `skeletonClass` (`h-6`) (also apply inside `ShuoListCard`)     |
-| `listCard`      | `icon`, `pageSize` (`10`), `showPagination` (`true`), `showSummary` (`true`), `transition` (`true`), `ui`                   |
-| `infoTooltip`   | `icon`                                                                                                                      |
-| `tooltip`       | `touch` (`true`; also affects tooltips inside the library)                                                                  |
+| Key             | Configurable props (built-in default)                                                                                        |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `inputText`     | `size` (`lg`), `hideMaskToggle` (`false`), `revealIcon`, `concealIcon`                                                       |
+| `inputNumber`   | `size`, `unit` (`false`; boolean only), `thousandSeparator` (`true`)                                                         |
+| `textarea`      | `size`, `autoresize`, `rows`, `maxrows`, `fixed`                                                                             |
+| `file`          | `size`, `clearIcon`, `downloadIcon`, `selectIcon`                                                                            |
+| `months`        | `size`                                                                                                                       |
+| `phone`         | `size`                                                                                                                       |
+| `selectMenu`    | `size`, `format` (`{label}`), `emptyValue` (`''`), `labelKey` (`label`), `valueKey` (`value`), `clear` (`true`), `clearIcon` |
+| `checkbox`      | `size`, `trueValue` (`1`), `falseValue` (`0`)                                                                                |
+| `switch`        | `size`, `color`, `loadingIcon`                                                                                               |
+| `radioGroup`    | `size`, `orientation` (`auto`), `breakpoint` (`md`), `ui`, `labelKey`, `valueKey`                                            |
+| `checkboxGroup` | Same as `radioGroup`                                                                                                         |
+| `datepicker`    | `size`, `clear` (`true`), `calendarIcon`, `clearIcon`, `roc` (`true`), `separator` (`/`), `yearRange` (`[1900, 2100]`)       |
+| `queryCard`     | `icon`, `expandIcon`, `collapseIcon`, `validateOn`, `ui`                                                                     |
+| `table`         | `selectAll` (`true`), `checkboxProps`, `skeletonRows` (`3`), `skeletonClass` (`h-6`) (also apply inside `ShuoListCard`)      |
+| `listCard`      | `icon`, `pageSize` (`10`), `showPagination` (`true`), `showSummary` (`true`), `transition` (`true`), `ui`                    |
+| `infoTooltip`   | `icon`                                                                                                                       |
+| `tooltip`       | `touch` (`true`; also affects tooltips inside the library)                                                                   |
 
 Example for a back end that uses `{ Code, Name }` items, `Y` / `N` flags and `YYYY-MM-DD` dates:
 
@@ -52,7 +52,7 @@ shuoUi: {
     radioGroup: { labelKey: 'Name', valueKey: 'Code' },
     checkboxGroup: { labelKey: 'Name', valueKey: 'Code' },
     checkbox: { trueValue: 'Y', falseValue: 'N' },
-    datepicker: { clearable: true, separator: '-' },
+    datepicker: { clear: false, separator: '-' },
     listCard: { pageSize: 20 },
     queryCard: { ui: { grid: 'sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4' } }
   }

@@ -29,6 +29,8 @@
         :highlight="highlight"
         :placeholder="placeholder"
         :loading="loading"
+        :clear="showClear"
+        :clear-icon="clearIcon"
         trailing
         :aria-busy="loading || void 0"
         :search-input="{ placeholder: messages.selectMenu.searchPlaceholder }"
@@ -77,6 +79,7 @@ import { useOptionKeysWarning } from "../internal/useOptionKeysWarning";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps, useShuoPropSource } from "../internal/useShuoComponentProps";
 import { useControlSize } from "../internal/useControlSize";
+import { useClearButton } from "../internal/useClearButton";
 import ShuoTooltip from "./ShuoTooltip.vue";
 const BUILTIN_UI = { base: "w-full min-w-0", value: "min-w-0 truncate", placeholder: "min-w-0 truncate" };
 const theme = tv({
@@ -105,6 +108,8 @@ const props = defineProps({
   disabled: { type: Boolean, required: false, default: void 0 },
   loading: { type: Boolean, required: false },
   emptyValue: { type: [String, null], required: false, default: BUILT_IN_DEFAULTS.selectMenu.emptyValue },
+  clear: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.selectMenu.clear },
+  clearIcon: { type: String, required: false, default: BUILT_IN_DEFAULTS.selectMenu.clearIcon },
   ui: { type: Object, required: false }
 });
 const modelValue = defineModel({ type: null });
@@ -124,6 +129,9 @@ const innerValue = computed({
 });
 const resolvedLabelKey = computed(() => resolved.labelKey ?? BUILT_IN_DEFAULTS.selectMenu.labelKey);
 const resolvedValueKey = computed(() => resolved.valueKey ?? BUILT_IN_DEFAULTS.selectMenu.valueKey);
+const clearButton = useClearButton("selectMenu", props);
+const showClear = computed(() => clearButton.value);
+const clearIcon = computed(() => resolved.clearIcon);
 useOptionKeysWarning(
   "ShuoSelectMenu",
   "selectMenu",

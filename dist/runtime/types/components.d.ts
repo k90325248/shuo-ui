@@ -453,8 +453,8 @@ export interface DatepickerProps<TRange extends boolean = false> {
     start?: string;
     /** 結束日期綁定值，僅範圍模式使用，尚無完整範圍或關閉範圍時為 ''。 */
     end?: string;
-    /** 清除按鈕，預設關閉。 */
-    clearable?: boolean;
+    /** 清除按鈕，預設開啟；外層 UFormField 為 required 時預設關閉。 */
+    clear?: boolean;
     /** 尾端日曆圖示，預設 `i-lucide-calendar`。 */
     calendarIcon?: string;
     /** 清除按鈕圖示，預設 `i-lucide-x`。 */
@@ -587,9 +587,9 @@ export type SelectMenuUi = NonNullable<USelectMenuProps['ui']> & {
 };
 /**
  * 沿用 Nuxt UI 下拉選單的參數，僅供型別推導；值經 `$attrs` 轉給 USelectMenu。
- * 排除元件自行宣告或改寫語意的項目：綁定值另依 emptyValue 處理；清除按鈕的型別依 Nuxt UI 的 C 泛型推導，本元件未提供該泛型，一併排除。
+ * 排除元件自行宣告或改寫語意的項目：綁定值另依 emptyValue 處理；清除按鈕改由元件宣告為 boolean（Nuxt UI 的型別依本元件未提供的 C 泛型推導）。
  */
-type InheritedSelectMenuProps<T extends SelectMenuItem[], VK extends GetItemKeys<T>, M extends boolean> = Omit<USelectMenuProps<T, VK, M>, keyof SelectMenuOwnProps<T, VK, M> | 'modelValue' | 'defaultValue' | 'modelModifiers' | 'clear' | 'clearIcon'> & ForwardedEvents<USelectMenuEmits<T, VK, M>>;
+type InheritedSelectMenuProps<T extends SelectMenuItem[], VK extends GetItemKeys<T>, M extends boolean> = Omit<USelectMenuProps<T, VK, M>, keyof SelectMenuOwnProps<T, VK, M> | 'modelValue' | 'defaultValue' | 'modelModifiers'> & ForwardedEvents<USelectMenuEmits<T, VK, M>>;
 /** 下拉選單參數；未列出的 Nuxt UI 下拉選單參數（variant、icon、searchInput、content、descriptionKey 等）皆可直接使用 */
 export interface SelectMenuProps<T extends SelectMenuItem[] = SelectMenuItem[], VK extends GetItemKeys<T> = GetItemKeys<T>, M extends boolean = false> extends /* @vue-ignore */ InheritedSelectMenuProps<T, VK, M>, SelectMenuOwnProps<T, VK, M> {
 }
@@ -627,6 +627,10 @@ interface SelectMenuOwnProps<T extends SelectMenuItem[] = SelectMenuItem[], VK e
     loading?: boolean;
     /** 單選未選取時的綁定值，預設空字串；多選固定為空陣列 */
     emptyValue?: SelectMenuEmptyValue;
+    /** 清除按鈕，有選取值時顯示，預設開啟；外層 UFormField 為 required 時預設關閉 */
+    clear?: boolean;
+    /** 清除按鈕圖示，預設 `i-lucide-x` */
+    clearIcon?: string;
     /** 樣式覆寫，與內建樣式合併，同一 slot 衝突時以傳入值優先；可用函式取得預設值後自行取代 */
     ui?: SelectMenuUi;
 }
