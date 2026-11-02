@@ -23,7 +23,9 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/phone-file/
 
 ### 既有附件
 
-沒有本機 `File` 時顯示 `file-name`；按下載以 Blob 取得 `file-url` 的內容，跨來源網址須允許 CORS，下載失敗會顯示 Toast（需 `UApp`）。檔名被省略時，滑鼠移入或鍵盤聚焦會顯示完整檔名，觸控裝置長按顯示（見 [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#%E8%A7%B8%E6%8E%A7%E9%95%B7%E6%8C%89)），長按不會開啟選檔。
+沒有本機 `File` 時顯示 `file-name`。傳入 `download` 函式才會顯示下載按鈕，按下時才呼叫，不必事先把檔案抓下來放進 `v-model`；驗證標頭、POST 等請求方式都由頁面決定。回傳 `Blob` 由元件以 `file-name` 儲存；不回傳則視為頁面已自行處理（例如開新分頁）。下載中按鈕顯示轉圈並防止重複點擊，拋出錯誤時顯示下載失敗 Toast（需 `UApp`），元件卸載時會中止傳入的 `signal`。有本機 `File` 時直接下載本機檔案，不呼叫 `download`。
+
+檔名被省略時，滑鼠移入或鍵盤聚焦會顯示完整檔名，觸控裝置長按顯示（見 [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#%E8%A7%B8%E6%8E%A7%E9%95%B7%E6%8C%89)），長按不會開啟選檔。
 
 <component-example name="file-existing">
 
@@ -31,9 +33,21 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/phone-file/
 
 </component-example>
 
+### 清除
+
+`clear` 預設開啟，有本機 `File` 或既有附件時尾端顯示清除按鈕；停用或載入中時不顯示。清除後 `v-model` 為 `null`、`file-name` 為 `''`，欄位完全清空，可重新選檔。以 `v-model:file-name` 綁定既有附件名稱，頁面就能從 `''` 得知使用者移除了既有附件；只單向傳入時，清除仍會清空畫面。
+
+傳 `:clear="false"` 不允許移除；包在 `required` 的 `UFormField` 內時預設關閉，規則同 [SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)。整個專案都不需要時，可在[全站設定](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)關閉。
+
+<component-example name="file-clear">
+
+
+
+</component-example>
+
 ### 按鈕圖示
 
-`select-icon` 是尚無檔案時的選擇檔案按鈕，`clear-icon` 是清除按鈕，`download-icon` 是有檔案時的下載按鈕。清除按鈕只在有本機 `File` 且未停用時顯示。
+`select-icon` 是無法下載時的選擇檔案按鈕，`clear-icon` 是清除按鈕，`download-icon` 是可下載時的下載按鈕。
 
 <component-example name="file-icons">
 
@@ -75,7 +89,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/phone-file/
 
 ### 選檔後再上傳
 
-選檔不會自動上傳，由頁面決定何時送出 `v-model` 的 `File`。範例按「上傳」後以 `loading` 停用欄位，完成後清空 `v-model`，改以 `file-name`、`file-url` 顯示為既有附件。
+選檔不會自動上傳，由頁面決定何時送出 `v-model` 的 `File`。範例按「上傳」後以 `loading` 停用欄位，完成後清空 `v-model`，改以 `file-name`、`download` 顯示為既有附件。
 
 <component-example name="file-upload">
 

@@ -236,6 +236,14 @@ Only the props in the table below can be set site-wide. State props such as `dis
       </code>
       
       ), <code>
+        clear
+      </code>
+      
+       (<code>
+        true
+      </code>
+      
+      ), <code>
         clearIcon
       </code>
       
@@ -768,7 +776,7 @@ Components or props outside this list cause a type error in `nuxt.config.ts`. Va
 - **"Passed explicitly" means the prop is written, whatever its value**: `<ShuoDatepicker :clear="false" />`, `<ShuoSelectMenu :empty-value="null" />` and `format=""` all count as explicit and are not replaced by the site-wide value. `v-bind="{ clear: undefined }"` counts as not written and uses the site-wide value.
 - **ui is merged per slot**: with a site-wide `radioGroup.ui.fieldset` and a page passing `:ui="{ item: '...' }"`, both apply. If the page also passes `fieldset`, the page value replaces the site-wide one (classes are not concatenated). The result is then merged with the component's built-in styles using tailwind-merge, as in [Per-component `ui` prop](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#per-component-ui-prop). The title bar parts of `queryCard.ui` and `listCard.ui` (`bar`, `icon`, `title`, `headerRight`) share the same built-in styles; to make both cards' titles match, set the same values on both.
 - **Other values are replaced as a whole**: arrays (such as `yearRange`) are not concatenated with the built-in value.
-- **clear also looks at required fields**: `selectMenu.clear` and `datepicker.clear` do not apply to components inside a `required` `UFormField`, which hide the clear button by default; `clear` passed on the page still wins.
+- **clear also looks at required fields**: `selectMenu.clear`, `datepicker.clear` and `file.clear` do not apply to components inside a `required` `UFormField`, which hide the clear button by default; `clear` passed on the page still wins.
 - `inputNumber.unit` site-wide only decides whether a unit is shown by default and only accepts `true` / `false`; the unit text comes from `messages.inputNumber.unit`. A single field can still pass `unit="pcs"` or `:unit="false"`.
 - After setting `labelKey` / `valueKey` site-wide to `{ Code, Name }`, if a page's items are still `{ label, value }`, pass `label-key="label" value-key="value"` on that component. Radio and checkbox groups still bind string values, so convert numeric codes from the back end to strings first. In development mode, when items are missing a field, the console warning says whether the field name was passed explicitly or came from the site-wide setting (for example `(source: valueKey from the site-wide setting components.selectMenu.valueKey)`).
 

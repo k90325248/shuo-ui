@@ -5604,7 +5604,9 @@ const columns: TableColumn<Row>[] = [
 
 ### 既有附件
 
-沒有本機 `File` 時顯示 `file-name`；按下載以 Blob 取得 `file-url` 的內容，跨來源網址須允許 CORS，下載失敗會顯示 Toast（需 `UApp`）。檔名被省略時，滑鼠移入或鍵盤聚焦會顯示完整檔名，觸控裝置長按顯示（見 [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#%E8%A7%B8%E6%8E%A7%E9%95%B7%E6%8C%89)），長按不會開啟選檔。
+沒有本機 `File` 時顯示 `file-name`。傳入 `download` 函式才會顯示下載按鈕，按下時才呼叫，不必事先把檔案抓下來放進 `v-model`；驗證標頭、POST 等請求方式都由頁面決定。回傳 `Blob` 由元件以 `file-name` 儲存；不回傳則視為頁面已自行處理（例如開新分頁）。下載中按鈕顯示轉圈並防止重複點擊，拋出錯誤時顯示下載失敗 Toast（需 `UApp`），元件卸載時會中止傳入的 `signal`。有本機 `File` 時直接下載本機檔案，不呼叫 `download`。
+
+檔名被省略時，滑鼠移入或鍵盤聚焦會顯示完整檔名，觸控裝置長按顯示（見 [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#%E8%A7%B8%E6%8E%A7%E9%95%B7%E6%8C%89)），長按不會開啟選檔。
 
 <component-example name="file-existing">
 
@@ -5612,9 +5614,21 @@ const columns: TableColumn<Row>[] = [
 
 </component-example>
 
+### 清除
+
+`clear` 預設開啟，有本機 `File` 或既有附件時尾端顯示清除按鈕；停用或載入中時不顯示。清除後 `v-model` 為 `null`、`file-name` 為 `''`，欄位完全清空，可重新選檔。以 `v-model:file-name` 綁定既有附件名稱，頁面就能從 `''` 得知使用者移除了既有附件；只單向傳入時，清除仍會清空畫面。
+
+傳 `:clear="false"` 不允許移除；包在 `required` 的 `UFormField` 內時預設關閉，規則同 [SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)。整個專案都不需要時，可在[全站設定](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)關閉。
+
+<component-example name="file-clear">
+
+
+
+</component-example>
+
 ### 按鈕圖示
 
-`select-icon` 是尚無檔案時的選擇檔案按鈕，`clear-icon` 是清除按鈕，`download-icon` 是有檔案時的下載按鈕。清除按鈕只在有本機 `File` 且未停用時顯示。
+`select-icon` 是無法下載時的選擇檔案按鈕，`clear-icon` 是清除按鈕，`download-icon` 是可下載時的下載按鈕。
 
 <component-example name="file-icons">
 
@@ -5656,7 +5670,7 @@ const columns: TableColumn<Row>[] = [
 
 ### 選檔後再上傳
 
-選檔不會自動上傳，由頁面決定何時送出 `v-model` 的 `File`。範例按「上傳」後以 `loading` 停用欄位，完成後清空 `v-model`，改以 `file-name`、`file-url` 顯示為既有附件。
+選檔不會自動上傳，由頁面決定何時送出 `v-model` 的 `File`。範例按「上傳」後以 `loading` 停用欄位，完成後清空 `v-model`，改以 `file-name`、`download` 顯示為既有附件。
 
 <component-example name="file-upload">
 
@@ -8573,6 +8587,14 @@ export default defineNuxtConfig({
       </code>
       
       ）、<code>
+        clear
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
         clearIcon
       </code>
       
@@ -9123,7 +9145,7 @@ export default defineNuxtConfig({
 - **是否明確傳入看的是有沒有寫這個 prop，不看值**：`<ShuoDatepicker :clear="false" />`、`<ShuoSelectMenu :empty-value="null" />`、`format=""` 都算明確傳入，不會被全站值取代；`v-bind="{ clear: undefined }"` 視為沒寫，沿用全站值。
 - **ui 依 slot 合併**：全站設定 `radioGroup.ui.fieldset`、頁面傳 `:ui="{ item: '...' }"` 時兩者都生效；頁面也傳了 `fieldset` 時，以頁面的值取代全站值（不做 class 串接）。合併後再和元件內建樣式以 tailwind-merge 合併，同[單一元件的 `ui` prop](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)。`queryCard.ui` 與 `listCard.ui` 的標題列部位（`bar`、`icon`、`title`、`headerRight`）與內建樣式相同，要統一兩張卡片的標題樣式時兩邊寫相同的值。
 - **其他值整個取代**：陣列（例如 `yearRange`）不和內建值串接。
-- **clear 另看必填欄位**：`selectMenu.clear`、`datepicker.clear` 不影響包在 `required` 的 `UFormField` 內的元件，這些元件預設不顯示清除按鈕；頁面明確傳 `clear` 時仍優先。
+- **clear 另看必填欄位**：`selectMenu.clear`、`datepicker.clear`、`file.clear` 不影響包在 `required` 的 `UFormField` 內的元件，這些元件預設不顯示清除按鈕；頁面明確傳 `clear` 時仍優先。
 - `inputNumber.unit` 全站只決定「預設是否顯示單位」，只接受 `true`／`false`；單位文字由 `messages.inputNumber.unit` 決定。單一欄位仍可傳 `unit="件"` 或 `:unit="false"`。
 - `labelKey`／`valueKey` 全站設定為 `{ Code, Name }` 後，某一頁的選項仍是 `{ label, value }` 時，在該元件明確傳 `label-key="label" value-key="value"`。單選與複選群組的綁定值仍為字串，後端代碼是數字時請先轉成字串。開發模式下選項缺少欄位時，主控台警告會註明欄位名稱來自明確傳入或全站設定（例如 `（來源：valueKey 為全站設定 components.selectMenu.valueKey）`）。
 
@@ -10359,82 +10381,68 @@ export default defineAppConfig({
 </table>
 
 
-# v2.0.0
+# v3.0.0
 
 > 發佈於 2026年11月2日
 
-下拉選單與日期選擇器的清除按鈕統一為 `clear`，並改為預設開啟。日期選擇器的 `clearable` 已改名，升級前請先看下方的升級須知。
+檔案選擇的既有附件改為點擊才下載，並可由使用者移除。`ShuoFile` 的 `fileUrl` 已移除，升級前請先看下方的升級須知。
 
 ## ✨ Highlights
 
-### ✖️ 清除按鈕統一為 `clear`，預設開啟
+### ⬇️ 既有附件點擊才下載
 
-`ShuoSelectMenu` 新增 `clear` 與 `clear-icon`：已選取時尾端以清除按鈕取代箭頭，清除後單選為 `empty-value`、多選為 `[]`，停用或載入中時不顯示：[SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)
-
-`ShuoDatepicker` 的 `clearable` 改名為 `clear`，與下拉選單一致：[Datepicker 的圖示與清除按鈕](https://k90325248.github.io/shuo-ui/components/date/datepicker#%E5%9C%96%E7%A4%BA%E8%88%87%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)
-
-兩者都預設開啟，不需要時傳 `:clear="false"`：
+`ShuoFile` 新增 `download`：既有附件按下載按鈕時才呼叫，頁面不必事先把檔案抓下來放進 `v-model`。驗證標頭、POST 等請求方式都由頁面決定；回傳 `Blob` 由元件以 `file-name` 儲存，不回傳則視為頁面已自行處理（例如開新分頁）。下載中按鈕顯示轉圈並防止重複點擊，失敗時顯示 Toast，元件卸載時會中止傳入的 `signal`：[File 的既有附件](https://k90325248.github.io/shuo-ui/components/phone-file/file#%E6%97%A2%E6%9C%89%E9%99%84%E4%BB%B6)
 
 ```vue
-<ShuoSelectMenu v-model="state.type" :items="items" :clear="false" />
-<ShuoDatepicker v-model="state.date" :clear="false" />
+<ShuoFile
+  v-model="file"
+  :file-name="attachment.name"
+  :download="(signal) => $fetch < Blob > (attachment.url, { headers, responseType: 'blob', signal })"
+/>
 ```
 
-包在 `required` 的 `UFormField` 內時預設關閉，避免必填欄位一鍵清空；需要時仍可明確傳 `clear`：
+### ✖️ 既有附件可以移除，清除後完全清空
+
+`ShuoFile` 新增 `clear`，規則與下拉選單、日期選擇器相同：預設開啟，包在 `required` 的 `UFormField` 內時預設關閉，也可以在全站設定 `components.file.clear`。清除按鈕現在也會移除既有附件，清除後 `v-model` 為 `null`、`file-name` 為 `''`，欄位完全清空，可重新選檔。以 `v-model:file-name` 綁定，頁面就能從 `''` 得知使用者移除了既有附件：[File 的清除](https://k90325248.github.io/shuo-ui/components/phone-file/file#%E6%B8%85%E9%99%A4)
 
 ```vue
-<UFormField label="類別" name="type" required>
-  <ShuoSelectMenu v-model="state.type" :items="items" />
-</UFormField>
-```
-
-也可以在全站設定分別調整，判斷順序為：明確傳入的 `clear` > `UFormField` 的 `required` > 全站設定 > 內建預設（開啟）：
-
-```ts
-export default defineNuxtConfig({
-  shuoUi: {
-    components: {
-      selectMenu: { clear: false },
-      datepicker: { clear: true }
-    }
-  }
-});
+<ShuoFile v-model="file" v-model:file-name="fileName" :download="download" :clear="canRemove" />
 ```
 
 ## ⚠️ 升級須知
 
-### `clearable` 改名為 `clear`
+### `fileUrl` 已移除，改用 `download`
 
-`ShuoDatepicker` 的 `clearable` 與全站設定 `components.datepicker.clearable` 都改為 `clear`。舊名稱不再生效：元件上的 `clearable` 會被當成一般屬性忽略，全站設定則會在啟動時警告並略過。請全專案搜尋 `clearable` 改為 `clear`；原本寫 `clearable` 開啟清除的地方，除了必填欄位（見下一節）之外，現在預設就有清除按鈕，可以直接刪除。
+`ShuoFile` 不再接受 `file-url`，傳了也不會下載；沒有傳 `download` 的既有附件只顯示檔名，尾端是選擇檔案按鈕。請全專案搜尋 `file-url`、`fileUrl`，改為傳入下載函式：
 
-### 清除按鈕預設顯示
-
-先前下拉選單沒有清除按鈕，日期選擇器預設不顯示。升級後兩者有值時都會顯示清除按鈕（包在 `required` 的 `UFormField` 內除外），下拉選單已選取時尾端的箭頭也會改為清除按鈕。要維持先前的行為，在全站設定關閉：
-
-```ts
-export default defineNuxtConfig({
-  shuoUi: {
-    components: {
-      selectMenu: { clear: false },
-      datepicker: { clear: false }
-    }
-  }
-});
+```vue
+<!-- 2.x -->
+<ShuoFile v-model="file" :file-name="name" :file-url="url" />
+<!-- 3.0.0 -->
+<ShuoFile
+  v-model="file"
+  :file-name="name"
+  :download="(signal) => $fetch < Blob > (url, { responseType: 'blob', signal })"
+/>
 ```
 
-原本在必填欄位寫 `clearable` 的日期選擇器，改名後要寫 `clear` 才會顯示清除按鈕；直接刪除會因為必填而不顯示。只在 schema 設必填、`UFormField` 沒寫 `required` 的欄位仍會顯示清除按鈕，不想顯示時在 `UFormField` 加上 `required` 或傳 `:clear="false"`。
+先前為了帶驗證標頭而預先下載、把附件包成 `File` 放進 `v-model` 的頁面，改為 `v-model` 維持 `null`，以 `file-name` 與 `download` 顯示既有附件。
 
-寬度很窄（約 90px 以下）的欄位顯示清除按鈕後，文字可能沒有空間顯示，這類欄位請傳 `:clear="false"`。
+### 清除按鈕的顯示規則改變
+
+- **既有附件會顯示清除按鈕：** 先前只有本機 `File` 才能清除。升級後只傳 `file-name` 的既有附件也會顯示清除按鈕，不允許移除的地方請傳 `:clear="false"`。
+- **必填欄位預設不顯示：** 包在 `required` 的 `UFormField` 內時，本機 `File` 也不再顯示清除按鈕，使用者仍可重新選檔替換；需要時明確傳 `clear`。
+- **清除後連同檔名清空：** 先前清除本機 `File` 後會改回顯示 `file-name`，現在 `file-name` 也一併清為 `''`。
 
 ## 📖 文件網站
 
-- **1.x 文件：** 2.0.0 部署後，網站根目錄改為 2.x 文件，1.x 文件移到 `v1/`，可從標題列的版本選單切換。
-- SelectMenu 頁新增[清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)一節；Datepicker 與[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)頁改用 `clear`。
+- **2.x 文件：** 3.0.0 部署後，網站根目錄改為 3.x 文件，2.x 文件移到 `v2/`，可從標題列的版本選單切換。
+- File 頁改寫[既有附件](https://k90325248.github.io/shuo-ui/components/phone-file/file#%E6%97%A2%E6%9C%89%E9%99%84%E4%BB%B6)一節並新增[清除](https://k90325248.github.io/shuo-ui/components/phone-file/file#%E6%B8%85%E9%99%A4)一節；[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)頁新增 `file.clear`。
 
 ## 📦 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v2.0.0
+pnpm add github:k90325248/shuo-ui#v3.0.0
 pnpm add @iconify-json/lucide # 建議，圖示會直接打包
 ```
 
@@ -10486,75 +10494,7 @@ pnpm add @iconify-json/lucide # 建議，圖示會直接打包
 
 ---
 
-- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v2.0.0)
-
-
-# v2.0.1
-
-> 發佈於 2026年11月2日
-
-修正 `ShuoTable` 放在彈窗等有縮放動畫的容器內時，表格底部被裁掉的問題。從 2.0.0 升級不需要修改程式碼。
-
-## 🐛 Bug Fixes
-
-- **ShuoTable 在彈窗內底部被裁掉：** 表格在 `UModal` 開啟的縮放動畫（0.95 → 1）期間掛載時，資料區量到縮小後的高度，動畫結束後也不會修正，捲到最底時最後一筆只露出上半部。改為量測不受 CSS transform 影響的排版高度，`Popover` 或自訂縮放動畫內的表格同樣適用。先前以 `:transition="false"` 繞過的頁面，升級後可以拿掉。
-
-## 📦 安裝
-
-```bash
-pnpm add github:k90325248/shuo-ui#v2.0.1
-pnpm add @iconify-json/lucide # 建議，圖示會直接打包
-```
-
-在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
-
-## 📋 需求
-
-<table>
-<thead>
-  <tr>
-    <th>
-      套件
-    </th>
-    
-    <th>
-      版本
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v2.0.1)
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v3.0.0)
 
 
 # Months
@@ -16848,7 +16788,9 @@ Binds the original `File`; `null` after clearing. Click the field, or focus it a
 
 ### Existing attachments
 
-Without a local `File`, `file-name` is shown. Pressing download fetches the contents of `file-url` as a Blob; cross-origin URLs must allow CORS, and a failed download shows a toast (requires `UApp`). When the file name is truncated, hovering or keyboard focus shows the full name, or a long press on touch devices (see [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#touch-long-press)); a long press does not open the file dialog.
+Without a local `File`, `file-name` is shown. The download button appears only when a `download` function is passed, and it is called only when the button is pressed, so there is no need to fetch the file up front and put it in `v-model`; the page decides on auth headers, POST and the like. Return a `Blob` to have the component save it under `file-name`, or return nothing if the page handled the download itself (for example by opening a new tab). While downloading, the button shows a spinner and ignores repeated clicks; throwing an error shows the download failed toast (requires `UApp`), and the passed `signal` is aborted on unmount. With a local `File`, the local file is downloaded directly and `download` is not called.
+
+When the file name is truncated, hovering or keyboard focus shows the full name, or a long press on touch devices (see [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#touch-long-press)); a long press does not open the file dialog.
 
 <component-example name="file-existing">
 
@@ -16856,9 +16798,21 @@ Without a local `File`, `file-name` is shown. Pressing download fetches the cont
 
 </component-example>
 
+### Clearing
+
+`clear` is on by default and shows a trailing clear button when there is a local `File` or an existing attachment; it is hidden while disabled or loading. Clearing sets `v-model` to `null` and `file-name` to `''`, leaving the field completely empty so a new file can be selected. Bind the attachment name with `v-model:file-name` so the page can tell from `''` that the user removed the existing attachment; when it is passed one-way, clearing still empties the field.
+
+Pass `:clear="false"` to disallow removal; it is off by default inside a `required` `UFormField`, following the same rules as the [SelectMenu clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button). To turn it off across the project, use the [global defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
+
+<component-example name="file-clear">
+
+
+
+</component-example>
+
 ### Button icons
 
-`select-icon` is the select button shown when there is no file, `clear-icon` is the clear button, and `download-icon` is the download button shown when there is a file. The clear button only shows with a local `File` and when not disabled.
+`select-icon` is the select button shown when there is nothing to download, `clear-icon` is the clear button, and `download-icon` is the download button shown when the file can be downloaded.
 
 <component-example name="file-icons">
 
@@ -16900,7 +16854,7 @@ Check required, type and size with Valibot's `v.file`, `v.mimeType` and `v.maxSi
 
 ### Uploading after selection
 
-Selecting a file does not upload it; the page decides when to send the `File` in `v-model`. In the example, pressing "Upload" disables the field with `loading`, then clears `v-model` when done and shows the file as an existing attachment with `file-name` and `file-url`.
+Selecting a file does not upload it; the page decides when to send the `File` in `v-model`. In the example, pressing "Upload" disables the field with `loading`, then clears `v-model` when done and shows the file as an existing attachment with `file-name` and `download`.
 
 <component-example name="file-upload">
 
@@ -19833,6 +19787,14 @@ Only the props in the table below can be set site-wide. State props such as `dis
       </code>
       
       ), <code>
+        clear
+      </code>
+      
+       (<code>
+        true
+      </code>
+      
+      ), <code>
         clearIcon
       </code>
       
@@ -20365,7 +20327,7 @@ Components or props outside this list cause a type error in `nuxt.config.ts`. Va
 - **"Passed explicitly" means the prop is written, whatever its value**: `<ShuoDatepicker :clear="false" />`, `<ShuoSelectMenu :empty-value="null" />` and `format=""` all count as explicit and are not replaced by the site-wide value. `v-bind="{ clear: undefined }"` counts as not written and uses the site-wide value.
 - **ui is merged per slot**: with a site-wide `radioGroup.ui.fieldset` and a page passing `:ui="{ item: '...' }"`, both apply. If the page also passes `fieldset`, the page value replaces the site-wide one (classes are not concatenated). The result is then merged with the component's built-in styles using tailwind-merge, as in [Per-component `ui` prop](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#per-component-ui-prop). The title bar parts of `queryCard.ui` and `listCard.ui` (`bar`, `icon`, `title`, `headerRight`) share the same built-in styles; to make both cards' titles match, set the same values on both.
 - **Other values are replaced as a whole**: arrays (such as `yearRange`) are not concatenated with the built-in value.
-- **clear also looks at required fields**: `selectMenu.clear` and `datepicker.clear` do not apply to components inside a `required` `UFormField`, which hide the clear button by default; `clear` passed on the page still wins.
+- **clear also looks at required fields**: `selectMenu.clear`, `datepicker.clear` and `file.clear` do not apply to components inside a `required` `UFormField`, which hide the clear button by default; `clear` passed on the page still wins.
 - `inputNumber.unit` site-wide only decides whether a unit is shown by default and only accepts `true` / `false`; the unit text comes from `messages.inputNumber.unit`. A single field can still pass `unit="pcs"` or `:unit="false"`.
 - After setting `labelKey` / `valueKey` site-wide to `{ Code, Name }`, if a page's items are still `{ label, value }`, pass `label-key="label" value-key="value"` on that component. Radio and checkbox groups still bind string values, so convert numeric codes from the back end to strings first. In development mode, when items are missing a field, the console warning says whether the field name was passed explicitly or came from the site-wide setting (for example `(source: valueKey from the site-wide setting components.selectMenu.valueKey)`).
 
@@ -21601,82 +21563,68 @@ The `class` you pass goes on the component's outer element, merged after `ui.roo
 </table>
 
 
-# v2.0.0
+# v3.0.0
 
 > Released on November 2, 2026
 
-The clear button of select menus and date pickers is now `clear` on both, and on by default. The date picker's `clearable` is renamed; read the upgrade notes below before upgrading.
+Existing attachments in the file input are now downloaded on click and can be removed by the user. `ShuoFile`'s `fileUrl` is removed; read the upgrade notes below before upgrading.
 
 ## ✨ Highlights
 
-### ✖️ One `clear` prop for the clear button, on by default
+### ⬇️ Existing attachments download on click
 
-`ShuoSelectMenu` adds `clear` and `clear-icon`: once a value is selected, a clear button replaces the trailing arrow, and clearing sets the value to `empty-value` (`[]` for multiple). It is hidden while disabled or loading: [Clear button in SelectMenu](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button)
-
-`ShuoDatepicker` renames `clearable` to `clear`, matching the select menu: [Icons and clear button in Datepicker](https://k90325248.github.io/shuo-ui/components/date/datepicker#icons-and-clear-button)
-
-Both are on by default; pass `:clear="false"` where you don't want it:
+`ShuoFile` adds `download`: it is called only when the download button is pressed for an existing attachment, so pages no longer need to fetch the file up front and put it in `v-model`. Auth headers, POST and the like are up to the page. Return a `Blob` to have the component save it under `file-name`, or nothing if the page handled the download itself (for example by opening a new tab). While downloading, the button shows a spinner and ignores repeated clicks, a failure shows a toast, and the passed `signal` is aborted on unmount: [Existing attachments in File](https://k90325248.github.io/shuo-ui/components/phone-file/file#existing-attachments)
 
 ```vue
-<ShuoSelectMenu v-model="state.type" :items="items" :clear="false" />
-<ShuoDatepicker v-model="state.date" :clear="false" />
+<ShuoFile
+  v-model="file"
+  :file-name="attachment.name"
+  :download="(signal) => $fetch < Blob > (attachment.url, { headers, responseType: 'blob', signal })"
+/>
 ```
 
-Inside a `required` `UFormField` it is off by default, so a required field cannot be emptied with one click; pass `clear` explicitly when you still want it:
+### ✖️ Existing attachments can be removed, and clearing empties the field
+
+`ShuoFile` adds `clear`, following the same rules as the select menu and date picker: on by default, off by default inside a `required` `UFormField`, and configurable site-wide with `components.file.clear`. The clear button now also removes an existing attachment. Clearing sets `v-model` to `null` and `file-name` to `''`, leaving the field completely empty so a new file can be selected. Bind `v-model:file-name` so the page can tell from `''` that the user removed the existing attachment: [Clearing in File](https://k90325248.github.io/shuo-ui/components/phone-file/file#clearing)
 
 ```vue
-<UFormField label="Type" name="type" required>
-  <ShuoSelectMenu v-model="state.type" :items="items" />
-</UFormField>
-```
-
-Each can also be set site-wide. The order is: `clear` passed explicitly > `required` on `UFormField` > site-wide setting > built-in default (on):
-
-```ts
-export default defineNuxtConfig({
-  shuoUi: {
-    components: {
-      selectMenu: { clear: false },
-      datepicker: { clear: true }
-    }
-  }
-});
+<ShuoFile v-model="file" v-model:file-name="fileName" :download="download" :clear="canRemove" />
 ```
 
 ## ⚠️ Upgrade notes
 
-### `clearable` is renamed to `clear`
+### `fileUrl` is removed; use `download`
 
-`ShuoDatepicker`'s `clearable` and the site-wide `components.datepicker.clearable` are now `clear`. The old name no longer works: `clearable` on the component is ignored as a plain attribute, and the site-wide setting is skipped with a warning at startup. Search your project for `clearable` and change it to `clear`; where you wrote `clearable` to turn the button on, you can simply remove it outside required fields (see the next section), since the button is now shown by default.
+`ShuoFile` no longer accepts `file-url`, and passing it downloads nothing; an existing attachment without `download` only shows its name, with the select file button at the end. Search your project for `file-url` and `fileUrl` and pass a download function instead:
 
-### The clear button is shown by default
-
-Previously the select menu had no clear button and the date picker hid it by default. After upgrading, both show a clear button when they have a value (except inside a `required` `UFormField`), and a selected select menu shows it in place of the trailing arrow. To keep the previous behavior, turn it off site-wide:
-
-```ts
-export default defineNuxtConfig({
-  shuoUi: {
-    components: {
-      selectMenu: { clear: false },
-      datepicker: { clear: false }
-    }
-  }
-});
+```vue
+<!-- 2.x -->
+<ShuoFile v-model="file" :file-name="name" :file-url="url" />
+<!-- 3.0.0 -->
+<ShuoFile
+  v-model="file"
+  :file-name="name"
+  :download="(signal) => $fetch < Blob > (url, { responseType: 'blob', signal })"
+/>
 ```
 
-A date picker in a required field that had `clearable` needs `clear` after the rename to keep its clear button; simply removing it hides the button because the field is required. Fields that are only required in the schema, without `required` on `UFormField`, still show the clear button; add `required` to the `UFormField` or pass `:clear="false"` to hide it.
+Pages that pre-fetched the attachment to send auth headers and put it in `v-model` as a `File` can keep `v-model` at `null` and show the existing attachment with `file-name` and `download`.
 
-On very narrow fields (about 90px or less) the clear button can leave no room for the text; pass `:clear="false"` on those.
+### When the clear button is shown
+
+- **Existing attachments show a clear button:** previously only a local `File` could be cleared. After upgrading, an existing attachment with only `file-name` shows a clear button too; pass `:clear="false"` where removal is not allowed.
+- **Hidden by default in required fields:** inside a `required` `UFormField`, a local `File` no longer shows a clear button either; users can still select another file to replace it. Pass `clear` explicitly when you want it.
+- **Clearing also empties the file name:** previously, clearing a local `File` went back to showing `file-name`; now `file-name` is cleared to `''` as well.
 
 ## 📖 Docs site
 
-- **1.x docs:** once 2.0.0 is deployed, the site root shows the 2.x docs and the 1.x docs move to `v1/`; switch between them with the version menu in the header.
-- The SelectMenu page adds a [Clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button) section; the Datepicker and [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults) pages use `clear`.
+- **2.x docs:** once 3.0.0 is deployed, the site root shows the 3.x docs and the 2.x docs move to `v2/`; switch between them with the version menu in the header.
+- The File page rewrites the [Existing attachments](https://k90325248.github.io/shuo-ui/components/phone-file/file#existing-attachments) section and adds a [Clearing](https://k90325248.github.io/shuo-ui/components/phone-file/file#clearing) section; the [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults) page adds `file.clear`.
 
 ## 📦 Installation
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v2.0.0
+pnpm add github:k90325248/shuo-ui#v3.0.0
 pnpm add @iconify-json/lucide # recommended, icons are bundled
 ```
 
@@ -21728,75 +21676,7 @@ Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your 
 
 ---
 
-- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v2.0.0)
-
-
-# v2.0.1
-
-> Released on November 2, 2026
-
-Fixes the bottom of `ShuoTable` being cut off inside modals and other containers with a scale animation. Upgrading from 2.0.0 needs no code changes.
-
-## 🐛 Bug Fixes
-
-- **ShuoTable cut off at the bottom inside a modal:** when the table mounted during the `UModal` open animation (scale 0.95 → 1), the data area measured the scaled-down height and never corrected it after the animation, so the last row was only half visible when scrolled to the bottom. The table now measures its layout height, which CSS transforms do not affect; tables inside a `Popover` or a custom scale animation are fixed too. Pages that worked around this with `:transition="false"` can drop it after upgrading.
-
-## 📦 Installation
-
-```bash
-pnpm add github:k90325248/shuo-ui#v2.0.1
-pnpm add @iconify-json/lucide # recommended, icons are bundled
-```
-
-Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
-
-## 📋 Requirements
-
-<table>
-<thead>
-  <tr>
-    <th>
-      Package
-    </th>
-    
-    <th>
-      Version
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v2.0.1)
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v3.0.0)
 
 
 # Months

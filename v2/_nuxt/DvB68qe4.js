@@ -1,0 +1,1 @@
+var e=(e,t)=>e?t==null||t===``?e:typeof t==`function`?n=>t(n?`${n} ${e}`:e):[e,t]:t,t=(t,n)=>{let r={...n};for(let[n,i]of Object.entries(t))r[n]=e(i,r[n]);return r};export{t};

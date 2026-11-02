@@ -23,7 +23,9 @@ Binds the original `File`; `null` after clearing. Click the field, or focus it a
 
 ### Existing attachments
 
-Without a local `File`, `file-name` is shown. Pressing download fetches the contents of `file-url` as a Blob; cross-origin URLs must allow CORS, and a failed download shows a toast (requires `UApp`). When the file name is truncated, hovering or keyboard focus shows the full name, or a long press on touch devices (see [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#touch-long-press)); a long press does not open the file dialog.
+Without a local `File`, `file-name` is shown. The download button appears only when a `download` function is passed, and it is called only when the button is pressed, so there is no need to fetch the file up front and put it in `v-model`; the page decides on auth headers, POST and the like. Return a `Blob` to have the component save it under `file-name`, or return nothing if the page handled the download itself (for example by opening a new tab). While downloading, the button shows a spinner and ignores repeated clicks; throwing an error shows the download failed toast (requires `UApp`), and the passed `signal` is aborted on unmount. With a local `File`, the local file is downloaded directly and `download` is not called.
+
+When the file name is truncated, hovering or keyboard focus shows the full name, or a long press on touch devices (see [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#touch-long-press)); a long press does not open the file dialog.
 
 <component-example name="file-existing">
 
@@ -31,9 +33,21 @@ Without a local `File`, `file-name` is shown. Pressing download fetches the cont
 
 </component-example>
 
+### Clearing
+
+`clear` is on by default and shows a trailing clear button when there is a local `File` or an existing attachment; it is hidden while disabled or loading. Clearing sets `v-model` to `null` and `file-name` to `''`, leaving the field completely empty so a new file can be selected. Bind the attachment name with `v-model:file-name` so the page can tell from `''` that the user removed the existing attachment; when it is passed one-way, clearing still empties the field.
+
+Pass `:clear="false"` to disallow removal; it is off by default inside a `required` `UFormField`, following the same rules as the [SelectMenu clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button). To turn it off across the project, use the [global defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
+
+<component-example name="file-clear">
+
+
+
+</component-example>
+
 ### Button icons
 
-`select-icon` is the select button shown when there is no file, `clear-icon` is the clear button, and `download-icon` is the download button shown when there is a file. The clear button only shows with a local `File` and when not disabled.
+`select-icon` is the select button shown when there is nothing to download, `clear-icon` is the clear button, and `download-icon` is the download button shown when the file can be downloaded.
 
 <component-example name="file-icons">
 
@@ -75,7 +89,7 @@ Check required, type and size with Valibot's `v.file`, `v.mimeType` and `v.maxSi
 
 ### Uploading after selection
 
-Selecting a file does not upload it; the page decides when to send the `File` in `v-model`. In the example, pressing "Upload" disables the field with `loading`, then clears `v-model` when done and shows the file as an existing attachment with `file-name` and `file-url`.
+Selecting a file does not upload it; the page decides when to send the `File` in `v-model`. In the example, pressing "Upload" disables the field with `loading`, then clears `v-model` when done and shows the file as an existing attachment with `file-name` and `download`.
 
 <component-example name="file-upload">
 

@@ -1,8 +1,13 @@
 [
   {
+    "major": 3,
+    "version": "3.0.0",
+    "path": ""
+  },
+  {
     "major": 2,
     "version": "2.0.1",
-    "path": ""
+    "path": "v2/"
   },
   {
     "major": 1,
