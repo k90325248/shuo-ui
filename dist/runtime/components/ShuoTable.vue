@@ -196,9 +196,9 @@ const countColumns = (columns) => columns.reduce((count, column) => {
 const observeHeight = () => {
   const content = tableContent.value;
   if (!content || tableResizeObserver) return;
-  tableHeight.value = content.getBoundingClientRect().height;
-  tableResizeObserver = new ResizeObserver(() => {
-    tableHeight.value = content.getBoundingClientRect().height;
+  tableHeight.value = content.offsetHeight;
+  tableResizeObserver = new ResizeObserver(([entry]) => {
+    tableHeight.value = entry?.borderBoxSize[0]?.blockSize ?? content.offsetHeight;
   });
   tableResizeObserver.observe(content);
 };
