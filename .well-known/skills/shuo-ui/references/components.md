@@ -65,6 +65,7 @@ Values of the wrong type are cleared too, usually with a `console.warn` like `[S
 - `multiple`: binds `string[]`, empty `[]`.
 - `empty-value`: `''` (default) or `null` for an empty single selection.
 - `format`: default `'{label}'`; `'{value}_{label}'` shows code and name. Applies to items and the selected text.
+- `clear`: default `true`, shows a clear button once a value is selected; `:clear="false"` hides it. Off by default inside a `required` `UFormField` (order: explicit `clear` > field `required` > site-wide > built-in). `clear-icon` (default `i-lucide-x`).
 - `label-key` / `value-key` for other field names (inferred from `items`; a wrong name is a type error).
 - Built-in search on `label-key`; `:search-input="false"` hides it.
 - When the bound value has no matching item yet (items loading), `placeholder` shows, then the label appears once items arrive.
@@ -110,7 +111,7 @@ Same as `ShuoRadioGroup` (items, orientation, keys, `item-append` with `{ item, 
 - `roc` (default `true`) only changes the display; `separator` (default `'/'`) only changes the bound value. Use `separator="-"` for `YYYY-MM-DD` APIs.
 - `range`: binds `[start, end]` or `[]`; also `v-model:start` / `v-model:end` (strings, `''` when empty). Only complete ranges are committed. With separate API fields, bind only `v-model:start` and `v-model:end`.
 - `min-date`, `max-date` (string, number or `Date`), `year-range` (default `[1900, 2100]`; ROC mode starts at 1911).
-- `clearable` (default `false`), `calendar-icon`, `clear-icon`, `state`.
+- `clear` (default `true`, off by default inside a `required` `UFormField`; `:clear="false"` hides it), `calendar-icon`, `clear-icon`, `state`.
 - Mismatched values (wrong format for `mode` / `separator`, reversed range) are cleared with a `console.warn`. When changing `mode`, set a matching value at the same time.
 - Does not inherit `@vuepic/vue-datepicker` props.
 - Two linked pickers: pass each other's value as `max-date` / `min-date`.

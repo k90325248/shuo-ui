@@ -26,7 +26,7 @@ Components start with `Shuo` and need no import. Use them with Nuxt UI's `UForm`
 
     <!-- Application date -->
     <UFormField label="Application date" name="date">
-      <ShuoDatepicker v-model="state.date" clearable />
+      <ShuoDatepicker v-model="state.date" />
     </UFormField>
 
     <UButton type="submit" label="Submit" />

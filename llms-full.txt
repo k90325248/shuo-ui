@@ -1758,6 +1758,31 @@ export default defineNuxtConfig({
 
 </code-group>
 
+### 清除按鈕
+
+`clear` 預設開啟，已選取時尾端顯示清除按鈕，清除後單選為 `empty-value`、多選為 `[]`；停用或載入中時不顯示。傳 `:clear="false"` 關閉，`clear-icon` 可換圖示（預設 `i-lucide-x`）。整個專案都不需要清除按鈕時，在全站設定關閉，個別元件仍可傳 `clear` 開啟。
+
+包在 `required` 的 `UFormField` 內時預設關閉，避免必填欄位一鍵清空；需要時仍可明確傳 `clear`。判斷順序為：明確傳入的 `clear` > `UFormField` 的 `required` > 全站設定 > 內建預設（開啟）。只在 schema 設必填、`UFormField` 沒寫 `required` 的欄位不受影響。
+
+<code-group>
+
+```vue [單一元件]
+<ShuoSelectMenu v-model="state.type" :items="items" :clear="false" />
+```
+
+```ts [全站設定]
+// nuxt.config.ts
+export default defineNuxtConfig({
+  shuoUi: {
+    components: {
+      selectMenu: { clear: false }
+    }
+  }
+});
+```
+
+</code-group>
+
 ### 自訂選項欄位
 
 後端欄位不是 `label`、`value` 時，以 `label-key`、`value-key` 指定。`USelectMenu` 的 `description-key` 等 props 也能直接使用，欄位名稱依 `items` 推導，寫錯會有型別錯誤。
@@ -2676,7 +2701,7 @@ export default defineNuxtConfig({
 
 ### 圖示與清除按鈕
 
-`clearable` 顯示清除按鈕，預設關閉，清除後綁定值為 `''`（範圍為 `[]`）。`calendar-icon` 是尾端的日曆圖示，預設 `i-lucide-calendar`；`clear-icon` 是清除按鈕的圖示，預設 `i-lucide-x`。
+`clear` 顯示清除按鈕，預設開啟（傳 `:clear="false"` 關閉；包在 `required` 的 `UFormField` 內時預設關閉，規則同 [SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)），清除後綁定值為 `''`（範圍為 `[]`）。`calendar-icon` 是尾端的日曆圖示，預設 `i-lucide-calendar`；`clear-icon` 是清除按鈕的圖示，預設 `i-lucide-x`。
 
 <component-example name="datepicker-icons">
 
@@ -2860,7 +2885,7 @@ export default defineNuxtConfig({
 
 </component-props>
 
-`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clearable`、`calendarIcon`、`clearIcon`、`roc`、`separator`、`yearRange` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clear`、`calendarIcon`、`clearIcon`、`roc`、`separator`、`yearRange` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
 
 <note>
 
@@ -7861,7 +7886,7 @@ Shuo UI 是一組基於 [Nuxt UI](https://ui.nuxt.com) 的表單元件，以 Nux
 
     <!-- 申請日期 -->
     <UFormField label="申請日期" name="date">
-      <ShuoDatepicker v-model="state.date" clearable />
+      <ShuoDatepicker v-model="state.date" />
     </UFormField>
 
     <UButton type="submit" label="送出" />
@@ -8338,7 +8363,8 @@ export default defineNuxtConfig({
         size: 'md',
         emptyValue: null,
         labelKey: 'Name',
-        valueKey: 'Code'
+        valueKey: 'Code',
+        clear: false
       },
 
       // checkboxGroup 複選群組
@@ -8363,7 +8389,7 @@ export default defineNuxtConfig({
 
       // datepicker 日期選擇器
       datepicker: {
-        clearable: true,
+        clear: false,
         separator: '-'
       },
 
@@ -8662,6 +8688,22 @@ export default defineNuxtConfig({
         value
       </code>
       
+      ）、<code>
+        clear
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        clearIcon
+      </code>
+      
+      （<code>
+        i-lucide-x
+      </code>
+      
       ）
     </td>
   </tr>
@@ -8782,6 +8824,22 @@ export default defineNuxtConfig({
         value
       </code>
       
+      ）、<code>
+        clear
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        clearIcon
+      </code>
+      
+      （<code>
+        i-lucide-x
+      </code>
+      
       ）
     </td>
   </tr>
@@ -8817,11 +8875,11 @@ export default defineNuxtConfig({
       </code>
       
       ）、<code>
-        clearable
+        clear
       </code>
       
       （<code>
-        false
+        true
       </code>
       
       ）、<code>
@@ -9062,9 +9120,10 @@ export default defineNuxtConfig({
 
 ## 規則
 
-- **是否明確傳入看的是有沒有寫這個 prop，不看值**：`<ShuoDatepicker :clearable="false" />`、`<ShuoSelectMenu :empty-value="null" />`、`format=""` 都算明確傳入，不會被全站值取代；`v-bind="{ clearable: undefined }"` 視為沒寫，沿用全站值。
+- **是否明確傳入看的是有沒有寫這個 prop，不看值**：`<ShuoDatepicker :clear="false" />`、`<ShuoSelectMenu :empty-value="null" />`、`format=""` 都算明確傳入，不會被全站值取代；`v-bind="{ clear: undefined }"` 視為沒寫，沿用全站值。
 - **ui 依 slot 合併**：全站設定 `radioGroup.ui.fieldset`、頁面傳 `:ui="{ item: '...' }"` 時兩者都生效；頁面也傳了 `fieldset` 時，以頁面的值取代全站值（不做 class 串接）。合併後再和元件內建樣式以 tailwind-merge 合併，同[單一元件的 `ui` prop](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)。`queryCard.ui` 與 `listCard.ui` 的標題列部位（`bar`、`icon`、`title`、`headerRight`）與內建樣式相同，要統一兩張卡片的標題樣式時兩邊寫相同的值。
 - **其他值整個取代**：陣列（例如 `yearRange`）不和內建值串接。
+- **clear 另看必填欄位**：`selectMenu.clear`、`datepicker.clear` 不影響包在 `required` 的 `UFormField` 內的元件，這些元件預設不顯示清除按鈕；頁面明確傳 `clear` 時仍優先。
 - `inputNumber.unit` 全站只決定「預設是否顯示單位」，只接受 `true`／`false`；單位文字由 `messages.inputNumber.unit` 決定。單一欄位仍可傳 `unit="件"` 或 `:unit="false"`。
 - `labelKey`／`valueKey` 全站設定為 `{ Code, Name }` 後，某一頁的選項仍是 `{ label, value }` 時，在該元件明確傳 `label-key="label" value-key="value"`。單選與複選群組的綁定值仍為字串，後端代碼是數字時請先轉成字串。開發模式下選項缺少欄位時，主控台警告會註明欄位名稱來自明確傳入或全站設定（例如 `（來源：valueKey 為全站設定 components.selectMenu.valueKey）`）。
 
@@ -10300,642 +10359,82 @@ export default defineAppConfig({
 </table>
 
 
-# v1.0.1
+# v2.0.0
 
-> 發佈於 2026年10月25日
+> 發佈於 2026年11月2日
 
-> `1.0.0` 在未安裝 `@iconify-json/lucide` 的專案中無法建置，已撤回，請直接使用 `1.0.1`。本版內容即第一個正式版本，並包含下方的修正。
-
-Shuo UI 第一個正式版本：依照我們專案的表單寫法整理出來的 [Nuxt UI](https://ui.nuxt.com) 元件，以 Nuxt Module 提供，共 15 個元件。完整說明與可操作的範例見[文件網站](https://k90325248.github.io/shuo-ui/)。
+下拉選單與日期選擇器的清除按鈕統一為 `clear`，並改為預設開啟。日期選擇器的 `clearable` 已改名，升級前請先看下方的升級須知。
 
 ## ✨ Highlights
 
-### 🧩 建立在 Nuxt UI 之上
+### ✖️ 清除按鈕統一為 `clear`，預設開啟
 
-元件包裝 Nuxt UI，沒有另外宣告的 Nuxt UI 參數、slot 與 ref 都能直接使用，型別也會一併推導，照 Nuxt UI 文件使用即可：[沿用 Nuxt UI](https://k90325248.github.io/shuo-ui/components/overview/common#%E6%B2%BF%E7%94%A8-nuxt-ui)
+`ShuoSelectMenu` 新增 `clear` 與 `clear-icon`：已選取時尾端以清除按鈕取代箭頭，清除後單選為 `empty-value`、多選為 `[]`，停用或載入中時不顯示：[SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)
 
-```vue
-<ShuoInputText v-model="keyword" variant="soft" icon="i-lucide-search" />
-```
+`ShuoDatepicker` 的 `clearable` 改名為 `clear`，與下拉選單一致：[Datepicker 的圖示與清除按鈕](https://k90325248.github.io/shuo-ui/components/date/datepicker#%E5%9C%96%E7%A4%BA%E8%88%87%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)
 
-### 🇹🇼 繁體中文與台灣常用格式
-
-文案預設繁體中文，並內建專案中常見的格式：身分證字號遮蔽、金額千分位、民國年日期、區碼與電話、年月數換算。綁定值維持原始資料（西元日期、純數字），只在顯示時轉換。
+兩者都預設開啟，不需要時傳 `:clear="false"`：
 
 ```vue
-<ShuoInputText v-model="idNumber" :mask="4" />
-<ShuoInputNumber v-model="amount" unit />
-<!-- 顯示 115/10/25，綁定值為 2026/10/25 -->
-<ShuoDatepicker v-model="applyDate" />
+<ShuoSelectMenu v-model="state.type" :items="items" :clear="false" />
+<ShuoDatepicker v-model="state.date" :clear="false" />
 ```
 
-### 📐 一致的尺寸與狀態
-
-所有表單輸入元件共用 `size`、`disabled`、`loading`、`skeleton`、`id`、`name`，同尺寸的元件高度一致，並會跟著 `UFormField` 與 `UForm` 的尺寸、停用與錯誤狀態走：[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common)
+包在 `required` 的 `UFormField` 內時預設關閉，避免必填欄位一鍵清空；需要時仍可明確傳 `clear`：
 
 ```vue
-<UForm :schema="schema" :state="state" :disabled="saving">
-  <UFormField label="金額" name="amount" size="md">
-    <ShuoInputNumber v-model="state.amount" :skeleton="loading" />
-  </UFormField>
-</UForm>
+<UFormField label="類別" name="type" required>
+  <ShuoSelectMenu v-model="state.type" :items="items" />
+</UFormField>
 ```
 
-### ⚙️ 全站預設值與共用驗證規則
-
-尺寸、顯示格式、圖示等可在 `nuxt.config.ts` 統一設定，元件上明確傳入的值仍然優先；常用的 Valibot 驗證規則已自動匯入，錯誤訊息格式全站一致：[元件全站預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)、[表單驗證](https://k90325248.github.io/shuo-ui/getting-started/form/validation)
-
-```ts
-export default defineNuxtConfig({
-  modules: ['@nuxt/ui', '@shuo/ui'],
-  shuoUi: {
-    components: {
-      selectMenu: { format: '{value}_{label}' },
-      listCard: { pageSize: 20 }
-    }
-  }
-});
-```
-
-```ts
-const schema = v.object({
-  name: requiredText('姓名'),
-  amount: requiredNumber('金額')
-});
-```
-
-### 🔎 查詢頁版面
-
-`ShuoQueryCard` 放查詢條件、`ShuoListCard` 放查詢結果與後端分頁，查詢中的骨架、空資料與高度過渡都已處理：[查詢條件卡片](https://k90325248.github.io/shuo-ui/components/layout/query-card)、[清單卡片](https://k90325248.github.io/shuo-ui/components/layout/list-card)
-
-## 🚀 新增元件
-
-- **InputText:** 單行文字輸入，可遮蔽全部或最後幾碼（[文件](https://k90325248.github.io/shuo-ui/components/text/input-text)）
-- **InputNumber:** 數字輸入，離開輸入框後顯示千分位，可指定小數位數與單位（[文件](https://k90325248.github.io/shuo-ui/components/text/input-number)）
-- **Textarea:** 多行文字輸入，保留換行，可自動調整高度（[文件](https://k90325248.github.io/shuo-ui/components/text/textarea)）
-- **SelectMenu:** 下拉選單，可搜尋、多選，文字過長時顯示完整提示（[文件](https://k90325248.github.io/shuo-ui/components/choice/select-menu)）
-- **Datepicker:** 日期選擇器，預設民國年，支援五種精度與範圍選擇（[文件](https://k90325248.github.io/shuo-ui/components/date/datepicker)）
-- **Checkbox:** 單一核取方塊，可自訂勾選值，文字旁可放附加內容（[文件](https://k90325248.github.io/shuo-ui/components/choice/checkbox)）
-- **RadioGroup:** 單選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容（[文件](https://k90325248.github.io/shuo-ui/components/choice/radio-group)）
-- **CheckboxGroup:** 複選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容（[文件](https://k90325248.github.io/shuo-ui/components/choice/checkbox-group)）
-- **File:** 單檔選擇與既有附件下載，選檔不會自動上傳（[文件](https://k90325248.github.io/shuo-ui/components/phone-file/file)）
-- **Months:** 年月數換算輸入，可同時綁定總月數、年數與月數（[文件](https://k90325248.github.io/shuo-ui/components/date/months)）
-- **Phone:** 市話號碼，兩個輸入框分別輸入區碼與電話（[文件](https://k90325248.github.io/shuo-ui/components/phone-file/phone)）
-- **QueryCard:** 可收合的查詢條件卡片，內含 UForm，欄位以響應式格線排列（[文件](https://k90325248.github.io/shuo-ui/components/layout/query-card)）
-- **ListCard:** 查詢結果清單卡片，包含標題列、表格與後端分頁（[文件](https://k90325248.github.io/shuo-ui/components/layout/list-card)）
-- **Table:** 基於 UTable 的純表格，含骨架、空資料與高度過渡（[文件](https://k90325248.github.io/shuo-ui/components/layout/table)）
-- **InfoTooltip:** 資訊圖示加提示，滑鼠移入或鍵盤聚焦即顯示（[文件](https://k90325248.github.io/shuo-ui/components/helper/info-tooltip)）
-
-## 🐛 Bug Fixes
-
-- **module:** 只把已安裝圖示集的圖示加入 `@nuxt/icon` 的 client bundle。`1.0.0` 固定加入內建的 lucide 圖示，專案沒有安裝 `@iconify-json/lucide` 時，`nuxt build`、`nuxt generate` 會因無法產生 client bundle 而失敗；現在沒有安裝也能建置，圖示改由 `@nuxt/icon` 在執行時載入。建議一併安裝 `@iconify-json/lucide`，讓圖示直接打包進網站。
-
-## ⚠️ 使用前須知
-
-- 核取方塊與選項群組（`ShuoCheckbox`、`ShuoRadioGroup`、`ShuoCheckboxGroup`）的高度與輸入框對齊，因此不支援 Nuxt UI 的說明文字（`description`、`descriptionKey`）、`variant`（card、table）、`indicator` 與 `highlight`，傳入時型別會報錯，執行時也不會套用。
-- `ShuoInputNumber` 不提供原生 `min`、`max`、`step`，數值範圍請用驗證規則。
-- 選檔不會自動上傳：`ShuoFile` 只負責選擇與下載，上傳時機由頁面決定。
-
-## 📦 安裝
-
-```bash
-pnpm add github:k90325248/shuo-ui#v1.0.1
-pnpm add @iconify-json/lucide # 建議，圖示會直接打包
-```
-
-在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
-
-## 📋 需求
-
-<table>
-<thead>
-  <tr>
-    <th>
-      套件
-    </th>
-    
-    <th>
-      版本
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.0.1)
-
-
-# v1.1.0
-
-> 發佈於 2026年10月26日
-
-新增 `ShuoTooltip`，手機上長按即可查看所有提示；元件文案改為跟隨 Nuxt UI 的語系，內建繁體中文與英文。文件網站同步推出英文版，並重新整理成分頁與分組。升級前請先看下方的「升級須知」：自動匯入的函式範圍與元件文案的語系行為有調整。
-
-## ✨ Highlights
-
-### 📱 手機上長按查看提示
-
-Nuxt UI 的 `UTooltip` 只在滑鼠移入或鍵盤聚焦時顯示，手機上點擊、按住都不會出現。新的 `ShuoTooltip` 沿用 `UTooltip` 的全部參數與 slot，補上觸控裝置的長按顯示；`ShuoInfoTooltip` 與下拉選單、日期選擇器、檔案選擇、核取方塊、選項群組的文字截斷提示都改用它，在手機上一樣長按顯示：[Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip)
-
-```vue
-<ShuoTooltip text="儲存草稿">
-  <UButton label="儲存" />
-</ShuoTooltip>
-```
-
-長按顯示提示時不會觸發原本的點擊、勾選或開啟選單。要恢復 Nuxt UI 原本的行為，單一元件傳 `:touch="false"`，或在全站設定 `components.tooltip.touch: false`。
-
-### 🌐 元件文案跟隨 Nuxt UI 語系
-
-驗證訊息、無障礙名稱、提示文字、日期選擇器的月份與星期等文案，跟著 `<UApp :locale>` 切換，內建繁體中文與英文，已顯示的元件會立即更新。文案可依語系覆寫，也可以加入內建以外的語系：[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)
-
-```ts
-export default defineNuxtConfig({
-  shuoUi: {
-    locale: 'zh-TW', // 頁面沒有設定 UApp 語系時使用
-    locales: {
-      en: { listCard: { title: 'Search results' } }
-    }
-  }
-});
-```
-
-### 🌙 深色模式的表單色票
-
-停用中的輸入框在深色模式改用較暗的底色與較亮的文字，不再沿用淺色模式的顏色；輸入框邊框在深色模式改用較亮的主色。停用色也從固定的灰色改為 Nuxt UI 的中性色，色調跟著專案 `app.config.ts` 的 `ui.colors.neutral`。顏色由 `--ui-form-*` 變數決定，可在專案 CSS 以 `:root` 與 `.dark` 分別覆寫：[表單色票](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#%E8%A1%A8%E5%96%AE%E8%89%B2%E7%A5%A8)
-
-## 🚀 新增元件
-
-- **Tooltip:** 基於 UTooltip 的提示，補上觸控裝置長按顯示（[文件](https://k90325248.github.io/shuo-ui/components/helper/tooltip)）
-
-## 🐛 Bug Fixes
-
-- **InputText:** 遮蔽的文字切換為明碼時，不再先閃一下所有文字。
-- **Months:** 「年」「月」單位的寬度依文字調整，英文的 `yr`、`mo` 不會被截斷。
-
-## ⚠️ 升級須知
-
-### 只自動匯入公開的工具函式
-
-先前模組會自動匯入 `runtime/utils` 與 `runtime/composables` 底下的所有函式，元件內部使用的工具也一併暴露給專案。現在只自動匯入下列公開函式，參數與範例見文件網站新的[工具函式](https://k90325248.github.io/shuo-ui/utils/form/validation)分頁：
-
-<table>
-<thead>
-  <tr>
-    <th>
-      分類
-    </th>
-    
-    <th>
-      函式
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      驗證規則
-    </td>
-    
-    <td>
-      <code>
-        requiredText
-      </code>
-      
-      、<code>
-        requiredNumber
-      </code>
-      
-      、<code>
-        requiredArray
-      </code>
-      
-      、<code>
-        optionalEmail
-      </code>
-      
-      、<code>
-        optionalNonNegativeNumber
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      顯示格式
-    </td>
-    
-    <td>
-      <code>
-        formatDateDisplay
-      </code>
-      
-      、<code>
-        parseDateValue
-      </code>
-      
-      、<code>
-        formatNumberDisplay
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      欄位拆合
-    </td>
-    
-    <td>
-      <code>
-        splitPhone
-      </code>
-      
-      、<code>
-        joinPhone
-      </code>
-      
-      、<code>
-        splitMonths
-      </code>
-      
-      、<code>
-        combineMonths
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      設定
-    </td>
-    
-    <td>
-      <code>
-        resolveShuoDefault
-      </code>
-      
-      、<code>
-        getShuoComponentDefaults
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
-`getShuoMessages`、`setShuoMessages`、`formatMessage`、`toNumberText`、`getDecimalPlaces`、`filterPhoneInput`、`getDateModelFormat`、`isValidDateSeparator`、`useChoiceGroup`、`useTruncatedText` 等內部函式不再自動匯入。專案有用到時，建置會出現找不到函式的錯誤；這些函式不屬於公開 API，之後可能調整，建議改用上表的公開函式或模組選項（例如文案改用 `shuoUi.messages`、`shuoUi.locales` 覆寫）。
-
-### 元件文案跟隨 UApp 的語系
-
-先前元件文案固定為繁體中文。現在元件會跟隨 `<UApp :locale>`：
-
-- 沒有設定 `UApp` 的 `locale`，或設定為繁體中文時，畫面和先前相同。
-- 設定了其他語系（例如英文）的專案，升級後元件文案會跟著變成該語系。需要調整文字時，以 `shuoUi.locales` 依語系覆寫，見[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages#%E8%A6%86%E5%AF%AB%E6%96%87%E6%A1%88)。
-
-## 📖 文件網站
-
-- **英文版：** 右上角可切換繁體中文與英文，網址改為 `/zh-tw/...` 與 `/en/...`，根網址依上次選擇的語言導向。1.0.1 的頁面網址已不再使用，請從[首頁](https://k90325248.github.io/shuo-ui/)重新進入。
-- **分頁與分組：** 內容分成「開始使用」「元件」「工具函式」三個分頁，左側選單依用途分組。
-- **主題選單：** 右上角的調色盤可即時切換主題色、字型、圓角、元件尺寸、民國／西元年與元件語系，並匯出對應的 `app.config.ts`、CSS 與 `nuxt.config.ts`。
-
-## 📦 安裝
-
-```bash
-pnpm add github:k90325248/shuo-ui#v1.1.0
-pnpm add @iconify-json/lucide # 建議，圖示會直接打包
-```
-
-在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
-
-## 📋 需求
-
-<table>
-<thead>
-  <tr>
-    <th>
-      套件
-    </th>
-    
-    <th>
-      版本
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.1.0)
-
-
-# v1.2.0
-
-> 發佈於 2026年10月27日
-
-新增 `ShuoSwitch`，切換後可以先呼叫 API，成功才更新、失敗自動復原；表格與清單卡片支援勾選；核取方塊、選項群組與開關支援說明文字。文件網站的元件更新紀錄改為依語系顯示。升級前請先看下方的「升級須知」：選項資料原本就帶有 `description` 欄位的群組，升級後會顯示說明。
-
-## ✨ Highlights
-
-### 🔀 切換後先處理、成功才更新的開關
-
-新的 `ShuoSwitch` 沿用 `USwitch` 的參數，多了 `action`：切換後先顯示新的值並進入載入中、停用，處理函式回傳 `false` 或丟出錯誤時自動復原，其他回傳值才更新 `v-model` 並送出 `change`。適合切換當下就要呼叫 API 儲存的設定：[Switch](https://k90325248.github.io/shuo-ui/components/choice/switch)
-
-```vue
-<ShuoSwitch v-model="enabled" label="啟用帳號" :action="(value) => api.setEnabled(value)" />
-```
-
-高度與同尺寸的輸入框一致，文字過長時省略並以 Tooltip 顯示完整文字，與核取方塊相同；`size`、`color`、`loadingIcon` 可在全站設定 `components.switch`。按鈕不需要另外包裝，`UButton` 的 `loading-auto` 已提供相同的處理中狀態。
-
-### ☑️ 表格與清單卡片勾選
-
-`ShuoTable` 與 `ShuoListCard` 加上 `selectable` 後，在最前面加上勾選欄，勾選結果以 `v-model:selected` 綁定 key 陣列：[Table 的勾選](https://k90325248.github.io/shuo-ui/components/layout/table#%E5%8B%BE%E9%81%B8)
-
-```vue
-<ShuoListCard
-  v-model:selected="selected"
-  :data="rows"
-  :columns="columns"
-  selectable
-  row-key="ID"
-  :row-selectable="(row) => row.status !== '已結案'"
-  @page-change="search"
-/>
-```
-
-- `row-key` 為欄位名稱或函式；後端分頁時換頁仍保留其他頁的勾選，可以一次處理多頁勾選的資料。
-- 表頭的全選只勾選目前這頁可勾選的資料，部分勾選時顯示半選；`select-all` 設為 `false` 時改顯示 `selection-header` 的文字。
-- `row-selectable` 回傳 `false` 的資料停用勾選；查詢中停用所有核取方塊。
-- `checkbox-props` 設定核取方塊的 `class`、`ui`、`color`、`size` 與圖示；`columns` 中放 `{ id: 'select' }` 可指定勾選欄的位置，`#select-header`、`#select-cell` 插槽可完全自訂。
-- `selectAll`、`checkboxProps` 可在全站設定 `components.table`。
-
-沒有開啟 `selectable` 時行為不變，先前以 `tableProps` 自行控制勾選的寫法照常可用。
-
-### 📝 核取方塊、選項群組與開關的說明文字
-
-`ShuoCheckbox`、`ShuoRadioGroup`、`ShuoCheckboxGroup` 與 `ShuoSwitch` 支援說明文字（群組以選項的 `description` 欄位或 `description-key` 指定）。沒有說明時高度仍與輸入框一致；有說明時往下撐高、說明換行，第一行文字仍與旁邊的欄位對齊。水平排列的群組整列一起撐高，說明不會擠壓其他選項的文字：[Checkbox 的說明文字](https://k90325248.github.io/shuo-ui/components/choice/checkbox#%E8%AA%AA%E6%98%8E%E6%96%87%E5%AD%97)
-
-```vue
-<ShuoCheckbox v-model="subscribe" label="訂閱電子報" description="每週寄送一次最新公告，可以隨時取消" />
-```
-
-## 🚀 新增元件
-
-- **Switch:** 開關，切換後可先執行處理函式，成功才更新綁定值，失敗或丟出錯誤時自動復原（[文件](https://k90325248.github.io/shuo-ui/components/choice/switch)）
-
-## ⚠️ 升級須知
-
-### 選項資料的 description 欄位會顯示
-
-先前單選與複選群組不顯示選項說明，選項資料就算帶有 `description` 欄位也會被忽略。現在會顯示在選項文字下方，並讓選項撐高。
-
-選項直接使用後端資料、而資料剛好有 `description` 欄位（例如代碼表的備註）時，升級後畫面會多出說明。不想顯示時，在傳入前移除該欄位：
-
-```ts
-const options = computed(() => codes.value.map(({ description: _description, ...item }) => item));
-```
-
-## 📖 文件網站
-
-- **版本紀錄：** 標題列新增「版本紀錄」分頁，可查看每個版本的發佈說明，與 GitHub Release 內容相同，英文版顯示英文說明。
-- **更新紀錄依語系顯示：** 元件頁最後的更新紀錄改為依文件語系顯示中文或英文說明，不再顯示 `feat:`、`fix:` 等前綴。
-- **新頁面：** 新增 [Switch](https://k90325248.github.io/shuo-ui/components/choice/switch)；Table、ListCard、Checkbox、RadioGroup、CheckboxGroup 頁新增勾選與說明文字的用法與範例；共用參數頁的範例加入開關。
-
-## 📦 安裝
-
-```bash
-pnpm add github:k90325248/shuo-ui#v1.2.0
-pnpm add @iconify-json/lucide # 建議，圖示會直接打包
-```
-
-在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
-
-## 📋 需求
-
-<table>
-<thead>
-  <tr>
-    <th>
-      套件
-    </th>
-    
-    <th>
-      版本
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.0)
-
-
-# v1.2.1
-
-> 發佈於 2026年10月27日
-
-文件網站新增「Agents」分組，讓 Cursor、Claude Code 等 AI 工具也能正確使用 Shuo UI：提供 LLMs.txt，以及可直接安裝的 Shuo UI skill。元件沒有任何變更，從 1.2.0 升級不需要修改程式碼。
-
-## ✨ Highlights
-
-### 🤖 給 AI 工具的 Skill
-
-新的 `shuo-ui` skill 教 AI coding agent 用 Shuo UI 撰寫表單與查詢頁面：各元件的 v-model 型別與空值約定、搭配 `UForm` 與 Valibot 的驗證規則、查詢卡片搭配清單卡片的分頁寫法、`shuoUi` 全站設定等。安裝後在 agent 的對話框輸入 `/shuo-ui` 即可呼叫：[Skills](https://k90325248.github.io/shuo-ui/getting-started/agents/skills)
-
-```bash
-npx skills add k90325248/shuo-ui
-```
-
-- Cursor 可在文件頁按「安裝 Skill」一鍵安裝，Claude Code 使用 `claude skill add`，其他工具可直接引用 GitHub 上的 `skills/shuo-ui/SKILL.md`。
-- skill 檔案放在公開 repo 的 `skills/shuo-ui`，也發佈在文件網站的 `/.well-known/skills/`；套件本身不包含這些檔案，安裝的內容與 1.2.0 相同。
-
-### 📄 LLMs.txt
-
-文件網站提供 [`/llms.txt`](https://k90325248.github.io/shuo-ui/llms.txt)（所有頁面的索引）與 [`/llms-full.txt`](https://k90325248.github.io/shuo-ui/llms-full.txt)（完整文件），每個頁面也可在網址後加上 `.md` 取得 markdown 版本。在 ChatGPT、Claude 等工具中提供這些網址，AI 就能依照文件回答：[LLMs.txt](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt)
-
-## 📖 文件網站
-
-- **新頁面：** 「開始使用」新增 Agents 分組，包含 [LLMs.txt](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt) 與 [Skills](https://k90325248.github.io/shuo-ui/getting-started/agents/skills)。
-
-## 📦 安裝
-
-```bash
-pnpm add github:k90325248/shuo-ui#v1.2.1
-pnpm add @iconify-json/lucide # 建議，圖示會直接打包
-```
-
-在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
-
-## 📋 需求
-
-<table>
-<thead>
-  <tr>
-    <th>
-      套件
-    </th>
-    
-    <th>
-      版本
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.1)
-
-
-# v1.3.0
-
-> 發佈於 2026年10月29日
-
-表格與清單卡片的初次載入骨架可以調整列數與高度，也可以全站設定。沒有設定時與 1.2.1 相同，升級不需要修改程式碼。
-
-## ✨ Highlights
-
-### 🦴 調整初次載入骨架的列數與高度
-
-`ShuoTable` 與 `ShuoListCard` 新增 `skeleton-rows` 與 `skeleton-class`：前者設定骨架列數（預設 `3`，至少 1 列），後者設定每條骨架的高度等樣式（預設 `h-6`，即 24px，傳入時整個取代預設值）：[Table 的初次載入骨架](https://k90325248.github.io/shuo-ui/components/layout/table#%E5%88%9D%E6%AC%A1%E8%BC%89%E5%85%A5%E9%AA%A8%E6%9E%B6)
-
-```vue
-<ShuoListCard :data="rows" :columns="columns" :loading="loading" :skeleton-rows="5" skeleton-class="h-8" />
-```
-
-兩者都可在全站設定 `components.table` 統一調整，也套用到 `ShuoListCard` 內的表格；頁面明確傳入時優先：
+也可以在全站設定分別調整，判斷順序為：明確傳入的 `clear` > `UFormField` 的 `required` > 全站設定 > 內建預設（開啟）：
 
 ```ts
 export default defineNuxtConfig({
   shuoUi: {
     components: {
-      table: { skeletonRows: 5, skeletonClass: 'h-8' }
+      selectMenu: { clear: false },
+      datepicker: { clear: true }
     }
   }
 });
 ```
 
+## ⚠️ 升級須知
+
+### `clearable` 改名為 `clear`
+
+`ShuoDatepicker` 的 `clearable` 與全站設定 `components.datepicker.clearable` 都改為 `clear`。舊名稱不再生效：元件上的 `clearable` 會被當成一般屬性忽略，全站設定則會在啟動時警告並略過。請全專案搜尋 `clearable` 改為 `clear`；原本寫 `clearable` 開啟清除的地方，除了必填欄位（見下一節）之外，現在預設就有清除按鈕，可以直接刪除。
+
+### 清除按鈕預設顯示
+
+先前下拉選單沒有清除按鈕，日期選擇器預設不顯示。升級後兩者有值時都會顯示清除按鈕（包在 `required` 的 `UFormField` 內除外），下拉選單已選取時尾端的箭頭也會改為清除按鈕。要維持先前的行為，在全站設定關閉：
+
+```ts
+export default defineNuxtConfig({
+  shuoUi: {
+    components: {
+      selectMenu: { clear: false },
+      datepicker: { clear: false }
+    }
+  }
+});
+```
+
+原本在必填欄位寫 `clearable` 的日期選擇器，改名後要寫 `clear` 才會顯示清除按鈕；直接刪除會因為必填而不顯示。只在 schema 設必填、`UFormField` 沒寫 `required` 的欄位仍會顯示清除按鈕，不想顯示時在 `UFormField` 加上 `required` 或傳 `:clear="false"`。
+
+寬度很窄（約 90px 以下）的欄位顯示清除按鈕後，文字可能沒有空間顯示，這類欄位請傳 `:clear="false"`。
+
 ## 📖 文件網站
 
-- Table、ListCard 與[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)頁新增骨架列數與高度的說明。
+- **1.x 文件：** 2.0.0 部署後，網站根目錄改為 2.x 文件，1.x 文件移到 `v1/`，可從標題列的版本選單切換。
+- SelectMenu 頁新增[清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)一節；Datepicker 與[全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)頁改用 `clear`。
 
 ## 📦 安裝
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v1.3.0
+pnpm add github:k90325248/shuo-ui#v2.0.0
 pnpm add @iconify-json/lucide # 建議，圖示會直接打包
 ```
 
@@ -10987,7 +10486,7 @@ pnpm add @iconify-json/lucide # 建議，圖示會直接打包
 
 ---
 
-- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v1.3.0)
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v2.0.0)
 
 
 # Months
@@ -13435,6 +12934,31 @@ export default defineNuxtConfig({
 
 </code-group>
 
+### Clear button
+
+`clear` is on by default: once a value is selected, a clear button shows at the end, and clearing sets the value to `empty-value` (`[]` for multiple). It is hidden while disabled or loading. Pass `:clear="false"` to turn it off; `clear-icon` changes the icon (`i-lucide-x` by default). To turn it off for the whole project, set it site-wide; a single component can still pass `clear` to turn it back on.
+
+Inside a `required` `UFormField` it is off by default, so a required field cannot be emptied with one click; pass `clear` explicitly when you still want it. The order is: `clear` passed explicitly > `required` on `UFormField` > site-wide setting > built-in default (on). Fields that are only required in the schema, without `required` on `UFormField`, are not affected.
+
+<code-group>
+
+```vue [Single component]
+<ShuoSelectMenu v-model="state.type" :items="items" :clear="false" />
+```
+
+```ts [Site-wide]
+// nuxt.config.ts
+export default defineNuxtConfig({
+  shuoUi: {
+    components: {
+      selectMenu: { clear: false }
+    }
+  }
+});
+```
+
+</code-group>
+
 ### Custom item fields
 
 When the back-end fields are not `label` and `value`, set them with `label-key` and `value-key`. Props of `USelectMenu` such as `description-key` work directly too; field names are inferred from `items`, and a wrong name is a type error.
@@ -14349,7 +13873,7 @@ Each clearing emits `update:modelValue` (or `update:start`, `update:end`) only o
 
 ### Icons and clear button
 
-`clearable` shows a clear button, off by default; after clearing, the bound value is `''` (`[]` for ranges). `calendar-icon` is the trailing calendar icon, `i-lucide-calendar` by default; `clear-icon` is the clear button icon, `i-lucide-x` by default.
+`clear` shows a clear button, on by default (pass `:clear="false"` to hide it; off by default inside a `required` `UFormField`, following the same rules as the [SelectMenu clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button)); after clearing, the bound value is `''` (`[]` for ranges). `calendar-icon` is the trailing calendar icon, `i-lucide-calendar` by default; `clear-icon` is the clear button icon, `i-lucide-x` by default.
 
 <component-example name="datepicker-icons">
 
@@ -14535,7 +14059,7 @@ Month and weekday names, the "年" in the year list, the year and year-month for
 
 </component-props>
 
-See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clearable`, `calendarIcon`, `clearIcon`, `roc`, `separator` and `yearRange` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
+See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clear`, `calendarIcon`, `clearIcon`, `roc`, `separator` and `yearRange` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
 
 <note>
 
@@ -19552,7 +19076,7 @@ Components start with `Shuo` and need no import. Use them with Nuxt UI's `UForm`
 
     <!-- Application date -->
     <UFormField label="Application date" name="date">
-      <ShuoDatepicker v-model="state.date" clearable />
+      <ShuoDatepicker v-model="state.date" />
     </UFormField>
 
     <UButton type="submit" label="Submit" />
@@ -20031,7 +19555,8 @@ export default defineNuxtConfig({
         size: 'md',
         emptyValue: null,
         labelKey: 'Name',
-        valueKey: 'Code'
+        valueKey: 'Code',
+        clear: false
       },
 
       // checkboxGroup: checkbox group
@@ -20056,7 +19581,7 @@ export default defineNuxtConfig({
 
       // datepicker: date picker
       datepicker: {
-        clearable: true,
+        clear: false,
         separator: '-'
       },
 
@@ -20355,6 +19880,22 @@ Only the props in the table below can be set site-wide. State props such as `dis
         value
       </code>
       
+      ), <code>
+        clear
+      </code>
+      
+       (<code>
+        true
+      </code>
+      
+      ), <code>
+        clearIcon
+      </code>
+      
+       (<code>
+        i-lucide-x
+      </code>
+      
       )
     </td>
   </tr>
@@ -20510,11 +20051,11 @@ Only the props in the table below can be set site-wide. State props such as `dis
       </code>
       
       ), <code>
-        clearable
+        clear
       </code>
       
        (<code>
-        false
+        true
       </code>
       
       ), <code>
@@ -20753,9 +20294,10 @@ Components or props outside this list cause a type error in `nuxt.config.ts`. Va
 
 ## Rules
 
-- **"Passed explicitly" means the prop is written, whatever its value**: `<ShuoDatepicker :clearable="false" />`, `<ShuoSelectMenu :empty-value="null" />` and `format=""` all count as explicit and are not replaced by the site-wide value. `v-bind="{ clearable: undefined }"` counts as not written and uses the site-wide value.
+- **"Passed explicitly" means the prop is written, whatever its value**: `<ShuoDatepicker :clear="false" />`, `<ShuoSelectMenu :empty-value="null" />` and `format=""` all count as explicit and are not replaced by the site-wide value. `v-bind="{ clear: undefined }"` counts as not written and uses the site-wide value.
 - **ui is merged per slot**: with a site-wide `radioGroup.ui.fieldset` and a page passing `:ui="{ item: '...' }"`, both apply. If the page also passes `fieldset`, the page value replaces the site-wide one (classes are not concatenated). The result is then merged with the component's built-in styles using tailwind-merge, as in [Per-component `ui` prop](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#per-component-ui-prop). The title bar parts of `queryCard.ui` and `listCard.ui` (`bar`, `icon`, `title`, `headerRight`) share the same built-in styles; to make both cards' titles match, set the same values on both.
 - **Other values are replaced as a whole**: arrays (such as `yearRange`) are not concatenated with the built-in value.
+- **clear also looks at required fields**: `selectMenu.clear` and `datepicker.clear` do not apply to components inside a `required` `UFormField`, which hide the clear button by default; `clear` passed on the page still wins.
 - `inputNumber.unit` site-wide only decides whether a unit is shown by default and only accepts `true` / `false`; the unit text comes from `messages.inputNumber.unit`. A single field can still pass `unit="pcs"` or `:unit="false"`.
 - After setting `labelKey` / `valueKey` site-wide to `{ Code, Name }`, if a page's items are still `{ label, value }`, pass `label-key="label" value-key="value"` on that component. Radio and checkbox groups still bind string values, so convert numeric codes from the back end to strings first. In development mode, when items are missing a field, the console warning says whether the field name was passed explicitly or came from the site-wide setting (for example `(source: valueKey from the site-wide setting components.selectMenu.valueKey)`).
 
@@ -21991,646 +21533,82 @@ The `class` you pass goes on the component's outer element, merged after `ui.roo
 </table>
 
 
-# v1.0.1
+# v2.0.0
 
-> Released on October 25, 2026
+> Released on November 2, 2026
 
-> `1.0.0` failed to build in projects without `@iconify-json/lucide` and has been withdrawn; use `1.0.1` instead. This release is the first stable version and includes the fix below.
-
-The first stable release of Shuo UI: [Nuxt UI](https://ui.nuxt.com) components shaped around the way our projects write forms, shipped as a Nuxt module with 15 components. See the [docs site](https://k90325248.github.io/shuo-ui/) for full guides and live examples.
+The clear button of select menus and date pickers is now `clear` on both, and on by default. The date picker's `clearable` is renamed; read the upgrade notes below before upgrading.
 
 ## ✨ Highlights
 
-### 🧩 Built on Nuxt UI
+### ✖️ One `clear` prop for the clear button, on by default
 
-The components wrap Nuxt UI. Nuxt UI props, slots and refs that are not redeclared can be used directly, with types inferred, so you can follow the Nuxt UI docs: [Built on Nuxt UI](https://k90325248.github.io/shuo-ui/components/overview/common#built-on-nuxt-ui)
+`ShuoSelectMenu` adds `clear` and `clear-icon`: once a value is selected, a clear button replaces the trailing arrow, and clearing sets the value to `empty-value` (`[]` for multiple). It is hidden while disabled or loading: [Clear button in SelectMenu](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button)
 
-```vue
-<ShuoInputText v-model="keyword" variant="soft" icon="i-lucide-search" />
-```
+`ShuoDatepicker` renames `clearable` to `clear`, matching the select menu: [Icons and clear button in Datepicker](https://k90325248.github.io/shuo-ui/components/date/datepicker#icons-and-clear-button)
 
-### 🇹🇼 Traditional Chinese and Taiwanese formats
-
-Texts default to Traditional Chinese, with formats common in our projects built in: masked ID numbers, thousands separators, ROC-year dates, area codes and phone numbers, and year/month conversion. Bound values keep the raw data (Gregorian dates, plain numbers) and are only converted for display.
+Both are on by default; pass `:clear="false"` where you don't want it:
 
 ```vue
-<ShuoInputText v-model="idNumber" :mask="4" />
-<ShuoInputNumber v-model="amount" unit />
-<!-- Shows 115/10/25; the bound value is 2026/10/25 -->
-<ShuoDatepicker v-model="applyDate" />
+<ShuoSelectMenu v-model="state.type" :items="items" :clear="false" />
+<ShuoDatepicker v-model="state.date" :clear="false" />
 ```
 
-### 📐 Consistent sizes and states
-
-All form inputs share `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. Components of the same size have the same height and follow the size, disabled and error states of `UFormField` and `UForm`: [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common)
+Inside a `required` `UFormField` it is off by default, so a required field cannot be emptied with one click; pass `clear` explicitly when you still want it:
 
 ```vue
-<UForm :schema="schema" :state="state" :disabled="saving">
-  <UFormField label="Amount" name="amount" size="md">
-    <ShuoInputNumber v-model="state.amount" :skeleton="loading" />
-  </UFormField>
-</UForm>
+<UFormField label="Type" name="type" required>
+  <ShuoSelectMenu v-model="state.type" :items="items" />
+</UFormField>
 ```
 
-### ⚙️ Site-wide defaults and shared validation rules
-
-Sizes, display formats, icons and more can be set once in `nuxt.config.ts`, while values passed on a component still win. Common Valibot rules are auto-imported, with consistent error messages across the site: [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults), [Validation](https://k90325248.github.io/shuo-ui/getting-started/form/validation)
-
-```ts
-export default defineNuxtConfig({
-  modules: ['@nuxt/ui', '@shuo/ui'],
-  shuoUi: {
-    components: {
-      selectMenu: { format: '{value}_{label}' },
-      listCard: { pageSize: 20 }
-    }
-  }
-});
-```
-
-```ts
-const schema = v.object({
-  name: requiredText('Name'),
-  amount: requiredNumber('Amount')
-});
-```
-
-### 🔎 Query page layout
-
-`ShuoQueryCard` holds the query fields and `ShuoListCard` the results with server-side pagination, with loading skeletons, empty data and height transitions handled: [QueryCard](https://k90325248.github.io/shuo-ui/components/layout/query-card), [ListCard](https://k90325248.github.io/shuo-ui/components/layout/list-card)
-
-## 🚀 New components
-
-- **InputText:** Single-line text input that can mask all or the last characters ([docs](https://k90325248.github.io/shuo-ui/components/text/input-text))
-- **InputNumber:** Number input with thousands separators after blur, configurable decimals and unit ([docs](https://k90325248.github.io/shuo-ui/components/text/input-number))
-- **Textarea:** Multi-line text input that keeps line breaks and can resize automatically ([docs](https://k90325248.github.io/shuo-ui/components/text/textarea))
-- **SelectMenu:** Select menu with search and multiple selection, showing the full text when truncated ([docs](https://k90325248.github.io/shuo-ui/components/choice/select-menu))
-- **Datepicker:** Date picker with ROC years by default, five precisions and range selection ([docs](https://k90325248.github.io/shuo-ui/components/date/datepicker))
-- **Checkbox:** Single checkbox with custom checked values and content next to the label ([docs](https://k90325248.github.io/shuo-ui/components/choice/checkbox))
-- **RadioGroup:** Radio group that lays out by viewport width, with custom item fields and item content ([docs](https://k90325248.github.io/shuo-ui/components/choice/radio-group))
-- **CheckboxGroup:** Checkbox group that lays out by viewport width, with custom item fields and item content ([docs](https://k90325248.github.io/shuo-ui/components/choice/checkbox-group))
-- **File:** Single file selection and download of an existing attachment; selecting does not upload ([docs](https://k90325248.github.io/shuo-ui/components/phone-file/file))
-- **Months:** Year and month input that can bind the total months, years and months at once ([docs](https://k90325248.github.io/shuo-ui/components/date/months))
-- **Phone:** Landline number with separate inputs for the area code and number ([docs](https://k90325248.github.io/shuo-ui/components/phone-file/phone))
-- **QueryCard:** Collapsible query card with a UForm inside and fields on a responsive grid ([docs](https://k90325248.github.io/shuo-ui/components/layout/query-card))
-- **ListCard:** Results card with a title bar, table and server-side pagination ([docs](https://k90325248.github.io/shuo-ui/components/layout/list-card))
-- **Table:** Plain table based on UTable, with skeletons, empty data and height transitions ([docs](https://k90325248.github.io/shuo-ui/components/layout/table))
-- **InfoTooltip:** Info icon with a tooltip shown on hover or keyboard focus ([docs](https://k90325248.github.io/shuo-ui/components/helper/info-tooltip))
-
-## 🐛 Bug Fixes
-
-- **module:** Only icons from installed icon collections are added to the `@nuxt/icon` client bundle. `1.0.0` always added the built-in lucide icons, so `nuxt build` and `nuxt generate` failed to create the client bundle in projects without `@iconify-json/lucide`. Projects without it now build, and icons are loaded by `@nuxt/icon` at runtime. Installing `@iconify-json/lucide` is still recommended so icons are bundled into the site.
-
-## ⚠️ Before you start
-
-- Checkboxes and choice groups (`ShuoCheckbox`, `ShuoRadioGroup`, `ShuoCheckboxGroup`) match the height of inputs, so they do not support Nuxt UI descriptions (`description`, `descriptionKey`), `variant` (card, table), `indicator` or `highlight`. Passing them is a type error and they are not applied at runtime.
-- `ShuoInputNumber` has no native `min`, `max` or `step`; use validation rules for ranges.
-- Selecting a file does not upload it: `ShuoFile` only handles selection and download, and the page decides when to upload.
-
-## 📦 Installation
-
-```bash
-pnpm add github:k90325248/shuo-ui#v1.0.1
-pnpm add @iconify-json/lucide # recommended, icons are bundled
-```
-
-Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
-
-## 📋 Requirements
-
-<table>
-<thead>
-  <tr>
-    <th>
-      Package
-    </th>
-    
-    <th>
-      Version
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.0.1)
-
-
-# v1.1.0
-
-> Released on October 26, 2026
-
-Adds `ShuoTooltip`, so every tooltip can be shown with a long press on phones; component texts now follow the Nuxt UI locale, with Traditional Chinese and English built in. The docs site gains an English version and is reorganized into tabs and groups. Before upgrading, read "Upgrade notes" below: the auto-imported functions and the locale behavior of component texts have changed.
-
-## ✨ Highlights
-
-### 📱 Long press for tooltips on phones
-
-Nuxt UI's `UTooltip` only opens on hover or keyboard focus, so tapping or holding on a phone shows nothing. The new `ShuoTooltip` keeps all `UTooltip` props and slots and adds long press on touch devices. `ShuoInfoTooltip` and the truncated-text tooltips of the select menu, datepicker, file, checkbox and choice groups all use it, so they also open with a long press on phones: [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip)
-
-```vue
-<ShuoTooltip text="Save draft">
-  <UButton label="Save" />
-</ShuoTooltip>
-```
-
-A long press that shows a tooltip does not trigger the original click, check or menu. To keep Nuxt UI's original behavior, pass `:touch="false"` on a component or set `components.tooltip.touch: false` site-wide.
-
-### 🌐 Component texts follow the Nuxt UI locale
-
-Validation messages, accessible names, tooltips, and the months and weekdays of the datepicker follow `<UApp :locale>`, with Traditional Chinese and English built in; mounted components update immediately. Texts can be overridden per locale, and other locales can be added: [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)
-
-```ts
-export default defineNuxtConfig({
-  shuoUi: {
-    locale: 'zh-TW', // used when the page does not set a UApp locale
-    locales: {
-      en: { listCard: { title: 'Search results' } }
-    }
-  }
-});
-```
-
-### 🌙 Form color tokens for dark mode
-
-Disabled inputs in dark mode now use a darker background and lighter text instead of the light mode colors, and input borders use a lighter primary color. The disabled color also changed from a fixed gray to Nuxt UI's neutral color, following `ui.colors.neutral` in your `app.config.ts`. The colors come from the `--ui-form-*` variables, which you can override in your CSS for `:root` and `.dark`: [Form color tokens](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#form-color-tokens)
-
-## 🚀 New components
-
-- **Tooltip:** Tooltip based on UTooltip that also opens with a long press on touch devices ([docs](https://k90325248.github.io/shuo-ui/components/helper/tooltip))
-
-## 🐛 Bug Fixes
-
-- **InputText:** Revealing masked text no longer briefly flashes the whole value.
-- **Months:** The year and month units grow with their text, so the English `yr` and `mo` are no longer cut off.
-
-## ⚠️ Upgrade notes
-
-### Only public utility functions are auto-imported
-
-The module used to auto-import every function under `runtime/utils` and `runtime/composables`, exposing internal helpers to projects. Now only the public functions below are auto-imported; see the new [Utilities](https://k90325248.github.io/shuo-ui/utils/form/validation) tab for parameters and examples:
-
-<table>
-<thead>
-  <tr>
-    <th>
-      Category
-    </th>
-    
-    <th>
-      Functions
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Validation
-    </td>
-    
-    <td>
-      <code>
-        requiredText
-      </code>
-      
-      , <code>
-        requiredNumber
-      </code>
-      
-      , <code>
-        requiredArray
-      </code>
-      
-      , <code>
-        optionalEmail
-      </code>
-      
-      , <code>
-        optionalNonNegativeNumber
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      Formatting
-    </td>
-    
-    <td>
-      <code>
-        formatDateDisplay
-      </code>
-      
-      , <code>
-        parseDateValue
-      </code>
-      
-      , <code>
-        formatNumberDisplay
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      Field helpers
-    </td>
-    
-    <td>
-      <code>
-        splitPhone
-      </code>
-      
-      , <code>
-        joinPhone
-      </code>
-      
-      , <code>
-        splitMonths
-      </code>
-      
-      , <code>
-        combineMonths
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      Settings
-    </td>
-    
-    <td>
-      <code>
-        resolveShuoDefault
-      </code>
-      
-      , <code>
-        getShuoComponentDefaults
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
-Internal functions such as `getShuoMessages`, `setShuoMessages`, `formatMessage`, `toNumberText`, `getDecimalPlaces`, `filterPhoneInput`, `getDateModelFormat`, `isValidDateSeparator`, `useChoiceGroup` and `useTruncatedText` are no longer auto-imported. If your project uses them, the build reports missing functions. They are not public API and may change, so use the public functions above or module options instead (for example, override texts with `shuoUi.messages` or `shuoUi.locales`).
-
-### Component texts follow the UApp locale
-
-Component texts used to be fixed to Traditional Chinese. Components now follow `<UApp :locale>`:
-
-- Projects without a `UApp` `locale`, or with Traditional Chinese, look the same as before.
-- Projects with another locale (for example English) will see component texts in that locale after upgrading. To adjust the wording, override it per locale with `shuoUi.locales`; see [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages#overriding-messages).
-
-## 📖 Docs site
-
-- **English version:** Switch between Traditional Chinese and English at the top right. URLs are now `/zh-tw/...` and `/en/...`, and the root URL redirects to the language you chose last. The 1.0.1 page URLs are no longer used; start again from the [home page](https://k90325248.github.io/shuo-ui/).
-- **Tabs and groups:** Content is split into Getting started, Components and Utilities tabs, with the left menu grouped by purpose.
-- **Theme menu:** The palette at the top right switches the primary color, font, radius, component size, ROC/Gregorian years and component locale on the fly, and exports the matching `app.config.ts`, CSS and `nuxt.config.ts`.
-
-## 📦 Installation
-
-```bash
-pnpm add github:k90325248/shuo-ui#v1.1.0
-pnpm add @iconify-json/lucide # recommended, icons are bundled
-```
-
-Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
-
-## 📋 Requirements
-
-<table>
-<thead>
-  <tr>
-    <th>
-      Package
-    </th>
-    
-    <th>
-      Version
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.1.0)
-
-
-# v1.2.0
-
-> Released on October 27, 2026
-
-Adds `ShuoSwitch`, which can call an API after toggling, updating only on success and reverting on failure; tables and list cards support row selection; checkboxes, choice groups and switches support descriptions. Component changelogs on the docs site now follow the docs language. Before upgrading, read "Upgrade notes" below: choice groups whose item data already has a `description` field will show it after upgrading.
-
-## ✨ Highlights
-
-### 🔀 A switch that confirms the change before updating
-
-The new `ShuoSwitch` keeps the props of `USwitch` and adds `action`: after toggling, it shows the new value, loading and disabled. If the action returns `false` or throws, the switch reverts; any other result updates `v-model` and emits `change`. Use it for settings saved through an API as soon as they change: [Switch](https://k90325248.github.io/shuo-ui/components/choice/switch)
-
-```vue
-<ShuoSwitch v-model="enabled" label="Enable account" :action="(value) => api.setEnabled(value)" />
-```
-
-Its height matches inputs of the same size, and a long label is truncated with a tooltip showing the full text, the same as the checkbox. `size`, `color` and `loadingIcon` can be set site-wide with `components.switch`. Buttons need no wrapper: `loading-auto` on `UButton` already provides the same loading state.
-
-### ☑️ Row selection in tables and list cards
-
-With `selectable`, `ShuoTable` and `ShuoListCard` add a selection column at the front, and the selection is bound to an array of keys with `v-model:selected`: [Selection in Table](https://k90325248.github.io/shuo-ui/components/layout/table#selection)
-
-```vue
-<ShuoListCard
-  v-model:selected="selected"
-  :data="rows"
-  :columns="columns"
-  selectable
-  row-key="ID"
-  :row-selectable="(row) => row.status !== 'Closed'"
-  @page-change="search"
-/>
-```
-
-- `row-key` is a field name or a function. With server-side pagination, selections on other pages are kept when changing pages, so rows selected across pages can be handled together.
-- Select all in the header only selects the selectable rows on the current page and shows an indeterminate state when only some are selected; with `select-all` set to `false`, the header shows the `selection-header` text instead.
-- Rows for which `row-selectable` returns `false` cannot be selected; all checkboxes are disabled while loading.
-- `checkbox-props` sets the `class`, `ui`, `color`, `size` and icons of the checkboxes. Put `{ id: 'select' }` in `columns` to place the selection column, or replace it entirely with the `#select-header` and `#select-cell` slots.
-- `selectAll` and `checkboxProps` can be set site-wide with `components.table`.
-
-Without `selectable` nothing changes, and controlling selection yourself through `tableProps` still works.
-
-### 📝 Descriptions on checkboxes, choice groups and switches
-
-`ShuoCheckbox`, `ShuoRadioGroup`, `ShuoCheckboxGroup` and `ShuoSwitch` support descriptions (for groups, the item's `description` field or the field set by `description-key`). Without a description the height still matches inputs; with one the control grows and the description wraps, while the first line stays aligned with the fields next to it. In horizontal groups the whole row grows, and the description does not squeeze the labels of other items: [Checkbox description](https://k90325248.github.io/shuo-ui/components/choice/checkbox#description)
-
-```vue
-<ShuoCheckbox
-  v-model="subscribe"
-  label="Subscribe to the newsletter"
-  description="A weekly email; unsubscribe at any time"
-/>
-```
-
-## 🚀 New components
-
-- **Switch:** Switch that can run an action after toggling, updating the bound value only on success and reverting on failure or errors ([docs](https://k90325248.github.io/shuo-ui/components/choice/switch))
-
-## ⚠️ Upgrade notes
-
-### The description field of items is shown
-
-Radio and checkbox groups used to hide item descriptions, ignoring any `description` field in the item data. It is now shown below the item label and makes the item taller.
-
-If your items come straight from back-end data that happens to have a `description` field (for example remarks in a code table), the page will show it after upgrading. To hide it, remove the field before passing the items:
-
-```ts
-const options = computed(() => codes.value.map(({ description: _description, ...item }) => item));
-```
-
-## 📖 Docs site
-
-- **Releases:** A new Releases tab in the header shows the release notes of every version, the same as the GitHub Releases, in English on the English site.
-- **Localized changelogs:** The changelog at the end of each component page now shows English or Chinese text by docs language, without `feat:` or `fix:` prefixes.
-- **New pages:** A new [Switch](https://k90325248.github.io/shuo-ui/components/choice/switch) page; the Table, ListCard, Checkbox, RadioGroup and CheckboxGroup pages add usage and examples for selection and descriptions; the examples on the shared props page include the switch.
-
-## 📦 Installation
-
-```bash
-pnpm add github:k90325248/shuo-ui#v1.2.0
-pnpm add @iconify-json/lucide # recommended, icons are bundled
-```
-
-Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
-
-## 📋 Requirements
-
-<table>
-<thead>
-  <tr>
-    <th>
-      Package
-    </th>
-    
-    <th>
-      Version
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.0)
-
-
-# v1.2.1
-
-> Released on October 27, 2026
-
-The docs site adds an "Agents" group so AI tools such as Cursor and Claude Code can use Shuo UI correctly: LLMs.txt, and a Shuo UI skill you can install directly. No components changed; upgrading from 1.2.0 needs no code changes.
-
-## ✨ Highlights
-
-### 🤖 A skill for AI tools
-
-The new `shuo-ui` skill teaches AI coding agents to build forms and query pages with Shuo UI: the v-model types and empty values of each component, validation with `UForm` and Valibot, the query card with a paginated list card, the `shuoUi` site-wide settings and more. Once installed, type `/shuo-ui` in your agent's chat to invoke it: [Skills](https://k90325248.github.io/shuo-ui/getting-started/agents/skills)
-
-```bash
-npx skills add k90325248/shuo-ui
-```
-
-- Cursor can install it with one click from the "Install Skill" button on the docs page, Claude Code uses `claude skill add`, and other tools can reference `skills/shuo-ui/SKILL.md` on GitHub directly.
-- The skill files live in `skills/shuo-ui` of the public repo and are also published at `/.well-known/skills/` on the docs site. The package does not include them, so what you install is the same as 1.2.0.
-
-### 📄 LLMs.txt
-
-The docs site provides [`/llms.txt`](https://k90325248.github.io/shuo-ui/llms.txt) (an index of every page) and [`/llms-full.txt`](https://k90325248.github.io/shuo-ui/llms-full.txt) (the full documentation), and every page has a markdown version: add `.md` to its URL. Give these URLs to tools such as ChatGPT or Claude so they answer from the docs: [LLMs.txt](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt)
-
-## 📖 Docs site
-
-- **New pages:** Getting started has a new Agents group with [LLMs.txt](https://k90325248.github.io/shuo-ui/getting-started/agents/llms-txt) and [Skills](https://k90325248.github.io/shuo-ui/getting-started/agents/skills).
-
-## 📦 Installation
-
-```bash
-pnpm add github:k90325248/shuo-ui#v1.2.1
-pnpm add @iconify-json/lucide # recommended, icons are bundled
-```
-
-Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
-
-## 📋 Requirements
-
-<table>
-<thead>
-  <tr>
-    <th>
-      Package
-    </th>
-    
-    <th>
-      Version
-    </th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>
-      Nuxt
-    </td>
-    
-    <td>
-      <code>
-        ^4.6.2
-      </code>
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      <code>
-        @nuxt/ui
-      </code>
-    </td>
-    
-    <td>
-      <code>
-        ^4.12.0
-      </code>
-    </td>
-  </tr>
-</tbody>
-</table>
-
----
-
-- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.2.1)
-
-
-# v1.3.0
-
-> Released on October 29, 2026
-
-The first-load skeleton of tables and list cards now has a configurable row count and height, also site-wide. Without these settings everything behaves as in 1.2.1; upgrading needs no code changes.
-
-## ✨ Highlights
-
-### 🦴 Configure the first-load skeleton rows and height
-
-`ShuoTable` and `ShuoListCard` add `skeleton-rows` and `skeleton-class`: the first sets the skeleton row count (default `3`, at least 1 row), the second the height and other styles of each skeleton bar (default `h-6`, i.e. 24px, replaced as a whole when passed): [First-load skeleton in Table](https://k90325248.github.io/shuo-ui/components/layout/table#first-load-skeleton)
-
-```vue
-<ShuoListCard :data="rows" :columns="columns" :loading="loading" :skeleton-rows="5" skeleton-class="h-8" />
-```
-
-Both can be set site-wide with `components.table`, which also applies to the table inside `ShuoListCard`; values passed on the page win:
+Each can also be set site-wide. The order is: `clear` passed explicitly > `required` on `UFormField` > site-wide setting > built-in default (on):
 
 ```ts
 export default defineNuxtConfig({
   shuoUi: {
     components: {
-      table: { skeletonRows: 5, skeletonClass: 'h-8' }
+      selectMenu: { clear: false },
+      datepicker: { clear: true }
     }
   }
 });
 ```
 
+## ⚠️ Upgrade notes
+
+### `clearable` is renamed to `clear`
+
+`ShuoDatepicker`'s `clearable` and the site-wide `components.datepicker.clearable` are now `clear`. The old name no longer works: `clearable` on the component is ignored as a plain attribute, and the site-wide setting is skipped with a warning at startup. Search your project for `clearable` and change it to `clear`; where you wrote `clearable` to turn the button on, you can simply remove it outside required fields (see the next section), since the button is now shown by default.
+
+### The clear button is shown by default
+
+Previously the select menu had no clear button and the date picker hid it by default. After upgrading, both show a clear button when they have a value (except inside a `required` `UFormField`), and a selected select menu shows it in place of the trailing arrow. To keep the previous behavior, turn it off site-wide:
+
+```ts
+export default defineNuxtConfig({
+  shuoUi: {
+    components: {
+      selectMenu: { clear: false },
+      datepicker: { clear: false }
+    }
+  }
+});
+```
+
+A date picker in a required field that had `clearable` needs `clear` after the rename to keep its clear button; simply removing it hides the button because the field is required. Fields that are only required in the schema, without `required` on `UFormField`, still show the clear button; add `required` to the `UFormField` or pass `:clear="false"` to hide it.
+
+On very narrow fields (about 90px or less) the clear button can leave no room for the text; pass `:clear="false"` on those.
+
 ## 📖 Docs site
 
-- The Table, ListCard and [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults) pages describe the skeleton row count and height.
+- **1.x docs:** once 2.0.0 is deployed, the site root shows the 2.x docs and the 1.x docs move to `v1/`; switch between them with the version menu in the header.
+- The SelectMenu page adds a [Clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button) section; the Datepicker and [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults) pages use `clear`.
 
 ## 📦 Installation
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v1.3.0
+pnpm add github:k90325248/shuo-ui#v2.0.0
 pnpm add @iconify-json/lucide # recommended, icons are bundled
 ```
 
@@ -22682,7 +21660,7 @@ Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your 
 
 ---
 
-- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v1.3.0)
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v2.0.0)
 
 
 # Months

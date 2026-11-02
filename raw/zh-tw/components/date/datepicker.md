@@ -212,7 +212,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 
 ### 圖示與清除按鈕
 
-`clearable` 顯示清除按鈕，預設關閉，清除後綁定值為 `''`（範圍為 `[]`）。`calendar-icon` 是尾端的日曆圖示，預設 `i-lucide-calendar`；`clear-icon` 是清除按鈕的圖示，預設 `i-lucide-x`。
+`clear` 顯示清除按鈕，預設開啟（傳 `:clear="false"` 關閉；包在 `required` 的 `UFormField` 內時預設關閉，規則同 [SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)），清除後綁定值為 `''`（範圍為 `[]`）。`calendar-icon` 是尾端的日曆圖示，預設 `i-lucide-calendar`；`clear-icon` 是清除按鈕的圖示，預設 `i-lucide-x`。
 
 <component-example name="datepicker-icons">
 
@@ -396,7 +396,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 
 </component-props>
 
-`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clearable`、`calendarIcon`、`clearIcon`、`roc`、`separator`、`yearRange` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clear`、`calendarIcon`、`clearIcon`、`roc`、`separator`、`yearRange` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
 
 <note>
 

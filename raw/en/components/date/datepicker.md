@@ -212,7 +212,7 @@ Each clearing emits `update:modelValue` (or `update:start`, `update:end`) only o
 
 ### Icons and clear button
 
-`clearable` shows a clear button, off by default; after clearing, the bound value is `''` (`[]` for ranges). `calendar-icon` is the trailing calendar icon, `i-lucide-calendar` by default; `clear-icon` is the clear button icon, `i-lucide-x` by default.
+`clear` shows a clear button, on by default (pass `:clear="false"` to hide it; off by default inside a `required` `UFormField`, following the same rules as the [SelectMenu clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button)); after clearing, the bound value is `''` (`[]` for ranges). `calendar-icon` is the trailing calendar icon, `i-lucide-calendar` by default; `clear-icon` is the clear button icon, `i-lucide-x` by default.
 
 <component-example name="datepicker-icons">
 
@@ -398,7 +398,7 @@ Month and weekday names, the "年" in the year list, the year and year-month for
 
 </component-props>
 
-See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clearable`, `calendarIcon`, `clearIcon`, `roc`, `separator` and `yearRange` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
+See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clear`, `calendarIcon`, `clearIcon`, `roc`, `separator` and `yearRange` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
 
 <note>
 

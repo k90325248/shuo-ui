@@ -52,6 +52,31 @@ export default defineNuxtConfig({
 
 </code-group>
 
+### 清除按鈕
+
+`clear` 預設開啟，已選取時尾端顯示清除按鈕，清除後單選為 `empty-value`、多選為 `[]`；停用或載入中時不顯示。傳 `:clear="false"` 關閉，`clear-icon` 可換圖示（預設 `i-lucide-x`）。整個專案都不需要清除按鈕時，在全站設定關閉，個別元件仍可傳 `clear` 開啟。
+
+包在 `required` 的 `UFormField` 內時預設關閉，避免必填欄位一鍵清空；需要時仍可明確傳 `clear`。判斷順序為：明確傳入的 `clear` > `UFormField` 的 `required` > 全站設定 > 內建預設（開啟）。只在 schema 設必填、`UFormField` 沒寫 `required` 的欄位不受影響。
+
+<code-group>
+
+```vue [單一元件]
+<ShuoSelectMenu v-model="state.type" :items="items" :clear="false" />
+```
+
+```ts [全站設定]
+// nuxt.config.ts
+export default defineNuxtConfig({
+  shuoUi: {
+    components: {
+      selectMenu: { clear: false }
+    }
+  }
+});
+```
+
+</code-group>
+
 ### 自訂選項欄位
 
 後端欄位不是 `label`、`value` 時，以 `label-key`、`value-key` 指定。`USelectMenu` 的 `description-key` 等 props 也能直接使用，欄位名稱依 `items` 推導，寫錯會有型別錯誤。

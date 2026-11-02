@@ -26,7 +26,8 @@ export default defineNuxtConfig({
         size: 'md',
         emptyValue: null,
         labelKey: 'Name',
-        valueKey: 'Code'
+        valueKey: 'Code',
+        clear: false
       },
 
       // checkboxGroup 複選群組
@@ -51,7 +52,7 @@ export default defineNuxtConfig({
 
       // datepicker 日期選擇器
       datepicker: {
-        clearable: true,
+        clear: false,
         separator: '-'
       },
 
@@ -350,6 +351,22 @@ export default defineNuxtConfig({
         value
       </code>
       
+      ）、<code>
+        clear
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        clearIcon
+      </code>
+      
+      （<code>
+        i-lucide-x
+      </code>
+      
       ）
     </td>
   </tr>
@@ -470,6 +487,22 @@ export default defineNuxtConfig({
         value
       </code>
       
+      ）、<code>
+        clear
+      </code>
+      
+      （<code>
+        true
+      </code>
+      
+      ）、<code>
+        clearIcon
+      </code>
+      
+      （<code>
+        i-lucide-x
+      </code>
+      
       ）
     </td>
   </tr>
@@ -505,11 +538,11 @@ export default defineNuxtConfig({
       </code>
       
       ）、<code>
-        clearable
+        clear
       </code>
       
       （<code>
-        false
+        true
       </code>
       
       ）、<code>
@@ -750,9 +783,10 @@ export default defineNuxtConfig({
 
 ## 規則
 
-- **是否明確傳入看的是有沒有寫這個 prop，不看值**：`<ShuoDatepicker :clearable="false" />`、`<ShuoSelectMenu :empty-value="null" />`、`format=""` 都算明確傳入，不會被全站值取代；`v-bind="{ clearable: undefined }"` 視為沒寫，沿用全站值。
+- **是否明確傳入看的是有沒有寫這個 prop，不看值**：`<ShuoDatepicker :clear="false" />`、`<ShuoSelectMenu :empty-value="null" />`、`format=""` 都算明確傳入，不會被全站值取代；`v-bind="{ clear: undefined }"` 視為沒寫，沿用全站值。
 - **ui 依 slot 合併**：全站設定 `radioGroup.ui.fieldset`、頁面傳 `:ui="{ item: '...' }"` 時兩者都生效；頁面也傳了 `fieldset` 時，以頁面的值取代全站值（不做 class 串接）。合併後再和元件內建樣式以 tailwind-merge 合併，同[單一元件的 `ui` prop](https://k90325248.github.io/shuo-ui/getting-started/theme/theming#%E5%96%AE%E4%B8%80%E5%85%83%E4%BB%B6%E7%9A%84-ui-prop)。`queryCard.ui` 與 `listCard.ui` 的標題列部位（`bar`、`icon`、`title`、`headerRight`）與內建樣式相同，要統一兩張卡片的標題樣式時兩邊寫相同的值。
 - **其他值整個取代**：陣列（例如 `yearRange`）不和內建值串接。
+- **clear 另看必填欄位**：`selectMenu.clear`、`datepicker.clear` 不影響包在 `required` 的 `UFormField` 內的元件，這些元件預設不顯示清除按鈕；頁面明確傳 `clear` 時仍優先。
 - `inputNumber.unit` 全站只決定「預設是否顯示單位」，只接受 `true`／`false`；單位文字由 `messages.inputNumber.unit` 決定。單一欄位仍可傳 `unit="件"` 或 `:unit="false"`。
 - `labelKey`／`valueKey` 全站設定為 `{ Code, Name }` 後，某一頁的選項仍是 `{ label, value }` 時，在該元件明確傳 `label-key="label" value-key="value"`。單選與複選群組的綁定值仍為字串，後端代碼是數字時請先轉成字串。開發模式下選項缺少欄位時，主控台警告會註明欄位名稱來自明確傳入或全站設定（例如 `（來源：valueKey 為全站設定 components.selectMenu.valueKey）`）。
 

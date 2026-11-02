@@ -52,6 +52,31 @@ export default defineNuxtConfig({
 
 </code-group>
 
+### Clear button
+
+`clear` is on by default: once a value is selected, a clear button shows at the end, and clearing sets the value to `empty-value` (`[]` for multiple). It is hidden while disabled or loading. Pass `:clear="false"` to turn it off; `clear-icon` changes the icon (`i-lucide-x` by default). To turn it off for the whole project, set it site-wide; a single component can still pass `clear` to turn it back on.
+
+Inside a `required` `UFormField` it is off by default, so a required field cannot be emptied with one click; pass `clear` explicitly when you still want it. The order is: `clear` passed explicitly > `required` on `UFormField` > site-wide setting > built-in default (on). Fields that are only required in the schema, without `required` on `UFormField`, are not affected.
+
+<code-group>
+
+```vue [Single component]
+<ShuoSelectMenu v-model="state.type" :items="items" :clear="false" />
+```
+
+```ts [Site-wide]
+// nuxt.config.ts
+export default defineNuxtConfig({
+  shuoUi: {
+    components: {
+      selectMenu: { clear: false }
+    }
+  }
+});
+```
+
+</code-group>
+
 ### Custom item fields
 
 When the back-end fields are not `label` and `value`, set them with `label-key` and `value-key`. Props of `USelectMenu` such as `description-key` work directly too; field names are inferred from `items`, and a wrong name is a type error.
