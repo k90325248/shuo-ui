@@ -134,7 +134,8 @@ Same as `ShuoRadioGroup` (items, orientation, keys, `item-append` with `{ item, 
 
 - Selecting does not upload; the page sends the `File` when it wants.
 - `accept` only filters the dialog; enforce type and size with `v.file()`, `v.mimeType([...])`, `v.maxSize(bytes)`.
-- Existing attachment: `file-name` + `file-url` (download fetches the URL as a Blob; needs CORS for other origins; failures show a toast).
+- Existing attachment: `file-name` + `:download="(signal) => ..."`, called only on click (auth headers, POST, etc. are up to the page). Return a `Blob` to save it under `file-name`, or nothing if the page handled it; throwing shows the failure toast. Without `download` there is no download button. Do not pre-fetch the attachment into `v-model`. There is no `file-url`.
+- `clear`: default `true`, shows a clear button for a local `File` or an existing attachment; `:clear="false"` disallows removal. Off by default inside a `required` `UFormField` (same order as `ShuoSelectMenu`). Clearing sets `v-model` to `null` and `file-name` to `''`; bind `v-model:file-name` to know the existing attachment was removed.
 - `select-icon`, `clear-icon`, `download-icon`. No `trailing`, `color` or `highlight`.
 
 ## Layout

@@ -57,9 +57,9 @@
           />
 
           <template v-else>
-            <!-- 清除按鈕：有檔案且未停用時顯示 -->
+            <!-- 清除按鈕：開啟 clear、有本機檔案或既有附件且未停用時顯示 -->
             <UButton
-              v-if="modelValue && !isDisabled"
+              v-if="canClear"
               type="button"
               :icon="resolved.clearIcon"
               :aria-label="messages.file.clear"
@@ -101,6 +101,7 @@ import { useTruncatedText } from "../composables/useTruncatedText";
 import { BUILT_IN_DEFAULTS } from "../utils/component-defaults";
 import { useShuoComponentProps } from "../internal/useShuoComponentProps";
 import { useControlSize } from "../internal/useControlSize";
+import { useClearButton } from "../internal/useClearButton";
 import ShuoTooltip from "./ShuoTooltip.vue";
 const theme = tv({ slots: { wrapper: "flex w-full min-w-0 cursor-default" } });
 defineOptions({ inheritAttrs: false });
@@ -109,8 +110,9 @@ const props = defineProps({
   accept: { type: String, required: false },
   placeholder: { type: String, required: false },
   fileName: { type: String, required: false },
-  fileUrl: { type: String, required: false },
+  download: { type: Function, required: false },
   size: { type: null, required: false },
+  clear: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.file.clear },
   disabled: { type: Boolean, required: false },
   loading: { type: Boolean, required: false },
   clearIcon: { type: String, required: false, default: BUILT_IN_DEFAULTS.file.clearIcon },
@@ -119,6 +121,7 @@ const props = defineProps({
   ui: { type: Object, required: false }
 });
 const modelValue = defineModel({ type: null, ...{ required: true } });
+const fileNameModel = defineModel("fileName", { type: String });
 const slots = defineSlots();
 const {
   id: fieldId,
@@ -131,6 +134,7 @@ const {
 } = useFormField(props);
 const resolved = useShuoComponentProps("file", props);
 const controlSize = useControlSize("file", props);
+const clearButton = useClearButton("file", props);
 const appConfig = useAppConfig();
 const toast = useToast();
 const messages = useShuoMessages();
@@ -145,13 +149,14 @@ const root = useTemplateRef("root");
 const downloading = ref(false);
 let downloadController;
 let downloadUrl;
-const filename = computed(() => modelValue.value?.name ?? props.fileName ?? "");
-const hasDownload = computed(() => Boolean(modelValue.value || props.fileUrl));
+const filename = computed(() => modelValue.value?.name ?? fileNameModel.value ?? "");
+const hasDownload = computed(() => Boolean(modelValue.value || fileNameModel.value && props.download));
 const isDisabled = computed(() => fieldDisabled.value ?? props.disabled);
+const canClear = computed(() => clearButton.value && !isDisabled.value && Boolean(filename.value));
 const blocked = computed(() => props.loading || isDisabled.value);
 const inputUi = computed(() => {
   const { wrapper: _wrapper, ...ui } = props.ui ?? {};
-  const padding = modelValue.value && !isDisabled.value ? "pe-16" : "pe-9";
+  const padding = canClear.value ? "pe-16" : "pe-9";
   return mergeUi(
     {
       root: "w-full min-w-0",
@@ -171,6 +176,7 @@ const openPicker = () => {
 };
 const updateFile = async (file) => {
   modelValue.value = file;
+  if (!file) fileNameModel.value = "";
   await nextTick();
   emitFormInput();
   emitFormChange();
@@ -181,7 +187,7 @@ const onSelect = (event) => {
   if (file) void updateFile(file);
 };
 const clearFile = () => {
-  if (blocked.value || props.skeleton) return;
+  if (blocked.value || props.skeleton || !canClear.value) return;
   if (picker.value) picker.value.value = "";
   tooltipOpen.value = false;
   void updateFile(null);
@@ -190,6 +196,7 @@ const releaseDownloadUrl = () => {
   if (downloadUrl) URL.revokeObjectURL(downloadUrl);
   downloadUrl = void 0;
 };
+const resolveBlob = async (signal) => modelValue.value ?? props.download?.(signal);
 const downloadFile = async () => {
   if (props.skeleton || props.loading || !hasDownload.value || downloading.value) return;
   const name = filename.value || "download";
@@ -197,11 +204,8 @@ const downloadFile = async () => {
   downloadController = new AbortController();
   const controller = downloadController;
   try {
-    const blob = modelValue.value ?? await $fetch(props.fileUrl, {
-      responseType: "blob",
-      signal: controller.signal
-    });
-    if (controller.signal.aborted) return;
+    const blob = await resolveBlob(controller.signal);
+    if (controller.signal.aborted || !(blob instanceof Blob)) return;
     releaseDownloadUrl();
     downloadUrl = URL.createObjectURL(blob);
     const link = document.createElement("a");

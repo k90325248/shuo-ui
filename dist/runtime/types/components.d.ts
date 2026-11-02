@@ -166,12 +166,17 @@ interface FileOwnProps {
     accept?: string;
     /** 未選檔時的提示文字 */
     placeholder?: string;
-    /** 既有附件名稱，沒有本機 File 時顯示此名稱。 */
+    /** 既有附件名稱，沒有本機 File 時顯示；可用 `v-model:file-name` 綁定，清除時為 ''。 */
     fileName?: string;
-    /** 既有附件下載 API 網址，以 Blob 取得內容；跨來源網址須允許 CORS。 */
-    fileUrl?: string;
+    /**
+     * 既有附件下載，有 `fileName` 且沒有本機 File 時，點擊下載按鈕才呼叫；有本機 File 時下載本機檔案。
+     * 回傳 Blob 由元件以檔名儲存；不回傳則視為頁面已自行處理。拋出錯誤時顯示下載失敗提示，卸載時中止傳入的 signal。
+     */
+    download?: (signal: AbortSignal) => Blob | void | Promise<Blob | void>;
     /** 輸入框尺寸 */
     size?: InputProps['size'];
+    /** 清除按鈕，有本機 File 或既有附件時顯示，預設開啟；外層 UFormField 為 required 時預設關閉。清除後 `v-model` 為 null、`fileName` 為 ''。 */
+    clear?: boolean;
     /** 是否停用選檔並隱藏清除按鈕；已有附件仍可下載 */
     disabled?: boolean;
     /** 是否顯示載入中，以轉圈圖示取代尾端按鈕，並停用選檔、清除與下載 */

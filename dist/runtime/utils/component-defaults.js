@@ -4,7 +4,13 @@ export const BUILT_IN_DEFAULTS = {
   inputText: { size: "lg", hideMaskToggle: false, revealIcon: "i-lucide-eye", concealIcon: "i-lucide-eye-off" },
   inputNumber: { size: "lg", unit: false, thousandSeparator: true },
   textarea: { size: "lg", autoresize: void 0, rows: void 0, maxrows: void 0, fixed: void 0 },
-  file: { size: "lg", clearIcon: "i-lucide-x", downloadIcon: "i-lucide-download", selectIcon: "i-lucide-paperclip" },
+  file: {
+    size: "lg",
+    clear: true,
+    clearIcon: "i-lucide-x",
+    downloadIcon: "i-lucide-download",
+    selectIcon: "i-lucide-paperclip"
+  },
   months: { size: "lg" },
   phone: { size: "lg" },
   selectMenu: {

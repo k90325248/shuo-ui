@@ -21,6 +21,7 @@ export declare const BUILT_IN_DEFAULTS: {
     };
     file: {
         size: "lg";
+        clear: true;
         clearIcon: string;
         downloadIcon: string;
         selectIcon: string;

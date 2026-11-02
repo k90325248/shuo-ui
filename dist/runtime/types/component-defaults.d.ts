@@ -4,7 +4,7 @@ export declare const COMPONENT_DEFAULT_KEYS: {
     readonly inputText: readonly ["size", "hideMaskToggle", "revealIcon", "concealIcon"];
     readonly inputNumber: readonly ["size", "unit", "thousandSeparator"];
     readonly textarea: readonly ["size", "autoresize", "rows", "maxrows", "fixed"];
-    readonly file: readonly ["size", "clearIcon", "downloadIcon", "selectIcon"];
+    readonly file: readonly ["size", "clear", "clearIcon", "downloadIcon", "selectIcon"];
     readonly months: readonly ["size"];
     readonly phone: readonly ["size"];
     readonly selectMenu: readonly ["size", "format", "emptyValue", "labelKey", "valueKey", "clear", "clearIcon"];

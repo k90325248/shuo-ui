@@ -28,7 +28,7 @@ Precedence: prop written on the component (any value, even `false` or `null`) > 
 | `inputText`     | `size` (`lg`), `hideMaskToggle` (`false`), `revealIcon`, `concealIcon`                                                       |
 | `inputNumber`   | `size`, `unit` (`false`; boolean only), `thousandSeparator` (`true`)                                                         |
 | `textarea`      | `size`, `autoresize`, `rows`, `maxrows`, `fixed`                                                                             |
-| `file`          | `size`, `clearIcon`, `downloadIcon`, `selectIcon`                                                                            |
+| `file`          | `size`, `clear`, `clearIcon`, `downloadIcon`, `selectIcon`                                                                   |
 | `months`        | `size`                                                                                                                       |
 | `phone`         | `size`                                                                                                                       |
 | `selectMenu`    | `size`, `format` (`{label}`), `emptyValue` (`''`), `labelKey` (`label`), `valueKey` (`value`), `clear` (`true`), `clearIcon` |

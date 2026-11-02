@@ -2,7 +2,7 @@ export const COMPONENT_DEFAULT_KEYS = {
   inputText: ["size", "hideMaskToggle", "revealIcon", "concealIcon"],
   inputNumber: ["size", "unit", "thousandSeparator"],
   textarea: ["size", "autoresize", "rows", "maxrows", "fixed"],
-  file: ["size", "clearIcon", "downloadIcon", "selectIcon"],
+  file: ["size", "clear", "clearIcon", "downloadIcon", "selectIcon"],
   months: ["size"],
   phone: ["size"],
   selectMenu: ["size", "format", "emptyValue", "labelKey", "valueKey", "clear", "clearIcon"],

@@ -4,6 +4,6 @@ import type { ComputedRef } from 'vue';
  * - `props` 必須是原始 props（不經 useShuoComponentProps），才能分辨明確傳入與全站預設。
  * - required 讀 UFormField 實例的 props（響應式），欄位切換必填時跟著更新；只在 schema 設必填、欄位沒寫 required 時無法判斷。
  */
-export declare const useClearButton: (name: "selectMenu" | "datepicker", props: {
+export declare const useClearButton: (name: "selectMenu" | "datepicker" | "file", props: {
     clear?: boolean;
 }) => ComputedRef<boolean>;
