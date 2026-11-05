@@ -1,6 +1,6 @@
 import type { InputSlots } from '@nuxt/ui';
 import type { InputNumberProps } from '../types/components.js';
-export type { InputNumberProps, InputNumberUi } from '../types/components.js';
+export type { InputNumberProps, InputNumberUi, InputNumberOrientation } from '../types/components.js';
 type __VLS_Props = InputNumberProps;
 type __VLS_Slots = InputSlots;
 type __VLS_ModelProps = {

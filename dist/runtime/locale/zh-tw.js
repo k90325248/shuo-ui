@@ -22,7 +22,7 @@ export default {
       downloadFailedTitle: "\u6A94\u6848\u4E0B\u8F09\u5931\u6557",
       downloadFailedDescription: "\u8ACB\u7A0D\u5F8C\u518D\u8A66\u3002"
     },
-    inputNumber: { unit: "\u5143" },
+    inputNumber: { unit: "\u5143", increment: "\u589E\u52A0", decrement: "\u6E1B\u5C11" },
     inputText: { hide: "\u96B1\u85CF\u5167\u5BB9", show: "\u986F\u793A\u5167\u5BB9" },
     phone: { areaCode: "\u5340\u78BC", number: "\u96FB\u8A71\u865F\u78BC" },
     months: { total: "\u7E3D\u6708\u6578", years: "\u5E74\u6578", months: "\u6708\u6578", yearUnit: "\u5E74", monthUnit: "\u6708" },
@@ -71,7 +71,11 @@ export default {
       /** 年份清單與年份按鈕，`{year}` 為年份 */
       yearOption: "{year}\u5E74",
       /** 範圍選擇時起迄日期之間的分隔 */
-      rangeSeparator: " \uFF5E "
+      rangeSeparator: " \uFF5E ",
+      /** 輸入框顯示星期（show-weekday）的格式，`{date}` 為日期、`{weekday}` 為星期名稱；時間接在後面 */
+      weekday: "{date}\uFF08{weekday}\uFF09",
+      /** 星期名稱，依序為週日到週六 */
+      weekdays: ["\u661F\u671F\u65E5", "\u661F\u671F\u4E00", "\u661F\u671F\u4E8C", "\u661F\u671F\u4E09", "\u661F\u671F\u56DB", "\u661F\u671F\u4E94", "\u661F\u671F\u516D"]
     },
     /** 日期顯示的年、年月單位（日期選擇器的年、年月模式），`{year}`、`{month}` 為年份與兩位數月份 */
     date: {

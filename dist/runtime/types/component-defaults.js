@@ -1,6 +1,6 @@
 export const COMPONENT_DEFAULT_KEYS = {
   inputText: ["size", "hideMaskToggle", "revealIcon", "concealIcon"],
-  inputNumber: ["size", "unit", "thousandSeparator"],
+  inputNumber: ["size", "unit", "thousandSeparator", "buttons", "orientation"],
   textarea: ["size", "autoresize", "rows", "maxrows", "fixed"],
   file: ["size", "clear", "clearIcon", "downloadIcon", "selectIcon"],
   months: ["size"],
@@ -10,7 +10,18 @@ export const COMPONENT_DEFAULT_KEYS = {
   switch: ["size", "color", "loadingIcon"],
   radioGroup: ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"],
   checkboxGroup: ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"],
-  datepicker: ["size", "clear", "calendarIcon", "clearIcon", "roc", "separator", "yearRange"],
+  datepicker: [
+    "size",
+    "clear",
+    "calendarIcon",
+    "clearIcon",
+    "roc",
+    "separator",
+    "displaySeparator",
+    "yearRange",
+    "weekStart",
+    "showWeekday"
+  ],
   queryCard: ["icon", "expandIcon", "collapseIcon", "validateOn", "ui"],
   table: ["selectAll", "checkboxProps", "skeletonRows", "skeletonClass"],
   listCard: ["icon", "pageSize", "showPagination", "showSummary", "transition", "ui"],

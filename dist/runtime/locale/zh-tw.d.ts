@@ -26,6 +26,8 @@ declare const _default: {
         };
         inputNumber: {
             unit: string;
+            increment: string;
+            decrement: string;
         };
         inputText: {
             hide: string;
@@ -98,6 +100,10 @@ declare const _default: {
             yearOption: string;
             /** 範圍選擇時起迄日期之間的分隔 */
             rangeSeparator: string;
+            /** 輸入框顯示星期（show-weekday）的格式，`{date}` 為日期、`{weekday}` 為星期名稱；時間接在後面 */
+            weekday: string;
+            /** 星期名稱，依序為週日到週六 */
+            weekdays: string[];
         };
         /** 日期顯示的年、年月單位（日期選擇器的年、年月模式），`{year}`、`{month}` 為年份與兩位數月份 */
         date: {

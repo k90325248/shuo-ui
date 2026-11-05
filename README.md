@@ -115,13 +115,13 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => console.log(
 | 元件                | 用途                                     | v-model 型別                                    |
 | ------------------- | ---------------------------------------- | ----------------------------------------------- |
 | `ShuoInputText`     | 單行文字，可遮蔽                         | `string`                                        |
-| `ShuoInputNumber`   | 數字，千分位、小數、單位                 | `number \| null`                                |
+| `ShuoInputNumber`   | 數字，千分位、小數、單位、增減按鈕       | `number \| null`                                |
 | `ShuoSelectMenu`    | 下拉選單，可搜尋、多選                   | `string`／多選為 `string[]`                     |
-| `ShuoDatepicker`    | 日期、年月、日期時間，範圍               | `string`／範圍為 `[string, string]`             |
+| `ShuoDatepicker`    | 日期、年月、日期時間，範圍，可顯示星期   | `string`／範圍為 `[string, string]`             |
 | `ShuoCheckbox`      | 單一核取方塊                             | `string \| number \| boolean`（預設 `1`／`0`）  |
 | `ShuoCheckboxGroup` | 複選群組                                 | `string[]`                                      |
 | `ShuoSwitch`        | 開關，切換後可先執行處理函式             | `boolean`（可設定 `trueValue`／`falseValue`）   |
-| `ShuoRadioGroup`    | 單選群組                                 | `string`                                        |
+| `ShuoRadioGroup`    | 單選群組，可用卡片外觀                   | `string`                                        |
 | `ShuoTextarea`      | 多行文字                                 | `string`                                        |
 | `ShuoFile`          | 單檔選擇與既有附件下載                   | `File \| null`                                  |
 | `ShuoMonths`        | 年月數換算輸入                           | 總月數 `number \| null`（另有 `year`、`month`） |

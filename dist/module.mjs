@@ -101,7 +101,9 @@ const module$1 = defineNuxtModule({
     ];
     nuxt.options.build.transpile.push("@vuepic/vue-datepicker");
     const installed = import.meta.url.includes("node_modules");
-    const deps = ["date-fns", "date-fns/locale", "valibot"].map((name) => installed ? `@shuo/ui > ${name}` : name);
+    const deps = ["date-fns", "date-fns/locale", "decimal.js", "valibot"].map(
+      (name) => installed ? `@shuo/ui > ${name}` : name
+    );
     nuxt.options.vite.optimizeDeps = defu(nuxt.options.vite.optimizeDeps, { include: deps });
   }
 });

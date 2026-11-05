@@ -2,7 +2,7 @@ import { COMPONENT_DEFAULT_KEYS } from "../types/component-defaults.js";
 import { DEFAULT_DATE_SEPARATOR } from "./date.js";
 export const BUILT_IN_DEFAULTS = {
   inputText: { size: "lg", hideMaskToggle: false, revealIcon: "i-lucide-eye", concealIcon: "i-lucide-eye-off" },
-  inputNumber: { size: "lg", unit: false, thousandSeparator: true },
+  inputNumber: { size: "lg", unit: false, thousandSeparator: true, buttons: false, orientation: "horizontal" },
   textarea: { size: "lg", autoresize: void 0, rows: void 0, maxrows: void 0, fixed: void 0 },
   file: {
     size: "lg",
@@ -47,7 +47,10 @@ export const BUILT_IN_DEFAULTS = {
     clearIcon: "i-lucide-x",
     roc: true,
     separator: DEFAULT_DATE_SEPARATOR,
-    yearRange: [1900, 2100]
+    displaySeparator: DEFAULT_DATE_SEPARATOR,
+    yearRange: [1900, 2100],
+    weekStart: 0,
+    showWeekday: false
   },
   queryCard: {
     icon: "i-lucide-search",

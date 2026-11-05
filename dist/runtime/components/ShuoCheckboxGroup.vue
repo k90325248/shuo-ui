@@ -223,31 +223,31 @@ const appendProps = (item) => {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.form-checkbox-group[data-orientation=horizontal]:has([data-slot=description]) {
+.form-checkbox-group:not([data-variant=card])[data-orientation=horizontal]:has([data-slot=description]) {
   width: 100%;
 }
-.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) {
+.form-checkbox-group:not([data-variant=card])[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) {
   width: 100%;
   height: auto;
   min-height: var(--choice-control-height);
   align-items: flex-start;
 }
-.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) > [data-slot=item] {
+.form-checkbox-group:not([data-variant=card])[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) > [data-slot=item] {
   height: auto;
   min-height: var(--choice-control-height);
   align-items: flex-start;
   padding-block: calc((var(--choice-control-height) - var(--choice-line-height)) / 2);
 }
-.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) > [data-slot=item]:has([data-slot=description]) {
+.form-checkbox-group:not([data-variant=card])[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) > [data-slot=item]:has([data-slot=description]) {
   flex-grow: 1;
 }
-.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) > [data-slot=item]:has([data-slot=description]) > [data-slot=wrapper] {
+.form-checkbox-group:not([data-variant=card])[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) > [data-slot=item]:has([data-slot=description]) > [data-slot=wrapper] {
   flex-grow: 1;
 }
-.form-checkbox-group[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) [data-slot=description] {
+.form-checkbox-group:not([data-variant=card])[data-orientation=horizontal] :deep([data-slot='fieldset']:has([data-slot='description'])) [data-slot=description] {
   contain: inline-size;
 }
-.form-checkbox-group[data-layout=grid] :deep([data-slot='item']:has([data-slot='description'])) {
+.form-checkbox-group:not([data-variant=card])[data-layout=grid] :deep([data-slot='item']:has([data-slot='description'])) {
   height: auto;
   min-height: var(--choice-control-height);
   align-items: flex-start;

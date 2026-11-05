@@ -25,6 +25,8 @@ declare const _default: {
         };
         inputNumber: {
             unit: string;
+            increment: string;
+            decrement: string;
         };
         inputText: {
             hide: string;
@@ -91,6 +93,8 @@ declare const _default: {
             yearOption: string;
             /** 範圍選擇時起迄日期之間的分隔 */
             rangeSeparator: string;
+            weekday: string;
+            weekdays: string[];
         };
         date: {
             year: string;

@@ -52,7 +52,7 @@
         :year-range="effectiveYearRange"
         :start-date="hasInvalidValue ? effectiveMinDate : void 0"
         :focus-start-date="hasInvalidValue"
-        :week-start="0"
+        :week-start="weekStart"
         six-weeks
         prevent-min-max-navigation
         :floating="{ placement: 'bottom-start', offset: 8, shift: { padding: 8, crossAxis: true } }"
@@ -119,9 +119,12 @@ import { normalizeClass } from "vue";
 import { useFormField } from "@nuxt/ui/composables";
 import { isValid, startOfMonth, startOfYear } from "date-fns";
 import {
+  DEFAULT_WEEK_START,
   formatDatepickerDisplay,
+  formatDatepickerWeekday,
   getDatepickerValueIssue,
   isEmptyDatepickerValue,
+  isValidWeekStart,
   normalizeDatepickerValue,
   parseDatepickerValue,
   serializeDatepickerRange,
@@ -161,7 +164,10 @@ const props = defineProps({
   minDate: { type: [Date, String, Number], required: false },
   maxDate: { type: [Date, String, Number], required: false },
   yearRange: { type: Array, required: false, default: () => [...BUILT_IN_DEFAULTS.datepicker.yearRange] },
-  separator: { type: String, required: false, default: BUILT_IN_DEFAULTS.datepicker.separator }
+  separator: { type: String, required: false, default: BUILT_IN_DEFAULTS.datepicker.separator },
+  displaySeparator: { type: String, required: false, default: BUILT_IN_DEFAULTS.datepicker.displaySeparator },
+  weekStart: { type: Number, required: false, default: BUILT_IN_DEFAULTS.datepicker.weekStart },
+  showWeekday: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.datepicker.showWeekday }
 });
 const valueModel = defineModel({ type: null });
 const startModel = defineModel("start", { type: String });
@@ -223,6 +229,10 @@ const fieldState = computed(() => fieldColor.value === "error" ? false : props.s
 const separator = computed(
   () => isValidDateSeparator(resolved.separator) ? resolved.separator : DEFAULT_DATE_SEPARATOR
 );
+const displaySeparator = computed(
+  () => isValidDateSeparator(resolved.displaySeparator) ? resolved.displaySeparator : DEFAULT_DATE_SEPARATOR
+);
+const weekStart = computed(() => isValidWeekStart(resolved.weekStart) ? resolved.weekStart : DEFAULT_WEEK_START);
 const hasTime = computed(() => props.mode === "datetime" || props.mode === "datetime-second");
 const selectionFlow = computed(() => ({ steps: hasTime.value ? ["calendar", "time"] : [] }));
 const timeConfig = computed(() => ({
@@ -313,11 +323,15 @@ const validRange = (value) => getDatepickerValueIssue(value, { mode: props.mode,
 const formatYear = (year) => formatMessage(messages.value.datepicker.yearOption, {
   year: formatDateDisplay(String(year).padStart(4, "0"), { mode: "year", roc: resolved.roc })
 });
+const formatSingleDisplay = (date) => {
+  const text = formatDatepickerDisplay(date, props.mode, resolved.roc, messages.value.date, displaySeparator.value);
+  return resolved.showWeekday ? formatDatepickerWeekday(text, date, props.mode, messages.value.datepicker) : text;
+};
 const formatDisplay = (value) => {
   if (Array.isArray(value)) {
-    return value.map((date) => date ? formatDatepickerDisplay(date, props.mode, resolved.roc, messages.value.date) : "").join(messages.value.datepicker.rangeSeparator);
+    return value.map((date) => date ? formatSingleDisplay(date) : "").join(messages.value.datepicker.rangeSeparator);
   }
-  return formatDatepickerDisplay(value, props.mode, resolved.roc, messages.value.date);
+  return formatSingleDisplay(value);
 };
 const centerYear = async (menu) => {
   if (props.mode !== "year") return;
@@ -356,6 +370,20 @@ watch(
   () => resolved.separator,
   (value) => {
     if (!isValidDateSeparator(value)) console.warn('[ShuoDatepicker] separator \u7121\u6548\uFF0C\u6539\u7528\u9810\u8A2D "/"\uFF1A', value);
+  },
+  { immediate: true }
+);
+watch(
+  () => resolved.displaySeparator,
+  (value) => {
+    if (!isValidDateSeparator(value)) console.warn('[ShuoDatepicker] displaySeparator \u7121\u6548\uFF0C\u6539\u7528\u9810\u8A2D "/"\uFF1A', value);
+  },
+  { immediate: true }
+);
+watch(
+  () => resolved.weekStart,
+  (value) => {
+    if (!isValidWeekStart(value)) console.warn("[ShuoDatepicker] weekStart \u9808\u70BA 0\uFF5E6 \u7684\u6574\u6578\uFF0C\u6539\u7528\u9810\u8A2D 0\uFF1A", value);
   },
   { immediate: true }
 );

@@ -21,7 +21,7 @@ export default {
       downloadFailedTitle: "Download failed",
       downloadFailedDescription: "Please try again later."
     },
-    inputNumber: { unit: "NTD" },
+    inputNumber: { unit: "NTD", increment: "Increment", decrement: "Decrement" },
     inputText: { hide: "Hide content", show: "Show content" },
     phone: { areaCode: "Area code", number: "Phone number" },
     months: { total: "Total months", years: "Years", months: "Months", yearUnit: "yr", monthUnit: "mo" },
@@ -64,7 +64,9 @@ export default {
       decrementValue: "Decrease {unit}",
       yearOption: "{year}",
       /** 範圍選擇時起迄日期之間的分隔 */
-      rangeSeparator: " \u2013 "
+      rangeSeparator: " \u2013 ",
+      weekday: "{date} ({weekday})",
+      weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     },
     date: {
       year: "{year}",

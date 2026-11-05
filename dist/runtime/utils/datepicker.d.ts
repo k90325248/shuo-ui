@@ -16,8 +16,31 @@ export declare const isEmptyDatepickerValue: (value: unknown) => boolean;
 export declare const DATEPICKER_MODEL_FORMATS: Record<DateMode, string>;
 /** 日期選擇器的綁定值依分隔符號嚴格解析，預設為斜線。 */
 export declare const parseDatepickerValue: (value: string | null | undefined, mode: DateMode, separator?: string) => Date | null;
-/** 日期選擇器共用日期顯示邏輯，年與年月加上單位；未傳入格式時使用目前語系的文案。 */
-export declare const formatDatepickerDisplay: (date: Date, mode: DatepickerMode, roc: boolean, labels?: YearMonthLabels | true) => string;
+/** 日曆每週的起始日：0 為週日、1 為週一，依此類推。 */
+export type DatepickerWeekStart = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+/** 內建的週起始日（週日）。 */
+export declare const DEFAULT_WEEK_START: DatepickerWeekStart;
+/** 判斷是否為有效的週起始日：0～6 的整數。 */
+export declare const isValidWeekStart: (value: unknown) => value is DatepickerWeekStart;
+/** 輸入框顯示星期的文案 */
+export interface DatepickerWeekdayLabels {
+    /** 顯示格式，`{date}` 為日期、`{weekday}` 為星期名稱，例如 `{date}（{weekday}）` */
+    weekday: string;
+    /** 星期名稱，依序為週日到週六 */
+    weekdays: readonly string[];
+}
+/** 會顯示星期的模式；年與年月沒有特定日期，不顯示。 */
+export declare const DATEPICKER_WEEKDAY_MODES: readonly DatepickerMode[];
+/**
+ * 在日期顯示文字加上星期：日期部分套用 `labels.weekday` 格式，時間（第一個空白之後）接在後面。
+ * 年與年月模式、空字串原樣回傳；星期名稱缺漏時以 `Date.getDay()` 的數字代替，不讓文字消失。
+ */
+export declare const formatDatepickerWeekday: (display: string, date: Date, mode: DatepickerMode, labels: DatepickerWeekdayLabels) => string;
+/**
+ * 日期選擇器共用日期顯示邏輯，年與年月加上單位；未傳入格式時使用目前語系的文案。
+ * `displaySeparator` 取代日期（date、datetime、datetime-second）年月日之間的斜線；年與年月使用文案格式，不受影響。
+ */
+export declare const formatDatepickerDisplay: (date: Date, mode: DatepickerMode, roc: boolean, labels?: YearMonthLabels | true, displaySeparator?: string) => string;
 /** 將套件的年份數字或日期字串統一為西元字串；無效或民國下限之前的值不接受。 */
 export declare const normalizeDatepickerValue: (value: unknown, mode: DatepickerMode, roc: boolean, separator?: string) => string | null;
 /** 將套件原生 Date、年月物件或年份數字轉成指定精度的西元字串。 */

@@ -11,6 +11,8 @@ export declare const BUILT_IN_DEFAULTS: {
         size: "lg";
         unit: false;
         thousandSeparator: true;
+        buttons: false;
+        orientation: "horizontal";
     };
     textarea: {
         size: "lg";
@@ -74,7 +76,10 @@ export declare const BUILT_IN_DEFAULTS: {
         clearIcon: string;
         roc: true;
         separator: string;
+        displaySeparator: string;
         yearRange: [number, number];
+        weekStart: 0;
+        showWeekday: false;
     };
     queryCard: {
         icon: string;

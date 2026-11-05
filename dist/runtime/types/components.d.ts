@@ -1,7 +1,7 @@
 import type { CardProps, CheckboxEmits as NuxtCheckboxEmits, CheckboxGroupEmits as NuxtCheckboxGroupEmits, CheckboxGroupProps as NuxtCheckboxGroupProps, CheckboxProps as NuxtCheckboxProps, EmitsToProps, FormProps, FormSchema, GetItemKeys, InputEmits, InputProps, RadioGroupEmits as NuxtRadioGroupEmits, RadioGroupProps as NuxtRadioGroupProps, SelectMenuEmits as USelectMenuEmits, SelectMenuItem, SelectMenuProps as USelectMenuProps, SlotClass, SwitchEmits as NuxtSwitchEmits, SwitchProps as NuxtSwitchProps, TableColumn, TableData, TableProps, TextareaEmits as NuxtTextareaEmits, TextareaProps as NuxtTextareaProps, TooltipProps as NuxtTooltipProps } from '@nuxt/ui';
 import type { DateValue } from '@vuepic/vue-datepicker';
 import type { ChoiceGroupBreakpoint, ChoiceGroupOrientation } from '../composables/useChoiceGroup.js';
-import type { DatepickerMode, DatepickerValue } from '../utils/datepicker.js';
+import type { DatepickerMode, DatepickerValue, DatepickerWeekStart } from '../utils/datepicker.js';
 import type { DecimalOption } from '../utils/number.js';
 import type { TableRowKeyGetter } from '../utils/table-selection.js';
 import type { TextMask } from '../utils/text-mask.js';
@@ -52,15 +52,25 @@ interface InputTextOwnProps {
 }
 /** 數字輸入框樣式覆寫 */
 export type InputNumberUi = NonNullable<InputProps['ui']> & {
-    /** 尾端外層，包住單位與載入圖示 */
+    /** 尾端外層，包住單位、載入圖示與增加按鈕 */
     suffix?: SlotClass;
     /** 單位文字 */
     unit?: SlotClass;
+    /** 前端外層，水平排列時包住減少按鈕與使用端的 leading slot */
+    prefix?: SlotClass;
+    /** 垂直排列時上下疊放兩個按鈕的外層 */
+    buttons?: SlotClass;
+    /** 增加按鈕 */
+    increment?: SlotClass;
+    /** 減少按鈕 */
+    decrement?: SlotClass;
 };
+/** 數字輸入增減按鈕的排列：水平為左減右加，垂直為兩個按鈕上下疊放在右側。 */
+export type InputNumberOrientation = 'horizontal' | 'vertical';
 /**
  * 沿用 Nuxt UI 輸入框的參數，僅供型別推導；值經 `$attrs` 轉給 UInput。
  * 排除元件自行宣告或改寫語意的項目：綁定值為數字、輸入模式依小數設定決定、載入圖示由元件繪製；
- * 原生 min、max、step 對文字輸入框無效，一併排除，避免誤以為有數值限制。
+ * min、max、step 由元件宣告，用於按鈕與鍵盤增減，不轉給原生輸入框。
  */
 type InheritedInputNumberProps = Omit<InputProps<string>, keyof InputNumberOwnProps | 'modelValue' | 'defaultValue' | 'modelModifiers' | 'type' | 'min' | 'max' | 'step' | 'loadingIcon'> & ForwardedEvents<InputEmits>;
 /** 數字輸入框參數；未列出的 Nuxt UI 輸入框參數（variant、icon、autofocus 等）皆可直接使用 */
@@ -92,6 +102,16 @@ interface InputNumberOwnProps {
     thousandSeparator?: boolean;
     /** 是否允許小數或指定小數位數，預設 false；固定精度最多 100 位。 */
     decimal?: DecimalOption;
+    /** 每次增減的量（按鈕、方向鍵），預設 1；小數位數超過 decimal 允許的位數時依 decimal 四捨五入並警告。 */
+    step?: number;
+    /** 按鈕與鍵盤增減的下限；只限制互動，手動輸入不會自動修正，表單驗證請寫在 schema。 */
+    min?: number;
+    /** 按鈕與鍵盤增減的上限；只限制互動，手動輸入不會自動修正，表單驗證請寫在 schema。 */
+    max?: number;
+    /** 是否顯示增減按鈕，預設關閉。 */
+    buttons?: boolean;
+    /** 增減按鈕的排列，預設 horizontal（左減右加）；vertical 為兩個按鈕上下疊放在右側。 */
+    orientation?: InputNumberOrientation;
     /** 樣式覆寫，與內建樣式合併，同一 slot 衝突時以傳入值優先；可用函式取得預設值後自行取代 */
     ui?: InputNumberUi;
 }
@@ -362,16 +382,19 @@ export interface SwitchProps extends /* @vue-ignore */ InheritedSwitchProps, Swi
 export type RadioGroupOrientation = ChoiceGroupOrientation | 'grid';
 /** 自動排列斷點，沿用 Tailwind 的 sm、md、lg、xl、2xl。 */
 export type RadioGroupBreakpoint = ChoiceGroupBreakpoint;
+/** 單選群組外觀：`list` 為一般選項（預設），`card` 為卡片。不支援 Nuxt UI 的 `table`。 */
+export type RadioGroupVariant = 'list' | 'card';
+/** 選項按鈕位置：`start` 在文字前（預設）、`end` 在文字後、`hidden` 隱藏（仍可用鍵盤操作）。 */
+export type RadioGroupIndicator = 'start' | 'end' | 'hidden';
 /** 單選群組參數 */
 /**
  * 沿用 Nuxt UI 單選群組的參數與事件，僅供型別推導；值經 `$attrs` 轉給 URadioGroup。
  * 排除元件自行宣告或改寫語意的項目：選項與欄位名稱由元件轉換；
  * 選項說明（descriptionKey 指定的欄位，預設 description）可用：沒有說明的選項高度對齊輸入框，有說明的選項撐高、說明換行。
- * 不支援 variant、indicator、highlight：card／table 外框會撐高選項、破壞與輸入框對齊的高度，
- * 移動選項按鈕會讓載入圖示對不上，highlight 只在 card／table 有作用。
+ * variant、indicator 由元件宣告；不支援 highlight 與 `variant="table"`。
  */
-type InheritedRadioGroupProps = Omit<NuxtRadioGroupProps, keyof RadioGroupOwnProps | 'modelValue' | 'defaultValue' | 'variant' | 'indicator' | 'highlight'> & ForwardedEvents<NuxtRadioGroupEmits> & UnsupportedChoiceProps;
-/** 單選群組參數；未列出的 Nuxt UI 單選群組參數（legend、descriptionKey、required 等）皆可直接使用；不支援 variant、indicator、highlight */
+type InheritedRadioGroupProps = Omit<NuxtRadioGroupProps, keyof RadioGroupOwnProps | 'modelValue' | 'defaultValue' | 'highlight'> & ForwardedEvents<NuxtRadioGroupEmits> & Pick<UnsupportedChoiceProps, 'highlight'>;
+/** 單選群組參數；未列出的 Nuxt UI 單選群組參數（legend、descriptionKey、required 等）皆可直接使用；不支援 highlight */
 export interface RadioGroupProps<T extends object = RadioGroupOption> extends /* @vue-ignore */ InheritedRadioGroupProps, RadioGroupOwnProps<T> {
 }
 /** 單選群組自行宣告的參數 */
@@ -400,6 +423,10 @@ interface RadioGroupOwnProps<T extends object = RadioGroupOption> {
     breakpoint?: RadioGroupBreakpoint;
     /** 元件尺寸，水平高度對齊同尺寸的輸入框，預設 lg。 */
     size?: NuxtRadioGroupProps['size'];
+    /** 外觀，預設 `list`；`card` 為卡片，選項不再對齊輸入框高度，可搭配 orientation（含 grid、auto）使用。 */
+    variant?: RadioGroupVariant;
+    /** 選項按鈕位置，預設 `start`；`hidden` 搭配 `card` 時只以卡片外框與底色表示選取。 */
+    indicator?: RadioGroupIndicator;
     /** 樣式覆寫；grid 模式以 fieldset 設定分欄與響應式斷點 class。 */
     ui?: NuxtRadioGroupProps['ui'];
 }
@@ -490,6 +517,12 @@ export interface DatepickerProps<TRange extends boolean = false> {
     yearRange?: [number, number];
     /** 綁定值的日期分隔符號，預設 '/'；不可為空或含數字、空白、冒號，無效時沿用預設並警告。 */
     separator?: string;
+    /** 輸入框顯示日期時的分隔符號，預設 '/'；只影響顯示，綁定值仍依 separator。年與年月模式使用文案格式，不受影響。規則同 separator。 */
+    displaySeparator?: string;
+    /** 日曆每週的起始日，0 為週日、1 為週一，依此類推，預設 0；變更後下次開啟日曆即套用。 */
+    weekStart?: DatepickerWeekStart;
+    /** 是否在輸入框的日期後顯示星期，預設關閉；只影響顯示，不改變綁定值。套用於 date、datetime、datetime-second，year、month 忽略。 */
+    showWeekday?: boolean;
 }
 /**
  * 沿用 Nuxt UI 提示的參數，僅供型別推導；值經 `$attrs` 轉給 UTooltip。

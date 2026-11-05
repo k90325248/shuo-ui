@@ -2,7 +2,7 @@ import type { CheckboxGroupProps, CheckboxProps, DatepickerProps, FileProps, Inf
 /** 可設定全站預設值的 prop 白名單；型別與執行時過濾共用這份清單。 */
 export declare const COMPONENT_DEFAULT_KEYS: {
     readonly inputText: readonly ["size", "hideMaskToggle", "revealIcon", "concealIcon"];
-    readonly inputNumber: readonly ["size", "unit", "thousandSeparator"];
+    readonly inputNumber: readonly ["size", "unit", "thousandSeparator", "buttons", "orientation"];
     readonly textarea: readonly ["size", "autoresize", "rows", "maxrows", "fixed"];
     readonly file: readonly ["size", "clear", "clearIcon", "downloadIcon", "selectIcon"];
     readonly months: readonly ["size"];
@@ -12,7 +12,7 @@ export declare const COMPONENT_DEFAULT_KEYS: {
     readonly switch: readonly ["size", "color", "loadingIcon"];
     readonly radioGroup: readonly ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"];
     readonly checkboxGroup: readonly ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"];
-    readonly datepicker: readonly ["size", "clear", "calendarIcon", "clearIcon", "roc", "separator", "yearRange"];
+    readonly datepicker: readonly ["size", "clear", "calendarIcon", "clearIcon", "roc", "separator", "displaySeparator", "yearRange", "weekStart", "showWeekday"];
     readonly queryCard: readonly ["icon", "expandIcon", "collapseIcon", "validateOn", "ui"];
     readonly table: readonly ["selectAll", "checkboxProps", "skeletonRows", "skeletonClass"];
     readonly listCard: readonly ["icon", "pageSize", "showPagination", "showSummary", "transition", "ui"];

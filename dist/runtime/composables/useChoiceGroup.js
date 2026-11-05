@@ -1,7 +1,23 @@
 import { breakpointsTailwind, useBreakpoints, useMounted, useResizeObserver } from "@vueuse/core";
-export const getChoiceGroupUi = ({ orientation, grid, loading }) => {
+export const getChoiceGroupUi = ({
+  orientation,
+  grid,
+  loading,
+  card = false,
+  indicator = "start"
+}) => {
   const horizontal = orientation === "horizontal";
   const join = (...classes) => classes.filter(Boolean).join(" ");
+  if (card) {
+    return {
+      root: horizontal && !grid ? "w-fit max-w-full min-w-0" : "w-full max-w-full min-w-0",
+      fieldset: join("min-w-0 flex-nowrap justify-start gap-2", grid && "grid grid-cols-1"),
+      item: join("min-w-0 max-w-full text-start", horizontal ? "flex-[0_1_auto]" : "w-full", loading && "relative"),
+      wrapper: "min-w-0 flex-1",
+      label: "w-fit max-w-full",
+      base: loading ? "opacity-0" : void 0
+    };
+  }
   return {
     root: grid ? "w-full max-w-full min-w-0" : "w-fit max-w-full min-w-0",
     fieldset: join(
@@ -15,10 +31,19 @@ export const getChoiceGroupUi = ({ orientation, grid, loading }) => {
       grid && "min-h-(--choice-control-height) items-center",
       loading && "relative"
     ),
-    wrapper: join("w-auto min-w-0", horizontal && "ms-1"),
+    // 水平排列縮小選項按鈕與文字的間距；按鈕在後面時改縮小尾端間距，隱藏按鈕時不留間距。
+    wrapper: join("w-auto min-w-0", horizontal && WRAPPER_GAP[indicator]),
     label: "w-fit max-w-full",
     base: loading ? "opacity-0" : void 0
   };
+};
+const WRAPPER_GAP = {
+  /** 按鈕在前 */
+  start: "ms-1",
+  /** 按鈕在後 */
+  end: "me-1",
+  /** 隱藏按鈕 */
+  hidden: "ms-0"
 };
 export const useChoiceGroup = (props) => {
   const tooltipReference = shallowRef();

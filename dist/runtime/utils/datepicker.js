@@ -7,10 +7,29 @@ import {
   getDateModelFormat,
   parseDateValue
 } from "./date.js";
+import { formatMessage } from "./messages.js";
 export const isEmptyDatepickerValue = (value) => value === null || value === void 0 || value === "" || Array.isArray(value) && value.length === 0;
 export const DATEPICKER_MODEL_FORMATS = DATE_MODEL_FORMATS;
 export const parseDatepickerValue = parseDateValue;
-export const formatDatepickerDisplay = (date, mode, roc, labels = true) => formatDateDisplay(date, { mode, roc, yearMonthLabels: labels });
+export const DEFAULT_WEEK_START = 0;
+export const isValidWeekStart = (value) => typeof value === "number" && Number.isInteger(value) && value >= 0 && value <= 6;
+export const DATEPICKER_WEEKDAY_MODES = ["date", "datetime", "datetime-second"];
+export const formatDatepickerWeekday = (display, date, mode, labels) => {
+  if (!display || !DATEPICKER_WEEKDAY_MODES.includes(mode) || !isValid(date)) return display;
+  const day = date.getDay();
+  const weekday = labels.weekdays[day] ?? String(day);
+  const spaceIndex = display.indexOf(" ");
+  const datePart = spaceIndex === -1 ? display : display.slice(0, spaceIndex);
+  const timePart = spaceIndex === -1 ? "" : display.slice(spaceIndex);
+  return `${formatMessage(labels.weekday, { date: datePart, weekday })}${timePart}`;
+};
+export const formatDatepickerDisplay = (date, mode, roc, labels = true, displaySeparator = DEFAULT_DATE_SEPARATOR) => {
+  const text = formatDateDisplay(date, { mode, roc, yearMonthLabels: labels });
+  if (displaySeparator === DEFAULT_DATE_SEPARATOR || !DATEPICKER_WEEKDAY_MODES.includes(mode)) return text;
+  const spaceIndex = text.indexOf(" ");
+  const datePart = spaceIndex === -1 ? text : text.slice(0, spaceIndex);
+  return datePart.replaceAll(DEFAULT_DATE_SEPARATOR, displaySeparator) + (spaceIndex === -1 ? "" : text.slice(spaceIndex));
+};
 export const normalizeDatepickerValue = (value, mode, roc, separator = DEFAULT_DATE_SEPARATOR) => {
   const candidate = mode === "year" && typeof value === "number" ? String(value).padStart(4, "0") : value;
   if (typeof candidate !== "string") return null;

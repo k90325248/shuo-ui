@@ -2,7 +2,7 @@ import type { RadioGroupOption, ResolvedRadioGroupOption } from '../types/choice
 import type { RadioGroupProps } from '../types/components.js';
 /** 選項型別，供使用端與測試頁共用。 */
 export type { RadioGroupOption, ResolvedRadioGroupOption } from '../types/choice.js';
-export type { RadioGroupProps, RadioGroupOrientation, RadioGroupBreakpoint } from '../types/components.js';
+export type { RadioGroupProps, RadioGroupOrientation, RadioGroupBreakpoint, RadioGroupVariant, RadioGroupIndicator } from '../types/components.js';
 /** 選項附加內容 slot 參數 */
 export interface RadioGroupAppendSlotProps<T extends object = RadioGroupOption> {
     /** 轉換後的選項：保留原始欄位，label、value 為依 labelKey、valueKey 解析的值；字串選項轉為 { label, value } */
@@ -16,10 +16,23 @@ export interface RadioGroupAppendSlotProps<T extends object = RadioGroupOption> 
     /** 選取此選項，例如附加輸入框聚焦時呼叫 */
     select: () => void;
 }
+/** 選項文字與說明 slot 參數 */
+export interface RadioGroupItemSlotProps<T extends object = RadioGroupOption> {
+    /** 轉換後的選項：保留原始欄位，label、value 為依 labelKey、valueKey 解析的值；字串選項轉為 { label, value } */
+    item: ResolvedRadioGroupOption<T>;
+    /** 目前的綁定值 */
+    modelValue: string | undefined;
+    /** 此選項是否已選取 */
+    selected: boolean;
+}
 /** 單選群組 slot */
 export interface RadioGroupSlots<T extends object = RadioGroupOption> {
     /** 群組標題，同 Nuxt UI 的 legend slot；也可用 legend prop 傳入文字 */
     'legend'?: () => unknown;
+    /** 選項文字，放在省略文字層內，超出寬度時截斷並以 Tooltip 顯示完整文字 */
+    'label'?: (props: RadioGroupItemSlotProps<T>) => unknown;
+    /** 選項說明，同 Nuxt UI 的 description slot；傳入後每個選項都會顯示說明區，例如卡片內的自訂預覽 */
+    'description'?: (props: RadioGroupItemSlotProps<T>) => unknown;
     /** 選項文字旁的附加內容 */
     'item-append'?: (props: RadioGroupAppendSlotProps<T>) => unknown;
 }

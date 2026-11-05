@@ -49,7 +49,8 @@ Values of the wrong type are cleared too, usually with a `console.warn` like `[S
 - `thousand-separator` (default `true`): separators shown on blur. Set `false` for years or codes.
 - `unit`: `true` shows the locale unit ("元" / "NTD"), or pass a string (`unit="pcs"`).
 - Right-aligned by default; `:ui="{ base: 'text-center' }"` centers.
-- **No `min` / `max` / `step`**: use `v.minValue` / `v.maxValue` in the schema. Incomplete input such as `-` binds `null`.
+- **Step buttons**: `buttons` (default `false`) shows increment / decrement buttons; `orientation` `'horizontal'` (default, minus left, plus right) or `'vertical'` (stacked on the right). `step` (default `1`), `min`, `max` limit the buttons and keys: ArrowUp / ArrowDown one step, PageUp / PageDown 10 steps, Home / End to `min` / `max`. Keys only step when `buttons`, `step`, `min` or `max` is set. From `null`, stepping starts at `min` (or `0`). Steps are computed in decimal and rounded to `decimal`; a `step` finer than `decimal` allows is rounded with a warning (use `:decimal="2"` with `:step="0.25"`). Press and hold repeats. Each step triggers form input and change validation. Site-wide: `components.inputNumber.buttons`, `orientation`.
+- **`min` / `max` do not validate**: typed values outside the range are kept as typed; use `v.minValue` / `v.maxValue` in the schema. Incomplete input such as `-` binds `null`.
 - Slot `trailing` sits next to the unit without replacing it. Expose `inputRef`.
 
 ### ShuoTextarea — `v-model: string`
@@ -85,6 +86,8 @@ Values of the wrong type are cleared too, usually with a `console.warn` like `[S
 - `orientation`: `'auto'` (default; vertical below `breakpoint`, default `md`), `'horizontal'`, `'vertical'`, or `'grid'` with columns set by `:ui="{ fieldset: 'grid-cols-1 md:grid-cols-2' }"`.
 - `label-key` / `value-key` / `description-key` for other field names. The component rewrites `label` and `value` on each item from these keys.
 - `legend` prop or slot. Slot `item-append` with `{ item, selected, disabled, labelId, select() }`; bind `@focus="select"` on an appended input to select its item. The appended input needs its own `UFormField` to be validated.
+- `variant`: `'list'` (default) or `'card'` (Nuxt UI card look; not aligned to input height; horizontal cards shrink and truncate long labels with a tooltip; vertical and grid cards fill the width). `indicator`: `'start'` (default), `'end'`, `'hidden'` (selection shown only by the card border and background). `table` and `highlight` are not supported. Works with every `orientation`, keys and `item-append`.
+- Slots `label` and `description` receive `{ item, modelValue, selected }`; with `#description` every item shows a description area (for example a preview in a card). The description area is a `<p>`, so use `span` elements inside. To make custom content fill a grid card: `:ui="{ fieldset: 'grid-cols-3', item: 'min-w-0', wrapper: 'w-full', description: 'w-full' }"`.
 
 ### ShuoCheckboxGroup — `v-model: string[]` (required)
 
@@ -108,10 +111,12 @@ Same as `ShuoRadioGroup` (items, orientation, keys, `item-append` with `{ item, 
 | `datetime`        | `115/09/20 14:02`    | `'2026/09/20 14:02'`    |
 | `datetime-second` | `115/09/20 14:02:09` | `'2026/09/20 14:02:09'` |
 
-- `roc` (default `true`) only changes the display; `separator` (default `'/'`) only changes the bound value. Use `separator="-"` for `YYYY-MM-DD` APIs.
+- `roc` (default `true`) only changes the display; `separator` (default `'/'`) only changes the bound value. Use `separator="-"` for `YYYY-MM-DD` APIs. `display-separator` (default `'/'`) only changes the displayed date (not year / month modes); add `display-separator="-"` to also show `2026-11-05`.
 - `range`: binds `[start, end]` or `[]`; also `v-model:start` / `v-model:end` (strings, `''` when empty). Only complete ranges are committed. With separate API fields, bind only `v-model:start` and `v-model:end`.
 - `min-date`, `max-date` (string, number or `Date`), `year-range` (default `[1900, 2100]`; ROC mode starts at 1911).
 - `clear` (default `true`, off by default inside a `required` `UFormField`; `:clear="false"` hides it), `calendar-icon`, `clear-icon`, `state`.
+- `week-start` (`0`–`6`, default `0` = Sunday, `1` = Monday) sets the first day of the calendar week; it is reactive and applies the next time the calendar opens. Set it site-wide with `components.datepicker.weekStart`.
+- `show-weekday` (default `false`) appends the weekday to the displayed date for `date`, `datetime` and `datetime-second` (ignored for `year` and `month`; each end of a range shows its own), for example `2026/11/05（星期四）` or `2026/11/05 (Thu)`; display only. The displayed date uses `display-separator`. Override the text with `messages.datepicker.weekday` (`{date}`, `{weekday}`) and `messages.datepicker.weekdays` (Sunday to Saturday).
 - Mismatched values (wrong format for `mode` / `separator`, reversed range) are cleared with a `console.warn`. When changing `mode`, set a matching value at the same time.
 - Does not inherit `@vuepic/vue-datepicker` props.
 - Two linked pickers: pass each other's value as `max-date` / `min-date`.
