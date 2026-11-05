@@ -223,7 +223,7 @@ const inputUi = computed(() => {
   } = props.ui ?? {};
   const builtin = {
     ...BUILTIN_UI,
-    ...horizontalButtons.value ? { leading: "ps-1" } : {},
+    ...horizontalButtons.value ? { base: "text-center", leading: "ps-1" } : {},
     ...showButtons.value ? { trailing: "pe-1" } : {}
   };
   return mergeUi(builtin, ui);

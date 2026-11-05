@@ -10,7 +10,7 @@
       ref="tooltipRoot"
       v-skeleton="skeleton"
       data-testid="datepicker-display"
-      v-bind="{ ...$attrs, class: void 0 }"
+      v-bind="containerAttrs"
       :class="[
   display({ class: normalizeClass($attrs.class) }),
   `form-datepicker--${controlSize}`,
@@ -173,6 +173,7 @@ const valueModel = defineModel({ type: null });
 const startModel = defineModel("start", { type: String });
 const endModel = defineModel("end", { type: String });
 const instance = getCurrentInstance();
+const attrs = useAttrs();
 const appConfig = useAppConfig();
 const {
   id: fieldId,
@@ -194,6 +195,11 @@ const messages = computed(() => locale.value.messages);
 const timeUnitLabel = (type) => messages.value.datepicker[type];
 const MIN_DATE_MODES = ["date", "datetime", "datetime-second"];
 const MIN_DATE_SEPARATORS = [DEFAULT_DATE_SEPARATOR, "-"];
+const INPUT_NAME_ATTRS = ["aria-label", "aria-labelledby"];
+const containerAttrs = computed(() => {
+  const { "class": _class, "aria-label": _label, "aria-labelledby": _labelledby, ...rest } = attrs;
+  return rest;
+});
 const ariaLabels = computed(() => ({
   // 保留原生 label 的名稱，避免套件預設的英文 aria-label 蓋過外部標籤。
   input: void 0,
@@ -454,12 +460,25 @@ watch(
   { immediate: true, deep: true }
 );
 watch(
-  () => [ariaAttrs.value?.["aria-describedby"], tooltipRoot.value, props.mode, resolved.roc, props.range],
+  () => [
+    ariaAttrs.value?.["aria-describedby"],
+    ...INPUT_NAME_ATTRS.map((name) => attrs[name]),
+    tooltipRoot.value,
+    props.mode,
+    resolved.roc,
+    props.range
+  ],
   () => {
     const input = tooltipRoot.value?.querySelector("input");
-    const description = ariaAttrs.value?.["aria-describedby"];
-    if (description) input?.setAttribute("aria-describedby", description);
-    else input?.removeAttribute("aria-describedby");
+    if (!input) return;
+    const values = {
+      "aria-describedby": ariaAttrs.value?.["aria-describedby"],
+      ...Object.fromEntries(INPUT_NAME_ATTRS.map((name) => [name, attrs[name]]))
+    };
+    for (const [name, value] of Object.entries(values)) {
+      if (value === void 0 || value === null || value === false || value === "") input.removeAttribute(name);
+      else input.setAttribute(name, String(value));
+    }
   },
   { flush: "post" }
 );

@@ -48,7 +48,7 @@ Values of the wrong type are cleared too, usually with a `console.warn` like `[S
 - `decimal`: `false` (default, integers only), a positive integer (fixed places), or `true` (any).
 - `thousand-separator` (default `true`): separators shown on blur. Set `false` for years or codes.
 - `unit`: `true` shows the locale unit ("元" / "NTD"), or pass a string (`unit="pcs"`).
-- Right-aligned by default; `:ui="{ base: 'text-center' }"` centers.
+- Right-aligned by default; `:ui="{ base: 'text-center' }"` centers. With horizontal step buttons the number is centered by default (vertical buttons stay right-aligned); `:ui="{ base: 'text-right' }"` overrides it.
 - **Step buttons**: `buttons` (default `false`) shows increment / decrement buttons; `orientation` `'horizontal'` (default, minus left, plus right) or `'vertical'` (stacked on the right). `step` (default `1`), `min`, `max` limit the buttons and keys: ArrowUp / ArrowDown one step, PageUp / PageDown 10 steps, Home / End to `min` / `max`. Keys only step when `buttons`, `step`, `min` or `max` is set. From `null`, stepping starts at `min` (or `0`). Steps are computed in decimal and rounded to `decimal`; a `step` finer than `decimal` allows is rounded with a warning (use `:decimal="2"` with `:step="0.25"`). Press and hold repeats. Each step triggers form input and change validation. Site-wide: `components.inputNumber.buttons`, `orientation`.
 - **`min` / `max` do not validate**: typed values outside the range are kept as typed; use `v.minValue` / `v.maxValue` in the schema. Incomplete input such as `-` binds `null`.
 - Slot `trailing` sits next to the unit without replacing it. Expose `inputRef`.
