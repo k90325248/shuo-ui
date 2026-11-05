@@ -503,7 +503,7 @@ The component only exposes the props in the table above and does not inherit eve
 
 ## Styling
 
-There is no `ui` prop. HTML attributes such as `class` and `style` go on the outer container and are not passed through to the date library. The container has a built-in `relative block w-full min-w-0`; `class` is merged with it using tailwind-merge and wins on conflicts, so it can override the width and minimum width (for example `class="w-40"` or `class="min-w-20"`).
+There is no `ui` prop. HTML attributes such as `class` and `style` go on the outer container and are not passed through to the date library. The exceptions are `aria-label` and `aria-labelledby`, which go on the input so the field has a name when it is not wrapped in `UFormField`. The container has a built-in `relative block w-full min-w-0`; `class` is merged with it using tailwind-merge and wins on conflicts, so it can override the width and minimum width (for example `class="w-40"` or `class="min-w-20"`).
 
 When the displayed date is wider than the field, it is truncated with an ellipsis, and a tooltip shows the full text on hover or focus, or on long press on touch devices (see [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#touch-long-press)); a long press does not open the calendar. The tooltip is not shown while the menu is open or during the skeleton.
 

@@ -27,7 +27,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
 
 ### 增減按鈕與步進
 
-`buttons` 顯示增減按鈕（預設關閉），`step` 為每次增減的量（預設 `1`），`min`、`max` 限制按鈕與鍵盤增減的範圍。`orientation` 決定按鈕排列：`horizontal`（預設）左減右加，`vertical` 兩個按鈕上下疊放在右側。
+`buttons` 顯示增減按鈕（預設關閉），`step` 為每次增減的量（預設 `1`），`min`、`max` 限制按鈕與鍵盤增減的範圍。`orientation` 決定按鈕排列：`horizontal`（預設）左減右加，數字預設置中；`vertical` 兩個按鈕上下疊放在右側，數字維持靠右。
 
 <component-example name="input-number-step">
 
@@ -118,7 +118,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
 
 ### 數字置中
 
-`ui.base` 內建 `text-right`，傳入 `text-center` 即可置中，適合嵌在句子中的短欄位。有單位或載入中時，右內距依尾端實際寬度保留，數字不會與單位重疊。
+`ui.base` 內建 `text-right`，傳入 `text-center` 即可置中，適合嵌在句子中的短欄位。開啟水平排列的增減按鈕時內建改為 `text-center`，數字在兩個按鈕中間；要維持靠右時傳入 `text-right`。有單位或載入中時，右內距依尾端實際寬度保留，數字不會與單位重疊。
 
 <component-example name="input-number-center">
 
@@ -351,6 +351,10 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
       <code>
         text-right
       </code>
+      
+      ；水平排列的增減按鈕為 <code>
+        text-center
+      </code>
     </td>
   </tr>
   
@@ -468,7 +472,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
 
 開啟按鈕時，Nuxt UI 的 `leading`、`trailing` 內距縮小為 `ps-1`、`pe-1`（同 `UInputNumber`），可由 `ui` 覆寫。按鈕圖示沿用 `app.config.ts` 的 `ui.icons`：水平為 `plus`、`minus`，垂直為 `chevronUp`、`chevronDown`。
 
-要讓數字置中，傳入 `:ui="{ base: 'text-center' }"`，見[數字置中](#%E6%95%B8%E5%AD%97%E7%BD%AE%E4%B8%AD)。有單位或載入中時，元件依尾端實際寬度設定輸入框右內距（inline style），`ui`、`class`、`style` 都不會蓋掉，置中時數字在扣除單位後的空間內置中，不會與單位重疊。
+要讓數字置中，傳入 `:ui="{ base: 'text-center' }"`，見[數字置中](#%E6%95%B8%E5%AD%97%E7%BD%AE%E4%B8%AD)；水平排列的增減按鈕已內建置中，傳入 `text-right`、`text-left` 可改回靠右或靠左。函式寫法收到的預設值同樣依按鈕排列而不同。有單位或載入中時，元件依尾端實際寬度設定輸入框右內距（inline style），`ui`、`class`、`style` 都不會蓋掉，置中時數字在扣除單位後的空間內置中，不會與單位重疊。
 
 ## 更新紀錄
 

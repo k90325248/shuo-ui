@@ -501,7 +501,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 
 ## 樣式
 
-沒有 `ui` prop。`class`、`style` 等 HTML attributes 套用在外層容器，不會透傳到日期套件。外層內建 `relative block w-full min-w-0`，`class` 以 tailwind-merge 與其合併，衝突時優先，可覆寫寬度與最小寬度（例如 `class="w-40"`、`class="min-w-20"`）。
+沒有 `ui` prop。`class`、`style` 等 HTML attributes 套用在外層容器，不會透傳到日期套件；`aria-label`、`aria-labelledby` 例外，會套用到輸入框，未包 `UFormField` 時用來提供欄位名稱。外層內建 `relative block w-full min-w-0`，`class` 以 tailwind-merge 與其合併，衝突時優先，可覆寫寬度與最小寬度（例如 `class="w-40"`、`class="min-w-20"`）。
 
 顯示的日期文字超過寬度時以省略號截斷，滑鼠移入或聚焦時以 Tooltip 顯示完整文字，觸控裝置長按顯示（見 [Tooltip](https://k90325248.github.io/shuo-ui/components/helper/tooltip#%E8%A7%B8%E6%8E%A7%E9%95%B7%E6%8C%89)），長按不會開啟日曆；選單開啟或骨架期間不顯示。
 

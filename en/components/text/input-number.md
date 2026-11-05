@@ -27,7 +27,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/en/components/text/input-num
 
 ### Step buttons
 
-`buttons` shows increment and decrement buttons (off by default), `step` is the amount per step (`1` by default), and `min`, `max` limit stepping with the buttons and keys. `orientation` sets the button layout: `horizontal` (default) puts decrement on the left and increment on the right; `vertical` stacks both on the right.
+`buttons` shows increment and decrement buttons (off by default), `step` is the amount per step (`1` by default), and `min`, `max` limit stepping with the buttons and keys. `orientation` sets the button layout: `horizontal` (default) puts decrement on the left and increment on the right and centers the number; `vertical` stacks both on the right and keeps the number right-aligned.
 
 <component-example name="input-number-step">
 
@@ -118,7 +118,7 @@ Use `requiredNumber` for required fields and add ranges with `v.minValue` and `v
 
 ### Centered numbers
 
-`ui.base` has a built-in `text-right`; pass `text-center` to center the number, which suits short fields inside a sentence. With a unit or while loading, the right padding follows the trailing content's actual width, so the number never overlaps the unit.
+`ui.base` has a built-in `text-right`; pass `text-center` to center the number, which suits short fields inside a sentence. With horizontal step buttons the built-in value is `text-center`, so the number sits between the buttons; pass `text-right` to keep it right-aligned. With a unit or while loading, the right padding follows the trailing content's actual width, so the number never overlaps the unit.
 
 <component-example name="input-number-center">
 
@@ -353,6 +353,12 @@ The props are the same as Nuxt UI `UInput`.
       <code>
         text-right
       </code>
+      
+      ; <code>
+        text-center
+      </code>
+      
+       with horizontal step buttons
     </td>
   </tr>
   
@@ -472,7 +478,7 @@ The props are the same as Nuxt UI `UInput`.
 
 With buttons on, Nuxt UI's `leading` and `trailing` padding shrinks to `ps-1` and `pe-1` (as in `UInputNumber`); override it with `ui`. The button icons follow `ui.icons` in `app.config.ts`: `plus` and `minus` in horizontal layout, `chevronUp` and `chevronDown` in vertical layout.
 
-To center the number, pass `:ui="{ base: 'text-center' }"`; see [Centered numbers](#centered-numbers). With a unit or while loading, the component sets the input's right padding from the trailing content's actual width (inline style), which `ui`, `class` and `style` do not override. When centered, the number is centered in the space left after the unit and never overlaps it.
+To center the number, pass `:ui="{ base: 'text-center' }"`; see [Centered numbers](#centered-numbers). Horizontal step buttons already center it; pass `text-right` or `text-left` to align it right or left. The defaults passed to the function form also follow the button layout. With a unit or while loading, the component sets the input's right padding from the trailing content's actual width (inline style), which `ui`, `class` and `style` do not override. When centered, the number is centered in the space left after the unit and never overlaps it.
 
 ## Changelog
 
