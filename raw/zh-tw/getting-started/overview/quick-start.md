@@ -111,7 +111,7 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => {
     </td>
     
     <td>
-      數字，千分位、小數、單位
+      數字，千分位、小數、單位、增減按鈕
     </td>
     
     <td>
@@ -175,7 +175,7 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => {
     </td>
     
     <td>
-      日期、年月、日期時間，範圍
+      日期、年月、日期時間，範圍，可顯示星期
     </td>
     
     <td>
@@ -239,7 +239,7 @@ const onSubmit = (event: { data: v.InferOutput<typeof schema> }) => {
     </td>
     
     <td>
-      單選群組
+      單選群組，可用卡片外觀
     </td>
     
     <td>

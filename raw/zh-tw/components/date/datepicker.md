@@ -161,7 +161,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 
 ### 民國年與分隔符號
 
-`roc` 只切換顯示，預設開啟，不改寫綁定值；`separator` 只影響綁定值，預設 `/`，顯示仍為斜線。
+`roc` 只切換顯示，預設開啟，不改寫綁定值；`separator` 只影響綁定值，`display-separator` 只影響輸入框顯示的日期，兩者預設都是 `/`，可以分別設定。
 
 <component-example name="datepicker-roc">
 
@@ -172,6 +172,8 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 - 民國年為西元年減 1911；1911 年顯示為民國 0 年。年份按鈕與年份清單也使用此規則。
 - 民國模式不顯示、也不能選取 1911 年以前的日期；西元模式沿用一般年份範圍。
 - 綁定值預設以斜線分隔；API 使用 `YYYY-MM-DD` 等連字號格式時，設定 `separator="-"` 即可直接綁定。`separator` 不可為空或含數字、空白、冒號，無效時沿用預設並警告。
+- 畫面也要顯示 `2026-11-05` 時，另外設定 `display-separator="-"`。只替換日期（`date`、`datetime`、`datetime-second`）年月日之間的分隔，時間仍為冒號；年與年月模式依[文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)的格式顯示，不受影響。規則與無效時的處理同 `separator`。
+- 全站統一時，在 `shuoUi.components.datepicker` 設定 `separator`、`displaySeparator`，例如西元專案設 `roc: false`、`separator: '-'`、`displaySeparator: '-'`。
 
 <warning>
 
@@ -180,6 +182,99 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 </warning>
 
 同一輪清空只送出一次 `update:modelValue`（或 `update:start`、`update:end`）事件；起迄相反時不會先同步出排序後的暫時值。
+
+### 週起始日與顯示星期
+
+`week-start` 設定日曆每週的第一天，`0` 為週日（預設）、`1` 為週一，依此類推到 `6`；星期標題列與六週排列都從這天開始，範圍選取與 `min-date`、`max-date` 的行為不變。值可以隨時改變，已掛載的元件下次開啟日曆即套用，不需要重新掛載；不是 0～6 的整數時沿用週日並警告。
+
+`show-weekday` 在輸入框的日期後加上星期，預設關閉，只影響顯示，`v-model` 不變。
+
+<component-example name="datepicker-weekday">
+
+
+
+</component-example>
+
+<table>
+<thead>
+  <tr>
+    <th>
+      mode
+    </th>
+    
+    <th>
+      顯示（<code>
+        show-weekday
+      </code>
+      
+      ）
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        date
+      </code>
+    </td>
+    
+    <td>
+      2026/11/05（星期四）
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        datetime
+      </code>
+      
+      、<code>
+        datetime-second
+      </code>
+    </td>
+    
+    <td>
+      2026/11/05（星期四） 14:30
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        year
+      </code>
+      
+      、<code>
+        month
+      </code>
+    </td>
+    
+    <td>
+      不顯示星期
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        range
+      </code>
+    </td>
+    
+    <td>
+      兩端各自顯示：2026/11/05（星期四） ～ …
+    </td>
+  </tr>
+</tbody>
+</table>
+
+- 星期名稱與括號樣式依語系切換，英文為「2026/11/05 (Thu)」；可用 `messages.datepicker.weekday`（格式，`{date}` 為日期、`{weekday}` 為星期）與 `weekdays`（週日到週六的名稱）覆寫，見[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)。時間接在星期之後。
+- 顯示的分隔符號由 `display-separator` 決定，與綁定值的 `separator` 無關（範例綁定 `2026-11-05`，預設顯示「2026/11/05（星期四）」，設 `display-separator="-"` 時顯示「2026-11-05（星期四）」）。
+- 加上星期後文字較長，超過寬度時同樣以省略號截斷，並以 Tooltip 顯示完整文字。
+- 兩者都可在全站設定預設值，例如讓整個專案以週一開始：`shuoUi.components.datepicker.weekStart: 1`。使用者可在設定頁切換時，把設定值綁到 `:week-start` 即可。
 
 ### 範圍綁定
 
@@ -288,7 +383,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 
 ### 日曆顯示
 
-日曆以週日為每週第一天，固定顯示六週；前後月份的日期以較淡文字呈現。換月使用透明度過場，避免水平位移產生捲軸。
+日曆預設以週日為每週第一天（可用 [`week-start`](#%E9%80%B1%E8%B5%B7%E5%A7%8B%E6%97%A5%E8%88%87%E9%A1%AF%E7%A4%BA%E6%98%9F%E6%9C%9F) 改變），固定顯示六週；前後月份的日期以較淡文字呈現。換月使用透明度過場，避免水平位移產生捲軸。
 
 月份與星期名稱、年份清單的「年」字、年與年月模式的「115 年 10 月」格式，以及範圍的分隔符號「～」都依語系切換（英文為「10/115」與「–」）；民國年或西元年仍由 `roc` 決定。見[多語系與文案](https://k90325248.github.io/shuo-ui/getting-started/theme/messages)。
 
@@ -396,7 +491,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 
 </component-props>
 
-`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clear`、`calendarIcon`、`clearIcon`、`roc`、`separator`、`yearRange` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clear`、`calendarIcon`、`clearIcon`、`roc`、`separator`、`displaySeparator`、`yearRange`、`weekStart`、`showWeekday` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
 
 <note>
 

@@ -53,12 +53,12 @@ The app must be wrapped in `<UApp>` (toasts and tooltips depend on it).
 | Component           | Purpose                                           | v-model                                                        |
 | ------------------- | ------------------------------------------------- | -------------------------------------------------------------- |
 | `ShuoInputText`     | Single-line text, optional masking                | `string`                                                       |
-| `ShuoInputNumber`   | Number with thousands separators, decimals, unit  | `number \| null`                                               |
+| `ShuoInputNumber`   | Number with separators, decimals, unit, steppers  | `number \| null`                                               |
 | `ShuoTextarea`      | Multi-line text                                   | `string`                                                       |
 | `ShuoSelectMenu`    | Select menu, searchable, `multiple`               | `string` (or `null` via `empty-value`); `string[]` if multiple |
-| `ShuoDatepicker`    | Date / year / month / date-time, ranges           | `string`; `[string, string] \| []` with `range`                |
+| `ShuoDatepicker`    | Date / year / month / date-time, ranges, weekday  | `string`; `[string, string] \| []` with `range`                |
 | `ShuoCheckbox`      | Single checkbox                                   | `string \| number \| boolean` (default `1` / `0`)              |
-| `ShuoRadioGroup`    | Radio group                                       | `string`                                                       |
+| `ShuoRadioGroup`    | Radio group, optional card appearance             | `string`                                                       |
 | `ShuoCheckboxGroup` | Checkbox group                                    | `string[]`                                                     |
 | `ShuoSwitch`        | Switch, optional async `action`                   | `boolean` (configurable `true-value` / `false-value`)          |
 | `ShuoFile`          | Single file pick + existing attachment download   | `File \| null` (does not upload)                               |
@@ -80,7 +80,7 @@ The app must be wrapped in `<UApp>` (toasts and tooltips depend on it).
 6. **Use `loading` for a field doing its own work** (fetching options), and **`skeleton`** while the page's data has not arrived yet.
 7. **Pagination is server-side.** `ShuoListCard` emits `page-change` with `{ PageNumber, PageSize }`; the page queries the back end and then updates `data`, `total` and `page`.
 8. **Display helpers are auto-imported**: `formatDateDisplay`, `formatNumberDisplay`, `splitMonths`, `splitPhone` and others. Use them in table cells instead of writing formatters, and never write formatted strings back into the data.
-9. **Do not add props that do not exist.** `ShuoInputNumber` has no `min` / `max` (use validation); `ShuoDatepicker` has no `color` (use `state`); checkboxes and groups do not support `variant`, `indicator` or `highlight`.
+9. **Do not add props that do not exist.** `ShuoInputNumber`'s `min` / `max` only limit its step buttons and arrow keys (still validate ranges in the schema); `ShuoDatepicker` has no `color` (use `state`); checkboxes and checkbox groups do not support `variant`, `indicator` or `highlight`; `ShuoRadioGroup` supports `variant` (`list`, `card`) and `indicator`, but not `table` or `highlight`.
 10. **Types** come from the `#shuo-ui` alias, for example `import type { PageRequest } from '#shuo-ui/types/pagination'`.
 
 ## Minimal form

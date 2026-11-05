@@ -222,7 +222,15 @@ An added locale does not change the language of the date picker calendar; month 
         true
       </code>
       
-      )
+      ), <code>
+        increment
+      </code>
+      
+      , <code>
+        decrement
+      </code>
+      
+       (accessible names of the step buttons)
     </td>
   </tr>
   
@@ -530,7 +538,27 @@ An added locale does not change the language of the date picker calendar; month 
         rangeSeparator
       </code>
       
-       (range separator)
+       (range separator), <code>
+        weekday
+      </code>
+      
+       (<code>
+        show-weekday
+      </code>
+      
+       format, <code>
+        {date}
+      </code>
+      
+      , <code>
+        {weekday}
+      </code>
+      
+      ), <code>
+        weekdays
+      </code>
+      
+       (weekday names from Sunday to Saturday, an array)
     </td>
   </tr>
   

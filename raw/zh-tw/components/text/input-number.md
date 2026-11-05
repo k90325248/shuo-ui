@@ -1,11 +1,11 @@
 ---
 title: "InputNumber"
-description: "數字輸入，離開輸入框後顯示千分位，可指定小數位數與單位。"
+description: "數字輸入，離開輸入框後顯示千分位，可指定小數位數、單位與增減按鈕。"
 canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-number"
 ---
 # InputNumber
 
-> 數字輸入，離開輸入框後顯示千分位，可指定小數位數與單位。
+> 數字輸入，離開輸入框後顯示千分位，可指定小數位數、單位與增減按鈕。
 
 `v-model: number | null`。
 
@@ -25,11 +25,32 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
 - 非數字字元與超過指定位數的小數無法輸入，貼上時也會還原；`decimal` 為 `false` 或 `0` 時不能輸入小數點。
 - 聚焦時改為不含千分位的編輯文字。`decimal` 為 `false` 或 `0` 時 `inputmode` 為 `numeric`，否則為 `decimal`，手機會顯示對應的數字鍵盤。
 
-<tip>
+### 增減按鈕與步進
 
-元件不提供 `min`、`max`。底層是文字型 input，原生的 `min`、`max`、`step` 不會生效，數值範圍請用[驗證規則](https://k90325248.github.io/shuo-ui/getting-started/form/validation)，見下方[搭配表單驗證](#%E6%90%AD%E9%85%8D%E8%A1%A8%E5%96%AE%E9%A9%97%E8%AD%89)。
+`buttons` 顯示增減按鈕（預設關閉），`step` 為每次增減的量（預設 `1`），`min`、`max` 限制按鈕與鍵盤增減的範圍。`orientation` 決定按鈕排列：`horizontal`（預設）左減右加，`vertical` 兩個按鈕上下疊放在右側。
 
-</tip>
+<component-example name="input-number-step">
+
+
+
+</component-example>
+
+- **鍵盤**：有 `buttons` 或傳入 `step`、`min`、`max` 任一個時，聚焦輸入框後 ArrowUp／ArrowDown 增減一步，PageUp／PageDown 增減 10 步，Home／End 跳到 `min`／`max`（有設定時）。沒有這些設定時方向鍵維持一般文字輸入的行為。按鈕不在 Tab 順序內，無障礙名稱為「增加」「減少」（依語系切換）。
+- **長按**：按住按鈕超過 0.4 秒後連續增減，到達上下限或放開時停止。按按鈕不會移走輸入框的焦點。
+- **空值**：值為 `null` 時，不論按增加或減少都從 `min` 開始；沒有 `min` 時從 `0` 開始。
+- **浮點誤差**：以十進位計算，`0.25` 連加不會出現 `0.7500000001`；結果依 `decimal` 的位數四捨五入。
+- **step 與 decimal**：`step` 的小數位數超過 `decimal` 允許的位數時（例如 `decimal` 為 `false` 卻給 `0.25`），改用依 `decimal` 四捨五入後的值（至少一個最小單位，`false` 時為 `1`），並在主控台警告。`step` 不是大於 0 的數字、`min` 大於 `max` 時同樣警告並忽略。
+- **上下限**：值等於或超過 `max` 時增加按鈕停用，等於或低於 `min` 時減少按鈕停用。停用、載入中、骨架與表單停用時兩個按鈕都停用。
+- 每次增減都會觸發 `UFormField` 的 input 與 change 驗證，與手動輸入相同。
+- `buttons`、`orientation` 可以在全站設定預設值，例如整個專案都顯示按鈕：`shuoUi.components.inputNumber.buttons: true`。
+
+<warning>
+
+`min`、`max` 只限制按鈕與鍵盤，**手動輸入超出範圍時不會自動修正**，綁定值維持輸入的數字；超出範圍時按增加或減少會回到範圍內。表單驗證仍請在 schema 以 `v.minValue`、`v.maxValue` 檢查，見下方[搭配表單驗證](#%E6%90%AD%E9%85%8D%E8%A1%A8%E5%96%AE%E9%A9%97%E8%AD%89)。
+
+</warning>
+
+水平排列時減少按鈕取代左側的 `icon`、`leadingIcon` 位置（`#leading` slot 仍接在按鈕後面）；需要左側圖示時改用 `orientation="vertical"`。增加按鈕排在單位、`#trailing` slot 與載入圖示的右側，左右內距依實際寬度保留，數字與單位不會被擠掉。
 
 ### 單位
 
@@ -80,6 +101,16 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
 必填用 `requiredNumber`，範圍以 `v.minValue`、`v.maxValue` 追加；選填的非負數字用 `optionalNonNegativeNumber`。驗證與送出的都是數字，不含千分位。
 
 <component-example name="input-number-validation">
+
+
+
+</component-example>
+
+### 增減按鈕搭配驗證
+
+`min`、`max` 不取代驗證：範例的按鈕只限制不小於 0，上限由 schema 檢查；按增加超過 40 時立即顯示錯誤。
+
+<component-example name="input-number-step-validation">
 
 
 
@@ -170,6 +201,8 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
       、<code>
         avatar
       </code>
+      
+      ；水平排列的按鈕開啟時接在減少按鈕後面
     </td>
   </tr>
   
@@ -209,7 +242,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
         trailing
       </code>
       
-       slot、載入圖示」，右內距依實際寬度保留
+       slot、載入圖示、增加按鈕」，右內距依實際寬度保留
     </td>
   </tr>
 </tbody>
@@ -265,7 +298,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
 
 ## 樣式
 
-`ui` 可用 Nuxt UI `UInput` 的所有 slot（`root`、`base`、`trailing` 等），另外提供 `suffix`、`unit`：
+`ui` 可用 Nuxt UI `UInput` 的所有 slot（`root`、`base`、`leading`、`trailing` 等），另外提供 `suffix`、`unit` 與增減按鈕的 `prefix`、`buttons`、`increment`、`decrement`：
 
 <table>
 <thead>
@@ -356,8 +389,84 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/text/input-
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        prefix
+      </code>
+    </td>
+    
+    <td>
+      水平排列時包住減少按鈕與 <code>
+        #leading
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        flex items-center gap-1.5
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        buttons
+      </code>
+    </td>
+    
+    <td>
+      垂直排列時上下疊放兩個按鈕
+    </td>
+    
+    <td>
+      <code>
+        flex flex-col justify-center
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        increment
+      </code>
+    </td>
+    
+    <td>
+      增加按鈕外層
+    </td>
+    
+    <td>
+      <code>
+        flex items-center
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        decrement
+      </code>
+    </td>
+    
+    <td>
+      減少按鈕外層
+    </td>
+    
+    <td>
+      <code>
+        flex items-center
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
+
+開啟按鈕時，Nuxt UI 的 `leading`、`trailing` 內距縮小為 `ps-1`、`pe-1`（同 `UInputNumber`），可由 `ui` 覆寫。按鈕圖示沿用 `app.config.ts` 的 `ui.icons`：水平為 `plus`、`minus`，垂直為 `chevronUp`、`chevronDown`。
 
 要讓數字置中，傳入 `:ui="{ base: 'text-center' }"`，見[數字置中](#%E6%95%B8%E5%AD%97%E7%BD%AE%E4%B8%AD)。有單位或載入中時，元件依尾端實際寬度設定輸入框右內距（inline style），`ui`、`class`、`style` 都不會蓋掉，置中時數字在扣除單位後的空間內置中，不會與單位重疊。
 

@@ -1,11 +1,11 @@
 ---
 title: "InputNumber"
-description: "Number input that shows thousands separators on blur, with decimal places and units."
+description: "Number input that shows thousands separators on blur, with decimal places, units and step buttons."
 canonical_url: "https://k90325248.github.io/shuo-ui/en/components/text/input-number"
 ---
 # InputNumber
 
-> Number input that shows thousands separators on blur, with decimal places and units.
+> Number input that shows thousands separators on blur, with decimal places, units and step buttons.
 
 `v-model: number | null`.
 
@@ -25,11 +25,32 @@ canonical_url: "https://k90325248.github.io/shuo-ui/en/components/text/input-num
 - Non-numeric characters and decimals beyond the set places cannot be typed, and pasted text is reverted too. When `decimal` is `false` or `0`, the decimal point cannot be typed.
 - On focus, the text switches to the editable form without separators. `inputmode` is `numeric` when `decimal` is `false` or `0`, and `decimal` otherwise, so phones show the matching number keyboard.
 
-<tip>
+### Step buttons
 
-The component has no `min` or `max`. It is a text input underneath, so the native `min`, `max` and `step` have no effect. Use [validation rules](https://k90325248.github.io/shuo-ui/getting-started/form/validation) for ranges; see [With form validation](#with-form-validation) below.
+`buttons` shows increment and decrement buttons (off by default), `step` is the amount per step (`1` by default), and `min`, `max` limit stepping with the buttons and keys. `orientation` sets the button layout: `horizontal` (default) puts decrement on the left and increment on the right; `vertical` stacks both on the right.
 
-</tip>
+<component-example name="input-number-step">
+
+
+
+</component-example>
+
+- **Keyboard**: with `buttons`, or when any of `step`, `min`, `max` is passed, ArrowUp / ArrowDown steps once in the focused input, PageUp / PageDown steps 10 times, and Home / End jump to `min` / `max` (when set). Without these settings the arrow keys behave as in a normal text input. The buttons are not in the Tab order and are labelled "Increment" and "Decrement" (following the locale).
+- **Press and hold**: holding a button for more than 0.4 seconds keeps stepping until a limit is reached or the button is released. Pressing a button does not move focus away from the input.
+- **Empty value**: when the value is `null`, both increment and decrement start at `min`, or at `0` without `min`.
+- **No floating-point errors**: steps are computed in decimal, so repeatedly adding `0.25` never gives `0.7500000001`; the result is rounded to the places allowed by `decimal`.
+- **step and decimal**: when `step` has more decimal places than `decimal` allows (for example `0.25` with `decimal` set to `false`), the step is rounded to what `decimal` allows (at least one smallest unit, `1` for `false`) with a console warning. A `step` that is not a number above 0, or a `min` greater than `max`, is also ignored with a warning.
+- **Limits**: the increment button is disabled when the value is at or above `max`, and the decrement button at or below `min`. Both are disabled while disabled, loading, in a skeleton or in a disabled form.
+- Each step triggers the `UFormField` input and change validation, just like typing.
+- `buttons` and `orientation` can have site-wide defaults, for example to show the buttons across the project: `shuoUi.components.inputNumber.buttons: true`.
+
+<warning>
+
+`min` and `max` only limit the buttons and keys. **A typed value outside the range is not corrected**; the bound value stays as typed, and stepping from it moves back into the range. Keep validating the range in the schema with `v.minValue` and `v.maxValue`; see [With form validation](#with-form-validation) below.
+
+</warning>
+
+In horizontal layout the decrement button takes the place of the left `icon` / `leadingIcon` (the `#leading` slot still follows the button); use `orientation="vertical"` when you need a left icon. The increment button sits to the right of the unit, the `#trailing` slot and the loading icon, and the padding on both sides follows their actual width, so the number and unit are never pushed out.
 
 ### Unit
 
@@ -80,6 +101,16 @@ While loading, the spinner sits to the right of the unit and the number and unit
 Use `requiredNumber` for required fields and add ranges with `v.minValue` and `v.maxValue`; use `optionalNonNegativeNumber` for optional non-negative numbers. What gets validated and submitted is a number, without separators.
 
 <component-example name="input-number-validation">
+
+
+
+</component-example>
+
+### Step buttons with validation
+
+`min` and `max` do not replace validation: the buttons in this example only stop at 0, and the schema checks the upper limit; stepping above 40 shows the error right away.
+
+<component-example name="input-number-step-validation">
 
 
 
@@ -171,7 +202,7 @@ See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/commo
         avatar
       </code>
       
-       are kept
+       are kept; with horizontal buttons it follows the decrement button
     </td>
   </tr>
   
@@ -211,7 +242,7 @@ See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/commo
         trailing
       </code>
       
-       slot, loading icon"; the right padding follows the actual width
+       slot, loading icon, increment button"; the right padding follows the actual width
     </td>
   </tr>
 </tbody>
@@ -269,7 +300,7 @@ The props are the same as Nuxt UI `UInput`.
 
 ## Styling
 
-`ui` accepts every slot of Nuxt UI `UInput` (`root`, `base`, `trailing` and so on), plus `suffix` and `unit`:
+`ui` accepts every slot of Nuxt UI `UInput` (`root`, `base`, `leading`, `trailing` and so on), plus `suffix`, `unit` and the step button parts `prefix`, `buttons`, `increment`, `decrement`:
 
 <table>
 <thead>
@@ -360,8 +391,86 @@ The props are the same as Nuxt UI `UInput`.
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        prefix
+      </code>
+    </td>
+    
+    <td>
+      Wrapper around the decrement button and <code>
+        #leading
+      </code>
+      
+       in horizontal layout
+    </td>
+    
+    <td>
+      <code>
+        flex items-center gap-1.5
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        buttons
+      </code>
+    </td>
+    
+    <td>
+      Stack of both buttons in vertical layout
+    </td>
+    
+    <td>
+      <code>
+        flex flex-col justify-center
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        increment
+      </code>
+    </td>
+    
+    <td>
+      Increment button wrapper
+    </td>
+    
+    <td>
+      <code>
+        flex items-center
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        decrement
+      </code>
+    </td>
+    
+    <td>
+      Decrement button wrapper
+    </td>
+    
+    <td>
+      <code>
+        flex items-center
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
+
+With buttons on, Nuxt UI's `leading` and `trailing` padding shrinks to `ps-1` and `pe-1` (as in `UInputNumber`); override it with `ui`. The button icons follow `ui.icons` in `app.config.ts`: `plus` and `minus` in horizontal layout, `chevronUp` and `chevronDown` in vertical layout.
 
 To center the number, pass `:ui="{ base: 'text-center' }"`; see [Centered numbers](#centered-numbers). With a unit or while loading, the component sets the input's right padding from the trailing content's actual width (inline style), which `ui`, `class` and `style` do not override. When centered, the number is centered in the space left after the unit and never overlaps it.
 

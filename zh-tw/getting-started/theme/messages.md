@@ -222,7 +222,15 @@ export default defineNuxtConfig({
         true
       </code>
       
-       時顯示的文字）
+       時顯示的文字）、<code>
+        increment
+      </code>
+      
+      、<code>
+        decrement
+      </code>
+      
+      （增減按鈕的無障礙名稱）
     </td>
   </tr>
   
@@ -530,7 +538,27 @@ export default defineNuxtConfig({
         rangeSeparator
       </code>
       
-      （範圍分隔）
+      （範圍分隔）、<code>
+        weekday
+      </code>
+      
+      （<code>
+        show-weekday
+      </code>
+      
+       的格式，<code>
+        {date}
+      </code>
+      
+      、<code>
+        {weekday}
+      </code>
+      
+      ）、<code>
+        weekdays
+      </code>
+      
+      （週日到週六的星期名稱，陣列）
     </td>
   </tr>
   

@@ -161,7 +161,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/en/components/date/datepicke
 
 ### ROC years and separators
 
-`roc` only switches the display, is on by default and does not rewrite the bound value; `separator` only affects the bound value, `/` by default, and the display still uses slashes.
+`roc` only switches the display, is on by default and does not rewrite the bound value; `separator` only affects the bound value and `display-separator` only affects the date shown in the input. Both default to `/` and can be set separately.
 
 <component-example name="datepicker-roc">
 
@@ -172,6 +172,8 @@ canonical_url: "https://k90325248.github.io/shuo-ui/en/components/date/datepicke
 - The ROC year is the Gregorian year minus 1911; 1911 shows as ROC year 0. The year button and year list use the same rule.
 - In ROC mode, dates before 1911 are neither shown nor selectable; Gregorian mode uses the normal year range.
 - The bound value uses slashes by default; when your API uses hyphenated formats such as `YYYY-MM-DD`, set `separator="-"` to bind it directly. `separator` cannot be empty or contain digits, spaces or colons; an invalid one falls back to the default with a warning.
+- To show `2026-11-05` on screen as well, also set `display-separator="-"`. It only replaces the separator between year, month and day of dates (`date`, `datetime`, `datetime-second`); the time keeps its colons, and the year and year-month modes follow the [message](https://k90325248.github.io/shuo-ui/getting-started/theme/messages) formats. Invalid values are handled as for `separator`.
+- To set them across the project, configure `separator` and `displaySeparator` in `shuoUi.components.datepicker`, for example `roc: false`, `separator: '-'` and `displaySeparator: '-'` for a Gregorian-year project.
 
 <warning>
 
@@ -180,6 +182,99 @@ When the parent passes a value (on mount or filled in later) that does not match
 </warning>
 
 Each clearing emits `update:modelValue` (or `update:start`, `update:end`) only once; for a reversed range, no temporary sorted value is emitted first.
+
+### Week start and weekday display
+
+`week-start` sets the first day of each calendar week: `0` is Sunday (default), `1` is Monday, and so on up to `6`. The weekday header and the six-week grid both start from that day; range selection and `min-date`, `max-date` behave the same. The value can change at any time and an already mounted component applies it the next time the calendar opens, without remounting; a value that is not an integer from 0 to 6 falls back to Sunday with a warning.
+
+`show-weekday` appends the weekday to the date in the input. It is off by default and only affects the display; `v-model` does not change.
+
+<component-example name="datepicker-weekday">
+
+
+
+</component-example>
+
+<table>
+<thead>
+  <tr>
+    <th>
+      mode
+    </th>
+    
+    <th>
+      Display (<code>
+        show-weekday
+      </code>
+      
+      )
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        date
+      </code>
+    </td>
+    
+    <td>
+      2026/11/05 (Thu)
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        datetime
+      </code>
+      
+      , <code>
+        datetime-second
+      </code>
+    </td>
+    
+    <td>
+      2026/11/05 (Thu) 14:30
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        year
+      </code>
+      
+      , <code>
+        month
+      </code>
+    </td>
+    
+    <td>
+      No weekday
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        range
+      </code>
+    </td>
+    
+    <td>
+      Each end shows its own: 2026/11/05 (Thu) – …
+    </td>
+  </tr>
+</tbody>
+</table>
+
+- The weekday names and bracket style follow the locale; Traditional Chinese shows "2026/11/05（星期四）". Override them with `messages.datepicker.weekday` (the format, where `{date}` is the date and `{weekday}` the weekday) and `weekdays` (names from Sunday to Saturday); see [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages). The time follows the weekday.
+- `display-separator` decides the separator shown, independent of the bound value's `separator` (the example binds `2026-11-05` and shows "2026/11/05 (Thu)" by default, or "2026-11-05 (Thu)" with `display-separator="-"`).
+- With the weekday the text is longer; when it does not fit, it is truncated with an ellipsis and the full text shows in a Tooltip as usual.
+- Both can have site-wide defaults, for example to start weeks on Monday across the project: `shuoUi.components.datepicker.weekStart: 1`. When users switch it on a settings page, bind the setting to `:week-start`.
 
 ### Range binding
 
@@ -288,7 +383,7 @@ When the menu opens, focus moves to the selected date (or year, month), or to th
 
 ### Calendar display
 
-The calendar starts weeks on Sunday and always shows six weeks; dates from the previous and next months are dimmed. Changing months uses an opacity transition to avoid a scrollbar from horizontal movement.
+The calendar starts weeks on Sunday by default (change it with [`week-start`](#week-start-and-weekday-display)) and always shows six weeks; dates from the previous and next months are dimmed. Changing months uses an opacity transition to avoid a scrollbar from horizontal movement.
 
 Month and weekday names, the "年" in the year list, the year and year-month format ("115 年 10 月" in Traditional Chinese, "10/115" in English) and the range separator ("～" in Traditional Chinese, "–" in English) all switch with the locale; ROC or Gregorian years are still decided by `roc`. See [Locales and messages](https://k90325248.github.io/shuo-ui/getting-started/theme/messages).
 
@@ -398,7 +493,7 @@ Month and weekday names, the "年" in the year list, the year and year-month for
 
 </component-props>
 
-See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clear`, `calendarIcon`, `clearIcon`, `roc`, `separator` and `yearRange` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
+See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clear`, `calendarIcon`, `clearIcon`, `roc`, `separator`, `displaySeparator`, `yearRange`, `weekStart` and `showWeekday` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
 
 <note>
 

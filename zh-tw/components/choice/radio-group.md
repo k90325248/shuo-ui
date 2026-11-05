@@ -1,11 +1,11 @@
 ---
 title: "RadioGroup"
-description: "單選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。"
+description: "單選群組，依視窗寬度自動排列，支援卡片外觀、自訂選項欄位與附加內容。"
 canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radio-group"
 ---
 # RadioGroup
 
-> 單選群組，依視窗寬度自動排列，支援自訂選項欄位與附加內容。
+> 單選群組，依視窗寬度自動排列，支援卡片外觀、自訂選項欄位與附加內容。
 
 `v-model: string`；選項 `value` 不使用空字串。需要複選時改用 [CheckboxGroup](https://k90325248.github.io/shuo-ui/components/choice/checkbox-group)。
 
@@ -68,6 +68,21 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
 
 </component-example>
 
+### 卡片外觀
+
+`variant="card"` 把每個選項顯示成卡片（沿用 Nuxt UI 的外框、內距與選取底色），點卡片任一處即選取；`variant="list"` 為預設的一般排列。`indicator` 決定選項按鈕的位置：`start`（預設）、`end`，或 `hidden` 隱藏按鈕、只以卡片外框與底色表示選取，仍可用方向鍵切換。
+
+<component-example name="radio-group-card">
+
+
+
+</component-example>
+
+- 卡片不對齊輸入框高度；同一列的卡片等高。
+- 水平排列時卡片依內容寬度、空間不足時縮小，長文字以省略號截斷並以 Tooltip 顯示完整文字；垂直排列（包含 `orientation="auto"` 在窄視窗切成垂直時）卡片填滿群組寬度。
+- `indicator` 也可用在一般排列；`variant` 不支援 Nuxt UI 的 `table`，傳入時沿用 `list` 並在開發期警告。
+- 外層 `UFormField` 有錯誤（或 `color="error"`）時，所有可操作的卡片外框都改為錯誤色；停用的卡片使用表單停用底色；鍵盤聚焦時卡片顯示主題色外框。
+
 ### 顏色
 
 沿用 `URadioGroup` 的 `color`，改變選取時的顏色。
@@ -121,6 +136,29 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
 
 </component-example>
 
+### 卡片網格
+
+`variant="card"` 搭配 `orientation="grid"`，以 `ui.fieldset` 設定欄數，卡片填滿每一格並等高；選項的 `description` 顯示在卡片內。
+
+<component-example name="radio-group-card-grid">
+
+
+
+</component-example>
+
+### 自訂卡片內容
+
+以 `#description` slot 在每張卡片放自訂內容，例如外觀主題的迷你畫面預覽。範例隱藏選項按鈕（`indicator="hidden"`），並以 `ui` 讓預覽撐滿卡片寬度：`fieldset` 設三欄，`item` 加 `min-w-0` 讓卡片可縮小，`wrapper`、`description` 設 `w-full`。
+
+<component-example name="radio-group-card-preview">
+
+
+
+</component-example>
+
+- 傳入 `#description` 後每個選項都會顯示說明區，slot 參數為 `item`（轉換後的選項）、`modelValue` 與 `selected`。
+- 說明區是 `<p>` 元素，預覽請用 `span` 搭配 `block`、`flex` 等 class，避免在 `<p>` 內放 `div` 造成 hydration 不一致。
+
 ### 依選項顯示其他欄位
 
 選「郵寄」才顯示通訊地址；schema 以 `v.variant` 依寄送方式切換，郵寄時地址必填。
@@ -141,7 +179,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
 
 `size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。
 
-不支援 Nuxt UI 的 `variant`（card、table）、`indicator` 與 `highlight`，避免外框撐高選項、破壞與輸入框對齊的高度，原因見[沿用 Nuxt UI](https://k90325248.github.io/shuo-ui/components/overview/common#%E6%B2%BF%E7%94%A8-nuxt-ui)。
+`variant` 支援 `list`、`card`，不支援 Nuxt UI 的 `table` 與 `highlight`，見[沿用 Nuxt UI](https://k90325248.github.io/shuo-ui/components/overview/common#%E6%B2%BF%E7%94%A8-nuxt-ui)。
 
 ### 選項欄位
 
@@ -292,6 +330,14 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
     
     <td>
       自訂欄位原樣保留，可在 <code>
+        #label
+      </code>
+      
+      、<code>
+        #description
+      </code>
+      
+      、<code>
         #item-append
       </code>
       
@@ -342,6 +388,60 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
       </code>
       
        prop
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        item
+      </code>
+      
+      、<code>
+        modelValue
+      </code>
+      
+      、<code>
+        selected
+      </code>
+    </td>
+    
+    <td>
+      選項文字，放在省略文字層內，超出寬度時截斷並顯示提示
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        item
+      </code>
+      
+      、<code>
+        modelValue
+      </code>
+      
+      、<code>
+        selected
+      </code>
+    </td>
+    
+    <td>
+      選項說明，見<a href="#%E8%87%AA%E8%A8%82%E5%8D%A1%E7%89%87%E5%85%A7%E5%AE%B9">
+        自訂卡片內容
+      </a>
     </td>
   </tr>
   
@@ -532,6 +632,24 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
       ；水平排列時加 <code>
         ms-1
       </code>
+      
+      （<code>
+        indicator="end"
+      </code>
+      
+       為 <code>
+        me-1
+      </code>
+      
+      ，<code>
+        hidden
+      </code>
+      
+       為 <code>
+        ms-0
+      </code>
+      
+      ）
     </td>
   </tr>
   
@@ -544,6 +662,126 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/choice/radi
     
     <td>
       選項文字
+    </td>
+    
+    <td>
+      <code>
+        w-fit max-w-full
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+`variant="card"` 時改用以下內建樣式，其餘 slot 沿用 Nuxt UI 的卡片樣式（外框、`p-2.5`～`p-4.5` 內距、選取底色）：
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      內建樣式（card）
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      水平為 <code>
+        w-fit max-w-full min-w-0
+      </code>
+      
+      ；垂直與 <code>
+        grid
+      </code>
+      
+       為 <code>
+        w-full max-w-full min-w-0
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        fieldset
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        min-w-0 flex-nowrap justify-start gap-2
+      </code>
+      
+      ；<code>
+        grid
+      </code>
+      
+       加 <code>
+        grid grid-cols-1
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        item
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        min-w-0 max-w-full text-start
+      </code>
+      
+      ；水平加 <code>
+        flex-[0_1_auto]
+      </code>
+      
+       可收縮，垂直與 <code>
+        grid
+      </code>
+      
+       加 <code>
+        w-full
+      </code>
+      
+      ；載入中加 <code>
+        relative
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        wrapper
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        min-w-0 flex-1
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
     </td>
     
     <td>

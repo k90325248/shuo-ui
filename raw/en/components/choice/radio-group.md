@@ -1,11 +1,11 @@
 ---
 title: "RadioGroup"
-description: "Radio group that lays out by viewport width, with custom item fields and appended content."
+description: "Radio group that lays out by viewport width, with a card appearance, custom item fields and appended content."
 canonical_url: "https://k90325248.github.io/shuo-ui/en/components/choice/radio-group"
 ---
 # RadioGroup
 
-> Radio group that lays out by viewport width, with custom item fields and appended content.
+> Radio group that lays out by viewport width, with a card appearance, custom item fields and appended content.
 
 `v-model: string`; item `value`s should not be empty strings. For multiple selection, use [CheckboxGroup](https://k90325248.github.io/shuo-ui/components/choice/checkbox-group) instead.
 
@@ -68,6 +68,21 @@ An item's `description` field (or the field set by `description-key`) shows belo
 
 </component-example>
 
+### Card appearance
+
+`variant="card"` shows each item as a card (using Nuxt UI's border, padding and selected background), and clicking anywhere on a card selects it; `variant="list"` is the default layout. `indicator` sets where the radio button goes: `start` (default), `end`, or `hidden`, which hides the button and shows the selection only through the card border and background; arrow keys still work.
+
+<component-example name="radio-group-card">
+
+
+
+</component-example>
+
+- Cards do not match the input height; cards in the same row have equal height.
+- In horizontal layout, cards size to their content and shrink when space runs out; long text is truncated with an ellipsis and the full text shows in a Tooltip. In vertical layout (including when `orientation="auto"` switches to vertical on narrow viewports), cards fill the group width.
+- `indicator` also works with the list layout; `variant` does not support Nuxt UI's `table`, which falls back to `list` with a development warning.
+- When the surrounding `UFormField` has an error (or with `color="error"`), the borders of all enabled cards turn to the error color; disabled cards use the form disabled background; a focused card shows a primary-color outline when focused with the keyboard.
+
 ### Color
 
 Uses the `color` of `URadioGroup` to change the selected color.
@@ -121,6 +136,29 @@ Use `requiredText` for a required group (empty is `''`). To validate an appended
 
 </component-example>
 
+### Card grid
+
+Combine `variant="card"` with `orientation="grid"` and set the columns with `ui.fieldset`; cards fill each cell with equal height, and the item `description` shows inside the card.
+
+<component-example name="radio-group-card-grid">
+
+
+
+</component-example>
+
+### Custom card content
+
+Use the `#description` slot to put custom content in each card, such as a mini preview of a color theme. The example hides the radio button (`indicator="hidden"`) and uses `ui` so the preview fills the card: `fieldset` sets three columns, `item` adds `min-w-0` so cards can shrink, and `wrapper` and `description` get `w-full`.
+
+<component-example name="radio-group-card-preview">
+
+
+
+</component-example>
+
+- With `#description`, every item shows a description area; the slot props are `item` (the resolved item), `modelValue` and `selected`.
+- The description area is a `<p>` element, so build the preview with `span` and classes such as `block` or `flex`; a `div` inside `<p>` causes a hydration mismatch.
+
 ### Showing fields by selection
 
 The mailing address only appears when "Mail" is selected; the schema switches by delivery method with `v.variant`, and the address is required for mail.
@@ -141,7 +179,7 @@ The mailing address only appears when "Mail" is selected; the schema switches by
 
 See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`.
 
-Nuxt UI's `variant` (card, table), `indicator` and `highlight` are not supported, so that a frame does not make the items taller and break the height alignment with inputs; see [Built on Nuxt UI](https://k90325248.github.io/shuo-ui/components/overview/common#built-on-nuxt-ui) for why.
+`variant` supports `list` and `card`; Nuxt UI's `table` and `highlight` are not supported; see [Built on Nuxt UI](https://k90325248.github.io/shuo-ui/components/overview/common#built-on-nuxt-ui).
 
 ### Item fields
 
@@ -290,6 +328,14 @@ Items (`RadioGroupOption`) use Nuxt UI's item fields, with `value` limited to st
       </code>
       
        of <code>
+        #label
+      </code>
+      
+      , <code>
+        #description
+      </code>
+      
+       and <code>
         #item-append
       </code>
     </td>
@@ -334,6 +380,60 @@ Items (`RadioGroupOption`) use Nuxt UI's item fields, with `value` limited to st
       </code>
       
        prop when you only need text
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        item
+      </code>
+      
+      , <code>
+        modelValue
+      </code>
+      
+      , <code>
+        selected
+      </code>
+    </td>
+    
+    <td>
+      Item label, inside the truncation layer; truncated with a Tooltip when too wide
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        description
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        item
+      </code>
+      
+      , <code>
+        modelValue
+      </code>
+      
+      , <code>
+        selected
+      </code>
+    </td>
+    
+    <td>
+      Item description; see <a href="#custom-card-content">
+        Custom card content
+      </a>
     </td>
   </tr>
   
@@ -529,7 +629,23 @@ The built-in styles are written in `ui` and can be overridden directly (see [Per
         ms-1
       </code>
       
-       in horizontal layout
+       in horizontal layout (<code>
+        me-1
+      </code>
+      
+       with <code>
+        indicator="end"
+      </code>
+      
+      , <code>
+        ms-0
+      </code>
+      
+       with <code>
+        hidden
+      </code>
+      
+      )
     </td>
   </tr>
   
@@ -542,6 +658,128 @@ The built-in styles are written in `ui` and can be overridden directly (see [Per
     
     <td>
       Item label
+    </td>
+    
+    <td>
+      <code>
+        w-fit max-w-full
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+With `variant="card"`, these built-in styles are used instead; the other slots keep Nuxt UI's card styles (border, `p-2.5` to `p-4.5` padding, selected background):
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Slot
+    </th>
+    
+    <th>
+      Built-in styles (card)
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      <code>
+        root
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        w-fit max-w-full min-w-0
+      </code>
+      
+       when horizontal; <code>
+        w-full max-w-full min-w-0
+      </code>
+      
+       for vertical and <code>
+        grid
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        fieldset
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        min-w-0 flex-nowrap justify-start gap-2
+      </code>
+      
+      ; <code>
+        grid
+      </code>
+      
+       adds <code>
+        grid grid-cols-1
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        item
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        min-w-0 max-w-full text-start
+      </code>
+      
+      ; horizontal adds <code>
+        flex-[0_1_auto]
+      </code>
+      
+       to shrink, vertical and <code>
+        grid
+      </code>
+      
+       add <code>
+        w-full
+      </code>
+      
+      ; <code>
+        relative
+      </code>
+      
+       while loading
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        wrapper
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        min-w-0 flex-1
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        label
+      </code>
     </td>
     
     <td>

@@ -111,7 +111,7 @@ The `name` of `UFormField` must match the field name in the schema and state; th
     </td>
     
     <td>
-      Numbers with thousands separators, decimals and units
+      Numbers with thousands separators, decimals, units and step buttons
     </td>
     
     <td>
@@ -177,7 +177,7 @@ The `name` of `UFormField` must match the field name in the schema and state; th
     </td>
     
     <td>
-      Date, year-month, date-time, ranges
+      Date, year-month, date-time, ranges, optional weekday
     </td>
     
     <td>
@@ -241,7 +241,7 @@ The `name` of `UFormField` must match the field name in the schema and state; th
     </td>
     
     <td>
-      Radio group
+      Radio group, with an optional card appearance
     </td>
     
     <td>

@@ -179,6 +179,22 @@ export default defineNuxtConfig({
         true
       </code>
       
+      ）、<code>
+        buttons
+      </code>
+      
+      （<code>
+        false
+      </code>
+      
+      ）、<code>
+        orientation
+      </code>
+      
+      （<code>
+        horizontal
+      </code>
+      
       ）
     </td>
   </tr>
@@ -586,11 +602,35 @@ export default defineNuxtConfig({
       </code>
       
       ）、<code>
+        displaySeparator
+      </code>
+      
+      （<code>
+        /
+      </code>
+      
+      ）、<code>
         yearRange
       </code>
       
       （<code>
         [1900, 2100]
+      </code>
+      
+      ）、<code>
+        weekStart
+      </code>
+      
+      （<code>
+        0
+      </code>
+      
+      ）、<code>
+        showWeekday
+      </code>
+      
+      （<code>
+        false
       </code>
       
       ）
