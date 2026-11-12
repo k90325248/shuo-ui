@@ -18,7 +18,8 @@
 ]"
       @mouseenter="measure"
       @focusin="showTooltip"
-      @focusout="tooltipOpen = false"
+      @focusout="onRootFocusout"
+      @keydown="onRootKeydown"
     >
       <!-- 日曆固定六週，避免不同月份的週數改變彈窗高度。 -->
       <VueDatePicker
@@ -61,7 +62,7 @@
         @closed="onMenuClosed"
         @focus="emitFormFocus"
         @blur="emitFormBlur"
-        @menu-mounted="centerYear"
+        @menu-mounted="onMenuMounted"
       >
         <!-- 尾端日曆圖示；slot 固定提供，套件初始化後不再偵測 slot 變化，圖示名稱可隨 prop 更新。 -->
         <template #input-icon>
@@ -357,6 +358,23 @@ const centerYear = async (menu) => {
     const listRect = list.getBoundingClientRect();
     list.scrollTop += optionRect.top - listRect.top - list.clientTop - (list.clientHeight - optionRect.height) / 2;
   });
+};
+const isMenuFocusEvent = (event) => event.relatedTarget instanceof Element && Boolean(event.relatedTarget.closest(".form-datepicker-menu"));
+const isolateMenu = (event) => {
+  if (event instanceof KeyboardEvent && event.key !== "Escape") return;
+  event.stopPropagation();
+};
+const onMenuMounted = (menu) => {
+  const root = menu.closest(".dp--menu-wrapper") ?? menu;
+  for (const type of ["focusin", "focusout", "keydown"]) root.addEventListener(type, isolateMenu);
+  centerYear(menu);
+};
+const onRootFocusout = (event) => {
+  tooltipOpen.value = false;
+  if (isMenuFocusEvent(event)) event.stopPropagation();
+};
+const onRootKeydown = (event) => {
+  if (event.key === "Escape" && isMenuOpen.value) event.stopPropagation();
 };
 const onMenuClosed = () => {
   isMenuOpen.value = false;
@@ -746,6 +764,11 @@ const { isTruncated, measure, tooltipOpen, showTooltip } = useTruncatedText(
 }
 
 /* 日曆選單：teleport 至 body，不能巢狀放在輸入框內。 */
+.form-datepicker-menu {
+  /* Reka Dialog（UModal、USlideover 的 modal 模式）開啟時把 body 設為 pointer-events: none，
+     teleport 至 body 的選單會繼承而讓點擊穿透到對話框，因此明確恢復。 */
+  pointer-events: auto;
+}
 .form-datepicker-menu.dp--menu {
   max-width: calc(100vw - 1rem);
   max-height: calc(100dvh - 1rem);
