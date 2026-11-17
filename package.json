@@ -1,6 +1,6 @@
 {
   "name": "@shuo/ui",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Shuo UI：基於 Nuxt UI 的表單元件 Nuxt Module",
   "repository": "https://github.com/k90325248/shuo-ui",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "valibot": "^1.5.0"
   },
   "peerDependencies": {
-    "@nuxt/ui": "^4.12.0",
+    "@nuxt/ui": "^4.12.2",
     "nuxt": "^4.6.2"
   }
 }

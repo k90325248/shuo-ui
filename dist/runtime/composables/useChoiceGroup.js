@@ -76,7 +76,12 @@ export const useChoiceGroup = (props) => {
     if (event.pointerType !== "touch") return;
     locateOptionTooltip(event);
   };
-  const closeTooltip = () => {
+  const closeTooltip = (event) => {
+    if (event instanceof FocusEvent) {
+      const group = event.currentTarget;
+      const next = event.relatedTarget;
+      if (group instanceof Node && next instanceof Node && group.contains(next)) return;
+    }
     tooltipOpen.value = false;
   };
   useResizeObserver(tooltipReference, measureTooltip);

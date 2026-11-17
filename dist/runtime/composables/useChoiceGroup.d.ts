@@ -49,6 +49,6 @@ export declare const useChoiceGroup: (props: ChoiceGroupOptions) => {
     tooltipOpen: any;
     showOptionTooltip: (event: PointerEvent | FocusEvent) => void;
     prepareOptionTooltip: (event: PointerEvent) => void;
-    closeTooltip: () => void;
+    closeTooltip: (event?: Event) => void;
 };
 export {};
