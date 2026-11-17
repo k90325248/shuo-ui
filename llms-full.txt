@@ -8196,7 +8196,7 @@ const schema = v.object({
     
     <td>
       <code>
-        ^4.12.0
+        ^4.12.2
       </code>
     </td>
   </tr>
@@ -8216,15 +8216,15 @@ const schema = v.object({
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v3.2.1
+pnpm add github:k90325248/shuo-ui#v3.2.2
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v3.2.1
+npm install github:k90325248/shuo-ui#v3.2.2
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v3.2.1
+yarn add github:k90325248/shuo-ui#v3.2.2
 ```
 
 </code-group>
@@ -11318,6 +11318,84 @@ pnpm add @iconify-json/lucide # 建議，圖示會直接打包
 ---
 
 - [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v3.2.1)
+
+
+# v3.2.2
+
+> 發佈於 2026年11月17日
+
+把 `@nuxt/ui` 的最低版本提高到 `4.12.2`，以修補 critical 等級的安全漏洞；並修正以鍵盤在選項群組間移動焦點時，完整文字提示立即關閉的問題。從 3.2.1 升級不需要修改程式碼，但專案的 `@nuxt/ui` 須一併升級到 `4.12.2` 以上。
+
+## 🔒 Security
+
+- **@nuxt/ui 最低版本改為 ^4.12.2（GHSA-x9jw-j844-v24h，CVSS 9.8）：** `@nuxt/ui` 4.12.2 以前的元件會把 `as` 原樣交給 reka-ui 的 `Primitive`，帶有 `template` 的物件會在 SSR 時被 Vue 的 CJS server renderer 編譯執行。以 Comark 或 MDC（`@nuxt/content`）渲染不受信任的 Markdown，或讓不受信任的資料寫入 `app.config.ui`、`<UTheme :props>` 的專案，可能因此在伺服器上被執行任意指令。Shuo UI 的元件本身沒有使用 `as`、`resolveAs` 或 `UTheme`，但會跟著專案使用同一份 `@nuxt/ui`，因此提高 peer 依賴的最低版本，安裝時會提示升級。
+
+升級方式：
+
+```bash
+pnpm add @nuxt/ui@^4.12.2
+```
+
+## 🐛 Bug Fixes
+
+- **以鍵盤在選項間移動焦點時，完整文字提示立即關閉：** `ShuoCheckboxGroup` 以 Tab、`ShuoRadioGroup` 以方向鍵移到另一個文字被省略的選項時，提示會先關閉再開啟，Reka 尚未卸載的舊提示收到開啟事件後，連同新提示一起關閉。現在焦點仍在群組內時不關閉提示，直接更新為目前選項的文字與位置；焦點移出群組時照常關閉。
+
+## 📦 安裝
+
+```bash
+pnpm add github:k90325248/shuo-ui#v3.2.2
+pnpm add @iconify-json/lucide # 建議，圖示會直接打包
+```
+
+在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
+
+## 📋 需求
+
+<table>
+<thead>
+  <tr>
+    <th>
+      套件
+    </th>
+    
+    <th>
+      版本
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.2
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v3.2.2)
 
 
 # Months
@@ -20219,7 +20297,7 @@ The input types of the shared schemas accept `null` / `undefined` while editing,
     
     <td>
       <code>
-        ^4.12.0
+        ^4.12.2
       </code>
     </td>
   </tr>
@@ -20239,15 +20317,15 @@ Pin a version with a tag, and change it to the new tag when upgrading. See [GitH
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v3.2.1
+pnpm add github:k90325248/shuo-ui#v3.2.2
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v3.2.1
+npm install github:k90325248/shuo-ui#v3.2.2
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v3.2.1
+yarn add github:k90325248/shuo-ui#v3.2.2
 ```
 
 </code-group>
@@ -23325,6 +23403,84 @@ Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your 
 ---
 
 - [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v3.2.1)
+
+
+# v3.2.2
+
+> Released on November 17, 2026
+
+Raises the minimum `@nuxt/ui` version to `4.12.2` to patch a critical security vulnerability, and fixes the full-text tooltip closing right away when keyboard focus moves between options in a group. Upgrading from 3.2.1 needs no code changes, but your project's `@nuxt/ui` must be upgraded to `4.12.2` or later as well.
+
+## 🔒 Security
+
+- **Minimum @nuxt/ui is now ^4.12.2 (GHSA-x9jw-j844-v24h, CVSS 9.8):** before 4.12.2, Nuxt UI components passed `as` straight to reka-ui's `Primitive`, so an object carrying a `template` was compiled and run by Vue's CJS server renderer during SSR. Projects that render untrusted markdown through Comark or MDC (`@nuxt/content`), or let untrusted data reach `app.config.ui` or `<UTheme :props>`, could have arbitrary commands run on the server. Shuo UI components do not use `as`, `resolveAs` or `UTheme` themselves, but they share your project's `@nuxt/ui`, so the peer dependency minimum is raised and installing will prompt you to upgrade.
+
+To upgrade:
+
+```bash
+pnpm add @nuxt/ui@^4.12.2
+```
+
+## 🐛 Bug Fixes
+
+- **Full-text tooltip closed right away when moving focus between options:** when Tab in `ShuoCheckboxGroup` or the arrow keys in `ShuoRadioGroup` moved to another truncated option, the tooltip closed and reopened, and the old tooltip, not yet unmounted, received Reka's open event and closed the new one with it. The tooltip now stays open while focus is inside the group and updates to the current option's text and position; it still closes when focus leaves the group.
+
+## 📦 Installation
+
+```bash
+pnpm add github:k90325248/shuo-ui#v3.2.2
+pnpm add @iconify-json/lucide # recommended, icons are bundled
+```
+
+Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
+
+## 📋 Requirements
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Package
+    </th>
+    
+    <th>
+      Version
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.2
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v3.2.2)
 
 
 # Months
