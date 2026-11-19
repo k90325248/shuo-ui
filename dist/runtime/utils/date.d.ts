@@ -1,5 +1,9 @@
-/** 日期精度：年、年月、年月日、年月日時分、年月日時分秒。 */
-export type DateMode = 'year' | 'month' | 'date' | 'datetime' | 'datetime-second';
+/** 日期精度：年、年月、年月日、年月日時分、年月日時分秒，以及只有時分、時分秒。 */
+export type DateMode = 'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second';
+/** 只有時間、不含日期的精度。 */
+export declare const TIME_MODES: readonly DateMode[];
+/** 判斷精度是否只有時間；只有時間時不套用紀年、分隔符號與日期範圍。 */
+export declare const isTimeMode: (mode: DateMode) => boolean;
 /** 日期顯示設定 */
 export interface DateDisplayOptions {
     /** 日期精度，預設年月日 */

@@ -20,6 +20,7 @@ const ICONS = [
   "lucide:chevron-down",
   "lucide:chevron-up",
   "lucide:circle-alert",
+  "lucide:clock",
   "lucide:download",
   "lucide:eye",
   "lucide:eye-off",

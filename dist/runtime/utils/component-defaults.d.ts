@@ -73,6 +73,7 @@ export declare const BUILT_IN_DEFAULTS: {
         size: "lg";
         clear: true;
         calendarIcon: string;
+        timeIcon: string;
         clearIcon: string;
         roc: true;
         separator: string;

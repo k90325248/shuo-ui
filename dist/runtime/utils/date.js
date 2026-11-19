@@ -1,5 +1,7 @@
 import { format, isValid, parse } from "date-fns";
 import { formatMessage, getShuoMessages } from "./messages.js";
+export const TIME_MODES = ["time", "time-second"];
+export const isTimeMode = (mode) => TIME_MODES.includes(mode);
 export const DATE_MODEL_FORMATS = {
   /** 年 */
   "year": "yyyy",
@@ -10,7 +12,11 @@ export const DATE_MODEL_FORMATS = {
   /** 年月日時分 */
   "datetime": "yyyy/MM/dd HH:mm",
   /** 年月日時分秒 */
-  "datetime-second": "yyyy/MM/dd HH:mm:ss"
+  "datetime-second": "yyyy/MM/dd HH:mm:ss",
+  /** 時分 */
+  "time": "HH:mm",
+  /** 時分秒 */
+  "time-second": "HH:mm:ss"
 };
 export const ROC_START_YEAR = 1911;
 export const DEFAULT_DATE_SEPARATOR = "/";
@@ -28,7 +34,9 @@ export const formatDateDisplay = (value, { mode = "date", roc = true, yearMonthL
     (_, year2, month, day) => day ? `${year2}/${month}/${day}` : `${year2}/${month}`
   );
   const date = normalized instanceof Date ? normalized : parseDateValue(normalized, mode);
-  if (!date || !isValid(date) || roc && date.getFullYear() < ROC_START_YEAR) return "";
+  if (!date || !isValid(date)) return "";
+  if (isTimeMode(mode)) return format(date, DATE_MODEL_FORMATS[mode]);
+  if (roc && date.getFullYear() < ROC_START_YEAR) return "";
   const year = roc ? String(date.getFullYear() - ROC_START_YEAR) : format(date, "yyyy");
   const labels = yearMonthLabels === true ? getShuoMessages().date : yearMonthLabels || void 0;
   if (mode === "year") return labels ? formatMessage(labels.year, { year }) : year;

@@ -1,5 +1,5 @@
 import type { DateMode, YearMonthLabels } from './date.js';
-/** 日期選擇模式：年、年月、日期、日期時分、日期時分秒。 */
+/** 日期選擇模式：年、年月、日期、日期時分、日期時分秒、時分、時分秒。 */
 export type DatepickerMode = DateMode;
 /** 完整日期範圍綁定值，起迄皆選完才回傳。 */
 export type DatepickerRangeValue = [
@@ -43,7 +43,7 @@ export declare const formatDatepickerWeekday: (display: string, date: Date, mode
 export declare const formatDatepickerDisplay: (date: Date, mode: DatepickerMode, roc: boolean, labels?: YearMonthLabels | true, displaySeparator?: string) => string;
 /** 將套件的年份數字或日期字串統一為西元字串；無效或民國下限之前的值不接受。 */
 export declare const normalizeDatepickerValue: (value: unknown, mode: DatepickerMode, roc: boolean, separator?: string) => string | null;
-/** 將套件原生 Date、年月物件或年份數字轉成指定精度的西元字串。 */
+/** 將套件原生 Date、年月物件、年份數字或時間物件轉成指定精度的字串。 */
 export declare const serializeDatepickerValue: (value: unknown, mode: DatepickerMode, roc: boolean, separator?: string) => string | null;
 /** 將完整起迄轉成西元字串並依時間排序；未完成的範圍不視為有效綁定值。 */
 export declare const serializeDatepickerRange: (value: unknown, mode: DatepickerMode, roc: boolean, separator?: string) => DatepickerRangeValue | null;

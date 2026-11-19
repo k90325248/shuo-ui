@@ -5,6 +5,7 @@ import {
   ROC_START_YEAR,
   formatDateDisplay,
   getDateModelFormat,
+  isTimeMode,
   parseDateValue
 } from "./date.js";
 import { formatMessage } from "./messages.js";
@@ -34,8 +35,9 @@ export const normalizeDatepickerValue = (value, mode, roc, separator = DEFAULT_D
   const candidate = mode === "year" && typeof value === "number" ? String(value).padStart(4, "0") : value;
   if (typeof candidate !== "string") return null;
   const date = parseDatepickerValue(candidate, mode, separator);
-  return date && (!roc || date.getFullYear() >= ROC_START_YEAR) ? candidate : null;
+  return date && (isTimeMode(mode) || !roc || date.getFullYear() >= ROC_START_YEAR) ? candidate : null;
 };
+const isTimeUnit = (value, max) => Number.isInteger(value) && value >= 0 && value <= max;
 export const serializeDatepickerValue = (value, mode, roc, separator = DEFAULT_DATE_SEPARATOR) => {
   if (value instanceof Date) {
     if (!isValid(value)) return null;
@@ -51,6 +53,14 @@ export const serializeDatepickerValue = (value, mode, roc, separator = DEFAULT_D
       roc,
       separator
     );
+  }
+  if (isTimeMode(mode) && value && typeof value === "object" && "hours" in value && "minutes" in value) {
+    const hours = Number(value.hours);
+    const minutes = Number(value.minutes);
+    const seconds = mode === "time-second" && "seconds" in value ? Number(value.seconds ?? 0) : 0;
+    if (!isTimeUnit(hours, 23) || !isTimeUnit(minutes, 59) || !isTimeUnit(seconds, 59)) return null;
+    const date = new Date(2e3, 0, 1, hours, minutes, seconds);
+    return normalizeDatepickerValue(format(date, getDateModelFormat(mode, separator)), mode, roc, separator);
   }
   return normalizeDatepickerValue(value, mode, roc, separator);
 };

@@ -14,6 +14,7 @@ export const COMPONENT_DEFAULT_KEYS = {
     "size",
     "clear",
     "calendarIcon",
+    "timeIcon",
     "clearIcon",
     "roc",
     "separator",

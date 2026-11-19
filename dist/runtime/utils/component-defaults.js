@@ -44,6 +44,7 @@ export const BUILT_IN_DEFAULTS = {
     size: "lg",
     clear: true,
     calendarIcon: "i-lucide-calendar",
+    timeIcon: "i-lucide-clock",
     clearIcon: "i-lucide-x",
     roc: true,
     separator: DEFAULT_DATE_SEPARATOR,

@@ -12,7 +12,7 @@ export declare const COMPONENT_DEFAULT_KEYS: {
     readonly switch: readonly ["size", "color", "loadingIcon"];
     readonly radioGroup: readonly ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"];
     readonly checkboxGroup: readonly ["size", "orientation", "breakpoint", "ui", "labelKey", "valueKey"];
-    readonly datepicker: readonly ["size", "clear", "calendarIcon", "clearIcon", "roc", "separator", "displaySeparator", "yearRange", "weekStart", "showWeekday"];
+    readonly datepicker: readonly ["size", "clear", "calendarIcon", "timeIcon", "clearIcon", "roc", "separator", "displaySeparator", "yearRange", "weekStart", "showWeekday"];
     readonly queryCard: readonly ["icon", "expandIcon", "collapseIcon", "validateOn", "ui"];
     readonly table: readonly ["selectAll", "checkboxProps", "skeletonRows", "skeletonClass"];
     readonly listCard: readonly ["icon", "pageSize", "showPagination", "showSummary", "transition", "ui"];

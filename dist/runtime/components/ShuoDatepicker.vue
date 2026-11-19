@@ -40,6 +40,7 @@
         :locale="locale.dateLocale"
         :year-picker="mode === 'year'"
         :month-picker="mode === 'month'"
+        :time-picker="timeOnly"
         :time-config="timeConfig"
         :disabled="loading || fieldDisabled"
         :range="range ? { partialRange: true } : false"
@@ -48,11 +49,11 @@
         :config="{ closeOnAutoApply: false }"
         :flow="selectionFlow"
         :formats="{ input: formatDisplay, preview: formatDisplay }"
-        :min-date="effectiveMinDate"
-        :max-date="maxDate"
+        :min-date="timeOnly ? void 0 : effectiveMinDate"
+        :max-date="timeOnly ? void 0 : maxDate"
         :year-range="effectiveYearRange"
-        :start-date="hasInvalidValue ? effectiveMinDate : void 0"
-        :focus-start-date="hasInvalidValue"
+        :start-date="hasInvalidValue && !timeOnly ? effectiveMinDate : void 0"
+        :focus-start-date="hasInvalidValue && !timeOnly"
         :week-start="weekStart"
         six-weeks
         prevent-min-max-navigation
@@ -64,11 +65,11 @@
         @blur="emitFormBlur"
         @menu-mounted="onMenuMounted"
       >
-        <!-- 尾端日曆圖示；slot 固定提供，套件初始化後不再偵測 slot 變化，圖示名稱可隨 prop 更新。 -->
+        <!-- 尾端日曆（只選時間時為時鐘）圖示；slot 固定提供，套件初始化後不再偵測 slot 變化，圖示名稱可隨 prop 更新。 -->
         <template #input-icon>
           <!-- 圖示元件固定加上 aria-hidden，無障礙名稱放在外層 -->
-          <span role="img" :aria-label="messages.datepicker.calendarIcon" class="form-datepicker-icon">
-            <UIcon :name="calendarIcon" class="size-full" />
+          <span role="img" :aria-label="inputIconLabel" class="form-datepicker-icon">
+            <UIcon :name="inputIcon" class="size-full" />
           </span>
         </template>
 
@@ -135,6 +136,7 @@ import {
   DEFAULT_DATE_SEPARATOR,
   ROC_START_YEAR,
   formatDateDisplay,
+  isTimeMode,
   isValidDateSeparator,
   parseDateValue
 } from "../utils/date";
@@ -152,6 +154,7 @@ const props = defineProps({
   end: { type: String, required: false },
   clear: { type: Boolean, required: false, default: BUILT_IN_DEFAULTS.datepicker.clear },
   calendarIcon: { type: String, required: false, default: BUILT_IN_DEFAULTS.datepicker.calendarIcon },
+  timeIcon: { type: String, required: false, default: BUILT_IN_DEFAULTS.datepicker.timeIcon },
   clearIcon: { type: String, required: false, default: BUILT_IN_DEFAULTS.datepicker.clearIcon },
   disabled: { type: Boolean, required: false, default: false },
   loading: { type: Boolean, required: false, default: false },
@@ -188,6 +191,7 @@ const {
 } = useFormField(props);
 const resolved = useShuoComponentProps("datepicker", props);
 const calendarIcon = computed(() => resolved.calendarIcon);
+const timeIcon = computed(() => resolved.timeIcon);
 const clearIcon = computed(() => resolved.clearIcon);
 const controlSize = useControlSize("datepicker", props);
 const display = tv({ base: "form-datepicker-display relative block w-full min-w-0" });
@@ -204,8 +208,8 @@ const containerAttrs = computed(() => {
 const ariaLabels = computed(() => ({
   // 保留原生 label 的名稱，避免套件預設的英文 aria-label 蓋過外部標籤。
   input: void 0,
-  menu: messages.value.datepicker.menu,
-  calendarIcon: messages.value.datepicker.calendarIcon,
+  menu: timeOnly.value ? messages.value.datepicker.openTimePicker : messages.value.datepicker.menu,
+  calendarIcon: inputIconLabel.value,
   clearInput: messages.value.datepicker.clearInput,
   toggleOverlay: messages.value.datepicker.toggleOverlay,
   monthPicker: () => messages.value.datepicker.monthPicker,
@@ -240,13 +244,20 @@ const displaySeparator = computed(
   () => isValidDateSeparator(resolved.displaySeparator) ? resolved.displaySeparator : DEFAULT_DATE_SEPARATOR
 );
 const weekStart = computed(() => isValidWeekStart(resolved.weekStart) ? resolved.weekStart : DEFAULT_WEEK_START);
-const hasTime = computed(() => props.mode === "datetime" || props.mode === "datetime-second");
-const selectionFlow = computed(() => ({ steps: hasTime.value ? ["calendar", "time"] : [] }));
+const timeOnly = computed(() => isTimeMode(props.mode));
+const hasTime = computed(() => timeOnly.value || props.mode === "datetime" || props.mode === "datetime-second");
+const selectionFlow = computed(() => ({
+  steps: hasTime.value && !timeOnly.value ? ["calendar", "time"] : []
+}));
 const timeConfig = computed(() => ({
   enableTimePicker: hasTime.value,
-  enableSeconds: props.mode === "datetime-second",
+  enableSeconds: props.mode === "datetime-second" || props.mode === "time-second",
   is24: true
 }));
+const inputIcon = computed(() => timeOnly.value ? timeIcon.value : calendarIcon.value);
+const inputIconLabel = computed(
+  () => timeOnly.value ? messages.value.datepicker.openTimePicker : messages.value.datepicker.calendarIcon
+);
 const effectiveYearRange = computed(() => [
   Math.max(resolved.yearRange[0], resolved.roc ? ROC_START_YEAR : resolved.yearRange[0]),
   resolved.yearRange[1]
@@ -324,6 +335,7 @@ const toPickerValue = (value) => {
   if (!date) return null;
   if (props.mode === "year") return date.getFullYear();
   if (props.mode === "month") return { year: date.getFullYear(), month: date.getMonth() };
+  if (timeOnly.value) return { hours: date.getHours(), minutes: date.getMinutes(), seconds: date.getSeconds() };
   return date;
 };
 const validRange = (value) => getDatepickerValueIssue(value, { mode: props.mode, roc: resolved.roc, range: true, separator: separator.value }) ? null : serializeDatepickerRange(value, props.mode, resolved.roc, separator.value);

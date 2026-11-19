@@ -479,7 +479,7 @@ interface CheckboxGroupOwnProps<T extends object = CheckboxGroupOption> {
 export interface DatepickerProps<TRange extends boolean = false> {
     /** 是否顯示與原控制項同尺寸的骨架 */
     skeleton?: boolean;
-    /** 主綁定值，單選為西元字串，範圍為 [起日, 迄日]；單選清空為 ''，範圍清空為 []。 */
+    /** 主綁定值，單選為西元字串（只選時間時為 `HH:mm` 或 `HH:mm:ss`），範圍為 [起, 迄]；單選清空為 ''，範圍清空為 []。 */
     modelValue?: DatepickerValue<TRange>;
     /** 起始日期綁定值，僅範圍模式使用，清空或關閉範圍時為 ''。 */
     start?: string;
@@ -489,6 +489,8 @@ export interface DatepickerProps<TRange extends boolean = false> {
     clear?: boolean;
     /** 尾端日曆圖示，預設 `i-lucide-calendar`。 */
     calendarIcon?: string;
+    /** 只選時間（time、time-second）時的尾端圖示，預設 `i-lucide-clock`。 */
+    timeIcon?: string;
     /** 清除按鈕圖示，預設 `i-lucide-x`。 */
     clearIcon?: string;
     /** 停用狀態，預設關閉。 */
@@ -507,7 +509,7 @@ export interface DatepickerProps<TRange extends boolean = false> {
     state?: boolean;
     /** 是否顯示民國年，預設開啟；不影響西元綁定值。 */
     roc?: boolean;
-    /** 選擇模式，預設為年月日。 */
+    /** 選擇模式，預設為年月日；`time`、`time-second` 只選時分、時分秒，不顯示日曆，忽略 roc、minDate、maxDate、yearRange、separator、displaySeparator、weekStart 與 showWeekday。 */
     mode?: DatepickerMode;
     /** 最早可選日期，民國模式至少為 1911/01/01。 */
     minDate?: DateValue;
