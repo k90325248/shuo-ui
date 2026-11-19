@@ -578,6 +578,14 @@ export default defineNuxtConfig({
       </code>
       
       ）、<code>
+        timeIcon
+      </code>
+      
+      （<code>
+        i-lucide-clock
+      </code>
+      
+      ）、<code>
         clearIcon
       </code>
       

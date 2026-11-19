@@ -562,6 +562,14 @@ Only the props in the table below can be set site-wide. State props such as `dis
       </code>
       
       ), <code>
+        timeIcon
+      </code>
+      
+       (<code>
+        i-lucide-clock
+      </code>
+      
+      ), <code>
         clearIcon
       </code>
       

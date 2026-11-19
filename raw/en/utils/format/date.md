@@ -46,7 +46,7 @@ A Gregorian date string or `Date`. A string must match the `mode` precision, for
 
 </field>
 
-<field name="options.mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second'">
+<field name="options.mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second'">
 
 Date precision, `date` by default.
 
@@ -182,8 +182,50 @@ Adds units to years and year-months, `false` by default. `true` uses the current
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time-second
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08:07
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08:07
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
+
+`time` and `time-second` are time only and not affected by `roc`.
 
 ### parseDateValue
 
@@ -204,7 +246,7 @@ A Gregorian date string.
 
 </field>
 
-<field name="mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second'" :required="true">
+<field name="mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second'" :required="true">
 
 Date precision.
 

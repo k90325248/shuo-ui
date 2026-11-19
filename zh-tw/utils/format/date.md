@@ -46,7 +46,7 @@ formatDateDisplay(
 
 </field>
 
-<field name="options.mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second'">
+<field name="options.mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second'">
 
 日期精度，預設 `date`。
 
@@ -182,8 +182,50 @@ formatDateDisplay(
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time-second
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08:07
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08:07
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
+
+`time`、`time-second` 只有時間，不受 `roc` 影響。
 
 ### parseDateValue
 
@@ -204,7 +246,7 @@ parseDateValue(
 
 </field>
 
-<field name="mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second'" :required="true">
+<field name="mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second'" :required="true">
 
 日期精度。
 

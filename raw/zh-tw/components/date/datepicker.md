@@ -146,6 +146,50 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time
+      </code>
+    </td>
+    
+    <td>
+      14:02
+    </td>
+    
+    <td>
+      14:02
+    </td>
+    
+    <td>
+      <code>
+        "14:02"
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time-second
+      </code>
+    </td>
+    
+    <td>
+      14:02:09
+    </td>
+    
+    <td>
+      14:02:09
+    </td>
+    
+    <td>
+      <code>
+        "14:02:09"
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
 
@@ -157,6 +201,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 
 - 年模式開啟時，已選年份會捲至清單中央；尚未選取時以今年置中，綁定值仍保持 `''`。接近年份範圍兩端時，以可捲動範圍為限。
 - 日期時間是本地日曆時間，不做 UTC 或時區轉換。
+- `time`、`time-second` 只選時間：開啟後直接顯示時分（秒）面板、不顯示日曆，尾端改為時鐘圖示（`time-icon`），綁定值為 24 小時制的 `HH:mm`／`HH:mm:ss`。只選時間時 `roc`、`separator`、`display-separator`、`min-date`、`max-date`、`year-range`、`week-start`、`show-weekday` 不生效；搭配 `range` 時起時不能晚於迄時，起迄同為 `HH:mm` 字串。
 - 切換 `mode` 後，既有值不符合新格式時會清空，見下方的警告。範例中每種 `mode` 各保留一個符合格式的值。
 
 ### 民國年與分隔符號
@@ -307,7 +352,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 
 ### 圖示與清除按鈕
 
-`clear` 顯示清除按鈕，預設開啟（傳 `:clear="false"` 關閉；包在 `required` 的 `UFormField` 內時預設關閉，規則同 [SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)），清除後綁定值為 `''`（範圍為 `[]`）。`calendar-icon` 是尾端的日曆圖示，預設 `i-lucide-calendar`；`clear-icon` 是清除按鈕的圖示，預設 `i-lucide-x`。
+`clear` 顯示清除按鈕，預設開啟（傳 `:clear="false"` 關閉；包在 `required` 的 `UFormField` 內時預設關閉，規則同 [SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)），清除後綁定值為 `''`（範圍為 `[]`）。`calendar-icon` 是尾端的日曆圖示，預設 `i-lucide-calendar`；`time-icon` 是只選時間（`time`、`time-second`）時的尾端圖示，預設 `i-lucide-clock`；`clear-icon` 是清除按鈕的圖示，預設 `i-lucide-x`。
 
 <component-example name="datepicker-icons">
 
@@ -491,7 +536,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/zh-tw/components/date/datepi
 
 </component-props>
 
-`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clear`、`calendarIcon`、`clearIcon`、`roc`、`separator`、`displaySeparator`、`yearRange`、`weekStart`、`showWeekday` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clear`、`calendarIcon`、`timeIcon`、`clearIcon`、`roc`、`separator`、`displaySeparator`、`yearRange`、`weekStart`、`showWeekday` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
 
 <note>
 

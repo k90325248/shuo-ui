@@ -110,11 +110,15 @@ Same as `ShuoRadioGroup` (items, orientation, keys, `item-append` with `{ item, 
 | `date` (default)  | `115/09/20`          | `'2026/09/20'`          |
 | `datetime`        | `115/09/20 14:02`    | `'2026/09/20 14:02'`    |
 | `datetime-second` | `115/09/20 14:02:09` | `'2026/09/20 14:02:09'` |
+| `time`            | `14:02`              | `'14:02'`               |
+| `time-second`     | `14:02:09`           | `'14:02:09'`            |
+
+- `time` / `time-second` pick a 24-hour time only (no calendar, clock icon via `time-icon`); `roc`, `separator`, `display-separator`, `min-date`, `max-date`, `year-range`, `week-start` and `show-weekday` are ignored. Works with `range` (`['09:00', '18:00']`).
 
 - `roc` (default `true`) only changes the display; `separator` (default `'/'`) only changes the bound value. Use `separator="-"` for `YYYY-MM-DD` APIs. `display-separator` (default `'/'`) only changes the displayed date (not year / month modes); add `display-separator="-"` to also show `2026-11-05`.
 - `range`: binds `[start, end]` or `[]`; also `v-model:start` / `v-model:end` (strings, `''` when empty). Only complete ranges are committed. With separate API fields, bind only `v-model:start` and `v-model:end`.
 - `min-date`, `max-date` (string, number or `Date`), `year-range` (default `[1900, 2100]`; ROC mode starts at 1911).
-- `clear` (default `true`, off by default inside a `required` `UFormField`; `:clear="false"` hides it), `calendar-icon`, `clear-icon`, `state`.
+- `clear` (default `true`, off by default inside a `required` `UFormField`; `:clear="false"` hides it), `calendar-icon`, `time-icon` (default `i-lucide-clock`), `clear-icon`, `state`.
 - `week-start` (`0`–`6`, default `0` = Sunday, `1` = Monday) sets the first day of the calendar week; it is reactive and applies the next time the calendar opens. Set it site-wide with `components.datepicker.weekStart`.
 - `show-weekday` (default `false`) appends the weekday to the displayed date for `date`, `datetime` and `datetime-second` (ignored for `year` and `month`; each end of a range shows its own), for example `2026/11/05（星期四）` or `2026/11/05 (Thu)`; display only. The displayed date uses `display-separator`. Override the text with `messages.datepicker.weekday` (`{date}`, `{weekday}`) and `messages.datepicker.weekdays` (Sunday to Saturday).
 - Mismatched values (wrong format for `mode` / `separator`, reversed range) are cleared with a `console.warn`. When changing `mode`, set a matching value at the same time.

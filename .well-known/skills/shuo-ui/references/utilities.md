@@ -8,7 +8,7 @@ Data and bound values stay raw (Gregorian date strings, numbers, total months, f
 
 ```ts
 formatDateDisplay(value: string | Date | null | undefined, options?: {
-  mode?: 'year' | 'month' | 'date' | 'datetime' | 'datetime-second'; // default 'date'
+  mode?: 'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second'; // default 'date'
   roc?: boolean; // default true
   yearMonthLabels?: boolean | { year: string; month: string }; // default false
 }): string

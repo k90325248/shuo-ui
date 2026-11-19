@@ -2873,6 +2873,50 @@ export default defineNuxtConfig({
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time
+      </code>
+    </td>
+    
+    <td>
+      14:02
+    </td>
+    
+    <td>
+      14:02
+    </td>
+    
+    <td>
+      <code>
+        "14:02"
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time-second
+      </code>
+    </td>
+    
+    <td>
+      14:02:09
+    </td>
+    
+    <td>
+      14:02:09
+    </td>
+    
+    <td>
+      <code>
+        "14:02:09"
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
 
@@ -2884,6 +2928,7 @@ export default defineNuxtConfig({
 
 - 年模式開啟時，已選年份會捲至清單中央；尚未選取時以今年置中，綁定值仍保持 `''`。接近年份範圍兩端時，以可捲動範圍為限。
 - 日期時間是本地日曆時間，不做 UTC 或時區轉換。
+- `time`、`time-second` 只選時間：開啟後直接顯示時分（秒）面板、不顯示日曆，尾端改為時鐘圖示（`time-icon`），綁定值為 24 小時制的 `HH:mm`／`HH:mm:ss`。只選時間時 `roc`、`separator`、`display-separator`、`min-date`、`max-date`、`year-range`、`week-start`、`show-weekday` 不生效；搭配 `range` 時起時不能晚於迄時，起迄同為 `HH:mm` 字串。
 - 切換 `mode` 後，既有值不符合新格式時會清空，見下方的警告。範例中每種 `mode` 各保留一個符合格式的值。
 
 ### 民國年與分隔符號
@@ -3034,7 +3079,7 @@ export default defineNuxtConfig({
 
 ### 圖示與清除按鈕
 
-`clear` 顯示清除按鈕，預設開啟（傳 `:clear="false"` 關閉；包在 `required` 的 `UFormField` 內時預設關閉，規則同 [SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)），清除後綁定值為 `''`（範圍為 `[]`）。`calendar-icon` 是尾端的日曆圖示，預設 `i-lucide-calendar`；`clear-icon` 是清除按鈕的圖示，預設 `i-lucide-x`。
+`clear` 顯示清除按鈕，預設開啟（傳 `:clear="false"` 關閉；包在 `required` 的 `UFormField` 內時預設關閉，規則同 [SelectMenu 的清除按鈕](https://k90325248.github.io/shuo-ui/components/choice/select-menu#%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)），清除後綁定值為 `''`（範圍為 `[]`）。`calendar-icon` 是尾端的日曆圖示，預設 `i-lucide-calendar`；`time-icon` 是只選時間（`time`、`time-second`）時的尾端圖示，預設 `i-lucide-clock`；`clear-icon` 是清除按鈕的圖示，預設 `i-lucide-x`。
 
 <component-example name="datepicker-icons">
 
@@ -3218,7 +3263,7 @@ export default defineNuxtConfig({
 
 </component-props>
 
-`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clear`、`calendarIcon`、`clearIcon`、`roc`、`separator`、`displaySeparator`、`yearRange`、`weekStart`、`showWeekday` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
+`size`、`disabled`、`loading`、`skeleton`、`id`、`name` 的行為見[共用參數](https://k90325248.github.io/shuo-ui/components/overview/common#%E5%85%B1%E7%94%A8%E5%8F%83%E6%95%B8)。`clear`、`calendarIcon`、`timeIcon`、`clearIcon`、`roc`、`separator`、`displaySeparator`、`yearRange`、`weekStart`、`showWeekday` 可在全站設定預設值，見[可設定的項目](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)。
 
 <note>
 
@@ -8216,15 +8261,15 @@ const schema = v.object({
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v3.2.2
+pnpm add github:k90325248/shuo-ui#v3.3.0
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v3.2.2
+npm install github:k90325248/shuo-ui#v3.3.0
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v3.2.2
+yarn add github:k90325248/shuo-ui#v3.3.0
 ```
 
 </code-group>
@@ -9372,6 +9417,14 @@ export default defineNuxtConfig({
       
       （<code>
         i-lucide-calendar
+      </code>
+      
+      ）、<code>
+        timeIcon
+      </code>
+      
+      （<code>
+        i-lucide-clock
       </code>
       
       ）、<code>
@@ -11398,6 +11451,95 @@ pnpm add @iconify-json/lucide # 建議，圖示會直接打包
 - [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v3.2.2)
 
 
+# v3.3.0
+
+> 發佈於 2026年11月19日
+
+日期選擇器新增只選時間的模式，可選時分或時分秒。這一版只新增功能，從 3.2.2 升級不需要修改程式碼。
+
+## ✨ Highlights
+
+### 🕒 日期選擇器：只選時間
+
+`ShuoDatepicker` 新增 `mode="time"`（時分）與 `mode="time-second"`（時分秒）。開啟後直接顯示時間面板、不顯示日曆，綁定值為 24 小時制的 `HH:mm`／`HH:mm:ss` 字串，調整時選單不會自動關閉，點外部或按 Esc 即保留目前的值。搭配 `range` 時綁定 `[起, 迄]`，起時不能晚於迄時：[Datepicker 的選擇模式](https://k90325248.github.io/shuo-ui/components/date/datepicker#%E9%81%B8%E6%93%87%E6%A8%A1%E5%BC%8F)
+
+```vue
+<ShuoDatepicker v-model="time" mode="time" />
+<!-- '14:02' -->
+<ShuoDatepicker v-model="time" mode="time-second" />
+<!-- '14:02:09' -->
+<ShuoDatepicker v-model="hours" mode="time" range />
+<!-- ['09:00', '18:00'] -->
+```
+
+- 只選時間時尾端改為時鐘圖示，新的 `time-icon` 可更換（預設 `i-lucide-clock`），也能以全站預設值 `components.datepicker.timeIcon` 設定。
+- `roc`、`separator`、`display-separator`、`min-date`、`max-date`、`year-range`、`week-start`、`show-weekday` 在這兩種模式不生效。
+- 不符合格式的綁定值（例如 `24:00`，或 `time-second` 收到 `08:05`）與其他模式一樣清空並警告。
+- `formatDateDisplay`、`parseDateValue` 也接受 `time`、`time-second`：[日期格式化](https://k90325248.github.io/shuo-ui/utils/format/date)
+
+## 📖 文件網站
+
+- Datepicker 頁的[選擇模式](https://k90325248.github.io/shuo-ui/components/date/datepicker#%E9%81%B8%E6%93%87%E6%A8%A1%E5%BC%8F)與範例加入 `time`、`time-second`，[圖示與清除按鈕](https://k90325248.github.io/shuo-ui/components/date/datepicker#%E5%9C%96%E7%A4%BA%E8%88%87%E6%B8%85%E9%99%A4%E6%8C%89%E9%88%95)補上 `time-icon`。
+- [全站元件預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#%E5%8F%AF%E8%A8%AD%E5%AE%9A%E7%9A%84%E9%A0%85%E7%9B%AE)的 `datepicker` 加入 `timeIcon`。
+
+## 📦 安裝
+
+```bash
+pnpm add github:k90325248/shuo-ui#v3.3.0
+pnpm add @iconify-json/lucide # 建議，圖示會直接打包
+```
+
+在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
+
+## 📋 需求
+
+<table>
+<thead>
+  <tr>
+    <th>
+      套件
+    </th>
+    
+    <th>
+      版本
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.2
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v3.3.0)
+
+
 # Months
 
 > 總月數與年、月的拆分與合併。
@@ -11769,7 +11911,7 @@ formatDateDisplay(
 
 </field>
 
-<field name="options.mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second'">
+<field name="options.mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second'">
 
 日期精度，預設 `date`。
 
@@ -11905,8 +12047,50 @@ formatDateDisplay(
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time-second
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08:07
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08:07
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
+
+`time`、`time-second` 只有時間，不受 `roc` 影響。
 
 ### parseDateValue
 
@@ -11927,7 +12111,7 @@ parseDateValue(
 
 </field>
 
-<field name="mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second'" :required="true">
+<field name="mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second'" :required="true">
 
 日期精度。
 
@@ -14954,6 +15138,50 @@ You can also adjust the height with `class="[--form-switch-height:1.25rem]"`. `c
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time
+      </code>
+    </td>
+    
+    <td>
+      14:02
+    </td>
+    
+    <td>
+      14:02
+    </td>
+    
+    <td>
+      <code>
+        "14:02"
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time-second
+      </code>
+    </td>
+    
+    <td>
+      14:02:09
+    </td>
+    
+    <td>
+      14:02:09
+    </td>
+    
+    <td>
+      <code>
+        "14:02:09"
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
 
@@ -14965,6 +15193,7 @@ You can also adjust the height with `class="[--form-switch-height:1.25rem]"`. `c
 
 - When the year mode opens, the selected year scrolls to the middle of the list; with nothing selected, the current year is centered and the bound value stays `''`. Near either end of the year range, scrolling stops at the range.
 - Date-times are local calendar times, with no UTC or time zone conversion.
+- `time` and `time-second` pick a time only: the menu opens straight to the hour/minute (second) panel with no calendar, the trailing icon becomes a clock (`time-icon`), and the bound value is 24-hour `HH:mm` / `HH:mm:ss`. In these modes `roc`, `separator`, `display-separator`, `min-date`, `max-date`, `year-range`, `week-start` and `show-weekday` have no effect; with `range`, the start time cannot be later than the end time, and both ends are `HH:mm` strings.
 - After switching `mode`, an existing value that does not match the new format is cleared; see the warning below. The example keeps a matching value for each `mode`.
 
 ### ROC years and separators
@@ -15115,7 +15344,7 @@ Each clearing emits `update:modelValue` (or `update:start`, `update:end`) only o
 
 ### Icons and clear button
 
-`clear` shows a clear button, on by default (pass `:clear="false"` to hide it; off by default inside a `required` `UFormField`, following the same rules as the [SelectMenu clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button)); after clearing, the bound value is `''` (`[]` for ranges). `calendar-icon` is the trailing calendar icon, `i-lucide-calendar` by default; `clear-icon` is the clear button icon, `i-lucide-x` by default.
+`clear` shows a clear button, on by default (pass `:clear="false"` to hide it; off by default inside a `required` `UFormField`, following the same rules as the [SelectMenu clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button)); after clearing, the bound value is `''` (`[]` for ranges). `calendar-icon` is the trailing calendar icon, `i-lucide-calendar` by default; `time-icon` is the trailing icon in the time-only modes (`time`, `time-second`), `i-lucide-clock` by default; `clear-icon` is the clear button icon, `i-lucide-x` by default.
 
 <component-example name="datepicker-icons">
 
@@ -15301,7 +15530,7 @@ Month and weekday names, the "年" in the year list, the year and year-month for
 
 </component-props>
 
-See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clear`, `calendarIcon`, `clearIcon`, `roc`, `separator`, `displaySeparator`, `yearRange`, `weekStart` and `showWeekday` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
+See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clear`, `calendarIcon`, `timeIcon`, `clearIcon`, `roc`, `separator`, `displaySeparator`, `yearRange`, `weekStart` and `showWeekday` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
 
 <note>
 
@@ -20317,15 +20546,15 @@ Pin a version with a tag, and change it to the new tag when upgrading. See [GitH
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v3.2.2
+pnpm add github:k90325248/shuo-ui#v3.3.0
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v3.2.2
+npm install github:k90325248/shuo-ui#v3.3.0
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v3.2.2
+yarn add github:k90325248/shuo-ui#v3.3.0
 ```
 
 </code-group>
@@ -21459,6 +21688,14 @@ Only the props in the table below can be set site-wide. State props such as `dis
       
        (<code>
         i-lucide-calendar
+      </code>
+      
+      ), <code>
+        timeIcon
+      </code>
+      
+       (<code>
+        i-lucide-clock
       </code>
       
       ), <code>
@@ -23483,6 +23720,95 @@ Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your 
 - [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v3.2.2)
 
 
+# v3.3.0
+
+> Released on November 19, 2026
+
+The date picker adds time-only modes for hours and minutes, with or without seconds. This release only adds features; upgrading from 3.2.2 needs no code changes.
+
+## ✨ Highlights
+
+### 🕒 Date picker: time only
+
+`ShuoDatepicker` adds `mode="time"` (hours and minutes) and `mode="time-second"` (with seconds). The menu opens straight to the time panel with no calendar, and the bound value is a 24-hour `HH:mm` / `HH:mm:ss` string. The menu stays open while adjusting; clicking outside or pressing Esc keeps the current value. With `range` it binds `[start, end]`, and the start time cannot be later than the end time: [Datepicker modes](https://k90325248.github.io/shuo-ui/components/date/datepicker#modes)
+
+```vue
+<ShuoDatepicker v-model="time" mode="time" />
+<!-- '14:02' -->
+<ShuoDatepicker v-model="time" mode="time-second" />
+<!-- '14:02:09' -->
+<ShuoDatepicker v-model="hours" mode="time" range />
+<!-- ['09:00', '18:00'] -->
+```
+
+- In the time-only modes the trailing icon is a clock, set with the new `time-icon` (`i-lucide-clock` by default) or site-wide with `components.datepicker.timeIcon`.
+- `roc`, `separator`, `display-separator`, `min-date`, `max-date`, `year-range`, `week-start` and `show-weekday` have no effect in these modes.
+- A bound value that does not match the format (such as `24:00`, or `08:05` for `time-second`) is cleared with a warning, as in the other modes.
+- `formatDateDisplay` and `parseDateValue` also accept `time` and `time-second`: [Date formatting](https://k90325248.github.io/shuo-ui/utils/format/date)
+
+## 📖 Docs site
+
+- The Datepicker page's [Modes](https://k90325248.github.io/shuo-ui/components/date/datepicker#modes) section and example include `time` and `time-second`, and [Icons and clear button](https://k90325248.github.io/shuo-ui/components/date/datepicker#icons-and-clear-button) covers `time-icon`.
+- `timeIcon` is added to `datepicker` in [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
+
+## 📦 Installation
+
+```bash
+pnpm add github:k90325248/shuo-ui#v3.3.0
+pnpm add @iconify-json/lucide # recommended, icons are bundled
+```
+
+Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
+
+## 📋 Requirements
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Package
+    </th>
+    
+    <th>
+      Version
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.2
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v3.3.0)
+
+
 # Months
 
 > Splitting total months into years and months, and combining them back.
@@ -23854,7 +24180,7 @@ A Gregorian date string or `Date`. A string must match the `mode` precision, for
 
 </field>
 
-<field name="options.mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second'">
+<field name="options.mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second'">
 
 Date precision, `date` by default.
 
@@ -23990,8 +24316,50 @@ Adds units to years and year-months, `false` by default. `true` uses the current
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time-second
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08:07
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        09:08:07
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
+
+`time` and `time-second` are time only and not affected by `roc`.
 
 ### parseDateValue
 
@@ -24012,7 +24380,7 @@ A Gregorian date string.
 
 </field>
 
-<field name="mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second'" :required="true">
+<field name="mode" type="'year' | 'month' | 'date' | 'datetime' | 'datetime-second' | 'time' | 'time-second'" :required="true">
 
 Date precision.
 

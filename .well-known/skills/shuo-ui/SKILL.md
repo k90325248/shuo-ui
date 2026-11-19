@@ -28,7 +28,7 @@ Fetch the page of a component when you need its full props table or more example
 ## Setup
 
 ```bash
-pnpm add github:k90325248/shuo-ui#v3.2.2
+pnpm add github:k90325248/shuo-ui#v3.3.0
 pnpm add valibot              # only if the project writes its own Valibot schemas
 pnpm add @iconify-json/lucide # recommended: bundles the built-in icons
 ```
@@ -56,7 +56,7 @@ The app must be wrapped in `<UApp>` (toasts and tooltips depend on it).
 | `ShuoInputNumber`   | Number with separators, decimals, unit, steppers  | `number \| null`                                               |
 | `ShuoTextarea`      | Multi-line text                                   | `string`                                                       |
 | `ShuoSelectMenu`    | Select menu, searchable, `multiple`               | `string` (or `null` via `empty-value`); `string[]` if multiple |
-| `ShuoDatepicker`    | Date / year / month / date-time, ranges, weekday  | `string`; `[string, string] \| []` with `range`                |
+| `ShuoDatepicker`    | Date / year / month / date-time / time, ranges    | `string`; `[string, string] \| []` with `range`                |
 | `ShuoCheckbox`      | Single checkbox                                   | `string \| number \| boolean` (default `1` / `0`)              |
 | `ShuoRadioGroup`    | Radio group, optional card appearance             | `string`                                                       |
 | `ShuoCheckboxGroup` | Checkbox group                                    | `string[]`                                                     |

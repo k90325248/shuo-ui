@@ -146,6 +146,50 @@ canonical_url: "https://k90325248.github.io/shuo-ui/en/components/date/datepicke
       </code>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time
+      </code>
+    </td>
+    
+    <td>
+      14:02
+    </td>
+    
+    <td>
+      14:02
+    </td>
+    
+    <td>
+      <code>
+        "14:02"
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        time-second
+      </code>
+    </td>
+    
+    <td>
+      14:02:09
+    </td>
+    
+    <td>
+      14:02:09
+    </td>
+    
+    <td>
+      <code>
+        "14:02:09"
+      </code>
+    </td>
+  </tr>
 </tbody>
 </table>
 
@@ -157,6 +201,7 @@ canonical_url: "https://k90325248.github.io/shuo-ui/en/components/date/datepicke
 
 - When the year mode opens, the selected year scrolls to the middle of the list; with nothing selected, the current year is centered and the bound value stays `''`. Near either end of the year range, scrolling stops at the range.
 - Date-times are local calendar times, with no UTC or time zone conversion.
+- `time` and `time-second` pick a time only: the menu opens straight to the hour/minute (second) panel with no calendar, the trailing icon becomes a clock (`time-icon`), and the bound value is 24-hour `HH:mm` / `HH:mm:ss`. In these modes `roc`, `separator`, `display-separator`, `min-date`, `max-date`, `year-range`, `week-start` and `show-weekday` have no effect; with `range`, the start time cannot be later than the end time, and both ends are `HH:mm` strings.
 - After switching `mode`, an existing value that does not match the new format is cleared; see the warning below. The example keeps a matching value for each `mode`.
 
 ### ROC years and separators
@@ -307,7 +352,7 @@ Each clearing emits `update:modelValue` (or `update:start`, `update:end`) only o
 
 ### Icons and clear button
 
-`clear` shows a clear button, on by default (pass `:clear="false"` to hide it; off by default inside a `required` `UFormField`, following the same rules as the [SelectMenu clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button)); after clearing, the bound value is `''` (`[]` for ranges). `calendar-icon` is the trailing calendar icon, `i-lucide-calendar` by default; `clear-icon` is the clear button icon, `i-lucide-x` by default.
+`clear` shows a clear button, on by default (pass `:clear="false"` to hide it; off by default inside a `required` `UFormField`, following the same rules as the [SelectMenu clear button](https://k90325248.github.io/shuo-ui/components/choice/select-menu#clear-button)); after clearing, the bound value is `''` (`[]` for ranges). `calendar-icon` is the trailing calendar icon, `i-lucide-calendar` by default; `time-icon` is the trailing icon in the time-only modes (`time`, `time-second`), `i-lucide-clock` by default; `clear-icon` is the clear button icon, `i-lucide-x` by default.
 
 <component-example name="datepicker-icons">
 
@@ -493,7 +538,7 @@ Month and weekday names, the "年" in the year list, the year and year-month for
 
 </component-props>
 
-See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clear`, `calendarIcon`, `clearIcon`, `roc`, `separator`, `displaySeparator`, `yearRange`, `weekStart` and `showWeekday` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
+See [Shared props](https://k90325248.github.io/shuo-ui/components/overview/common#shared-props) for the behavior of `size`, `disabled`, `loading`, `skeleton`, `id` and `name`. `clear`, `calendarIcon`, `timeIcon`, `clearIcon`, `roc`, `separator`, `displaySeparator`, `yearRange`, `weekStart` and `showWeekday` can have site-wide defaults; see [Configurable props](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults#configurable-props).
 
 <note>
 
