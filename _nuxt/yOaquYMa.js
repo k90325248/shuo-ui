@@ -1,0 +1,1 @@
+import{f as e,m as t}from"./LRNsYUES.js";var n=[`onPointermove`,`onPointerenter`,`onPointerleave`,`data-grace-area-trigger`];function r(r,i){return i===`root`?t(r,n):e(r,[`data-state`,...n])}export{r as t};

@@ -21,7 +21,8 @@ export default defineNuxtConfig({
     locale: 'zh-TW',
     messages: {},
     locales: {},
-    components: {}
+    components: {},
+    toastPauseFix: true
   }
 });
 ```
@@ -68,6 +69,12 @@ export default defineNuxtConfig({
 <field default="{}" name="components" type="object">
 
 元件全站預設值，依元件分區設定，見[元件全站預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)。
+
+</field>
+
+<field default="true" name="toastPauseFix" type="boolean">
+
+是否修正 toast 卡住的問題。reka-ui 2.11.0 的 bug：滑鼠停在 toast 上時關掉最後一個 toast，下一個 toast 會沒有進度條、也不會自動關閉。修正只在不該暫停時（視窗聚焦、滑鼠與焦點都不在 toast 上）恢復計時，不影響原本的暫停行為。`false` 表示停用；上游修好後此選項會移除。
 
 </field>
 </field-group>

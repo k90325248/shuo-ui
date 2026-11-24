@@ -8261,15 +8261,15 @@ const schema = v.object({
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v3.3.0
+pnpm add github:k90325248/shuo-ui#v3.3.1
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v3.3.0
+npm install github:k90325248/shuo-ui#v3.3.1
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v3.3.0
+yarn add github:k90325248/shuo-ui#v3.3.1
 ```
 
 </code-group>
@@ -10495,7 +10495,8 @@ export default defineNuxtConfig({
     locale: 'zh-TW',
     messages: {},
     locales: {},
-    components: {}
+    components: {},
+    toastPauseFix: true
   }
 });
 ```
@@ -10542,6 +10543,12 @@ export default defineNuxtConfig({
 <field default="{}" name="components" type="object">
 
 元件全站預設值，依元件分區設定，見[元件全站預設值](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults)。
+
+</field>
+
+<field default="true" name="toastPauseFix" type="boolean">
+
+是否修正 toast 卡住的問題。reka-ui 2.11.0 的 bug：滑鼠停在 toast 上時關掉最後一個 toast，下一個 toast 會沒有進度條、也不會自動關閉。修正只在不該暫停時（視窗聚焦、滑鼠與焦點都不在 toast 上）恢復計時，不影響原本的暫停行為。`false` 表示停用；上游修好後此選項會移除。
 
 </field>
 </field-group>
@@ -11538,6 +11545,78 @@ pnpm add @iconify-json/lucide # 建議，圖示會直接打包
 ---
 
 - [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v3.3.0)
+
+
+# v3.3.1
+
+> 發佈於 2026年11月24日
+
+修正 Nuxt UI 的 toast 卡住的問題：在特定操作後跳出的新 toast 沒有進度條，也不會自動關閉。從 3.3.0 升級不需要修改程式碼。
+
+## 🐛 Bug Fixes
+
+- **新 toast 沒有進度條、不會自動關閉：** 這是 reka-ui 2.11.0（目前最新版）的 bug。滑鼠停在 toast 上時，關掉最後一個 toast（呼叫 `toast.remove()`、點 action、滑動關閉，或在點按鈕不會取得焦點的瀏覽器上點 X），toast 的暫停狀態不會解除，下一個 toast 就不會計時。Shuo UI 現在會在新 toast 出現、而且此刻不該暫停（視窗聚焦、滑鼠與焦點都不在 toast 上）時，讓 reka-ui 恢復計時。滑鼠停在 toast 上、視窗失焦時仍會照常暫停。
+
+## ✨ 新選項
+
+- **shuoUi.toastPauseFix（預設 true）：** 上述修正的開關，設為 `false` 可停用。reka-ui 修好後，修正與這個選項會一併移除：[模組選項](https://k90325248.github.io/shuo-ui/getting-started/theme/module-options)
+
+## 📦 安裝
+
+```bash
+pnpm add github:k90325248/shuo-ui#v3.3.1
+pnpm add @iconify-json/lucide # 建議，圖示會直接打包
+```
+
+在 `nuxt.config.ts` 啟用模組，並在 CSS 加上 `@import '@shuo/ui/css';`，步驟見文件網站的[安裝](https://k90325248.github.io/shuo-ui/getting-started/overview/installation)。
+
+## 📋 需求
+
+<table>
+<thead>
+  <tr>
+    <th>
+      套件
+    </th>
+    
+    <th>
+      版本
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.2
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [在 GitHub 查看](https://github.com/k90325248/shuo-ui/releases/tag/v3.3.1)
 
 
 # Months
@@ -20546,15 +20625,15 @@ Pin a version with a tag, and change it to the new tag when upgrading. See [GitH
 <code-group>
 
 ```bash [pnpm]
-pnpm add github:k90325248/shuo-ui#v3.3.0
+pnpm add github:k90325248/shuo-ui#v3.3.1
 ```
 
 ```bash [npm]
-npm install github:k90325248/shuo-ui#v3.3.0
+npm install github:k90325248/shuo-ui#v3.3.1
 ```
 
 ```bash [yarn]
-yarn add github:k90325248/shuo-ui#v3.3.0
+yarn add github:k90325248/shuo-ui#v3.3.1
 ```
 
 </code-group>
@@ -22764,7 +22843,8 @@ export default defineNuxtConfig({
     locale: 'zh-TW',
     messages: {},
     locales: {},
-    components: {}
+    components: {},
+    toastPauseFix: true
   }
 });
 ```
@@ -22811,6 +22891,12 @@ Overrides texts per locale code, and can add locales beyond the built-in ones. S
 <field default="{}" name="components" type="object">
 
 Global component defaults, grouped by component. See [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults).
+
+</field>
+
+<field default="true" name="toastPauseFix" type="boolean">
+
+Whether to fix stuck toasts. A reka-ui 2.11.0 bug: if the last toast is closed while the pointer is over it, the next toast shows no progress bar and never closes on its own. The fix only resumes the timer when nothing should pause it (the window is focused and neither the pointer nor focus is on the toasts), so normal pausing is unchanged. `false` turns it off; the option will be removed once fixed upstream.
 
 </field>
 </field-group>
@@ -23807,6 +23893,78 @@ Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your 
 ---
 
 - [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v3.3.0)
+
+
+# v3.3.1
+
+> Released on November 24, 2026
+
+Fixes stuck Nuxt UI toasts: after certain interactions, the next toast showed no progress bar and never closed on its own. Upgrading from 3.3.0 needs no code changes.
+
+## 🐛 Bug Fixes
+
+- **New toasts had no progress bar and never closed:** a bug in reka-ui 2.11.0 (the latest release). If the last toast was closed while the pointer was over it (calling `toast.remove()`, clicking an action, swiping it away, or clicking X in browsers where buttons do not take focus on click), the toasts stayed paused and the next toast never started its timer. Shuo UI now has reka-ui resume the timer when a new toast appears and nothing should pause it (the window is focused and neither the pointer nor focus is on the toasts). Toasts still pause while hovered and while the window is unfocused.
+
+## ✨ New option
+
+- **shuoUi.toastPauseFix (default true):** turns the fix above on or off; set it to `false` to disable it. The fix and this option will be removed once reka-ui fixes the bug: [Module options](https://k90325248.github.io/shuo-ui/getting-started/theme/module-options)
+
+## 📦 Installation
+
+```bash
+pnpm add github:k90325248/shuo-ui#v3.3.1
+pnpm add @iconify-json/lucide # recommended, icons are bundled
+```
+
+Enable the module in `nuxt.config.ts` and add `@import '@shuo/ui/css';` to your CSS; see [Installation](https://k90325248.github.io/shuo-ui/getting-started/overview/installation) on the docs site.
+
+## 📋 Requirements
+
+<table>
+<thead>
+  <tr>
+    <th>
+      Package
+    </th>
+    
+    <th>
+      Version
+    </th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>
+      Nuxt
+    </td>
+    
+    <td>
+      <code>
+        ^4.6.2
+      </code>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>
+        @nuxt/ui
+      </code>
+    </td>
+    
+    <td>
+      <code>
+        ^4.12.2
+      </code>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+---
+
+- [View on GitHub](https://github.com/k90325248/shuo-ui/releases/tag/v3.3.1)
 
 
 # Months

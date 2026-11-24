@@ -21,7 +21,8 @@ export default defineNuxtConfig({
     locale: 'zh-TW',
     messages: {},
     locales: {},
-    components: {}
+    components: {},
+    toastPauseFix: true
   }
 });
 ```
@@ -68,6 +69,12 @@ Overrides texts per locale code, and can add locales beyond the built-in ones. S
 <field default="{}" name="components" type="object">
 
 Global component defaults, grouped by component. See [Component defaults](https://k90325248.github.io/shuo-ui/getting-started/theme/component-defaults).
+
+</field>
+
+<field default="true" name="toastPauseFix" type="boolean">
+
+Whether to fix stuck toasts. A reka-ui 2.11.0 bug: if the last toast is closed while the pointer is over it, the next toast shows no progress bar and never closes on its own. The fix only resumes the timer when nothing should pause it (the window is focused and neither the pointer nor focus is on the toasts), so normal pausing is unchanged. `false` turns it off; the option will be removed once fixed upstream.
 
 </field>
 </field-group>

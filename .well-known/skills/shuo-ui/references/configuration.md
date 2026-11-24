@@ -14,7 +14,8 @@ export default defineNuxtConfig({
     locale: 'zh-TW', // used when <UApp> has no locale; 'zh-TW' or 'en'
     messages: {}, // override texts of the default locale
     locales: {}, // override texts per locale code, or add locales
-    components: {} // site-wide component defaults
+    components: {}, // site-wide component defaults
+    toastPauseFix: true // works around a reka-ui 2.11.0 bug that leaves the next toast without a progress bar and never auto-closing
   }
 });
 ```
