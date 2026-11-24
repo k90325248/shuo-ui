@@ -42,7 +42,8 @@ const module$1 = defineNuxtModule({
     locale: "zh-TW",
     messages: {},
     locales: {},
-    components: {}
+    components: {},
+    toastPauseFix: true
   },
   moduleDependencies: {
     "@nuxt/ui": {}
@@ -75,6 +76,7 @@ const module$1 = defineNuxtModule({
       components: options.components
     });
     addPlugin(resolve("./runtime/plugin"));
+    if (options.toastPauseFix) addPlugin({ src: resolve("./runtime/toast-pause-fix.client"), mode: "client" });
     if (options.css) nuxt.options.css.push(resolve("./runtime/assets/css/shuo-ui.css"));
     if (options.theme)
       nuxt.options.appConfig.ui = defu(

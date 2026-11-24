@@ -18,6 +18,11 @@ interface ModuleOptions {
     locales: Record<string, ShuoMessagesOverride>;
     /** 元件全站預設值，依元件分區設定白名單內的 prop；明確傳入的 prop 仍然優先。 */
     components: ShuoComponentDefaults;
+    /**
+     * 是否修正 toast 卡住的問題，預設 true：reka-ui 2.11.0 在滑鼠停在 toast 上時關掉最後一個 toast，
+     * 下一個 toast 會沒有進度條、也不會自動關閉。上游修好後此選項與修正會移除。
+     */
+    toastPauseFix: boolean;
 }
 declare const _default: _nuxt_schema.NuxtModule<ModuleOptions, ModuleOptions, false>;
 
